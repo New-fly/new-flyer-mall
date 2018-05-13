@@ -41,7 +41,7 @@ window.onload = function(){
 	};
 	document.getElementById("button-next").onclick=function(){
 		num=num-1000;
-		if(num<-3000){num=-3000}
+		if(num<-1600){num=-1600}
 		document.getElementById("all-rob-long").style.left = num + "px";
 	};
    document.getElementsByClassName("ipt-1")[0].onblur=function() {

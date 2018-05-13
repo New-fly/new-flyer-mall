@@ -55,7 +55,7 @@
 		margin-top: 12px;
 }
 .side-bar-1:hover,.side-bar-2:hover,.side-bar-3:hover,.side-bar-4:hover,.side-bar-5:hover,.side-bar-6:hover{
-		background-color:#336699
+		background-color:skyblue;
 }
 .side-bar-1-hidden,.side-bar-2-hidden{
 		width: 100px;
@@ -82,7 +82,7 @@
 		top: -45px;
 		transition: 0.5s;
 		opacity: 0;
-		border: solid 8px #336699;
+		border: solid 8px skyblue;
 }
 .side-bar-3-hidden>img{
 		width: 100%;
@@ -265,7 +265,7 @@
 	font-size: 12px;
 }
 .classify-left-bottom-ul>li:hover{
-	background-color:#FDBCA1;
+	background-color:skyblue;
 }
 .classify-list-foot-text{
 	width: 119px;
@@ -349,7 +349,7 @@
 	height: 578px;
 	margin: 10px;
 	float: left;
-	border: solid 1px red;
+	border: solid 1px #D0D0D0;
 	background-color: white;
 }
 .block-2{
@@ -357,13 +357,13 @@
 	height: 258px;
 	margin: 10px;
 	padding: 10px;
-	border: solid 1px red;
+	border: solid 1px #D0D0D0;
 	float: left;
 	position: relative;
 	background-color: white;
 }
-.block-2:hover{
-	box-shadow: 3px 3px 5px white;
+.block-1:hover,.block-2:hover{
+    border: solid 1px deeppink;
 }
 .block-2-div{
 	width: 198px;
@@ -449,6 +449,27 @@
 	position: absolute;
 	transition: 1s;
 	left: 0;
+}
+.little-books{
+    width: 100%;
+    height: 25%;
+    position: relative;
+}
+.little-books>div{
+    width: 50%;
+    height: 33%;
+    float: left;
+    text-align: center;
+    font-size: 15px;
+    line-height: 40px;
+}
+.little-books>div>a{
+    color: firebrick;
+    text-decoration: none;
+}
+.all-rob-long>img{
+    width: 100%;
+    height: 170px;
 }
 .all-rob-long>div{
 	width: 170px;

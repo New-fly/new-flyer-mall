@@ -152,11 +152,18 @@
 	<div class="today">
 		<div class="block-1">
 			<img th:src="@{/images/08.jpg}" width="100%" height="75%"/>
-            <div style="width: 100%;height: 25%"></div>
+            <div class="little-books">
+                <div><a href="">电视</a></div>
+                <div><a href="">空调</a></div>
+                <div><a href="">冰箱</a></div>
+                <div><a href="">电脑</a></div>
+                <div><a href="">桌子</a></div>
+                <div><a href="">热水壶</a></div>
+            </div>
 		</div>
 		<div class="block-2" th:each="product : ${products}">
             <a th:href="@{/ProductListController/toProduct(productId=77,userId=${session.userId})}">
-			    <img th:src="${product.product_picture}" width="198px" height="180px"/>
+			    <img th:src="${product.product_picture}" style="width:100%;height:170px"/>
             </a>
 			<div class="block-2-div">
 				<span class="money" th:text="${product.product_counterPrice}">6456元</span>
@@ -201,124 +208,18 @@
 	</div>
 	<div class="recommend">新品首发</div>
 	<div class="today">
-		<div class="block-2" id="similar">
-			<img  th:src="@{/images/05.jpg}" width="198px" height="180px"/>
+		<div class="block-2" id="similar"  th:each="product : ${products}">
+			<img  th:src="${product.product_picture}" width="198px" height="180px"/>
 			<div class="block-2-div">
-				<span class="money">6456元</span>
-				<span class="old-money"><s>4153元</s></span><br/>
-				<span class="block-2-text">新飞BCD-450WGSV 多门冰箱 五重除菌气调保鲜 波光纹钢化玻璃面板</span><br/>
-				<div class="block-2-div-foot">本月已成交6263件<span class="right">评论466条</span></div>
+				<span class="money" th:text="${product.product_counterPrice}">6456元</span>
+				<span class="old-money"><s th:text="${product.product_mallPrice}">4153元</s></span><br/>
+				<span class="block-2-text" th:text="${product.product_counterPrice}">新飞BCD-450WGSV 多门冰箱 五重除菌气调保鲜 波光纹钢化玻璃面板</span><br/>
+				<div class="block-2-div-foot" th:text="'购买获得'+${product.product_getPoints}+'积分'">
+					<span class="right" th:text="'库存'+${product.product_inventory}+'件'"></span>
+				</div>
 			</div>
 			<div class="similarily">
-				<div class="similarity">找相似</div>
-			</div>
-		</div>
-		<div class="block-2" id="similar">
-			<img th:src="@{/images/05.jpg}" width="198px" height="180px"/>
-			<div class="block-2-div">
-				<span class="money">6456元</span>
-				<span class="old-money"><s>4153元</s></span><br/>
-				<span class="block-2-text">新飞BCD-450WGSV 多门冰箱 五重除菌气调保鲜 波光纹钢化玻璃面板</span><br/>
-				<div class="block-2-div-foot">本月已成交6263件<span class="right">评论466条</span></div>
-			</div>
-			<div class="similarily">
-				<div class="similarity">找相似</div>
-			</div>
-		</div>
-		<div class="block-2" id="similar">
-			<img th:src="@{/images/05.jpg}" width="198px" height="180px"/>
-			<div class="block-2-div">
-				<span class="money">6456元</span>
-				<span class="old-money"><s>4153元</s></span><br/>
-				<span class="block-2-text">新飞BCD-450WGSV 多门冰箱 五重除菌气调保鲜 波光纹钢化玻璃面板</span><br/>
-				<div class="block-2-div-foot">本月已成交6263件<span class="right">评论466条</span></div>
-			</div>
-			<div class="similarily">
-				<div class="similarity">找相似</div>
-			</div>
-		</div>
-		<div class="block-2" id="similar">
-			<img th:src="@{/images/05.jpg}" width="198px" height="180px"/>
-			<div class="block-2-div">
-				<span class="money">6456元</span>
-				<span class="old-money"><s>4153元</s></span><br/>
-				<span class="block-2-text">新飞BCD-450WGSV 多门冰箱 五重除菌气调保鲜 波光纹钢化玻璃面板</span><br/>
-				<div class="block-2-div-foot">本月已成交6263件<span class="right">评论466条</span></div>
-			</div>
-			<div class="similarily">
-				<div class="similarity">找相似</div>
-			</div>
-		</div>
-		<div class="block-2" id="similar">
-			<img th:src="@{/images/05.jpg}" width="198px" height="180px"/>
-			<div class="block-2-div">
-				<span class="money">6456元</span>
-				<span class="old-money"><s>4153元</s></span><br/>
-				<span class="block-2-text">新飞BCD-450WGSV 多门冰箱 五重除菌气调保鲜 波光纹钢化玻璃面板</span><br/>
-				<div class="block-2-div-foot">本月已成交6263件<span class="right">评论466条</span></div>
-			</div>
-			<div class="similarily">
-				<div class="similarity">找相似</div>
-			</div>
-		</div>
-		<div class="block-2" id="similar">
-			<img th:src="@{/images/05.jpg}" width="198px" height="180px"/>
-			<div class="block-2-div">
-				<span class="money">6456元</span>
-				<span class="old-money"><s>4153元</s></span><br/>
-				<span class="block-2-text">新飞BCD-450WGSV 多门冰箱 五重除菌气调保鲜 波光纹钢化玻璃面板</span><br/>
-				<div class="block-2-div-foot">本月已成交6263件<span class="right">评论466条</span></div>
-			</div>
-			<div class="similarily">
-				<div class="similarity">找相似</div>
-			</div>
-		</div>
-		<div class="block-2" id="similar">
-			<img th:src="@{/images/05.jpg}" width="198px" height="180px"/>
-			<div class="block-2-div">
-				<span class="money">6456元</span>
-				<span class="old-money"><s>4153元</s></span><br/>
-				<span class="block-2-text">新飞BCD-450WGSV 多门冰箱 五重除菌气调保鲜 波光纹钢化玻璃面板</span><br/>
-				<div class="block-2-div-foot">本月已成交6263件<span class="right">评论466条</span></div>
-			</div>
-			<div class="similarily">
-				<div class="similarity">找相似</div>
-			</div>
-		</div>
-		<div class="block-2" id="similar">
-			<img th:src="@{/images/05.jpg}" width="198px" height="180px"/>
-			<div class="block-2-div">
-				<span class="money">6456元</span>
-				<span class="old-money"><s>4153元</s></span><br/>
-				<span class="block-2-text">新飞BCD-450WGSV 多门冰箱 五重除菌气调保鲜 波光纹钢化玻璃面板</span><br/>
-				<div class="block-2-div-foot">本月已成交6263件<span class="right">评论466条</span></div>
-			</div>
-			<div class="similarily">
-				<div class="similarity">找相似</div>
-			</div>
-		</div>
-		<div class="block-2" id="similar">
-			<img th:src="@{/images/05.jpg}" width="198px" height="180px"/>
-			<div class="block-2-div">
-				<span class="money">6456元</span>
-				<span class="old-money"><s>4153元</s></span><br/>
-				<span class="block-2-text">新飞BCD-450WGSV 多门冰箱 五重除菌气调保鲜 波光纹钢化玻璃面板</span><br/>
-				<div class="block-2-div-foot">本月已成交6263件<span class="right">评论466条</span></div>
-			</div>
-			<div class="similarily">
-				<div class="similarity">找相似</div>
-			</div>
-		</div>
-		<div class="block-2" id="similar">
-			<img th:src="@{/images/05.jpg}" width="198px" height="180px"/>
-			<div class="block-2-div">
-				<span class="money">6456元</span>
-				<span class="old-money"><s>4153元</s></span><br/>
-				<span class="block-2-text">新飞BCD-450WGSV 多门冰箱 五重除菌气调保鲜 波光纹钢化玻璃面板</span><br/>
-				<div class="block-2-div-foot">本月已成交6263件<span class="right">评论466条</span></div>
-			</div>
-			<div class="similarily">
-				<div class="similarity">找相似</div>
+				<div class="similarity">查看商品</div>
 			</div>
 		</div>
 	</div>
