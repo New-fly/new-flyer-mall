@@ -94,6 +94,7 @@ public class LoginController {
     @RequestMapping("/login")
     public String login(HttpServletRequest request, Model model, String user_name, String user_password) {
         User user = logUserService.login(request, user_name, user_password);
+        System.out.println(user);
         if (user != null) {
             if (user.getUser_role().equals("管理员")) {
                 //model.addAttribute("user", user);

@@ -4,96 +4,113 @@
 <head>
     <meta charset="UTF-8">
     <title>商品表</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
-    <link rel="stylesheet" th:href="@{css/commodity.css}" type="text/css">
-    <link rel="shortcut icon" th:href="@{images/xflogo.ico}" type="image/x-icon"/>
-    <link rel="stylesheet" th:href="@{font/css/font-awesome.min.css}">
+    <link  th:href="@{/bootstrap/dist/css/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/css/commodity.css}" rel="stylesheet" type="text/css">
+    <link  th:href="@{/images/xflogo.ico}" rel="shortcut icon"  type="image/x-icon"/>
+    <link  th:href="@{/font/css/font-awesome.min.css}" rel="stylesheet">
+    <script th:src="@{/js/commodity.js}"></script>
 </head>
-<style>
-    .col-sm-2 {
-        width: 100%;
-    }
-</style>
-<body class="container">
-<br/>
-<h1>商品列表</h1>
-<br/><br/>
-<div class="with:80%">
-    <div class="col-sm-2 control-label">
-        <a class="btn btn-info">用户管理</a>
-        <a th:href="@{/AdminProductController/adminProductList}" class="btn btn-info">商品管理</a>
-        <a th:href="@{/AdminProductController/productCategoryList}" class="btn btn-info">分类管理</a>
-        <a th:href="@{/OrderController/allProductOrdersLists}" class="btn btn-info">订单管理</a>
-        <a th:href="@{/SearchShieldController/toProductSensitive}" class="btn btn-info">敏感词汇管理</a>
-        <a th:href="@{/AdminActivityController/activityProducts}" class="btn btn-info">活动管理</a>
-    </div>
-    <br/><br/>
-    <form th:action="@{/AdminProductController/adminFindProduct}"  method="post">
-        <div>
-            <input type="text" id="product_keywords" name="product_keywords" th:value="*{product_keywords}" placeholder="关键字" >
-            <input type="submit" value="搜索" class="btn btn-info" />
-        </div>
+<body>
+<table class="table table-bordered able-box" id="mytable">
+    <thead style="background-color: #F2F2F2;">
+    <tr>
+        <th>库存</th>
+        <th>活动名称</th>
+        <th>类别</th>
+        <th>图片</th>
+        <th>是否可兑换</th>
+        <th>是否上架</th>
+        <th>是否热门</th>
+        <th>关键字</th>
+        <th>商城价</th>
+        <th>需要积分</th>
+        <th>得到积分</th>
+        <th>服务类型</th>
+        <th>商品规格</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.product_inventory}"></td>
+        <td th:text="${product.product_activity}"></td>
+        <td th:text="${product.product_category}"></td>
+        <td><img th:src="${product.product_picture}" style="width: 45px;height: 45px;"></td>
+        <td th:text="${product.product_isRedeemable}"></td>
+        <td th:text="${product.product_isShelf}"></td>
+        <td th:text="${product.product_isTop}"></td>
+        <td th:text="${product.product_keywords}" style="width: 200px"></td>
+        <td th:text="${product.product_mallPrice}"></td>
+        <td th:text="${product.product_needPoints}"></td>
+        <td th:text="${product.product_getPoints}"></td>
+        <td th:text="${product.product_serviceType}"></td>
+        <td th:text="${product.product_specification}"></td>
+        <td>
+            <a class="aa1 aa" th:href="@{/AdminProductController/toAdminAddProduct}">添加</a>
+            <a class="aa2" th:href="@{/AdminProductController/adminDeleteProduct(productId=${product.productId})}">删除</a>
+            <a class="aa3 aa" th:href="@{/AdminProductController/toAdminEditProduct(productId=${product.productId})}">修改</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!--遮屏弹窗  修改内容-->
+<div class="windoww">
+<div class="popup-windows">
+    <h2 style="text-align: center">新增数据</h2>
+    <form th:action="@{/AdminProductController/adminAddProduct}" method="post">
+        <table class="table table-hover table-bordered">
+            <!--<tr>-->
+            <!--<th>ID</th>-->
+            <!--<td><input type="text" name="productId" class="form-control" id="Id" placeholder=""/></td>-->
+            <!--</tr>-->
+            <tr>
+                <th>商品关键字</th>
+                <td><input type="text" name="product_keywords" class="form-control" id="keywords" /></td>
+            </tr>
+            <tr>
+                <th>上架状态</th>
+                <td><input type="text" name="product_isShelf" class="form-control" id="condition" /></td>
+            </tr>
+            <tr>
+                <th>图片</th>
+                <td><input type="text" name="product_picture" class="form-control" id="price1" /></td>
+            </tr>
+            <tr>
+                <th>商城价格</th>
+                <td><input type="text" name="product_mallPrice" class="form-control" id="price2" /></td>
+            </tr>
+            <tr>
+                <th>商品规格信息</th>
+                <td><input type="text" name="product_specification" class="form-control" id="info" /></td>
+            </tr>
+            <tr>
+                <th>图片</th>
+                <td><input type="text" name="product_picture" class="form-control" id="picture" /></td>
+            </tr>
+            <tr>
+                <th>商品详情</th>
+                <td><input type="text" name="product_details" class="form-control" id="details" /></td>
+            </tr>
+            <tr>
+                <th>服务类型</th>
+                <td><input type="text" name="product_serviceType" class="form-control" id="kind" /></td>
+            </tr>
+            <tr>
+                <th>活动状态</th>
+                <td><input type="text" name="product_activity"  class="form-control" id="activity"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <!--<input type="reset" value="重置" class="btn btn-primary" id="reset" />-->
+                    <input type="button" value="添加"  class="btn btn-success" id="add" onclick="dd()"/>
+                    <!--<input type="button" value="修改"  class="btn btn-info" id="change" onclick="update()"/>-->
+                    <a th:href="@{/AdminProductController/adminProductList}"><input type="button" value="取消"  class="btn btn-info" id="cancel" style="background-color: orangered"/></a>
+                </td>
+            </tr>
+        </table>
     </form>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>库存</th>
-            <th>活动名称</th>
-            <th>类别</th>
-            <th>商城价</th>
-            <th>是否上架</th>
-            <th>关键字</th>
-            <th>图片</th>
-            <th>商品规格</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr  th:each="product : ${products}">
-            <th scope="row" th:text="${product.productId}"></th>
-            <td th:text="${product.product_inventory}"></td>
-            <td th:text="${product.product_activity}"></td>
-            <td th:text="${product.product_category}"></td>
-            <td th:text="${product.product_mallPrice}"></td>
-            <td th:text="${product.product_isShelf}"></td>
-            <td th:text="${product.product_keywords}"></td>
-            <td th:text="${product.product_picture}"></td>
-            <td th:text="${product.product_specification}"></td>
-            <td><a th:href="@{/AdminProductController/toAdminEditProduct(productId=${product.productId})}">edit</a></td>
-            <td><a th:href="@{/AdminProductController/adminDeleteProduct(productId=${product.productId})}">delete</a></td>
-        </tr>
-        </tbody>
-    </table>
 </div>
-<div class="fenye" th:if="${TotalPages > 0}">
-
-    <ul class="pagination" th:if="${Number == 1} and ${TotalPages > 1}"> <!--//如果当前页等于1，总页数大于1（不显示上一页）   Number&ndash;&gt;当前页-->
-        <li><a th:href="@{/AdminProductController/adminProductList(page=1)}">首页</a></li>
-        <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}"><!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
-            <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);" th:text="${i}">#</a><!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
-            <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}" th:href="@{/AdminProductController/adminProductList(page=${i})}" th:text="${i}" style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
-        </li>
-        <li><a th:href="@{/AdminProductController/adminProductList(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
-    </ul>
-
-    <ul class="pagination" th:if="${Number > 1} and ${Number > 1}"><!--//显示上一页-->
-        <li><a th:href="@{/AdminProductController/adminProductList(page=1)}">首页</a></li><!--//跳转至第一页-->
-        <li><a th:href="@{/AdminProductController/adminProductList(page=${Number-1})}">上一页</a></li><!--//请求页数-1-->
-        <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}"><!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
-            <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);" th:text="${i}">#</a><!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
-            <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}" th:href="@{/AdminProductController/adminProductList(page=${i})}" th:text="${i}" style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
-        </li>
-        <li th:if="${Number != TotalPages}"><a th:href="@{/AdminProductController/adminProductList(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
-        <li><a th:href="@{/AdminProductController/adminProductList(page=${Number})}">尾页</a></li><!--//跳转至第Number页-->
-    </ul>
-
 </div>
-<div class="form-group">
-    <div class="col-sm-2 control-label">
-        <a th:href="@{/AdminProductController/toAdminAddProduct}" class="btn btn-info">add</a>
-    </div>
-</div>
+<script th:src="@{/js/commodity.js}"></script>
 </body>
 </html>
