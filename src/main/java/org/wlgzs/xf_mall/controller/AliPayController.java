@@ -94,7 +94,7 @@ public class AliPayController {
      * @description 付款
      */
     @RequestMapping("aliPaySum")
-    public ModelAndView aliPay(@RequestParam(value = "productId",defaultValue = "233,232") String productId,
+    public ModelAndView aliPay(@RequestParam(value = "productId",defaultValue = "441,442") String productId,
                                @RequestParam(value = "userId",defaultValue = "46") long userId,
                                @RequestParam(value = "shoppingCount",defaultValue = "3,2") String shoppingCount,
                                HttpServletResponse response, HttpServletRequest request) throws IOException, AlipayApiException {

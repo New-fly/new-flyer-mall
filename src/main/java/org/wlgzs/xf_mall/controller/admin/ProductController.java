@@ -176,7 +176,6 @@ public class ProductController {
      */
     @RequestMapping("/toAddProductOneCategory")
     public ModelAndView toAddOneCategory(){
-        System.out.println("4894198");
         return new ModelAndView("admin/addProductOneCategory");
     }
     /**

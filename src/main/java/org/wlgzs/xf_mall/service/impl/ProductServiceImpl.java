@@ -244,6 +244,7 @@ public class ProductServiceImpl implements ProductService {
     //增加一级分类
     @Override
     public void saveOne(ProductCategory productCategory) {
+        productCategory.setParent_name("0");
         productCategoryRepository.save(productCategory);
     }
 
