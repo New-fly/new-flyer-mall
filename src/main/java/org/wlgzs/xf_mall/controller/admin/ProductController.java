@@ -89,7 +89,9 @@ public class ProductController {
      * @description 跳转到添加商品
      */
     @RequestMapping(value = "/toAdminAddProduct")
-    public ModelAndView toAdd(){
+    public ModelAndView toAdd(Model model){
+        List<ProductCategory> productCategories = productService.findProductTwoCategoryList();
+        model.addAttribute("productCategories",productCategories);
         return new ModelAndView("admin/adminAddProduct");
     }
     /**
@@ -135,8 +137,9 @@ public class ProductController {
      * @description 修改商品
      */
     @RequestMapping("/adminEditProduct")
-    public ModelAndView edit(Product product) {
-        productService.edit(product);
+    public ModelAndView edit(Product product,String product_details, @RequestParam("file") MultipartFile[] myFileNames, HttpSession session,
+                             HttpServletRequest request) {
+        productService.edit(product,product_details,myFileNames,session,request);
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
     }
     /**
