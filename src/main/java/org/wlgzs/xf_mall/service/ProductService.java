@@ -58,7 +58,7 @@ public interface ProductService {
 
     ProductCategory findProductCategoryById(long categoryId);
 
-    void save(long userId,long productId,HttpServletRequest request);
+    void save(long userId,long productId,int shoppingCart_count,HttpServletRequest request);
 
     ShoppingCart findByUserIdAndProductId(long userId, long productId);
 

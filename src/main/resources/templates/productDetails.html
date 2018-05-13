@@ -84,6 +84,8 @@
             <!--<span th:text="*{product_keywords}"></span>-->
             <span th:utext="*{product_keywords}" style="color: red;font-size: 16px;"></span>
         </div>
+        <input class="productId" type="submit" th:value="*{productId}" style="display: none" />
+        <input class="userId" type="submit" th:value="${session.userId}" style="display: none" />
         <div class="money">
             <span class="gray">价格：</span>
             <span class="gray" th:utext="'￥：'+ *{product_mallPrice}"></span><br/>
@@ -109,7 +111,7 @@
             <div class="number">
                 <span class="gray">数量：</span>
                 <div id="subtract">-</div>
-                <input id="number" name="shoppingCount" type="text" value="1" class="input-a"/>
+                <input id="number" name="shoppingCart_count" type="text" value="1" class="input-a shoppingCart_count"/>
                 <div id="add">+</div>
             </div>
             <div class="button">
@@ -119,22 +121,22 @@
                 <div class="shoppingcart">加入购物车</div>
             </div>
         </form>
-        <form th:action="@{/ProductListController/addShoppingProduct(productId=*{productId},userId=${session.userId})}"
-              method="post">
-            <div th:width="330px"
-                 style="padding: 10px; border: 1px solid #e7dbb1; margin: 15px 0 10px 0; background-color: #fffee6;">
-                <div style="margin: 5px 0 10px 0;">白色</div>
-                <div style="border-bottom: 1px solid #faeac7; margin-top: 20px; padding-left: 10px;">
-                    购买数量:
-                    <input id="shoppingCart_count" name="shoppingCart_count" value="1" maxlength="4" size="10"
-                           type="text">
-                </div>
-                <div style="margin: 20px 0 10px 0;; text-align: center;">
-                    <input th:width="127px" style="height: 36px;" value="加入购物车" type="submit">
-                    &nbsp;
-                </div>
-            </div>
-        </form>
+        <!--<form th:action="@{/ProductListController/addShoppingProduct(productId=*{productId},userId=${session.userId})}"-->
+              <!--method="post">-->
+            <!--<div th:width="330px"-->
+                 <!--style="padding: 10px; border: 1px solid #e7dbb1; margin: 15px 0 10px 0; background-color: #fffee6;">-->
+                <!--<div style="margin: 5px 0 10px 0;">白色</div>-->
+                <!--<div style="border-bottom: 1px solid #faeac7; margin-top: 20px; padding-left: 10px;">-->
+                    <!--购买数量:-->
+                    <!--<input id="shoppingCart_count" name="shoppingCart_count" value="1" maxlength="4" size="10"-->
+                           <!--type="text">-->
+                <!--</div>-->
+                <!--<div style="margin: 20px 0 10px 0;; text-align: center;">-->
+                    <!--<input th:width="127px" style="height: 36px;" value="加入购物车" type="submit">-->
+                    <!--&nbsp;-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</form>-->
         <div class="all-right-foot">
             <span class="gray">承诺：</span>
             <span class="gray">

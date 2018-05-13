@@ -68,11 +68,11 @@ public class AliPayController {
      */
     @RequestMapping("oneToPay")
     public ModelAndView oneToPay(Model model, @RequestParam(value = "productId",defaultValue = "224") long productId,
-                                 @RequestParam(value = "shoppingCount",defaultValue = "3") int shoppingCount,String user_name){
+                                 @RequestParam(value = "shoppingCart_count",defaultValue = "3") int shoppingCart_count,String user_name){
         List<Product> shoppingCarts = productService.findProductListById(productId);
         model.addAttribute("shoppingCarts",shoppingCarts);
-        System.out.println(shoppingCount);
-        model.addAttribute("shoppingCount",shoppingCount);
+        System.out.println(shoppingCart_count);
+        model.addAttribute("shoppingCart_count",shoppingCart_count);
         List<ShippingAddress> shippingAddressList = shippingAddressService.getShippingAddressList(user_name);
         model.addAttribute("shippingAddressList", shippingAddressList);
         return new ModelAndView("indent");

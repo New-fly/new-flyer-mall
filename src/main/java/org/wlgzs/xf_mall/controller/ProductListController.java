@@ -17,6 +17,7 @@ import org.wlgzs.xf_mall.service.ProductService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,12 +68,16 @@ public class ProductListController {
      * @description 跳转至商品详情页面
      */
     @RequestMapping("/toProduct")
-    public ModelAndView toProduct(Model model,long userId, long productId,HttpServletRequest request) {
+    public ModelAndView toProduct(Model model, long productId,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if(session.getAttribute("userId")!=null){
+            long userId = (long) session.getAttribute("userId");
+            Collection collection = productService.findByCollectionUserIdAndProductId(userId,productId);
+            model.addAttribute("collection",collection);
+            footprintService.save(request,userId,productId);
+        }
         Product product = productService.findProductById(productId);
         model.addAttribute("product", product);
-        Collection collection = productService.findByCollectionUserIdAndProductId(userId,productId);
-        model.addAttribute("collection",collection);
-        footprintService.save(request,userId,productId);
         return new ModelAndView("productDetails");
     }
     /**
@@ -82,8 +87,13 @@ public class ProductListController {
      * @description 添加购物车
      */
     @RequestMapping("/addShoppingProduct")
-    public  ModelAndView addShoppingProduct(long userId,long productId,HttpServletRequest request){
-        productService.save(userId,productId,request);
+    public  ModelAndView addShoppingProduct(long productId,int shoppingCart_count,HttpServletRequest request){
+        long userId = 0;
+        HttpSession session = request.getSession();
+        if(session.getAttribute("userId")!=null){
+            userId = (long) session.getAttribute("userId");
+        }
+        productService.save(userId,productId,shoppingCart_count,request);
         String url="redirect:/ProductListController/toProduct?productId="+productId+"&userId="+userId;
         return new ModelAndView(url);
     }
@@ -94,7 +104,13 @@ public class ProductListController {
      * @description 添加收藏
      */
     @RequestMapping("/addCollectionProduct")
-    public  ModelAndView addCollectionProduct(long userId,long productId,HttpServletRequest request){
+    public  ModelAndView addCollectionProduct(long productId,HttpServletRequest request){
+        long userId = 0;
+        HttpSession session = request.getSession();
+        System.out.println(productId);
+        if(session.getAttribute("userId")!=null){
+            userId = (long) session.getAttribute("userId");
+        }
         productService.saveCollection(userId,productId,request);
         String url="redirect:/ProductListController/toProduct?productId="+productId+"&userId="+userId;
         return new ModelAndView(url);
@@ -261,7 +277,6 @@ public class ProductListController {
         model.addAttribute("productTwoCategories", productTwoCategories);
         return new ModelAndView("productList");
     }
-
     //积分商品展示
     @RequestMapping("/integralProduct")
     public ModelAndView findByProduct_isRedeemable(Model model) {

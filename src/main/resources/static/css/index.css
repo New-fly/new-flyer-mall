@@ -178,7 +178,7 @@
 }
 .ipt-2{
 	width: 90px;
-	height: 32px;
+	height: 34px;
 	position: absolute;
     right: 0;
     top:0;
@@ -239,7 +239,7 @@
 	text-align: center;
 	cursor:pointer;
 	letter-spacing: 10px;
-	background-color: #CC0510;
+	background-color: burlywood;
 	color: white;
 }
 .classify-left-bottom{
@@ -256,6 +256,7 @@
 	width: 100%;
 	height: 35px;
 	padding: 5px 0;
+    background-color: oldlace;
 	list-style-type: none;
 	text-align: center;
 	font-size: 16px;
@@ -265,7 +266,7 @@
 	font-size: 12px;
 }
 .classify-left-bottom-ul>li:hover{
-	background-color:skyblue;
+	background-color:antiquewhite;
 }
 .classify-list-foot-text{
 	width: 119px;
@@ -326,16 +327,18 @@
 	width: 100%;
 }
 .recommend{
-	width: 1180px;
-	height: 70px;
-	margin: 0 auto;
-	line-height: 70px;
-	font-size: 30px;
-	letter-spacing: 20px;
-	margin-bottom: 20px;
-	padding-left: 20px;
-	color: red;
-	border-bottom: solid 3px red;
+    width: 1180px;
+    height: 70px;
+    margin: 0 auto;
+    line-height: 70px;
+    font-size: 30px;
+    letter-spacing: 20px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    color: #F80533;
+    font-weight: bold;
+    font-family: "仿宋";
+    border-bottom: solid 1px #f80533;
 }
 .today{
 	width: 1220px;
@@ -400,24 +403,27 @@
 	width: 180px;
 	height: 230px;
 	padding: 10px;
-	background-color: red;
+	background-color: antiquewhite;
 	float: left;
+    border-radius: 8px;
 }
 .count-down-text{
-	line-height: 50px;
 	text-align: center;
 	letter-spacing: 15px;
 	font-size: 27px;
+    color: chocolate;
 	line-height: 45px;
+    font-family: "楷体";
 }
 .count-down-english{
 	font-size: 20px;
 	letter-spacing: 0;
+    color: chocolate;
 }
 .count-down-text-little{
 	font-size: 15px;
-	color: #313131;
 	letter-spacing: 0;
+    color: chocolate;
 }
 .count-down-p{
 	font-size: 15px;
@@ -425,16 +431,18 @@
 	margin: 0;
 }
 .time1,.time2,.time3{
-	width: 30px;
-	height: 30px;
-	background-color: yellow;
-	float: left;
-	display: inline;
-	margin: 5px 15px;
-	text-align: center;
-	line-height: 30px;
-	font-size: 20px;
-	letter-spacing: 0;
+    width: 30px;
+    height: 30px;
+    background-color: ghostwhite;
+    float: left;
+    display: inline;
+    margin: 5px 15px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 20px;
+    border-radius: 7px;
+    color: chocolate;
+    letter-spacing: 0;
 }
 .all-rob{
 	width: 1000px;
@@ -490,7 +498,7 @@
 	width: 140px;
 	height: 18px;
 	margin: 0 auto;
-	border: solid 1px red;
+	border: solid 1px antiquewhite;
 }
 .money-left,.money-right{
 	width: 70px;
@@ -500,7 +508,8 @@
 	float: left;
 }
 .money-left{
-	background-color: red;
+    margin-left: -2px;
+	background-color: antiquewhite;
 }
 .button-last{
 	width: 10px;

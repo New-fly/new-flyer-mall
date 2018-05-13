@@ -90,13 +90,13 @@
 		<img th:src="@{/images/logo.png}" height="100%" style="float: left;"/>
 		<div class="ipt">
             <div style="position: relative">
-                <form>
+                <form th:action="@{/ProductListController/searchProductList/}">
                     <div class="all-hint">
-                        <input class="ipt-1"/>
+                        <input name="product_keywords" class="ipt-1"/>
                         <div class="hint">
                         </div>
                     </div>
-                    <input class="ipt-2" readonly th:value="搜索" />
+                    <input class="ipt-2" readonly type="submit" th:value="搜索" />
                 </form>
             </div>
 			<ul class="ipt-3">
@@ -125,9 +125,11 @@
 				</ul>
 			</div>
 		</div>
-		<div class="classify-right">
-            <!--轮播-->
-        </div>
+        <a th:href="@{/ActivityController/activityProducts(activitySumId=500)}">
+            <div class="classify-right">
+                <!--轮播-->
+            </div>
+        </a>
 		<div class="classify-list">
 			<div class="classify-list-top">电脑专区<span class="right"><a href="">>>></a></span></div>
 			<div class="classify-list-body">
@@ -162,7 +164,7 @@
             </div>
 		</div>
 		<div class="block-2" th:each="product : ${products}">
-            <a th:href="@{/ProductListController/toProduct(productId=77,userId=${session.userId})}">
+            <a th:href="@{/ProductListController/toProduct(productId=${product.productId})}">
 			    <img th:src="${product.product_picture}" style="width:100%;height:170px"/>
             </a>
 			<div class="block-2-div">

@@ -285,12 +285,13 @@ public class ProductServiceImpl implements ProductService {
 
     //添加购物车
     @Override
-    public void save(long userId, long productId, HttpServletRequest request) {
+    public void save(long userId, long productId,int shoppingCart_count, HttpServletRequest request) {
         Product product = productRepository.findById(productId);
 
         ShoppingCart shoppingCart = new ShoppingCart();
-        int count = Integer.parseInt(request.getParameter("shoppingCart_count"));
-        shoppingCart.setShoppingCart_count(count);
+        /*int count = Integer.parseInt(request.getParameter("shoppingCart_count"));*/
+        System.out.println(shoppingCart_count+"---");
+        shoppingCart.setShoppingCart_count(shoppingCart_count);
         ShoppingCart findShoppingCart = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
         if (findShoppingCart != null) {
             findShoppingCart.setShoppingCart_count(findShoppingCart.getShoppingCart_count() + shoppingCart.getShoppingCart_count());

@@ -46,11 +46,13 @@
 				</li>
 			</ul>
 		</div>
-		<div class="exit">退出</div>
+		<div class="exit">
+			<a th:href="${login}">退出</a>
+		</div>
 		<div class="user">
 			<div class="user-img"><img th:src="@{/images/03.jpg}" width="100%" height="100%"/></div>
 			<div class="user-nane">
-				jfdjvfk<i class="fa fa-paw"></i>
+				<i class="fa fa-paw"></i>
 			</div>
 		</div>
 	</nav>
@@ -73,15 +75,15 @@
 			<div class="list-1" id="src5">订单管理</div>
 		</div>
 		<div class="list-4" id="list-4">
-			<i class="fa fa-paw"></i>丰富生动管理
+			<i class="fa fa-paw"></i>活动管理
 			<div id="jiantou3"></div>
 		</div>
 		<div class="list-7">
 			<div class="list-1" id="src6">活动管理</div>
-			<div class="list-1" id="src7">管理管理管理管理</div>
+			<div class="list-1" id="src7">活动管理</div>
 		</div>
 	</div>
 	<div id="frame-div">
-		<iframe class="frame" th:src="@{.......}" frameborder="0" scrolling="yes"></iframe>
+		<iframe class="frame" th:src="@{/OrderController/allProductOrdersLists}" frameborder="0" scrolling="yes"></iframe>
 	</div>
 </body>
