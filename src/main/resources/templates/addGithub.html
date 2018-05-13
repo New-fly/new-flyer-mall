@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>第三方登录</title>
+    <link rel="stylesheet" th:href="@{bootstrap/dist/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{css/Third-party-landings.css}"type="text/css">
+    <link rel="shortcut icon"  th:href="@{images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{font/css/font-awesome.min.css}">
+    <script th:src="@{js/jquery.js}"></script>
+    <script th:src="@{js/distpicker.js}"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="left" style="height: 295px">
+                <h1>添加新账号</h1>
+                <form th:action="@{/githubRegistered}" method="post">
+                    <input type="hidden" name="githubId" th:value="${githubId}">
+                    <input type="text" placeholder="邮箱号" id="email" name="user_mail" onchange="test()">
+                    <font class="error"></font>
+                    <input type="password" placeholder="密码" id="password" name="user_password" onchange="test2()">
+                    <font class="error"></font>
+                    <input type="submit" value="注册" readonly style="background-color: red;" id="submit">
+                </form>
+            </div>
+            <div class="right">
+                <h1>绑定已有账号</h1>
+                <form th:action="@{bindingRegistered}" method="post">
+                    <input type="hidden" name="githubId" th:value="${githubId}">
+                    <input type="text" placeholder="用户名" id="user_name" name="user_name" onchange="test4()">
+                    <font class="error"></font>
+                    <input type="password" placeholder="密码" id="password2" name="user_password" onchange="test3()">
+                    <font class="error"></font>
+                    <input type="submit" value="绑定" style="background-color: red" id="bangding">
+                    <span>忘记密码了？</span>
+                    <span>如果忘记密码了，请<a>点击此处</a>进行重置密码</span>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{js/Third-party-landings.js}"></script>
+</body>
+</html>

@@ -2,6 +2,7 @@ package org.wlgzs.xf_mall.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.wlgzs.xf_mall.entity.Authorization;
 
 /**
@@ -11,5 +12,7 @@ import org.wlgzs.xf_mall.entity.Authorization;
  **/
 public interface AuthorizationRepository extends JpaRepository<Authorization,Long>,JpaSpecificationExecutor<Authorization> {
 
+    @Query(value = "select a from Authorization a where a.githubId=?1")
+    Authorization isBinding(long githubId);
 
 }

@@ -53,7 +53,6 @@ public class ShippingAddressController {
     @RequestMapping("addShippingAddress")
     public String addShippingAddress(ShippingAddress shippingAddress) {
         System.out.println(shippingAddress);
-        shippingAddress.setAddress_name("address");
         //是否默认
         int address_is_default = shippingAddress.getAddress_is_default();
         System.out.println("address_is_default===="+address_is_default);
