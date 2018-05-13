@@ -102,8 +102,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(String user_password, long userId) {
-        userRepository.changePassword(user_password,userId);
+    public void changePassword(String user_rePassword, long userId) {
+        userRepository.changePassword(user_rePassword,userId);
     }
 
     @Override
@@ -112,7 +112,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeEmail(String user_mail, Long userId) {
+    public void changeEmail(String user_mail, long userId) {
+        System.out.println("123123");
+        System.out.println(user_mail);
+        System.out.println(userId);
         userRepository.changeEmail(user_mail,userId);
     }
 }

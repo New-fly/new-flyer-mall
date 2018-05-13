@@ -33,11 +33,11 @@ public interface UserService {
     boolean checkPassWord(String user_password,long userId);
 
     //修改用户密码
-    void changePassword(String user_password,long userId);
+    void changePassword(String user_rePassword,long userId);
 
     //修改用户密码
     void changePassword(String user_password,String user_mail);
 
     //修改邮箱
-    void changeEmail(String user_mail,Long userId);
+    void changeEmail(String user_mail,long userId);
 }

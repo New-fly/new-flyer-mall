@@ -1,0 +1,26 @@
+.windoww{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    /*background: rgba(01,01,01,0.3);*/
+    top: 0;
+    left: 0;
+    z-index: 999;
+    display: block;
+    /*background-color: hsla(0,0%,100%,.7);*/
+
+}
+
+.popup-windows{
+    position: absolute;
+    left: 40%;
+    top: 15%;
+    z-index: 999;
+    width: 400px;
+    /*height: 600px;*/
+    display: block;
+    background-color: #fff;
+    padding: 0px 20px 20px 20px;
+    border-radius: 10px;
+    /*box-shadow: 2px 2px 1px;*/
+}

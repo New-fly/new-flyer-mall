@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8">
     <title>添加商品</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
-    <!-- 设置全屏功能的css文件 -->
+    <link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.css}">
+    <link th:href="@{/css/adminAddProduct.css}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/release/wangEditor-fullscreen-plugin.css}">
     <!-- 编辑器编辑后，提交时执行js，获得编辑器的内容，赋值给textarea，用于向后台提交存入数据库 -->
     <script type="text/javascript">
@@ -14,127 +17,136 @@
         }
     </script>
 </head>
-<body class="container">
-<br/>
-<h1>添加商品</h1>
-<br/><br/>
-<div class="with:80%">
-    <form class="form-horizontal" th:action="@{/AdminProductController/adminAddProduct}" method="post" enctype="multipart/form-data" onsubmit="modifyContent()">
-        <div class="form-group">
-            <label for="product_inventory" class="col-sm-2 control-label">库存</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="product_inventory"  id="product_inventory" placeholder="库存"/>
+<body>
+<div class="windoww">
+    <div class="popup-windows">
+        <h2 style="text-align: center">添加商品</h2>
+        <form th:action="@{/AdminProductController/adminAddProduct}" method="post"  enctype="multipart/form-data" onsubmit="modifyContent()">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th>库存</th>
+                    <td><input type="text" name="product_inventory" class="form-control" id="keywords" /></td>
+                </tr>
+                <tr>
+                    <th>活动名称</th>
+                    <td>
+                        <input type="text" name="product_activity" class="form-control" id="condition" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>类别</th>
+                    <td>
+                        <select name="product_category">
+                            <option th:each="productCategory : ${productCategories}" th:text="${productCategory.category_name}"></option>
+                        </select>
+                        <!--<input type="text" name="product_category" class="form-control" id="price1" />-->
+                    </td>
+                </tr>
+                <tr>
+                    <th>图片</th>
+                    <td><input type="text" name="product_picture" class="form-control" id="price2" /></td>
+                </tr>
+                <tr>
+                    <th>是否可兑换</th>
+                    <td>
+                        <select name="product_isRedeemable">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                        <!--<input type="text" name="product_isRedeemable" class="form-control" id="info" />-->
+                    </td>
+                </tr>
+                <tr>
+                    <th>是否上架</th>
+                    <td>
+                        <select name="product_isShelf">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                        <!--<input type="text" name="product_isShelf" class="form-control" id="picture" />-->
+                    </td>
+                </tr>
+                <tr>
+                    <th>是否热门</th>
+                    <td>
+                        <select name="product_isTop">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                        <!--<input type="text" name="product_isTop" class="form-control" id="details" />-->
+                    </td>
+                </tr>
+                <tr>
+                    <th>关键字</th>
+                    <td><input type="text" name="product_keywords" class="form-control" id="kind" /></td>
+                </tr>
+                <tr>
+                    <th>商城价</th>
+                    <td><input type="text" name="product_mallPrice"  class="form-control" id="activity"></td>
+                </tr>
+                <tr>
+                    <th>需要积分</th>
+                    <td><input type="text" name="product_needPoints"  class="form-control" id="activity"></td>
+                </tr>
+                <tr>
+                    <th>得到积分</th>
+                    <td><input type="text" name="product_getPoints"  class="form-control" id="activity"></td>
+                </tr>
+                <tr>
+                    <th>服务类型</th>
+                    <td><input type="text" name="product_serviceType"  class="form-control" id="activity"></td>
+                </tr>
+                <tr>
+                    <th>商品规格</th>
+                    <td><input type="text" name="product_specification"  class="form-control" id="activity"></td>
+                </tr>
+                <tr>
+                    <th style="padding-top: 64px;">上传图片</th>
+                    <td>
+                        <input type="file" name="file" />
+                        <input type="file" name="file" />
+                        <input type="file" name="file" />
+                        <input type="file" name="file" />
+                        <input type="file" name="file" />
+                    </td>
+                </tr>
+            </table>
+
+            <div class="form-group">
+                <!-- 编辑器编辑，提交时执行js，获得编辑器的内容，赋值给textarea，用于向后台提交存入数据库 -->
+                <textarea rows="5" cols="35" name="product_details" style="display:none;" id="introduce"></textarea>
+                <div id="editor">
+                    <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+                </div>
+                <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+                <script type="text/javascript" th:src="@{/release/wangEditor.min.js}"></script>
+                <!-- 设置全屏功能的两个js文件，先引入jquery-3.2.1.min.js，在引入wangEditor-fullscreen-plugin.js -->
+                <script type="text/javascript" th:src="@{/release/jquery-3.2.1.min.js}"></script>
+                <script type="text/javascript" th:src="@{/release/wangEditor-fullscreen-plugin.js}"></script>
+                <script type="text/javascript">
+                    var E = window.wangEditor
+                    var editor = new E('#editor')
+                    /* 处理上传图片的controller路径 */
+                    editor.customConfig.uploadImgServer = '/AdminProductController/upload'
+                    /* 定义上传图片的默认名字 */
+                    editor.customConfig.uploadFileName = 'myFileName'
+                    // 或者 var editor = new E( document.getElementById('editor') )
+                    editor.create()
+                    //初始化全屏插件
+                    E.fullscreen.init('#editor');
+                </script>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="product_activity" class="col-sm-2 control-label" >活动名称</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="product_activity" id="product_activity" placeholder="活动名称"/>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" value="Submit" class="btn btn-info" />
+                    &nbsp; &nbsp; &nbsp;
+                    <a th:href="@{/AdminProductController/adminProductList}">
+                        <input type="button" value="取消"  class="btn btn-info" id="cancel" style="background-color: orangered"/>
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="product_category" class="col-sm-2 control-label">类别</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="product_category"  id="product_category" placeholder="类别"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="product_counterPrice" class="col-sm-2 control-label">专柜价</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="product_counterPrice"  id="product_counterPrice" placeholder="专柜价"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="product_isRedeemable" class="col-sm-2 control-label">是否可兑换</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="product_isRedeemable"  id="product_isRedeemable" placeholder="是否可兑换"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="product_isShelf" class="col-sm-2 control-label">是否上架</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="product_isShelf"  id="product_isShelf" placeholder="是否上架"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="product_isTop" class="col-sm-2 control-label">是否热门</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="product_isTop"  id="product_isTop" placeholder="是否热门"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="product_keywords" class="col-sm-2 control-label">关键字</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="product_keywords"  id="product_keywords" placeholder="关键字"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="product_mallPrice" class="col-sm-2 control-label">商城价</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="product_mallPrice"  id="product_mallPrice" placeholder="商城价"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="product_needPoints" class="col-sm-2 control-label">需要积分</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="product_needPoints"  id="product_needPoints" placeholder="需要积分"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="product_getPoints" class="col-sm-2 control-label">得到积分</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="product_getPoints"  id="product_getPoints" placeholder="得到积分"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="product_serviceType" class="col-sm-2 control-label">服务类型</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="product_serviceType"  id="product_serviceType" placeholder="服务类型"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="product_specification" class="col-sm-2 control-label">商品规格</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="product_specification"  id="product_specification" placeholder="商品规格"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="product_isTop" class="col-sm-2 control-label">上传图片</label>
-            <input type="file" name="file" />
-            <input type="file" name="file" />
-        </div>
-        <div class="form-group">
-            <!-- 编辑器编辑，提交时执行js，获得编辑器的内容，赋值给textarea，用于向后台提交存入数据库 -->
-            <textarea rows="5" cols="35" name="product_details" style="display:none;" id="introduce"></textarea>
-            <div id="editor">
-                <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
-            </div>
-            <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
-            <script type="text/javascript" th:src="@{/release/wangEditor.min.js}"></script>
-            <!-- 设置全屏功能的两个js文件，先引入jquery-3.2.1.min.js，在引入wangEditor-fullscreen-plugin.js -->
-            <script type="text/javascript" th:src="@{/release/jquery-3.2.1.min.js}"></script>
-            <script type="text/javascript" th:src="@{/release/wangEditor-fullscreen-plugin.js}"></script>
-            <script type="text/javascript">
-                var E = window.wangEditor
-                var editor = new E('#editor')
-                /* 处理上传图片的controller路径 */
-                editor.customConfig.uploadImgServer = '/AdminProductController/upload'
-                /* 定义上传图片的默认名字 */
-                editor.customConfig.uploadFileName = 'myFileName'
-                // 或者 var editor = new E( document.getElementById('editor') )
-                editor.create()
-                //初始化全屏插件
-                E.fullscreen.init('#editor');
-            </script>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <input type="submit" value="Submit" class="btn btn-info" />
-                &nbsp; &nbsp; &nbsp;
-                <input type="reset" value="Reset" class="btn btn-info" />
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 </body>
 </html>

@@ -38,7 +38,7 @@
             <dl>
                 <dd><a th:href="@{/UserManagementController/toSafety(userId=${session.user.userId})}" target="_self">安全设置</a></dd>
                 <dd><a th:href="@{/UserManagementController/information(userId=${session.user.userId})}" target="_self">个人资料</a></dd>
-                <dd><a th:href="@{/UserAddressController/shippingAddress(user_name=${session.user.user_name})}" target="_self">收货地址</a></dd>
+                <dd><a th:href="@{/UserAddressController/shippingAddress(user_name=${user.user_name})}" target="_self">收货地址</a></dd>
 
             </dl>
 
@@ -48,9 +48,9 @@
         <div class="info" style="border-bottom: 1px solid #5e5e5e">你的基础信息
             <div class="infomain">
                 <ul>
-                    <li><span class="span1">会员名</span><span class="span2">****</span></li>
-                    <li><span class="span1">邮箱</span><span class="span2">******</span><span class="span3"><a th:href="@{UserManagementController/changeEmail(userId=${session.user.userId})}">修改邮箱</a></span></li>
-                    <li><span class="span1">绑定手机</span><span class="span2">*****</span><span class="span3"><a href="changePassword.html">修改手机</a></span></li>
+                    <li><span class="span1">会员名</span><span class="span2" th:text="${user.user_name}"></span></li>
+                    <li><span class="span1">邮箱</span><span class="span2" th:text="${user.user_mail}"></span><span class="span3"><a th:href="@{/UserManagementController/toChangeEmail}">修改邮箱</a></span></li>
+                    <li><span class="span1">绑定手机</span><span class="span2">*****</span><span class="span3"><a href="#">修改手机</a></span></li>
                 </ul>
             </div>
         </div>

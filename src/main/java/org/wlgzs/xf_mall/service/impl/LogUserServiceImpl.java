@@ -48,6 +48,16 @@ public class LogUserServiceImpl implements LogUserService {
     }
 
     @Override
+    public void loginId(HttpServletRequest request,long userId) {
+        HttpSession session = request.getSession(true);
+        User user = logUserRepository.loginId(userId);
+        session.setMaxInactiveInterval(60 * 20);
+        session.setAttribute("name", user.getUser_name());//之后用过滤器实现
+        session.setAttribute("userId", user.getUserId());
+        session.setAttribute("user",user);
+    }
+
+    @Override
     public void cancellation(HttpServletRequest request){
         HttpSession session = request.getSession(true);
         session.invalidate();

@@ -43,4 +43,7 @@ public interface LogUserService {
 
     //根据邮箱查询用户id
     long getUserId(String user_mail);
+
+    //id实现登陆
+    void loginId(HttpServletRequest request,long userId);
 }

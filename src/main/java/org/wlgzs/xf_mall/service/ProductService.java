@@ -1,6 +1,8 @@
 package org.wlgzs.xf_mall.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.wlgzs.xf_mall.entity.Collection;
 import org.wlgzs.xf_mall.entity.Product;
@@ -26,7 +28,8 @@ public interface ProductService {
 
     String[] uploadImg(MultipartFile myFileName, HttpSession session, HttpServletRequest request);
 
-    void edit(Product product);
+    void edit(Product product, String product_details, MultipartFile[] myFileNames, HttpSession session,
+              HttpServletRequest request);
 
     void delete(long productId);
 

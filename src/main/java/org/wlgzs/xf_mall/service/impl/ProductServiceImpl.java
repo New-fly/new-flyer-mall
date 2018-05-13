@@ -67,6 +67,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void saveProduct(String product_details, MultipartFile[] myFileNames, HttpSession session, HttpServletRequest request) {
         String realName = "";
+        System.out.println(myFileNames.length);
         String[] str = new String[myFileNames.length];
         for (int i = 0; i < myFileNames.length; i++) {
             if (!myFileNames[i].getOriginalFilename().equals("")) {
@@ -193,7 +194,51 @@ public class ProductServiceImpl implements ProductService {
 
     //修改商品
     @Override
-    public void edit(Product product) {
+    public void edit(Product product, String product_details, MultipartFile[] myFileNames, HttpSession session,
+                     HttpServletRequest request) {
+        String realName = "";
+        System.out.println(myFileNames.length);
+        String[] str = new String[myFileNames.length];
+        for (int i = 0; i < myFileNames.length; i++) {
+            if (!myFileNames[i].getOriginalFilename().equals("")) {
+                String fileName = myFileNames[i].getOriginalFilename();
+                String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
+
+                // 生成实际存储的真实文件名
+                realName = UUID.randomUUID().toString() + fileNameExtension;
+
+                // "/upload"是你自己定义的上传目录
+                String realPath = session.getServletContext().getRealPath("/upload");
+                File uploadFile = new File(realPath, realName);
+                System.out.println(uploadFile);
+                try {
+                    myFileNames[i].transferTo(uploadFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (!myFileNames[i].getOriginalFilename().equals("")) {
+                str[i] = request.getContextPath() + "/upload/" + realName;
+            }
+        }
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < str.length; i++) {
+            if (!myFileNames[i].getOriginalFilename().equals("")) {
+                stringBuffer.append(str[i] + ",");
+            }
+        }
+        String product_picture = stringBuffer.substring(0, stringBuffer.length() - 1);
+
+        Map<String, String[]> properties = request.getParameterMap();
+        try {
+            BeanUtils.populate(product, properties);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        product.setProduct_details(product_details);
+        product.setProduct_picture(product_picture);
         productRepository.save(product);
     }
 
@@ -244,6 +289,7 @@ public class ProductServiceImpl implements ProductService {
     //增加一级分类
     @Override
     public void saveOne(ProductCategory productCategory) {
+        productCategory.setParent_name("0");
         productCategoryRepository.save(productCategory);
     }
 

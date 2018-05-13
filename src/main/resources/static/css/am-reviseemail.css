@@ -1,0 +1,52 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+}
+body{
+    background:#F8DA56;
+}
+.container{
+    width: 350px;
+    margin: 200px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+
+}
+.pp{
+    text-align: center;
+    font-size: 30px;
+    letter-spacing: 10px;
+    margin-bottom: 10px;
+    color: #2EAD62;
+    font-family: "楷体";
+}
+.ipt{
+    /*margin: 12px;*/
+    padding: 10px;
+    width: 250px;
+    outline: none;
+    border-radius: 10px;
+    border-color: #00CCFF;
+}
+.ipt1{
+    background-color: green;
+    border: 0;
+    color: #fff;
+    letter-spacing: 20px;
+    text-align: center;
+    font-size: 16px;
+    width: 270px;
+    opacity: 0.7;
+}
+.ipt1:hover{
+    cursor: pointer;
+    opacity: 1;
+}
+font{
+    font-size: 12px;
+    color: red;
+    height: 20px;
+    display: block;
+}

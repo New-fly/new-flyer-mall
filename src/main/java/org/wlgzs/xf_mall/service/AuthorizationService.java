@@ -11,4 +11,6 @@ public interface AuthorizationService {
 
     void save(Authorization authorization);
 
+    //查询id是否已绑定
+    Authorization isBinding(long githubId);
 }

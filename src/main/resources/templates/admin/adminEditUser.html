@@ -1,50 +1,51 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>修改用户</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <meta charset="UTF-8">
+    <title>用户修改</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/userModify.css}" type="text/css">
+    <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <script type="text/javascript" th:src="@{/js/adminUserList.js}"></script>
 </head>
-<body class="container">
-<br/>
-<h1>修改用户</h1>
-<br/><br/>
-<div class="with:80%">
-    <form class="form-horizontal" th:action="@{/AdminUserController/adminEditUser}" th:object="${user}"  method="post">
-        <input type="hidden" name="userId" th:value="*{userId}" />
-        <div class="form-group">
-            <label for="user_name" class="col-sm-2 control-label">userName</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="user_name"  id="user_name" th:value="*{user_name}" placeholder="userName"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="user_password" class="col-sm-2 control-label" >Password</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" name="user_password" id="user_password"  th:value="*{user_password}" placeholder="Password"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="user_phone" class="col-sm-2 control-label">phone</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="user_phone"  id="user_phone" th:value="*{user_phone}" placeholder="phone"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="user_mail" class="col-sm-2 control-label">mail</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="user_mail"  id="user_mail" th:value="*{user_mail}" placeholder="mail"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <input type="submit" value="Submit" class="btn btn-info" />
-                &nbsp; &nbsp; &nbsp;
-                <a th:href="@{/AdminUserController/adminUserList}" class="btn btn-info">Back</a>
-            </div>
-
-        </div>
-    </form>
-</div>
+<body>
+<div class="windoww">
+    <div class="popup-windows">
+        <h2 style="text-align: center">新增数据</h2>
+        <form th:action="@{/AdminUserController/adminEditUser(userId=${user.userId})}" method="post" th:object="${user}" >
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th>用户名</th>
+                    <td><input type="text" name="user_name" class="form-control" th:value="*{user_name}" id="username" /></td>
+                </tr>
+                <tr>
+                    <th>角色</th>
+                    <td><input type="text" name="user_role" class="form-control" th:value="*{user_role}" id="userrole" /></td>
+                </tr>
+                <tr>
+                    <th>电话</th>
+                    <td><input type="text" name="user_phone" class="form-control"  th:value="*{user_phone}" id="userphone" /></td>
+                </tr>
+                <tr>
+                    <th>密码</th>
+                    <td><input type="text" name="user_password" class="form-control" th:value="*{user_password}" id="pwd" /></td>
+                </tr>
+                <tr>
+                    <th>邮箱</th>
+                    <td><input type="text" name="user_mail" class="form-control" th:value="*{user_mail}" id="email" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="修改"  class="btn btn-info" id="change"/>
+                        <a type="button" th:href="@{/AdminUserController/adminUserList}"  class="btn btn-info" id="cancel" style="background-color: orangered">取消</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    </div>
 </body>
 </html>
+
