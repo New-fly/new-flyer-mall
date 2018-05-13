@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.css}">
+    <link th:href="@{/css/adminUserList.css}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <script th:src="@{/js/adminUserList.js}"></script>
+</head>
+<body>
+<table class="table table-bordered able-box" id="mytable">
+    <thead style="background-color: #F2F2F2;">
+    <tr>
+        <th>ID</th>
+        <th>用户头像</th>
+        <th>用户名</th>
+        <th>角色</th>
+        <th>电话</th>
+        <th>密码</th>
+        <th>邮箱</th>
+        <th>操作</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.userId}">John</td>
+        <td th:text="${user.user_avatar}">Doe</td>
+        <td>john@example.com</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="ttdd">
+            <!--<button type="button" class="btn btn-primary" style="background-color: #fff;color: #000;">添加</button>-->
+            <a class="aa1">删除</a>
+            <button type="button" class="btn btn-primary modifi" style="background-color:#007BFF" >修改</button>
+        </td>
+    </tr>
+    <tr>
+        <td>Mary</td>
+        <td>Moe</td>
+        <td>mary@example.com</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            <a class="aa1">删除</a>
+            <button type="button" class="btn btn-primary  modifi" style="background-color: #007BFF">修改</button>
+        </td>
+    </tr>
+    <tr>
+        <td>July</td>
+        <td>Dooley</td>
+        <td>july@example.com</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+
+            <a class="aa1">删除</a>
+           <button type="button" class="btn btn-primary modifi" style="background-color: #007BFF" >修改</button>
+        </td>
+
+    </tr>
+    <tr>
+        <td>July</td>
+        <td>Dooley</td>
+        <td>july@example.com</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            <a class="aa1">删除</a>
+            <button type="button" class="btn btn-primary modifi" style="background-color: #007BFF" onclick="modify()">修改</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!--遮屏弹窗  修改内容-->
+<div class="windoww">
+    <div class="popup-windows">
+
+        <h2 style="text-align: center">新增数据</h2>
+        <form>
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th>ID</th>
+                    <td><input type="text" name="" class="form-control" id="num aa" placeholder=""/></td>
+                </tr>
+                <tr>
+                    <th>用户头像</th>
+                    <td><input type="text" name="" class="form-control" id="userphoto" /></td>
+                </tr>
+                <tr>
+                    <th>用户名</th>
+                    <td><input type="text" name="" class="form-control" id="username" /></td>
+                </tr>
+                <tr>
+                    <th>角色</th>
+                    <td><input type="text" name="" class="form-control" id="userrole" /></td>
+                </tr>
+                <tr>
+                    <th>电话</th>
+                    <td><input type="text" name="" class="form-control" id="userphone" /></td>
+                </tr>
+                <tr>
+                    <th>密码</th>
+                    <td><input type="text" name="" class="form-control" id="pwd" /></td>
+                </tr>
+                <tr>
+                    <th>邮箱</th>
+                    <td><input type="text" name="" class="form-control" id="email" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="reset" value="重置" class="btn btn-primary" id="reset" />
+                        <input type="button" value="添加"  class="btn btn-success" id="add"  />
+                        <input type="button" value="修改"  class="btn btn-info" id="change" onclick="update()"/>
+                        <input type="button" value="取消"  class="btn btn-info" id="cancel" style="background-color: orangered"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<button type="button" class="btn btn-primary add" style="background-color: green;color: #fff;float: right;">添加</button>
+</body>
+</html>

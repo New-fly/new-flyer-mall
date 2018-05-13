@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>活动列表</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+</head>
+<style>
+    .col-sm-2 {
+        width: 100%;
+    }
+</style>
+<body class="container">
+<br/>
+<h1>活动列表</h1>
+<br/><br/>
+<div class="with:80%">
+    <div class="col-sm-2 control-label">
+        <a class="btn btn-info">用户管理</a>
+        <a th:href="@{/AdminProductController/adminProductList}" class="btn btn-info">商品管理</a>
+        <a th:href="@{/AdminProductController/productCategoryList}" class="btn btn-info">分类管理</a>
+        <a th:href="@{/OrderController/allProductOrdersLists}" class="btn btn-info">订单管理</a>
+        <a th:href="@{/SearchShieldController/toProductSensitive}" class="btn btn-info">敏感词汇管理</a>
+        <a th:href="@{/AdminActivityController/activityProducts}" class="btn btn-info">活动管理</a>
+    </div>
+    <br/><br/>
+    <form th:action="@{/AdminActivityController/adminFindActivityProduct}" method="post">
+        <div>
+            <input type="text" id="activity_name" name="activity_name" th:value="*{activity_name}"
+                   placeholder="关键字">
+            <input type="submit" value="搜索" class="btn btn-info"/>
+        </div>
+    </form>
+    <h2>活动商品</h2>
+    <div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>活动折扣</th>
+                <th>活动名称</th>
+                <th>专柜价</th>
+                <th>商城价</th>
+                <th>关键字</th>
+                <th>图片</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="activitie : ${activities}">
+                <th scope="row" th:text="${activitie.activityId}"></th>
+                <td th:text="${activitie.activity_discount}"></td>
+                <td th:text="${activitie.activity_name}"></td>
+                <td th:text="${activitie.product_counterPrice}"></td>
+                <td th:text="${activitie.product_mallPrice}"></td>
+                <td th:text="${activitie.product_keywords}"></td>
+                <td th:text="${activitie.product_picture}"></td>
+                <td><a th:href="@{/AdminActivityController/toAdminEditActivity(activityId=${activitie.activityId})}">edit</a></td>
+                <td><a th:href="@{/AdminActivityController/adminDeleteActivity(activityId=${activitie.activityId})}">delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>活动</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.css}">
+    <link th:href="@{/css/adminActivityList.css}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <script th:src="@{/js/adminActivityList.js}"></script>
+</head>
+<body>
+<div class="mytable">
+    <table class="table table-bordered able-box" id="mytable">
+        <thead style="background-color: #F2F2F2;">
+        <tr>
+            <th>商品名称</th>
+            <th>商品简介</th>
+            <th>相关图片</th>
+            <th>活动名称</th>
+            <th>活动折扣</th>
+            <th>商品价格</th>
+            <th>商品......</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="activitie : ${activities}">
+                <td th:text="${activitie.productId}"></td>
+                <td th:text="${activitie.product_keywords}"></td>
+                <td><img th:src="${activitie.product_picture}"  style="width: 50px;"></td>
+                <td th:text="${activitie.activity_name}">Doe</td>
+                <td th:text="${activitie.activity_discount}"></td>
+                <td th:text="${activitie.product_mallPrice}"></td>
+                <td th:text="${activitie.activityId}"></td>
+                <td>
+                    <button class="btn btn-success">
+                        <a class="a2" th:href="@{/AdminActivityController/adminDeleteActivity(activityId=${activitie.activityId})}">删除</a>
+                    </button>
+                    <button type="button" class="btn btn-primary modifi" style="background-color:#007BFF">
+                        <a th:href="@{/AdminActivityController/toAdminEditActivity(activityId=${activitie.activityId})}" style="color: white">修改</a>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="fenye" th:if="${TotalPages>0}">
+    <ul class="pagination" th:if="${Number==1}and${TotalPages>1}">
+        <!--//如果当前页等于1，总页数大于1（不显示上一页）   Number&ndash;&gt;当前页-->
+        <li><a th:href="@{/AdminActivityController/activityProducts(page=1)}">首页</a></li>
+        <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
+            <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
+            <a th:if="${i >Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);" th:text="${i}">#</a>
+            <!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
+            <a th:if="${i >Number-3} and ${i < Number+3} and ${i != Number}"
+               th:href="@{/OrderController/allProductOrdersLists(page=${i})}" th:text="${i}"
+               style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
+        </li>
+        <li><a th:href="@{/AdminActivityController/activityProducts(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
+    </ul>
+    <ul class="pagination" th:if="${Number > 1} and ${Number > 1}"><!--//显示上一页-->
+        <li><a th:href="@{/AdminActivityController/activityProducts(page=1)}">首页</a></li><!--//跳转至第一页-->
+        <li><a th:href="@{/AdminActivityController/activityProducts(page=${Number-1})}">上一页</a></li><!--//请求页数-1-->
+        <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
+            <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
+            <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);" th:text="${i}">#</a>
+            <!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
+            <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
+               th:href="@{/OrderController/allProductOrdersLists(page=${i})}" th:text="${i}"
+               style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
+        </li>
+        <li th:if="${Number != activities}"><a
+                th:href="@{/AdminActivityController/activityProducts(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
+        <li><a th:href="@{/AdminActivityController/activityProducts(page=${Number})}">尾页</a></li><!--//跳转至第Number页-->
+    </ul>
+</div>
+</body>
+</html>

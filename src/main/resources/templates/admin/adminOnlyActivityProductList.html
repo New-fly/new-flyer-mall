@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>活动列表</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+</head>
+<style>
+    .col-sm-2 {
+        width: 100%;
+    }
+</style>
+<body class="container">
+<br/>
+<h1>活动列表</h1>
+<br/><br/>
+<div class="with:80%">
+    <div class="col-sm-2 control-label">
+        <a class="btn btn-info">用户管理</a>
+        <a th:href="@{/AdminProductController/adminProductList}" class="btn btn-info">商品管理</a>
+        <a th:href="@{/AdminProductController/productCategoryList}" class="btn btn-info">分类管理</a>
+        <a th:href="@{/OrderController/allProductOrdersLists}" class="btn btn-info">订单管理</a>
+        <a th:href="@{/SearchShieldController/toProductSensitive}" class="btn btn-info">敏感词汇管理</a>
+        <a th:href="@{/AdminActivityController/activityProducts}" class="btn btn-info">活动管理</a>
+    </div>
+    <br/><br/>
+    <form th:action="@{/AdminActivityController/adminFindProduct}" method="post">
+        <div>
+            <input type="text" id="product_keywords" name="product_keywords" th:value="*{product_keywords}"
+                   placeholder="关键字">
+            <input type="submit" value="搜索" class="btn btn-info"/>
+        </div>
+    </form>
+    <h2>全部商品</h2>
+    <div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>库存</th>
+                <th>活动名称</th>
+                <th>类别</th>
+                <th>商城价</th>
+                <th>是否上架</th>
+                <th>关键字</th>
+                <th>图片</th>
+                <th>商品规格</th>
+                <th>添加为活动</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <th scope="row" th:text="${product.productId}"></th>
+                <td th:text="${product.product_inventory}"></td>
+                <td th:text="${product.product_activity}"></td>
+                <td th:text="${product.product_category}"></td>
+                <td th:text="${product.product_mallPrice}"></td>
+                <td th:text="${product.product_isShelf}"></td>
+                <td th:text="${product.product_keywords}"></td>
+                <td th:text="${product.product_picture}"></td>
+                <td th:text="${product.product_specification}"></td>
+                <td><a th:href="@{/AdminActivityController/toAdminAddActivity(productId=${product.productId})}">添加为活动</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

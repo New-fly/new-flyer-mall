@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>Document</title>
+	<link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.css}">
+    <link th:href="@{/css/adminEdiOrders.css}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <script th:src="@{/js/adminEdiOrders.js}"></script>
+</head>
+<body>
+	<!--遮屏弹窗  修改内容-->
+<div class="windoww">
+    <div class="popup-windows">
+        <h2 style="text-align: center">新增数据</h2>
+        <form th:object="${order}" th:action="@{/OrderController/changeProductOrder(orderId=*{orderId})}" method="post">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th>address_name</th>
+                    <td><input type="text" name="address_name" th:value="*{address_name}" class="form-control" id="Name" /></td>
+                </tr>
+                <tr>
+                    <th>address_phone</th>
+                    <td><input type="text" name="address_phone" th:value="*{address_phone}" class="form-control" id="Mumber" /></td>
+                </tr>
+                <tr>
+                    <th>address_shipping</th>
+                    <td><input type="text" name="address_shipping" th:value="*{address_shipping}" class="form-control" id="Picture" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="reset" value="重置" class="btn btn-primary" id="reset" />
+                        <input type="submit" value="修改"  class="btn btn-info" id="change"/>
+                        <input type="button" value="取消"  class="btn btn-info" id="cancel" style="background-color: orangered"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

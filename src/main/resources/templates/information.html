@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>账号管理-个人资料</title>
+    <link th:href="@{/css/am.css}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+</head>
+<body>
+<div class="top">
+    <div class="top-left">
+        <ul>
+            <li><a href="#"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
+            <li><a th:href="@{/toLogin}"><i class="fa fa-paw"></i>&nbsp;&nbsp;登录</a></li>
+            <li><a th:href="@{/toRegistered}"><span class="red">立即注册</span></a></li>
+        </ul>
+    </div>
+    <div class="top-right">
+        <ul>
+            <li><a th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}"><i class="fa fa-paw" style="color: #336699"></i>&nbsp;&nbsp;购物车</a></li>
+            <li><a th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}"><i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a></li>
+            <li><a href="#">我的淘宝</a></li>
+            <li><a href="#">111111</a></li>
+            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;管理系统</a></li>
+        </ul>
+    </div>
+</div>
+<div class="nav">
+    <div class="navheader">账号管理</div>
+</div>
+<div class="container">
+    <div class="aside">
+        <a href="#"><img th:src="${user.user_avatar}" class="headphoto"></a>
+        <div>
+            <dl>
+            <dl>
+                <dd><a th:href="@{/UserManagementController/toSafety(userId=${session.user.userId})}" target="_self">安全设置</a></dd>
+                <dd><a th:href="@{/UserManagementController/information(userId=${session.user.userId})}" target="_self">个人资料</a></dd>
+                <dd><a th:href="@{/UserAddressController/shippingAddress(user_name=${session.user.user_name})}" target="_self">收货地址</a></dd>
+
+            </dl>
+
+        </div>
+    </div>
+    <div class="content">
+        <div class="info">个人基本资料</div>
+        <div class="infomain">
+            <p th:value="${session.user.user_name}"></p>
+            <div class="headphotoshow"><span>当前头像:</span><a th:href="@{/UserManagementController/toModifyAvatar(userId=${session.user.userId})}" target="_blank"><img th:src="${user.user_avatar}" class="headphoto show"></a></div>
+            <form th:action="@{/UserManagementController/changeInformation}">
+                <input type="hidden" name="userId" th:value="${user.userId}">
+            <div><label>用户名：</label><input type="text" name="user_name" class="ipt" th:value="${user.user_name}" style="width: 250px;">
+                <p style="color: #999999;margin-left: 54px">用户名填写须知：与淘宝业务或卖家品牌冲突的用户名，淘宝将有可能会收回</p></div>
+            <div class="item1"><button class="btn">保存</button></div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+</div>
+</body>
+</html>

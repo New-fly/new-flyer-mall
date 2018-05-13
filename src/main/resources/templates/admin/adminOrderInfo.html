@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>订单详情</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+</head>
+<body class="container">
+<br/>
+<h1>订单详情</h1>
+<br/><br/>
+<div class="with:80%">
+    <form class="form-horizontal" th:object="${order}"  method="post">
+        <!--获取用户id-->
+        <input type="hidden" name="orderId" th:value="*{orderId}" />
+        <div class="form-group">
+            <label for="address_name" class="col-sm-2 control-label">收货人姓名</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="address_name"  id="address_name" th:value="*{address_name}" placeholder="addressName"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="order_number" class="col-sm-2 control-label" >订单号</label>
+            <div class="col-sm-10">
+                <input type="type" class="form-control" name="order_number" id="order_number"  th:value="*{order_number}" placeholder="orderNumber"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="product_picture" class="col-sm-2 control-label">商品图片</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="product_picture"  id="product_picture" th:value="*{product_picture}" placeholder="productPicture"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="product_keywords" class="col-sm-2 control-label">商品关键字</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="product_keywords"  id="product_keywords" th:value="*{product_keywords}" placeholder="productKeywords"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="address_phone" class="col-sm-2 control-label">收货人电话</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="address_phone"  id="address_phone" th:value="*{address_phone}" placeholder="address_phone"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="address_shipping" class="col-sm-2 control-label">收货地址</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="address_shipping"  id="address_shipping" th:value="*{address_shipping}" placeholder="address_shipping"/>
+            </div>
+        </div>
+
+        <div class="form-group" style="display: none">
+            <label for="productId" class="col-sm-2 control-label">商品id</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="productId"  id="productId" th:value="*{productId}" placeholder="productId"/>
+            </div>
+        </div>
+
+        <div class="form-group" style="display: none">
+            <label for="userId" class="col-sm-2 control-label">用户id</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="userId"  id="userId" th:value="*{userId}" placeholder="userId"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="product_PaidPrice" class="col-sm-2 control-label">实付金额</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="product_PaidPrice"  id="product_PaidPrice" th:value="*{product_PaidPrice}" placeholder="product_PaidPrice"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="product_mallPrice" class="col-sm-2 control-label">商城价格</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="product_mallPrice"  id="product_mallPrice" th:value="*{product_mallPrice}" placeholder="product_mallPrice"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="product_specification" class="col-sm-2 control-label">商品规格信息</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="product_specification"  id="product_specification" th:value="*{product_specification}" placeholder="product_specification"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="order_freight" class="col-sm-2 control-label">运费</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="order_freight"  id="order_freight" th:value="*{order_freight}" placeholder="order_freight"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="order_discount" class="col-sm-2 control-label">折扣</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="order_discount"  id="order_discount" th:value="*{order_discount}" placeholder="order_discount"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="product_isRedeemable" class="col-sm-2 control-label">是否可用积分兑换</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="product_isRedeemable"  id="product_isRedeemable" th:value="*{product_isRedeemable}" placeholder="product_isRedeemable"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="product_needPoints" class="col-sm-2 control-label">兑换所需积分</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="product_needPoints"  id="product_needPoints" th:value="*{product_needPoints}" placeholder="product_needPoints"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="order_expressNumber" class="col-sm-2 control-label">订单快递号</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="order_expressNumber"  id="order_expressNumber" th:value="*{order_expressNumber}" placeholder="order_expressNumber"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="order_status" class="col-sm-2 control-label">订单状态</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="order_status"  id="order_status" th:value="*{order_status}" placeholder="order_status"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="order_deliveryAddress" class="col-sm-2 control-label">发货地址</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="order_deliveryAddress"  id="order_deliveryAddress" th:value="*{order_deliveryAddress}" placeholder="order_deliveryAddress"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="order_purchaseTime" class="col-sm-2 control-label">下单时间</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="order_purchaseTime"  id="order_purchaseTime" th:value="*{order_purchaseTime}" placeholder="order_purchaseTime"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="order_deliveryTime" class="col-sm-2 control-label">发货时间</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="order_deliveryTime"  id="order_deliveryTime" th:value="*{order_deliveryTime}" placeholder="order_deliveryTime"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="order_dealTime" class="col-sm-2 control-label">成交时间</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="order_dealTime"  id="order_dealTime" th:value="*{order_dealTime}" placeholder="order_dealTime"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="order_methodOfPurchase" class="col-sm-2 control-label">购买方式</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="order_methodOfPurchase"  id="order_methodOfPurchase" th:value="*{order_methodOfPurchase}" placeholder="order_methodOfPurchase"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="order_quantity" class="col-sm-2 control-label">购买数量</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="order_quantity"  id="order_quantity" th:value="*{order_quantity}" placeholder="order_quantity"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="user_name" class="col-sm-2 control-label">用户名</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="user_name"  id="user_name" th:value="*{user_name}" placeholder="user_name"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                &nbsp; &nbsp; &nbsp;
+                <a th:href="@{/OrderController/allOrders}" class="btn btn-info">Back</a>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

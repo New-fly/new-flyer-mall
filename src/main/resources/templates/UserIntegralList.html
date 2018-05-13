@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<link rel="Shortcut Icon" th:href="@{/images/logo.icon}">
+	<link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+	<title>积分明细</title>
+	<script th:src="@{/js/jquery.js}"></script>
+	<link th:href="@{/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+	<script th:src="@{/bootstrap/dist/js/bootstrap.min.js}"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/UserIntegralList.css}">
+	<script type="text/javascript" th:src="@{/js/UserIntegralList.js}"></script>
+</head>
+<body>
+	<div class="top">
+		<div class="top-left">
+			<ul>
+				<li><a href="#"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
+				<li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;登录</a></li>
+				<li><a href="#"><span class="red">立即注册</span></a></li>
+			</ul>
+		</div>
+		<div class="top-right">
+			<ul>
+				<li><a href="#"><i class="fa fa-paw" style="color: #336699"></i>&nbsp;&nbsp;购物车</a></li>
+				<li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a></li>
+				<li><a href="#">我的淘宝</a></li>
+				<li><a href="#">111111</a></li>
+				<li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;管理系统</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="title">
+		<img th:src="@{/images/logo.png}"  height="100%" style="float: left;"/>
+	</div>
+	<hr style="color: gray;"/>
+	<div class="nav">
+		<ul id="myTab" class="nav nav-tabs">
+			<li class="active"><a href="#home" data-toggle="tab">积分明细</a></li>
+            <li><a href="#jmeter" data-toggle="tab">积分收入</a></li>
+            <li><a href="#ejb" data-toggle="tab">积分支出</a></li>
+		</ul>
+		<div id="myTabContent" class="tab-content">
+			<!--第一块内容-->
+			<div class="tab-pane fade in active" id="home">
+				<div class="minute">
+					<div style="width: 325px;">来源/用途</div>
+					<div style="width: 225px;">积分变动</div>
+					<div style="width: 325px;">日期</div>
+					<div style="border: 0;width: 225px;">备注</div>
+				</div>
+				<div class="list" th:each="integral : ${integralLists}">
+					<div class="present">
+						<img th:src="${integral.product_picture}"/>
+						<span th:text="${integral.product_keyword}">商品介绍</span><br/>
+					</div>
+					<div class="divide" th:text="${integral.userIntegral_vary}" th:style="${integral.userIntegral_vary}>0?'':'color:red'">+10</div>
+					<div class="time" th:text="${integral.order_purchaseTime}">2018/10/1/12；62；66</div>
+					<div class="remarks" th:text="${integral.userIntegral_vary}>0?'购物奖励':'兑换商品'"></div>
+				</div>
+			</div>
+			<!--第三块内容-->
+			<div class="tab-pane fade" id="jmeter">
+				<div class="minute">
+					<div style="width: 325px;">来源/用途</div>
+					<div style="width: 225px;">积分变动</div>
+					<div style="width: 325px;">日期</div>
+					<div style="border: 0;width: 225px;">备注</div>
+				</div>
+                <div class="list"  th:each="integral : ${integralLists}" th:style="${integral.userIntegral_vary}>0?'':'display: none'">
+                    <div class="present">
+                        <img th:src="${integral.product_picture}"/>
+                        <span th:text="${integral.product_keyword}">商品介绍</span>
+                    </div>
+                    <div class="divide" th:text="${integral.userIntegral_vary}" th:style="${integral.userIntegral_vary}>0?'':'color:red'">+10</div>
+                    <div class="time" th:text="${integral.order_purchaseTime}">2018/10/1/12；62；66</div>
+                    <div class="remarks" th:text="${integral.userIntegral_vary}>0?'购物奖励':'兑换商品'"></div>
+                </div>
+			</div>
+			<!--第四块-->
+			<div class="tab-pane fade" id="ejb">
+				<div class="minute">
+					<div style="width: 325px;">来源/用途</div>
+					<div style="width: 225px;">积分变动</div>
+					<div style="width: 325px;">日期</div>
+					<div style="border: 0;width: 225px;">备注</div>
+				</div>
+                <div class="list"  th:each="integral : ${integralLists}"  th:style="${integral.userIntegral_vary}<0?'':'display: none'">
+                    <div class="present">
+                        <img th:src="${integral.product_picture}"/>
+                        <span th:text="${integral.product_keyword}">商品介绍</span>
+                    </div>
+                    <div class="divide" th:text="${integral.userIntegral_vary}" th:style="${integral.userIntegral_vary}>0?'':'color:red'">+10</div>
+                    <div class="time" th:text="${integral.order_purchaseTime}">2018/10/1/12；62；66</div>
+                    <div class="remarks" th:text="${integral.userIntegral_vary}>0?'购物奖励':'兑换商品'"></div>
+                </div>
+			</div>
+		</div>
+	</div>
+	<div class="img">
+		<div>
+			<img th:src="@{/images/you.png}"/>
+			品质保障<br />
+			<span style="color: gray;font-size: 14px;">品质护航&nbsp;&nbsp;购物无忧</span>
+		</div>
+		<div>
+			<img th:src="@{/images/te.png}"/>
+			特色服务体验<br />
+			<span style="color: gray;font-size: 14px;">为您呈现不一样的服务</span>
+		</div>
+		<div>
+			<img th:src="@{/images/bang.png}"/>
+			帮助中心<br />
+			<span style="color: gray;font-size: 14px;">您的购物指南</span>
+		</div>
+		<div>
+			<img th:src="@{/images/qi.png}"/>
+			七天无理由退换货<br />
+			<span style="color: gray;font-size: 14px;">为您提供售后无忧保障</span>
+		</div>
+	</div>
+	<hr />
+	<div class="gray_all">
+		<div class="gray_text1">
+			<div class="color">购物指南</div>
+    		免费注册<br/>
+    		开通支付宝<br/>
+    		支付宝充值
+		</div>
+		<div class="gray_text1">
+			<div class="color">天猫保障</div>
+    		发票保障<br />
+    		售后规则<br />
+    		缺货赔付
+		</div>
+		<div class="gray_text1">
+			<div class="color">支付方式</div>
+		    快捷支付<br/>
+		    信用卡<br/>
+		    余额宝<br/>
+		    蚂蚁花呗<br />
+		    货到付款
+		</div>
+		<div class="gray_text1">
+			<div class="color">商家服务</div>
+		    新飞规则<br/>
+		    商家入驻<br/>
+		    商家中心<br/>
+		    物流服务<br />
+		    运营服务
+		</div>
+		<div style="padding-top: 50px;"><img th:src="@{/images/qr-code.png}"/></div>
+	</div>
+	<div class="foots">
+		<div class="foots_all">
+			<div class="logo" style="position: absolute;top: 25px;left: 25px;">
+				<a href="#"><img th:src="@{/images/logo-foot.png}" width="110px" height="50px" /></a>
+			</div>
+			<div class="foots_text1">
+				服务邮箱：xf800@xinfei.com
+				全国客服中心电话：400-609-8888<br />
+				有任何购物问题请联系我们在线客服 |  工作时间：周一至周日 8:00－23:00
+				Copyright 2017-2020新飞电器 版权所有 豫ICP备 05017920号
+			</div>
+			<div class="foots_text2">友情链接</div>
+			<div class="foots_text3">
+				<a href="#">交通查询 </a> |
+                <a href="#">租租车 </a> |
+                <a href="#">美术教育 </a> |
+                <a href="#">中国交通网 </a> |
+                <a href="#">长途汽车票 </a> |
+                <a href="#">旅游网 </a> |
+                <a href="#">首都航空 </a> |
+                <a href="#">在线教育 </a> |
+                <a href="#">金运之旅 </a> |
+                <a href="#">豌豆荚 </a> |
+                <a href="#">安卓市场 </a> |
+                <a href="#">凤凰网旅游 </a> |
+                <a href="#">凯撒旅游 </a> |
+                <a href="#">神州租车 </a> |
+                <a href="#">国际租车 </a> |
+                <a href="#">携程攻略 </a> |
+                <a href="#">社区蜂鸟网 </a> |
+                <a href="#">天巡国际 </a> |
+                <a href="#">机票 </a> |
+                <a href="#">游谱旅行网 </a> |
+                <a href="#">中国签证 </a> |
+               	<a href="#">资讯网 </a> |
+                <a href="#">梦之旅 </a> |
+                <a href="#">交通查询 </a> |
+                <a href="#">租租车 </a> |
+                <a href="#">美术教育 </a> |
+                <a href="#">中国交通网 </a> |
+                <a href="#">长途汽车票 </a> |
+                <a href="#">旅游网 </a> |
+                <a href="#">首都航空 </a> |
+                <a href="#">在线教育 </a> |
+                <a href="#">金运之旅 </a> |
+                <a href="#">豌豆荚 </a> |
+                <a href="#">安卓市场 </a> |
+                <a href="#">凤凰网旅游 </a> |
+                <a href="#">凯撒旅游 </a> |
+                <a href="#">神州租车 </a> |
+                <a href="#">国际租车 </a> |
+                <a href="#">携程攻略 </a> |
+           	    <a href="#">社区蜂鸟网 </a> |
+                <a href="#">天巡国际 </a> |
+                <a href="#">机票 </a> |
+                <a href="#">游谱旅行网 </a> |
+                <a href="#">中国签证 </a> |
+                <a href="#">资讯网 </a> |
+                <a href="#">梦之旅 </a> |
+			</div>
+		</div>
+	</div>
+</body>
+</html>

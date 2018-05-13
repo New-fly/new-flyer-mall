@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>我的足迹</title>
+	<link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/footprint.css}">
+	<script type="text/javascript" th:src="@{/js/footprint.js}"></script>
+</head>
+<body>
+	<div class="top">
+		<div class="top-left">
+			<ul>
+				<li><a href="#"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
+				<li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;登录</a></li>
+				<li><a href="#"><span class="red">立即注册</span></a></li>
+			</ul>
+		</div>
+		<div class="top-right">
+			<ul>
+				<li><a href="#"><i class="fa fa-paw" style="color: #336699"></i>&nbsp;&nbsp;购物车</a></li>
+				<li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a></li>
+				<li><a href="#">我的淘宝</a></li>
+				<li><a href="#">111111</a></li>
+				<li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;管理系统</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="title">
+		<div class="title-center">
+			<img th:src="@{/images/logo-foot.png}" />
+			<span>我的足迹</span>
+			<div class="title-right">
+				<div id="small">
+					<input onfocus="fun4()" onblur="fun2()"/>
+				</div>
+				<i class="fa fa-search" onmousemove="fun1()" onmouseout="fun3()"></i>
+			</div>
+		</div>
+	</div>
+	<div class="deleat">
+		<div class="deleat-center">
+			<span><a href="#">批量删除</a></span>
+		</div>
+	</div>
+	<div class="list">
+		<div class="single" th:each="foot : ${footprints}">
+			<img th:src="${foot.product_picture}"/>
+			<div style="padding: 0 5px;">
+				<span class="mallPrice" th:text="${foot.product_mallPrice}"></span><br />
+				<span class="counterPrice" th:text="${foot.footprint_time}"></span>
+			</div>
+			<div th:text="${foot.footprintId}" class="footprintId"></div>
+			<div class="keywords" th:text="${foot.product_keywords}">发了啥地方可否考虑的是否分是的范德萨开发难度，收款方反倒是</div>
+			<div class="similar">找相似</div>
+			<div class="deleat-one">
+                <i class="fa fa-trash fa-2x"></i>
+            </div>
+		</div>
+	</div>
+	<footer>
+    	<ul>
+	        <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|
+			<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+	        <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|
+			<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+	        <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|
+			<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+	        <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|
+			<li class="listyle"><a href="#">新闻中心</a></li><br><li class="listyle"><a href="#">招贤纳士</a></li>|
+	        <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|
+			<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+	        <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|
+			<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+	        <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|
+			<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+	        <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|
+			<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+	        <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|
+			<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"> <a href="#">招贤纳士</a></li>|
+	        <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|
+			<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|<br>
+	         <p style="display: inline;color: #6C6C6C">网络文化经营许可证：<a>文网文[2010]40号</a></p>&nbsp&nbsp<p style="display: inline;color: #6C6C6C">
+			信息网络传播视听节目许可证：1109364号</p>
+    	</ul>
+	</footer>
+</body>
+</html>

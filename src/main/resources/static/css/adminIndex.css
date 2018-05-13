@@ -1,0 +1,97 @@
+body,html{
+	width: 100%;
+	height: 100%;
+	min-width:1000px;
+	overflow: hidden;
+	background-color: #F9F9FA;
+}
+.exit{
+	width: 80px;
+	height: 53px;
+	float: right;
+	line-height: 55px;
+	text-align: center;
+	border-bottom: solid 3px #F8F8F8;
+}
+.user{
+	width: 100px;
+	height: 53px;
+	float: right;
+	border-bottom: solid 3px #F8F8F8;
+}
+.border-1{
+	border-bottom: solid 3px #E7E7E7;
+}
+
+.border-2{
+	border-bottom: solid 3px #F8F8F8;
+}
+.exit:hover,.user:hover,.border-1:hover,.border-2:hover{
+	border-bottom: solid 3px #E3DC89;
+}
+.user-img{
+	width: 35px;
+	height: 35px;
+	border-radius: 35px;
+	overflow: hidden;
+	margin-top: 7px;
+	float: left;
+}
+.user-nane{
+	width: 60px;
+	height: 53px;
+	float: right;
+	line-height: 50px;
+	text-align: right;
+}
+.list{
+	width: 220px;
+	height: auto;
+	margin-top: -20px;
+}
+#frame-div{
+	width: 84%;
+	height: 92%;
+	position: absolute;
+	top: 55px;
+	left: 220px;
+}
+.frame{
+	width: 100%;
+	height: 100%;
+}
+.list-2,.list-3,.list-4{
+	width: 220px;
+	height: 40px;
+	background-color: #E7E7E7;
+	padding:0 20px;
+	line-height: 40px;
+	border-bottom: solid 1px white;
+}
+.list-1{
+	width: 220px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	background-color:#F8F8F8;
+	border-bottom: solid 1px white;
+}
+.list-5,.list-6,.list-7{
+	width: 220px;
+	height:auto;
+	display: none;
+}
+#jiantou1,#jiantou2,#jiantou3{
+	width: 0px;
+	height: 0px;
+	margin: 13px;
+	float: right;
+	border-top: 7px solid #E7E7E7;
+	border-left: 7px solid black;
+	border-right: 7px solid #E7E7E7;
+	border-bottom: 7px solid #E7E7E7;
+	transform-origin: 25% 50%;
+	display:inline-block;
+	vertical-align: top;
+	transition: all 0.5s;
+}

@@ -1,0 +1,29 @@
+.table-box{
+    margin: 30px auto;
+}
+tr:hover{
+    /*background-color: #F2F2F2;*/
+}
+td,th{
+    text-align: center;
+}
+/*增删查改格*/
+.ttdd{
+    width: 300px;
+  }
+
+.aa1{
+    background-color: red;
+    color: #fff;
+    border-radius: 5px;
+    width: 54px;
+    height: 34px;
+    display: inline-block;
+    text-align: center;
+    padding-top: 7px;
+}
+.aa1:hover{
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+}

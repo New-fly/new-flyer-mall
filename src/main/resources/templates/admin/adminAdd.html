@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>添加商品</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <!-- 设置全屏功能的css文件 -->
+    <link rel="stylesheet" type="text/css" th:href="@{/release/wangEditor-fullscreen-plugin.css}">
+    <!-- 编辑器编辑后，提交时执行js，获得编辑器的内容，赋值给textarea，用于向后台提交存入数据库 -->
+    <script type="text/javascript">
+        function modifyContent() {
+            var introduce = document.getElementById("introduce");
+            introduce.value = editor.txt.html();
+        }
+    </script>
+</head>
+<body class="container">
+<br/>
+<h1>添加商品</h1>
+<br/><br/>
+<div class="with:80%">
+    <form class="form-horizontal" th:action="@{/EstimateController/AddEstimate(orderId=246)}" method="post" enctype="multipart/form-data" onsubmit="modifyContent()">
+        <div class="form-group">
+            <label for="estimate_content" class="col-sm-2 control-label">库存</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="estimate_content"  id="estimate_content" placeholder="库存"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="estimate_grade" class="col-sm-2 control-label" >活动名称</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="estimate_grade" id="estimate_grade" placeholder="活动名称"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="estimate_is_nameless" class="col-sm-2 control-label">是否热门</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="estimate_is_nameless"  id="estimate_is_nameless" placeholder="是否热门"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">上传图片</label>
+            <input type="file" name="file" />
+            <input type="file" name="file" />
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" value="Submit" class="btn btn-info" />
+                &nbsp; &nbsp; &nbsp;
+                <input type="reset" value="Reset" class="btn btn-info" />
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

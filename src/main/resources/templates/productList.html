@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品表</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.css}">
+    <link th:href="@{/css/productList.css}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{font/css/font-awesome.min.css}">
+	<script th:src="@{/js/productList.js}"></script>
+</head>
+<body>
+	<table class="table table-bordered able-box" id="mytable">
+	    <thead style="background-color: #F2F2F2;">
+	    <tr>
+	        <th>库存</th>
+	        <th>是否可兑换</th>
+	        <th>上架状态</th>
+	        <th>专柜价格</th>
+	        <th>商城价格</th>
+	        <th>是否热门</th>
+	        <th>图片</th>
+	        <th>商品详情</th>
+	    </tr>
+	    </thead>
+	    <tbody>
+	    <tr>
+	        <td>John</td>
+	        <td>Doe</td>
+	        <td>john@example.com</td>
+	        <td></td>
+	        <td></td>
+	        <td></td>
+	        <td></td>
+	        <td class="ttdd">
+	            <!--<button type="button" class="btn btn-primary" style="background-color: #fff;color: #000;">添加</button>-->
+	            <a class="aa1">删除</a>
+	            <a href="./change.html"><button type="button" class="btn btn-primary modifi" style="background-color:#007BFF" >修改</button></a>
+	            <button type="button" class="btn btn-warning">查看</button>
+	        </td>
+	    </tr>
+	    <tr>
+	        <td>Mary</td>
+	        <td>Moe</td>
+	        <td>mary@example.com</td>
+	        <td></td>
+	        <td></td>
+	        <td></td>
+	        <td></td>
+	        <td>
+	            <!--<button type="button" class="btn btn-primary" style="background-color: #fff;color: #000;">添加</button>-->
+	            <a class="aa1">删除</a>
+	            <button type="button" class="btn btn-primary  modifi" style="background-color: #007BFF">修改</button>
+	            <button type="button" class="btn btn-warning">查看</button>
+	        </td>
+	    </tr>
+	    </tbody>
+	</table>
+	<button type="button" class="btn btn-primary add" style="background-color: green;color: #fff;float: right;">添加</button>
+</body>
+</html>

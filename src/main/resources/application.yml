@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: prod
+
+  mail:
+        default-encoding: utf-8
+        host: smtp.126.com
+        #发送者的邮箱密码
+        password: 123456huyaxing
+        #端口
+        port: 25
+        #协议
+        protocol: smtp
+        #发送者的邮箱账号
+        username: huystar@126.com
+  server:
+      port: 8081

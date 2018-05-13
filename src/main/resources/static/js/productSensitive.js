@@ -1,0 +1,11 @@
+$(document).ready(function(){
+	$(".delete").click(function(){
+		$(this).parent.parentNode.remove();
+	});
+	$(".add").click(function(){
+		$(".black").show();
+	})
+	$(".close").click(function(){
+		$(".black").hide();
+	})
+});

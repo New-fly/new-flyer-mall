@@ -1,0 +1,288 @@
+body{
+		margin: 0;
+		min-width: 1200px;
+		font-family:"微软雅黑";
+}
+.top{
+		width: 100%;
+		height: 25px;
+		background-color: #F2F2F2;
+}
+.top-left{
+		margin-left: 30px;
+}
+.top-right{
+		margin-right: 50px;
+}
+.top-left>ul{
+		float: left;
+		margin: 0;
+}
+.top-right>ul{
+		float: right;
+		margin: 0;
+}
+.top-left>ul>li,.top-right>ul>li{
+		float: left;
+		list-style-type: none;
+		font-size: 12px;
+		line-height: 25px;
+		margin: 0 12px;
+}
+.top-left>ul>li>a,.top-right>ul>li>a{
+		height: 100%;
+		text-decoration: none;
+		color: #838383;
+}
+.top-left>ul>li>a:hover,.top-right>ul>li>a:hover{
+		color: #336699;
+}
+.top-left>ul>li>a>span,.top-right>ul>li>a>span{
+		color: #336699;
+}
+.title{
+	width: 1000px;
+	height: 80px;
+	padding: 20px;
+	margin: 0 auto;
+}
+.ipt{
+	width: 500px;
+	height: 57px;
+	padding: 23px;
+	padding-bottom: 0;
+	float: right;
+	margin-left: 80px;
+}
+.ipt-1{
+	width: 400px;
+	height: 28px;
+	padding: 0 0 0 10px;
+	border: solid 3px #CC0510;
+}
+.ipt-2{
+	width: 84px;
+	height: 34px;
+	float: right;
+	background-color: #CC0510;
+	line-height: 34px;
+	cursor:pointer;
+	text-align: center;
+	letter-spacing: 10px;
+	color: white;	
+}
+.all{
+	width: 1000px;
+	height: 530px;
+	margin: 0 auto;
+	margin-top: 30px;
+	position: relative;
+}
+.all-left{
+	width: 420px;
+	height: 530px;
+	float: left;
+}
+.img-big{
+	width: 100%;
+	height: 420px;
+	float: left;
+}
+.img{
+	width: 66px;
+	height: 66px;
+	border: solid 2px white;
+	float: left;
+}
+.img-big>img,.img>img{
+	width: 100%;
+	height: 100%;
+}
+.img:hover{
+	border: solid 2px #CC0510;
+}
+.all-right{
+	width: 500px;
+	height: 500px;
+	float:right;
+}
+.all-right-title{
+	font-size: 16px;
+}
+.money{
+	width: 100%;
+	height: 100px;
+	line-height: 40px;
+	margin-top: 15px;
+	background-color:#E5E4E4;
+}
+.gray{
+	font-size:12px ;
+	color: gray;
+	margin-right: 30px;
+}
+.freight{
+	font-size: 12px;
+	margin: 10px 0;
+	margin-top: 15px;
+}
+.information{
+	width: 100%;
+	height: 40px;
+	margin-top: 15px;
+	border-top: dashed 1px gray;
+	border-bottom: dashed 1px gray;
+}
+.information>div{
+	width: 33%;
+	height:30px;
+	margin: 5px 0;
+	border-right: solid 1px gray;
+	float: left;
+	text-align: center;
+	line-height: 30px;
+	font-size: 13px;
+}
+.classify{
+	width: 100%;
+	height: 55px;
+	margin-top: 15px;
+}
+.classify>div{
+	width: 45px;
+	height: 30px;
+	margin: 10px 5px;
+	float: left;
+	text-align: center;
+	line-height: 30px;
+	font-size: 13px;
+	border: solid 2px gray;
+}
+.number{
+	margin-top: 10px;
+}
+.button{
+	width: 100%;
+	height: 50px;
+	margin-top: 15px;
+}
+.shoppingcart,.buy{
+	width: 150px;
+	height: 40px;
+	float: left;
+	margin: 0 10px;
+	line-height: 40px;
+	text-align: center;
+}
+.shoppingcart{
+	color:#fff;
+	background-color:#CC0510;
+}
+.buy{
+	background-color: #FFE4D0;
+	color:#CC0510;
+}
+.all-right-foot{
+	width: 100%;
+	height: 50px;
+	margin-top: 15px;
+	line-height: 25px;
+	font-size: 13px;
+}
+.berelated{
+	width: 1200px;
+	height: 120px;
+	position: relative;
+	margin: 0 auto;
+}
+.left{
+	width: 30px;
+	height: 100%;
+	float: left;
+	text-align: center;
+	line-height: 120px;
+	background-color:#FFE4D0;
+	opacity: 0.3;
+	transition: 0.5s;
+}
+.right{
+	width: 30px;
+	height: 100%;
+	line-height: 120px;
+	text-align: center;
+	float: right;
+	background-color:#FFE4D0;
+	opacity: 0.3;
+	transition: 0.5s;
+}
+.left:hover,.right:hover{
+	opacity: 1;
+}
+.berelated-goods{
+	width:1100px;
+	height: 100%;
+	position: relative;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.berelated-goods-long{
+	width: 3300px;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	transition: 1s;
+}
+.berelated-goods-long>div{
+	width: 180px;
+	height: 80px;
+	margin: 20px;
+	float: left;
+	line-height: 40px;
+	font-size: 13px;
+}
+.berelated-goods-long>div>img{
+	height: 100%;
+	width: auto;
+	float: left
+}
+.promote{
+	color: gray;
+	font-size: 20px;
+}
+.input-a{
+	width: 30px;
+	height: 15px;
+	text-align: center;
+}
+.details>p{
+	width: 100%;
+	text-align: center;
+}
+.details>img{
+    width: 100%;
+}
+#subtract{
+	width: 25px;
+	height: 21px;
+	background-color: #DFDFDF;
+	display: inline-block;
+	text-align: center;
+	line-height: 21px;
+	position: relative;
+	left: 5px;
+	top: 1px;
+	cursor: pointer;
+}
+#add{
+	width: 25px;
+	height: 21px;
+	background-color: #DFDFDF;
+	display: inline-block;
+	text-align: center;
+	line-height: 21px;
+	position: relative;
+	right: 5px;
+	top: 1px;
+	cursor: pointer;
+}

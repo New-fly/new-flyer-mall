@@ -1,0 +1,280 @@
+body{
+	min-width: 1200px;
+	margin: 0;
+}
+.top{
+		width: 100%;
+		height: 25px;
+		background-color: #F2F2F2;
+}
+.top-left{
+		margin-left: 30px;
+}
+.top-right{
+		margin-right: 50px;
+}
+.top-left>ul{
+		float: left;
+		margin: 0;
+}
+.top-right>ul{
+		float: right;
+		margin: 0;
+}
+.top-left>ul>li,.top-right>ul>li{
+		float: left;
+		list-style-type: none;
+		font-size: 12px;
+		line-height: 25px;
+		margin: 0 12px;
+}
+.top-left>ul>li>a,.top-right>ul>li>a{
+		height: 100%;
+		text-decoration: none;
+		color: #838383;
+}
+.top-left>ul>li>a:hover,.top-right>ul>li>a:hover{
+		color: #336699;
+}
+.top-left>ul>li>a>span,.top-right>ul>li>a>span{
+		color: #336699;
+}
+.title{
+	width: 1000px;
+	height: 70px;
+	padding: 20px;
+	margin: 0 auto;
+}
+.title>img{
+	width: 250px;
+	height: auto;
+}
+.text{
+	width: 980px;
+	height: 30px;
+	padding: 0 10px;
+	margin: 0 auto;
+	font-weight: bold;
+}
+.address{
+	width: 1000px;
+	height: 130px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.address>div{
+	width: 214px;
+	height: 94px;
+	float: left;
+	margin: 10px;
+	padding: 5px;
+	border: dashed 3px gray;
+}
+.location{
+	font-size: 14px;
+}
+.peple{
+	font-size: 12px;
+}
+.manage{
+	width: 980px;
+	height: auto;
+	padding: 0 10px;
+	margin: 0 auto;
+	overflow: hidden;
+	font-size: 14px;
+}
+.manage>span:hover{
+	color: red;
+	cursor:pointer;
+}
+.annotation{
+	width: 1000px;
+	height: 35px;
+	margin: 8px auto;
+}
+.annotation>div{
+	width: 200px;
+	height: 35px;
+	line-height: 35px;
+	font-size: 15px;
+	float: left;
+	text-align: center;
+}
+.single{
+	width: 980px;
+	height: 48px;
+	padding: 20px;
+	background-color: #FCFCFC;
+	border: solid 1px gray;
+	margin: 0 auto;
+	margin-top: 10px;
+}
+.single-introduce{
+	width: 180px;
+	height: 48px;
+	float: left;
+	overflow: hidden;
+	font-size: 12px;
+}
+.single-text,.single-text-a{
+	width: 190px;
+	height: 48px;
+	float: right;
+	line-height: 16px;
+	line-height: 48px;
+	text-align:center;
+	font-size: 13px;
+}
+.single-text>a,.single-text-a>a{
+	color: gray;
+	font-size: 12px;
+	text-decoration: none;
+}
+.single-text-a>a:hover{
+	color: #CC0510;
+}
+.pay{
+	width: 1020px;
+	height: 130px;
+	margin: 0 auto;
+	overflow: hidden;
+	margin-top: 15px;
+}
+.pay-block{
+	width: 250px;
+	height: 106px;
+	float: right;
+	padding: 10px;
+	border: solid 2px red;
+	text-align: right;
+}
+.font{
+	font-size: 13px;
+	line-height: 35px;
+}
+.money{
+	color: red;
+	font-size: 25px;
+}
+.pay2{
+	width: 1020px;
+	height: 35px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.pay2-block{
+	width: 150px;
+	height: 35px;
+	float: right;
+	background-color: red;
+	line-height: 35px;
+	text-align: center;
+	color: white;
+}
+.img{
+	width: 1100px;
+	height: 80px;
+	margin: 0 auto;
+	margin-top: 50px;
+}
+.img>div{
+	width: 275px;
+	height: 80px;
+	float: left;
+	line-height: 40px;
+	font-size: 16px;
+	letter-spacing:2px;
+	font-weight: bold;
+}
+.img>div>img{
+	float: left;
+}
+.arrange{
+	width: 1100px;
+	height: 250px;
+	margin: 0 auto;
+	background-color: pink;
+}
+.gray_all{
+	width: 1000px;
+	height: 225px;
+	margin: 0 auto;
+}
+.gray_all>div{
+	width: 200px;
+	height: 225px;
+	float: left;
+}
+.gray_text1{
+	margin-top: 40px;
+	line-height: 30px;
+	font-size: 14px;
+	cursor: pointer;
+	color: #B1B1B1;
+}
+.color{
+	line-height: 15px;
+	margin-left: -15px;
+	padding-left: 15px;
+	margin-bottom: 10px;
+	color:gray;
+	border-left: 4px solid #F66181;
+}
+.foots{
+	width: 100%;
+	height: auto;
+	background-color: black;
+}
+.foots_all{
+	width: 1200px;
+	height: 190px;
+	margin: 0 auto;
+	position: relative;
+}
+.free_1{
+	color: green;
+}
+.foots_text1{
+	width: 850px;
+	height: 70px;
+	position: absolute;
+	left: 150px;
+	top: 25px;
+	font-size: 12px;
+	color: #B1B1B1;
+	cursor: pointer;
+}
+.foots_text2{
+	position: absolute;
+	left: 70px;
+	top: 90px;
+	font-size: 12px;
+	color: #3F3F3F;
+	cursor: pointer;
+}
+.foots_text3{
+	width: 1000px;
+	height: 100px;
+	position: absolute;
+	left: 150px;
+	top: 90px;
+	font-size: 12px;
+	line-height: 20px;
+	color: #3F3F3F;
+}
+.foots_text3>a{
+	color: #3F3F3F;
+	text-decoration: none;
+	cursor: pointer;
+}
+.foots_text3>a:hover{
+	color: #B1B1B1;
+}
+.ipt{
+	width: 80px;
+	border: 0;
+	outline: none;
+	display: inline-block;
+	background-color: #fff;
+}

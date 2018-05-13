@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>账号管理-安全设置</title>
+    <link th:href="@{/css/am-safety.css}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+</head>
+<body>
+<div class="top">
+    <div class="top-left">
+        <ul>
+            <li><a href="#"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span>欢迎来到新飞商城！</a></li>
+            <li><a th:href="@{/toLogin}"><i class="fa fa-paw"></i>&nbsp;&nbsp;登录</a></li>
+            <li><a th:href="@{/toRegistered}"><span class="red">立即注册</span></a></li>
+        </ul>
+    </div>
+    <div class="top-right">
+        <ul>
+            <li><a th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}"><i class="fa fa-paw" style="color: #336699"></i>&nbsp;&nbsp;购物车</a></li>
+            <li><a th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}"><i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a></li>
+            <li><a href="#">我的淘宝</a></li>
+            <li><a href="#">111111</a></li>
+            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;管理系统</a></li>
+        </ul>
+    </div>
+</div>
+<div class="nav">
+    <div class="navheader">账号管理</div>
+</div>
+<div class="container">
+    <div class="aside">
+        <a href="#"><img th:src="${user.user_avatar}" class="headphoto"></a>
+        <div>
+            <dl>
+                <dd><a th:href="@{/UserManagementController/toSafety(userId=${session.user.userId})}" target="_self">安全设置</a></dd>
+                <dd><a th:href="@{/UserManagementController/information(userId=${session.user.userId})}" target="_self">个人资料</a></dd>
+                <dd><a th:href="@{/UserAddressController/shippingAddress(user_name=${session.user.user_name})}" target="_self">收货地址</a></dd>
+
+            </dl>
+
+        </div>
+    </div>
+    <div class="content">
+        <div class="info" style="border-bottom: 1px solid #5e5e5e">你的基础信息
+            <div class="infomain">
+                <ul>
+                    <li><span class="span1">会员名</span><span class="span2">****</span></li>
+                    <li><span class="span1">邮箱</span><span class="span2">******</span><span class="span3"><a th:href="@{UserManagementController/changeEmail(userId=${session.user.userId})}">修改邮箱</a></span></li>
+                    <li><span class="span1">绑定手机</span><span class="span2">*****</span><span class="span3"><a href="changePassword.html">修改手机</a></span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="info">
+            你的安全服务
+            <div class="infomain">
+                <ul>
+                    <li class="li-sty">
+                        <div class="item-password">登录密码</div>
+                        <div class="safety">安全性高的密码可以使账号更安全。建议您定期更换密码，且设置一个包含数字和字母，并长度超过6位以上的密码。</div>
+                        <div class="operate"><a th:href="@{/UserManagementController/toChangePassword}">修改</a></div>
+                    </li>
+                    <li class="li-sty">
+                        <div class="item-password">绑定手机</div>
+                        <div class="safety">是您找回登录密码的方式之一。建议您设置一个容易记住，且最不容易被他人获取的问题及答案，更有效保障您的密码安全。</div>
+                        <!--<div class="operate"><a th:href="">修改</a></div>-->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</body>
+</html>

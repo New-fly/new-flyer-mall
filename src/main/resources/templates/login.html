@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>新飞官方网上商城</title>
+    <script th:src="@{/js/jquery.js}"></script>
+    <link th:href="@{/css/login.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/login.js}"></script>
+    <!--<link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>-->
+    <!--<link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">-->
+</head>
+<body>
+    <div class="contenter">
+        <div class="header">
+            <img th:src="@{/images/logo.png}" class="xflogo">
+            <p class="cue">为确保您账户的安全及正常使用，依《网络安全法》相关要求，6月1日起会员账户需绑定手机，如还没绑定，请尽快完成，感谢您的支持与理解！</p>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <div class="content">
+        <div class="register-box-warp">
+            <div class="register-box">
+                <h5 class="h5-sty1">密码登录</h5>
+                <form th:action="@{/login}" method="post" class="">
+                    <div class="static-form">
+                        <label><i class="fa fa-user-o"></i></label>
+                        <input placeholder="请输入用户名/邮箱" th:name="user_name" type="text" class="ipt ipt1">
+                    </div>
+                    <div class="static-form">
+                        <label><i class="fa fa-expeditedssl"></i></label>
+                        <input placeholder="请输入密码" type="password" th:name="user_password" class="ipt ipt2">
+                    </div>
+                    <div class="static-form">
+                       <input class="divbtn aa1" type="submit" th:value="登录">
+                    </div>
+                    <div class="entry">
+                        <span>第三方登录：<a href="https://github.com/login/oauth/authorize?client_id=8c5284a3f97c73a66906&scope=user&state=any" methods="get" class="aa"><img th:src="@{/images/githup.jpg}" class="githup">githup</a></span>
+                    </div>
+                    <div class="entry1">
+                        <a th:href="@{/toRegistered}" class="aa"><span style="float: right">免费注册</span></a>
+                        <a href="#" class="aa"><span style="float: right;margin-right: 10px">忘记密码</span></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

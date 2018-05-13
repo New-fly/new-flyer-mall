@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>账户注册|新飞</title>
+    <link rel="stylesheet" th:href="@{/css/sign-up2.css}"></link>
+    <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <script th:src="@{/js/jquery-1.11.3.min.js}"></script>
+</head>
+<body>
+<div class="contenter">
+    <div class="header">
+        <img th:src="@{/images/logo.png}" class="xflogo">
+        <p class="register">用户注册</p>
+    </div>
+    <div class="steps">
+        <ul>
+            <li class="li1">
+                <div class="serial-1">1.</div>
+                <span class="spn1">设置用户名</span>
+            </li>
+            <li class="li2">
+                <div class="serial-2">2.</div>
+                <span class="spn2">填写账户信息</span>
+            </li>
+            <li class="li3">
+                <div class="serial-3">3.</div>
+                <span class="spn3">
+                    注册成功
+                </span>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <!--填写账户信息-->
+        <form th:action="registered" method="post" class="form-list2">
+            <div class="list">
+                <input type="hidden" class="ipt" name="user_mail" th:value="*{user_mail}">
+            </div>
+            <!--<div class="list">-->
+                <!--<label>用户名：</label><input type="text" class="ipt" name="user_name" id="user_name" placeholder="请输入你的用户名" th:onchange="'javascript:test2()'"><span id="remind"></span>-->
+                <!--<font class="error"></font>-->
+            <!--</div>-->
+            <div class="list">
+                <label>密&nbsp&nbsp&nbsp&nbsp码：</label><input type="password" name="user_password" class="ipt" placeholder="请输入密码" th:onchange="'javascript:test3()'" style="width: 140px;" id="user_password">
+                <font class="error"></font>
+            </div>
+            <div class="list">
+                <label>确&nbsp&nbsp&nbsp&nbsp认：</label><input type="password" class="ipt" placeholder="请再次输入密码" style="width: 140px;" id="text5" >
+                <font class="error"></font>
+            </div>
+            <input type="submit" value="注册" name="submit" class="affirm" id="aff">
+        </form>
+    </div>
+    <footer>
+        <ul>
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li><br><li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"> <a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|<br>
+            <p style="display: inline;color: #6C6C6C">网络文化经营许可证：<a>文网文[2010]40号</a></p>&nbsp&nbsp<p style="display: inline;color: #6C6C6C">信息网络传播视听节目许可证：1109364号</p>
+        </ul>
+    </footer>
+
+</div>
+
+</div>
+<script th:src="@{/js/sign-up2.js}"></script>
+</body>
+</html>
