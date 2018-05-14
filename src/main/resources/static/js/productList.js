@@ -1,88 +1,56 @@
-//获取所有a标签
-var allas=document.getElementsByClassName("aa1");
-function delA() {
-        var tr=this.parentNode.parentNode;
-        //获取要删除的名字
-        var name=tr.children[0].innerHTML;
-        var flag=confirm("确定要删除"+name+"吗？");
-        if(flag){
-            tr.parentNode.removeChild(tr);
-        }
-}
-//console.log(allas);
-//为每个button绑定一个单击相应函数
-for(i=0;i<allas.length;i++){
-    allas[i].onclick=delA;
-}
-//获取所有修改按钮
-var allmodifibtns=document.getElementsByClassName("btn btn-primary modifi");
-//console.log(allmodifibtns);
-//为每个修改按钮添加一个单击向应函数
-var tr;
-for(i=0;i<allmodifibtns.length;i++){
-    allmodifibtns[i].onclick=modify;
-}
-function modify() {
-    tr=this.parentNode.parentNode;
-    var button=tr.getElementsByClassName("btn btn-primary modifi")[0];
-}
-function update() {
-    var aaa=document.getElementById("num").value;
-    var bbb=document.getElementById("userphoto").value;
-    var ccc=document.getElementById("username").value;
-    var ddd=document.getElementById("userrole").value;
-    var eee=document.getElementById("userphone").value;
-    var fff=document.getElementById("pwd").value;
-    var ggg=document.getElementById("email").value;
-    // console.log(tr.innerHTML);
-    tr.innerHTML=" <td>"+aaa+"</td> <td>"+bbb+"</td> <td>"+ccc+"</td> <td>"+ddd+"</td> <td>"+eee+"</td> <td>"+fff+"</td> <td>"+ggg+"</td> <td><a class=\"aa1\">删除</a>\n" + "<button type=\"button\" class=\"btn btn-primary modifi\" style=\"background-color: #007BFF\" onclick=\"modify(this)\">修改</button></td>";
-    // console.log(tr.innerHTML);
-    //修改过后的添加点击删除事件：
-    var a=tr.getElementsByClassName("aa1")[0];
-    a.onclick=delA;
-    //修改过后的再添加点击修改事件
-    var button=tr.getElementsByClassName("btn btn-primary modifi")[0];
-    button.onclick=modify&&update;
+//生成Pager，当前页码, 总页数, 回调function
+$.fn.pager = function(page, total, callback) {
+    var html = '';
+    html += '<a class="first" href="javascript:;">首页</a>';
+    html += '<a class="first" href="javascript:;">上一页</a>';
+    var start = page - 5 < 0 ? 0 : page - 5;
+    var end = page + 5 < total ? page + 5 : total;
+    for (var i = start; i < end; i++) {
+        html += i == page - 1 ? '<span>' + (i + 1) + '</span>' : '<a href="javascript:;">' + (i + 1) + '</a>';
+    }
+    html += '<a class="first" href="javascript:;">下一页</a>';
+    html += '<a class="last" href="javascript:;">末页</a>';
+    $(this).html(html).find('a').click(function() {
+        var p = $(this).text();
+        if (p == '上一页') p = page == 1 ? 1 : page - 1;
+        if (p == '下一页') p = page == total ? total : page + 1;
+        if (p == '首页') p = 1;
+        if (p == '末页') p = total;
 
-    //修改过后，弹窗消失
-    var modifi = document.getElementsByClassName("windoww")[0];
-    modifi.style.display = "none";
+        if (p != page) callback(parseInt(p));
+    });
 }
-var cancelbtn=document.getElementById("cancel");
-cancel.onclick=function(){
-    var modifi = document.getElementsByClassName("windoww")[0];
+
+onload = function() {
+    //用用回调
+    function go(p) {
+        $('.pager').pager(p, 10, go);
+    }
+
+    $('.pager').pager(1, 10, go);
 }
-var addbtn1=document.getElementsByClassName("btn btn-primary add")[0];
-addbtn1.onclick=function () {
-    var modifi=document.getElementsByClassName("windoww")[0];
-    modifi.style.display="block";
+//返回顶部(缓慢滑动)
+function pageScroll(){
+    //把内容滚动指定的像素数（第一个参数是向右滚动的像素数，第二个参数是向下滚动的像素数）
+    window.scrollBy(0,-100);
+    //延时递归调用，模拟滚动向上效果
+    scrolldelay = setTimeout('pageScroll()',100);
+    //获取scrollTop值，声明了DTD的标准网页取document.documentElement.scrollTop，否则取document.body.scrollTop；因为二者只有一个会生效，另一个就恒为0，所以取和值可以得到网页的真正的scrollTop值
+    var sTop=document.documentElement.scrollTop+document.body.scrollTop;
+    //判断当页面到达顶部，取消延时代码（否则页面滚动到顶部会无法再向下正常浏览页面）
+    if(sTop==0) clearTimeout(scrolldelay);
 }
-var addbtn2=document.getElementById("add");
-addbtn2.onclick=function(){
-    var oNum = document.getElementById('num').value;
-    var oUserphoto = document.getElementById('userphoto').value;
-    var ousername = document.getElementById('username').value;
-    var userrole = document.getElementById('userrole').value;
-    var userphone = document.getElementById('userphone').value;
-    var pwd = document.getElementById('pwd').value;
-    var email = document.getElementById('email').value;
-    var btn=document.getElementsByClassName("btn btn-primary modifi")[0].value;
-    var aa1=document.getElementsByClassName("aa1")[0].value;
-    // alert(oNum );
-    //创建一个tr
-    var tr=document.createElement("tr");
-    tr.innerHTML="<td>"+oNum+"</td>"
-        +"<td>"+oUserphoto+"</td>"+
-        "<td>"+ousername+"</td>"+
-        "<td>"+userrole+"</td>"+
-        "<td>"+userphone+"</td>"+
-        "<td>"+pwd+"</td>"+
-        "<td>"+email+"</td>"+
-        "<td><a class='aa1' >删除</a> <button type=\"button\" class=\"btn btn-primary modifi\" style=\"background-color: #007BFF\" onclick=\"modify()\">修改</button></td>";
-    var a=tr.getElementsByClassName("aa1")[0];
-    a.onclick=delA;
-    var tbody=document.getElementsByTagName("tbody")[0];
-    tbody.appendChild(tr);
-    var modifi=document.getElementsByClassName("windoww")[0];
-    modifi.style.display="none";
+//顶部吸顶盒
+var oDiv=document.getElementsByClassName("top-search")[0];
+var divT=oDiv.offsetTop;
+window.onscroll=function () {
+    var scrollT=document.documentElement.scrollTop-400;
+    if(scrollT>divT){
+        oDiv.style.position="fixed";
+        oDiv.style.top=0;
+        // oDiv.style.left=0;
+
+    }else{
+        oDiv.style.position="";
+    }
 }

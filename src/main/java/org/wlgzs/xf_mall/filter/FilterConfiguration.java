@@ -39,10 +39,8 @@ public class FilterConfiguration {
         //拦截规则
         registration.addUrlPatterns("/pay/aliPay/*");
         registration.addUrlPatterns("/FootprintController/*");
-        registration.addUrlPatterns("/HomeController/*");
         registration.addUrlPatterns("/IntegralController/*");
         registration.addUrlPatterns("/ActivityController/*");
-        registration.addUrlPatterns("/ProductCategoryController/*");
         registration.addUrlPatterns("/EstimateController/*");
         registration.addUrlPatterns("/ProductListController/*");
         registration.addUrlPatterns("/UserAddressController/*");

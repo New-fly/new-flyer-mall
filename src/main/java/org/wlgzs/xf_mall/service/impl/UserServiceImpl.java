@@ -51,11 +51,14 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId);
         String img = user.getUser_avatar();
         String path = request.getSession().getServletContext().getRealPath("/");
-        File file = new File(path+""+img.substring(1,img.length()));
-        System.out.println(path+""+img.substring(1,img.length()));
-        if (!img.equals("/headPortrait/morende.jpg") && file.exists() && file.isFile()) {
-            file.delete();
+        if(img!=null){
+            File file = new File(path+""+img.substring(1,img.length()));
+            System.out.println(path+""+img.substring(1,img.length()));
+            if (!img.equals("/headPortrait/morende.jpg") && file.exists() && file.isFile()) {
+                file.delete();
+            }
         }
+        System.out.println(123);
         userRepository.deleteById(userId);
     }
 
