@@ -43,7 +43,7 @@ public class AliPayController {
      * @description 准备付款
      */
     @RequestMapping("toPay")
-    public ModelAndView toPay(Model model, @RequestParam(value = "shoppingCartId",defaultValue = "241,247") String shoppingCartId,
+    public ModelAndView toPay(Model model, @RequestParam(value = "shoppingCartId",defaultValue = "630,637") String shoppingCartId,
                               String user_name,HttpServletRequest request){
         IdsUtil idsUtil = new IdsUtil();
         long[] Ids = idsUtil.IdsUtils(shoppingCartId);
@@ -65,7 +65,7 @@ public class AliPayController {
      * @description 单个商品  准备直接付款
      */
     @RequestMapping("oneToPay")
-    public ModelAndView oneToPay(Model model, @RequestParam(value = "productId",defaultValue = "224") long productId,
+    public ModelAndView oneToPay(Model model, @RequestParam(value = "productId",defaultValue = "494") long productId,
                                  @RequestParam(value = "shoppingCart_count",defaultValue = "3") int shoppingCart_count,String user_name){
         List<Product> shoppingCarts = productService.findProductListById(productId);
         model.addAttribute("shoppingCarts",shoppingCarts);
@@ -92,9 +92,9 @@ public class AliPayController {
      * @description 付款
      */
     @RequestMapping("aliPaySum")
-    public ModelAndView aliPay(@RequestParam(value = "productId",defaultValue = "441,442") String productId,
+    public ModelAndView aliPay(@RequestParam(value = "productId",defaultValue = "630,637") String productId,
                                @RequestParam(value = "userId",defaultValue = "46") long userId,
-                               @RequestParam(value = "shoppingCount",defaultValue = "3,2") String shoppingCount,
+                               @RequestParam(value = "shoppingCount",defaultValue = "3,4") String shoppingCount,
                                HttpServletResponse response, HttpServletRequest request) throws IOException, AlipayApiException {
         ordersService.save(request,response,productId,userId,shoppingCount);
         return new ModelAndView("aliPay");
