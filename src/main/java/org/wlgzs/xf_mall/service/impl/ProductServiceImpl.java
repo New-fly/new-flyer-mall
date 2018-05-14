@@ -507,8 +507,8 @@ public class ProductServiceImpl implements ProductService {
 
     //搜索提示
     @Override
-    public List<Product> findProductByWord(String product_keywords) {
-        return productRepository.findProductByWord(product_keywords);
+    public List<ProductCategory> findProductByWord(String category_name) {
+        return productCategoryRepository.findProductByWord(category_name);
     }
 
     //积分商品展示

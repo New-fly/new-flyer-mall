@@ -87,7 +87,7 @@ public interface ProductService {
 
     List<Collection> findCollections(String product_keywords, long userId);
 
-    List<Product> findProductByWord(String product_keywords);
+    List<ProductCategory> findProductByWord(String category_name);
 
     List<Product> findByProduct_isRedeemable();
 

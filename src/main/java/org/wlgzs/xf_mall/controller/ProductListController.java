@@ -237,13 +237,13 @@ public class ProductListController {
      */
     @RequestMapping("/searchWord")
     public void searchWord(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String product_keywords = request.getParameter("product_keywords");
-        //product_keywords = "2";
-        List<Product> products = productService.findProductByWord(product_keywords);
-
+        String category_name = request.getParameter("product_keywords");
+        //category_name = "2";
+        List<ProductCategory> productCategories = productService.findProductByWord(category_name);
+        System.out.println(productCategories);
         List<Object> productKeywordList = new ArrayList<Object>();
-        for (int i = 0; i < products.size(); i++) {
-            productKeywordList.add(products.get(i).getProduct_keywords());
+        for (int i = 0; i < productCategories.size(); i++) {
+            productKeywordList.add(productCategories.get(i).getCategory_name());
         }
         Gson gson = new Gson();
         String json = gson.toJson(productKeywordList);
@@ -257,10 +257,10 @@ public class ProductListController {
      * @description 前台模糊搜索商品
      */
     @RequestMapping("/searchProductList")
-    public ModelAndView searchProductList(Model model, String product_keywords, @RequestParam(value = "page",defaultValue = "0") int page,
+    public ModelAndView searchProductList(Model model, String product_category, @RequestParam(value = "page",defaultValue = "0") int page,
                                           @RequestParam(value = "limit",defaultValue = "12") int limit){
         if(page != 0) page--;
-        Page pages =  productService.getProductListPage(product_keywords,page,limit);
+        Page<Product> pages = productService.findProductByTwoCategory(product_category, page, limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
         List<Product> products = pages.getContent();
@@ -274,7 +274,7 @@ public class ProductListController {
             }
         }
         model.addAttribute("products", products);//查询的当前页的集合
-        model.addAttribute("product_keywords",product_keywords);
+        model.addAttribute("product_category",product_category);
         //遍历一级二级分类
         List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();
         model.addAttribute("productOneCategories", productOneCategories);

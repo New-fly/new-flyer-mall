@@ -85,24 +85,21 @@
         <input class="userId" type="submit" th:value="${session.userId}" style="display: none" />
         <div class="money">
             <span class="gray">价格：</span>
-            <span class="gray" th:utext="'￥：'+ *{product_mallPrice}"></span><br/>
+            <span class="gray" th:utext="'￥：'+ *{product_counterPrice}"></span><br/>
             <span class="promote">促销价:</span>
-            <span th:text="'￥：'+ *{product_counterPrice}" style="color: red">
+            <span th:text="'￥：'+ *{product_mallPrice}" style="color: red">
         </div>
         <div class="freight"><span class="gray">运费</span> 四川成都至 新乡 快递: 0.00</div>
         <div class="information">
             <div>月销量45</div>
             <div>累计评价20</div>
-            <div style="border: 0;">送天猫积分264</div>
+            <div style="border: 0;" th:text="'送积分'+*{product_inventory}"></div>
         </div>
         <div class="gray" style="border: 0;width: 80px;display: inline-block">颜色分类：</div>
         <div class="classify">
             <div>红色</div>
-            <div>黑色</div>
-            <div>绿色</div>
-            <div>紫色</div>
             <div>金色</div>
-            <div>黑色</div>
+            <div>银色</div>
         </div>
         <form th:action="@{/pay/aliPay/oneToPay(productId=${product.productId})}">
             <div class="number">
