@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.wlgzs.xf_mall.dao.CollectionRepository;
 import org.wlgzs.xf_mall.dao.ProductCategoryRepository;
@@ -156,14 +157,13 @@ public class ProductServiceImpl implements ProductService {
     //通过id查找商品
     @Override
     public Product findProductById(long productId) {
-        Product product = productRepository.findById(productId);
-        String img;
+        /*String img;
         if (product.getProduct_picture().contains(",")) {
             img = product.getProduct_picture();
             img = img.substring(0, img.indexOf(","));
             product.setProduct_picture(img);
-        }
-        return product;
+        }*/
+        return  productRepository.findById(productId);
     }
 
     //通过id查询商品  返回集合

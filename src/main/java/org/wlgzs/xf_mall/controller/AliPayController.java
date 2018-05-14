@@ -53,10 +53,8 @@ public class AliPayController {
         if(user_name == null){
             HttpSession session = request.getSession(true);
             user_name = (String) session.getAttribute("name");
-            System.out.println(user_name);
         }
         List<ShippingAddress> shippingAddressList = shippingAddressService.getShippingAddressList(user_name);
-        System.out.println(shippingAddressList);
         model.addAttribute("shippingAddressList", shippingAddressList);
         return new ModelAndView("indent");
     }

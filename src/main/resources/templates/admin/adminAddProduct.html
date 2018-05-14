@@ -39,12 +39,7 @@
                         <select name="product_category">
                             <option th:each="productCategory : ${productCategories}" th:text="${productCategory.category_name}"></option>
                         </select>
-                        <!--<input type="text" name="product_category" class="form-control" id="price1" />-->
                     </td>
-                </tr>
-                <tr>
-                    <th>图片</th>
-                    <td><input type="text" name="product_picture" class="form-control" id="price2" /></td>
                 </tr>
                 <tr>
                     <th>是否可兑换</th>
@@ -53,7 +48,6 @@
                             <option value="1">是</option>
                             <option value="0">否</option>
                         </select>
-                        <!--<input type="text" name="product_isRedeemable" class="form-control" id="info" />-->
                     </td>
                 </tr>
                 <tr>
@@ -63,7 +57,6 @@
                             <option value="1">是</option>
                             <option value="0">否</option>
                         </select>
-                        <!--<input type="text" name="product_isShelf" class="form-control" id="picture" />-->
                     </td>
                 </tr>
                 <tr>
@@ -83,6 +76,10 @@
                 <tr>
                     <th>商城价</th>
                     <td><input type="text" name="product_mallPrice"  class="form-control" id="activity"></td>
+                </tr>
+                <tr>
+                    <th>专柜价</th>
+                    <td><input type="text" name="product_counterPrice" class="form-control" id="price2" /></td>
                 </tr>
                 <tr>
                     <th>需要积分</th>
@@ -116,7 +113,7 @@
                 <!-- 编辑器编辑，提交时执行js，获得编辑器的内容，赋值给textarea，用于向后台提交存入数据库 -->
                 <textarea rows="5" cols="35" name="product_details" style="display:none;" id="introduce"></textarea>
                 <div id="editor">
-                    <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+                    <p>请编写该商品的<b>商品详情</b>，包括图片文字</p>
                 </div>
                 <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
                 <script type="text/javascript" th:src="@{/release/wangEditor.min.js}"></script>

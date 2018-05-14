@@ -63,14 +63,11 @@
 <div class="all">
     <div class="all-left">
         <div class="img-big">
-            <img th:src="*{product_picture}"/>
+            <img th:src="${images[0]}"/>
         </div>
-        <div class="img"><img th:src="*{product_picture}"/></div>
-        <div class="img"><img th:src="*{product_picture}"/></div>
-        <div class="img"><img th:src="*{product_picture}"/></div>
-        <div class="img"><img th:src="*{product_picture}"/></div>
-        <div class="img"><img th:src="*{product_picture}"/></div>
-        <div class="img"><img th:src="*{product_picture}"/></div>
+        <div class="img" th:each="image : ${images}">
+            <img th:src="${image}"/>
+        </div><br>
         <span style="font-size: 13px;color: red;margin-left: 20px;letter-spacing: 2px;">
 				<i class="fa fa-paw"></i>收藏宝贝(6698人气)
 				<form th:action="@{/ProductListController/addCollectionProduct(productId=*{productId},userId=${session.userId})}"
@@ -121,22 +118,6 @@
                 <div class="shoppingcart">加入购物车</div>
             </div>
         </form>
-        <!--<form th:action="@{/ProductListController/addShoppingProduct(productId=*{productId},userId=${session.userId})}"-->
-              <!--method="post">-->
-            <!--<div th:width="330px"-->
-                 <!--style="padding: 10px; border: 1px solid #e7dbb1; margin: 15px 0 10px 0; background-color: #fffee6;">-->
-                <!--<div style="margin: 5px 0 10px 0;">白色</div>-->
-                <!--<div style="border-bottom: 1px solid #faeac7; margin-top: 20px; padding-left: 10px;">-->
-                    <!--购买数量:-->
-                    <!--<input id="shoppingCart_count" name="shoppingCart_count" value="1" maxlength="4" size="10"-->
-                           <!--type="text">-->
-                <!--</div>-->
-                <!--<div style="margin: 20px 0 10px 0;; text-align: center;">-->
-                    <!--<input th:width="127px" style="height: 36px;" value="加入购物车" type="submit">-->
-                    <!--&nbsp;-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</form>-->
         <div class="all-right-foot">
             <span class="gray">承诺：</span>
             <span class="gray">
@@ -155,36 +136,17 @@
     <div class="left"><i class="fa fa-paw"></i></div>
     <div class="right"><i class="fa fa-paw"></i></div>
     <div class="berelated-goods">
-        <div class="berelated-goods-long" th:each="ahangpin,product : ${product}">
+        <div class="berelated-goods-long" th:object="${product}">
             <div>
-                <img th:src="${ahangpin.product_picture}"/>
-                <span th:src="${ahangpin.product_keywords}"></span><br/>
-                <span style="color: red">￥6231</span>
+                <img th:src="${images[0]}"/>
+                <span></span><br/>
+                <span th:text="'￥'+*{product_mallPrice}" style="color: red"></span>
             </div>
         </div>
     </div>
 </div>
 <div class="details" th:utext="*{product_details}"></div>
 </body>
-<!--=======
-<body>
-<div class="container-fluid">
-    <div class="col-md-4">
-        <img src=""/>
-    </div>
-    <div class="col-md-5">
-        <img src=""/>
-    </div>
-    <div class="col-md-3" style="padding-top:20px">
-        <ol class="list-inline">
-            <li><a href="#">登录</a></li>
-            <li><a href="#">注册</a></li>
-            <li><a th:href="@{/ProductListController/shoppingCart(userId=46)}">购物车</a></li>
-            <li><a th:href="@{/ProductListController/collectionProduct(userId=46)}">我的收藏</a></li>
-            <li><a href="#">我的订单</a></li>
-        </ol>
-    </div>
-</div>
 
 &lt;!&ndash; 导航条 &ndash;&gt;
 <div class="container-fluid">

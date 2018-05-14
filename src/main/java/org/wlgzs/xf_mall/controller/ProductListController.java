@@ -77,6 +77,11 @@ public class ProductListController {
             footprintService.save(request,userId,productId);
         }
         Product product = productService.findProductById(productId);
+        String [] images = new String[0];
+        if (product.getProduct_picture().contains(",")) {
+            images = product.getProduct_picture().split(",");
+        }
+        model.addAttribute("images",images);
         model.addAttribute("product", product);
         return new ModelAndView("productDetails");
     }
