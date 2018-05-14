@@ -20,7 +20,7 @@ window.onload = function(){
         var newDate = new Date("2018/5/18 0:00:00");
         var newTime = newDate.getTime();
         var second = Math.floor((newTime - oldTime)/1000);
-        var day = Math.floor(second/86400);
+        // var day = Math.floor(second/86400);
         second = second % 86400;
         var hour = Math.floor(second/3600);
         second %= 3600;
@@ -57,7 +57,6 @@ window.onload = function(){
             },
             dataType: "JSON",
             success: function (data) {
-                console.log(data);
                 if (data.length > 0) {
                     document.getElementsByClassName("hint")[0].style.display = "block";
                     document.getElementsByClassName("hint")[0].innerHTML = "";
@@ -65,10 +64,11 @@ window.onload = function(){
                         let oDiv = document.createElement('div');
                         oDiv.innerHTML = data[i];
                         document.getElementsByClassName("hint")[0].appendChild(oDiv);
-                    };
+                    }
                 $(".hint").children().addClass("houxuan");
                 $(".houxuan").on("click",function(){
                      $(".ipt-1").val($(this).html());
+                $(".houxuan").css("overflow","hidden")
                     document.getElementsByClassName("hint")[0].style.display = "none";
                 })
                 }
@@ -77,7 +77,7 @@ window.onload = function(){
                 }
             },
             error: function () {
-                alert("请求失败");
+                alert("请求失败！！")
             }
         })
     }
