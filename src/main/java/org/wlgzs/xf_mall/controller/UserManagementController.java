@@ -220,7 +220,7 @@ public class UserManagementController {
         return new ModelAndView("changePassword");
     }
 
-    /**
+    /**+
      * @param
      * @return
      * @author 胡亚星
@@ -349,7 +349,7 @@ public class UserManagementController {
         String user_password = request.getParameter("user_password");
         userService.changePassword(user_password, user_mail);
         model.addAttribute("mgs", "修改成功");
-        return new ModelAndView("getBack");
+        return new ModelAndView("login");
     }
 
 

@@ -26,7 +26,6 @@
     </thead>
     <tbody>
     <tr th:each="user : ${users}">
-
         <td th:text="${user.userId}"></td>
         <td th:text="${user.user_name}"></td>
         <td th:text="${user.user_role}"></td>
@@ -35,7 +34,8 @@
         <td th:text="${user.user_mail}"></td>
         <td class="ttdd" >
             <!--<button type="button" class="btn btn-primary" style="background-color: #fff;color: #000;">添加</button>-->
-                <a class="aa1"th:href="@{/AdminUserController/adminDeleteUser(userId=${user.userId})}">删除</a>
+                <!--<a class="aa2" th:href="@{/AdminUserController/adminDeleteUser(userId=${user.userId})}">删除</a>-->
+                <a class="aa2" href="javascript:void(0);" th:onclick="'javascript:deleteUser('+${user.userId}+');'">删除</a>
                 <button type="button" class="btn btn-primary modifi" style="background-color:#007BFF" >
                 <a th:href="@{/AdminUserController/toAdminEditUser(userId=${user.userId})}">修改</a></button>
         </td>

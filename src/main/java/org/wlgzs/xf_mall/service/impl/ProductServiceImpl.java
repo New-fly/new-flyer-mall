@@ -316,11 +316,13 @@ public class ProductServiceImpl implements ProductService {
         ProductCategory productCategory = productCategoryRepository.findById(categoryId);
         if(productCategory.getParent_name().equals("0")){
             List<ProductCategory> productCategories = productCategoryRepository.findByCategoryParentName(productCategory.getCategory_name());
-            if(productCategories!=null){
+            System.out.println(productCategories);
+
+            System.out.println(productCategories.size()!=0);
+            if(productCategories.size()!=0){
                 long[] Ids = new long[productCategories.size()];
                 for (int i = 0; i < Ids.length; i++) {
                     Ids[i] = productCategories.get(i).getCategoryId();
-                    System.out.println("---"+Ids[i]);
                 }
                 productCategoryRepository.deleteByIds(Ids);
             }
