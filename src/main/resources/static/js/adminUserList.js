@@ -1,19 +1,23 @@
 //获取所有a标签
-var allas=document.getElementsByTagName("aa1");
-function delA() {
-
-        var tr=this.parentNode.parentNode;
-        //获取要删除的名字
-        var name=tr.children[0].innerHTML;
-        var flag=confirm("确定要删除"+name+"吗？");
-        if(flag==true){
-            tr.parentNode.removeChild(tr);
-        }
+/*var adelbtns=document.getElementsByClassName("aa2");
+function delA(){
+    var tr=this.parentNode.parentNode;
+    //获取要删除的名字
+    var name=tr.children[0].innerHTML;
+    var flag=confirm("确定要删除"+name+"吗？");
+    if(flag){
+        tr.parentNode.removeChild(tr);
+    }
 }
-//console.log(allas);
-//为每个button绑定一个单击相应函数
-for(i=0;i<allas.length;i++){
-    allas[i].onclick=delA;
+for(i=0;i<adelbtns.length;i++){
+    adelbtns[i].onclick=delA;
+}*/
+function deleteUser(userId) {
+    var isDel = confirm("您确认要删除吗？");
+    if(isDel){
+        //要删除
+        location.href = "/AdminUserController/adminDeleteUser?userId="+userId;
+    }
 }
 //添加
 //var addbtn1=document.getElementsByClassName("btn btn-primary add")[0];

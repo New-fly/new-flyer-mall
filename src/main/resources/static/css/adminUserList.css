@@ -12,7 +12,7 @@ td,th{
     width: 300px;
   }
 
-.aa1{
+.aa2{
     background-color: red;
     color: #fff;
     border-radius: 5px;
@@ -22,7 +22,7 @@ td,th{
     text-align: center;
     padding-top: 7px;
 }
-.aa1:hover{
+.aa2:hover{
     text-decoration: none;
     color: #fff;
     cursor: pointer;
