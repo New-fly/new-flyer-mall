@@ -1,0 +1,429 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    font-family: "微软雅黑";
+}
+body{
+    min-width: 1200px;
+}
+.top{
+    width: 100%;
+    margin: 0 auto;
+    height: 30px;
+    background-color: #F2F2F2;
+}
+.top-left{
+    margin-left: 30px;
+}
+.top-right{
+    margin-right: 50px;
+}
+.top-left>ul{
+    float: left;
+    margin: 0;
+}
+.top-right>ul{
+    float: right;
+    margin: 0;
+}
+.top-left>ul>li,.top-right>ul>li{
+    float: left;
+    list-style-type: none;
+    font-size: 12px;
+    line-height: 30px;
+    margin: 0 12px;
+}
+.top-left>ul>li>a,.top-right>ul>li>a{
+    height: 100%;
+    text-decoration: none;
+    color: #838383;
+}
+.top-left>ul>li>a:hover,.top-right>ul>li>a:hover{
+    color: #336699;
+}
+.top-left>ul>li>a>span,.top-right>ul>li>a>span{
+    color: #336699;
+}
+.top-search{
+    width: 100%;
+    margin: 0 auto;
+    height: 113px;
+    border-bottom: 1px solid #f2968e;
+    background-color: #fff;
+}
+.con-wrap{
+    width: 1200px;
+    min-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+img.xflogo{
+    width: 220px;
+    height: 72px;
+    float: left;
+    margin-top: 15px;
+}
+.search-box{
+    float: left;
+    margin: 20px;
+    margin-left: 170px;
+    margin-top: 35px;
+    background: #f03726;
+    position: relative;
+}
+.ipt1{
+    width: 500px;
+    height: 20px;
+    padding: 20px;
+    border: 3px solid #f03726;
+    outline: none;
+}
+.submit{
+    background-color: #f03726;
+    width: 85px;
+    height: 40px;
+    outline: none;
+    border: 0;
+    color: #f5f5f2;
+    font-size: 18px;
+    letter-spacing: 10px;
+}
+.submit:hover{
+    cursor: pointer;
+}
+.search-links {
+    position: absolute;
+    margin-top: 80px;
+    margin-left: 390px;
+}
+.alinks{
+    display: inline-block;
+    width: 54px;
+    margin: 10px;
+}
+a{
+    text-decoration: none;
+    color: #B3B3B3;
+}
+a:hover{
+    color: red;
+}
+.page-search{
+    width: 100%;
+    margin: 0px auto;
+    height: auto;
+    background-color: #FAFAFA;
+    padding-top: 40px;
+}
+.search-table{
+    width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid #e8e8e8;
+}
+.filter-group-list{
+    border-top: 0 none;
+    width: 1200px;
+    margin: 0 auto;
+    border-bottom: 1px solid #e8e8e8;
+    overflow: hidden;
+}
+.list-left{
+    float: left;
+    width: 105px;
+    border-right: 1px solid #e8e8e8;
+    padding: 10px;
+    color: #B3B3B3;
+}
+.list-right{
+    float: left;
+    width: 1053px;
+    height: 37px;
+    line-height: 37px;
+
+}
+.filter-group-list>.list-right>a{
+    margin-right: 12px;
+    color: #8D778D;
+}
+.filter-group-list>.list-right>a:hover{
+    color: red;
+}
+.sort-row{
+    padding-top: 30px;
+    width: 1200px;
+    margin: 0 auto;
+}
+.time,.price{
+    padding: 0 12px;
+    display: inline-block;
+    text-align: center;
+    border: 1px solid #FAFAFA;
+    height: 34px;
+    line-height: 35px;
+}
+.time:hover{
+    background-color: #fff;
+    border: 1px solid orange;
+}
+.price:hover{
+    background-color: #fff;
+    border: 1px solid orange;
+}
+.priceipt{
+    width: 30px;
+    height: 20px;
+}
+.queding{
+    width: 40px;
+    background: red;
+    outline: none;
+    border: 0;
+    border-radius: 3px;
+    color: #fff;
+}
+.show-product{
+    width: 1200px;
+    margin: 0 auto;
+    height: auto;
+    padding: 25px;
+}
+.product{
+    width: 258px;
+    border: 1px solid #e8e8e8;
+    display: inline-block;
+    margin: 20px 10px;
+}
+.product:hover{
+    border: 1px solid red;
+}
+.img-box{
+    width: 258px;
+    height: 250px;
+}
+.info-font{
+    color: #999;
+    background: #fff;
+}
+.fonta1{
+    color: #000;
+    text-decoration: none;
+}
+.fonta2{
+    color: #c10001;
+    text-decoration: none;
+}
+.fonta1:hover{
+    color: red;
+    text-decoration: underline;
+}
+.fonta2:hover{
+    color: red;
+    text-decoration: underline;
+}
+.title-row,.sale-row,.seller{
+    line-height: 20px;
+    padding: 5px 10px 15px;
+}
+.dianping{
+    margin-top: 5px;
+}
+.seller{
+    background-color: #E7E7E7;
+}
+/*分页*/
+.pager {
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    border:1px solid #dddddd;
+    border-radius:3px;
+    display:inline-block;
+    clear:both;
+    vertical-align: middle;
+}
+.pager a,.pager span {
+    font-size:14px;
+    color:#428bca;
+    border-right:1px solid #dddddd;
+    padding:4px 9px;
+    float:left;
+    text-decoration:none;
+}
+.pager span {
+    color:#fff;
+    background:#428bca;
+}
+.pager a:hover {
+    color:#2a6496;
+    background:#f2f2f2;
+}
+.pager a.last {
+    border-right:0;
+}
+.back-to-top{
+    position: fixed;
+    display: block;
+    right: 20px;
+    bottom: 100px;
+    width: 60px;
+    height: 60px;
+    z-index: 999;
+    background: red;
+}
+@font-face {
+    font-family: 'iconfont';  /* project id 652364 */
+    src: url('//at.alicdn.com/t/font_652364_h0prb2prii68yqfr.eot');
+    src: url('//at.alicdn.com/t/font_652364_h0prb2prii68yqfr.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_652364_h0prb2prii68yqfr.woff') format('woff'),
+    url('//at.alicdn.com/t/font_652364_h0prb2prii68yqfr.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_652364_h0prb2prii68yqfr.svg#iconfont') format('svg');
+}
+
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:55px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+    color: #fff;
+    display: block;
+    margin-top: -9px;
+}
+.back-to-top:hover .iconfont{
+    cursor: pointer;
+    display: none;
+}
+.back-to-top .b-to-t{
+    display: none;
+    width: 46px;
+    height: 50px;
+    font-size: 16px;
+    margin-left: 13px;
+    margin-top: 8px;
+    color: #fff;
+
+}
+.back-to-top:hover .b-to-t{
+    display: block;
+    cursor: pointer;
+}
+.hotsell{
+    width: 1200px;
+    margin: 0 auto;
+    height: 500px;
+    margin-top: 15px;
+}
+.headersell{
+    width: 1160px;
+    background: #fff;
+    padding: 0px 20px;
+    font-size: 16px;
+    margin: 0 auto;
+
+}
+figure{
+    width: 268px;
+    padding: 15px;
+    margin: 15px;
+    border: 1px solid #A3A3A3;
+    float: left;
+}
+.jieshao{
+    display: block;
+    padding: 10px 0;
+}
+
+.lettle{
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    margin-top: 6px;
+}
+.search2{
+    width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+.ipt2{
+    width: 800px;
+    margin-left: 160px;
+}
+.submit2{
+    vertical-align: bottom;
+    height: 46px;
+}
+.gray_all{
+    width: 1000px;
+    height: 225px;
+    margin: 0 auto;
+}
+.gray_all>div{
+    width: 200px;
+    height: 225px;
+    float: left;
+}
+.gray_text1{
+    margin-top: 40px;
+    line-height: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #B1B1B1;
+}
+.color{
+    line-height: 15px;
+    margin-left: -15px;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    color:gray;
+    border-left: 4px solid #F66181;
+}
+.foots{
+    width: 100%;
+    height: auto;
+    background-color: black;
+}
+.foots_all{
+    width: 1200px;
+    height: 190px;
+    margin: 0 auto;
+    position: relative;
+}
+.free_1{
+    color: green;
+}
+.foots_text1{
+    width: 850px;
+    height: 70px;
+    position: absolute;
+    left: 150px;
+    top: 25px;
+    font-size: 12px;
+    color: #B1B1B1;
+    cursor: pointer;
+}
+.foots_text2{
+    position: absolute;
+    left: 70px;
+    top: 90px;
+    font-size: 12px;
+    color: #3F3F3F;
+    cursor: pointer;
+}
+.foots_text3{
+    width: 1000px;
+    height: 100px;
+    position: absolute;
+    left: 150px;
+    top: 90px;
+    font-size: 12px;
+    line-height: 20px;
+    color: #3F3F3F;
+}
+.foots_text3>a{
+    color: #3F3F3F;
+    text-decoration: none;
+    cursor: pointer;
+}
+.foots_text3>a:hover{
+    color: #B1B1B1;
+}

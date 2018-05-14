@@ -149,8 +149,8 @@ public class ProductController {
      * @description 删除商品
      */
     @RequestMapping("/adminDeleteProduct")
-    public ModelAndView delete(long productId) {
-        productService.delete(productId);
+    public ModelAndView delete(long productId, HttpServletRequest request) {
+        productService.delete(productId,request);
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
     }
     /**

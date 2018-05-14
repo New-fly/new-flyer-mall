@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.wlgzs.xf_mall.entity.User ;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public interface UserService {
 
     void edit(User user);
 
-    void delete(long userId);
+    void delete(long userId, HttpServletRequest request);
 
     void save(List<User> users);
 
