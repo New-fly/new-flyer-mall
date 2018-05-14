@@ -31,7 +31,7 @@ public interface ProductService {
     void edit(Product product, String product_details, MultipartFile[] myFileNames, HttpSession session,
               HttpServletRequest request);
 
-    void delete(long productId);
+    void delete(long productId, HttpServletRequest request);
 
     Product findProductById(long productId);
 

@@ -9,6 +9,7 @@ import org.wlgzs.xf_mall.entity.User;
 import org.wlgzs.xf_mall.service.UserService;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -131,8 +132,8 @@ public class UserController {
      * @description 后台删除用户
      */
     @RequestMapping("/adminDeleteUser")
-    public String delete(Long userId) {
-        userService.delete(userId);
+    public String delete(Long userId, HttpServletRequest request) {
+        userService.delete(userId, request);
         return "redirect:/AdminUserController/adminUserList";
     }
 }

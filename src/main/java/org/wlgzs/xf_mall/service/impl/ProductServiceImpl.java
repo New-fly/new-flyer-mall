@@ -138,8 +138,19 @@ public class ProductServiceImpl implements ProductService {
 
     //删除商品
     @Override
-    public void delete(long id) {
-        productRepository.deleteById(id);
+    public void delete(long productId, HttpServletRequest request) {
+        Product product = productRepository.findById(productId);
+        String path = request.getSession().getServletContext().getRealPath("/");
+        String image = product.getProduct_picture();
+
+        String[] img = image.split(",");
+        for (int i = 0; i < img.length; i++) {
+            File file = new File(path+""+img[i].substring(1,img[0].length()));
+            if (file.exists() && file.isFile()) {
+                file.delete();
+            }
+        }
+        productRepository.deleteById(productId);
     }
 
     //通过id查找商品
