@@ -49,8 +49,7 @@ window.onscroll=function () {
         oDiv.style.position="fixed";
         oDiv.style.top=0;
         // oDiv.style.left=0;
-
     }else{
         oDiv.style.position="";
     }
-}
+};
