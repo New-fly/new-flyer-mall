@@ -111,7 +111,7 @@ public class LoginController {
 
     //github登陆
     @GetMapping(value = "/callback")
-    public String claaback(Model model, String code) {
+    public String claaback(HttpServletRequest request,Model model, String code) {
         System.out.println("进入123456");
         String me = "";
         JSONObject res = null;
@@ -130,8 +130,16 @@ public class LoginController {
         System.out.println(res);
         Object o = res.get("id");
         long githubId = Long.valueOf(String.valueOf(o)).longValue();
-        model.addAttribute("githubId",githubId);
-        return "addGithub";
+        //查询该id是否已存在，并返回该数据
+        Authorization authorization = authorizationService.isBinding(githubId);
+        if(authorization == null){//首次登陆
+            model.addAttribute("githubId",githubId);
+            return "addGithub";
+        }else{//登陆已有账号
+            long userId = authorization.getUserId();
+            logUserService.loginId(request,userId);
+            return "redirect:/HomeController/homeProduct";
+        }
     }
 
     //github注册新用户

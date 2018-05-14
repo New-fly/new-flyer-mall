@@ -31,6 +31,9 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
     @Query(value = "SELECT o FROM ProductCategory o WHERE o.category_name like %?1%")
     List<ProductCategory> findByCategoryName(String category_name);
 
+    @Query(value = "SELECT * FROM product_category WHERE category_name like %?% limit 0,8",nativeQuery = true)
+    List<ProductCategory> findProductByWord(String category_name);
+
     @Transactional
     @Modifying
     @Query("DELETE FROM ProductCategory p WHERE p.categoryId in :Ids")

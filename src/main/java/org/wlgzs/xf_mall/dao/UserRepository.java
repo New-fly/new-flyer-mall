@@ -33,19 +33,19 @@ public interface UserRepository extends JpaRepository<User, Long>,JpaSpecificati
     @Query("FROM User u WHERE u.user_password=?1 and u.userId=?2")
     User checkPassWord(String user_password,long id);
 
-    @Query("UPDATE User u SET u.user_password=user_password WHERE u.userId=id")
+    @Query("UPDATE User u SET u.user_password=?1 WHERE u.userId=?2")
     @Modifying
     @Transactional
-    void changePassword(String user_password,long id);
+    void changePassword(String user_rePassword,long userId);
 
     @Query("UPDATE User u SET u.user_password=user_password WHERE u.user_mail=user_mail")
     @Modifying
     @Transactional
     void changePassword(String user_password,String user_mail);
 
-    @Query("UPDATE User u SET u.user_mail=user_mail WHERE u.userId=userId")
+    @Query("UPDATE User u SET u.user_mail=?1 WHERE u.userId=?2")
     @Modifying
     @Transactional
-    void changeEmail(String user_mail,Long userId);
+    void changeEmail(String user_mail,long userId);
 
 }

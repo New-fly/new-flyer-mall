@@ -17,6 +17,7 @@ import org.wlgzs.xf_mall.service.ProductService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,12 +68,21 @@ public class ProductListController {
      * @description 跳转至商品详情页面
      */
     @RequestMapping("/toProduct")
-    public ModelAndView toProduct(Model model,long userId, long productId,HttpServletRequest request) {
+    public ModelAndView toProduct(Model model, long productId,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if(session.getAttribute("userId")!=null){
+            long userId = (long) session.getAttribute("userId");
+            Collection collection = productService.findByCollectionUserIdAndProductId(userId,productId);
+            model.addAttribute("collection",collection);
+            footprintService.save(request,userId,productId);
+        }
         Product product = productService.findProductById(productId);
+        String [] images = new String[0];
+        if (product.getProduct_picture().contains(",")) {
+            images = product.getProduct_picture().split(",");
+        }
+        model.addAttribute("images",images);
         model.addAttribute("product", product);
-        Collection collection = productService.findByCollectionUserIdAndProductId(userId,productId);
-        model.addAttribute("collection",collection);
-        footprintService.save(request,userId,productId);
         return new ModelAndView("productDetails");
     }
     /**
@@ -82,8 +92,13 @@ public class ProductListController {
      * @description 添加购物车
      */
     @RequestMapping("/addShoppingProduct")
-    public  ModelAndView addShoppingProduct(long userId,long productId,HttpServletRequest request){
-        productService.save(userId,productId,request);
+    public  ModelAndView addShoppingProduct(long productId,int shoppingCart_count,HttpServletRequest request){
+        long userId = 0;
+        HttpSession session = request.getSession();
+        if(session.getAttribute("userId")!=null){
+            userId = (long) session.getAttribute("userId");
+        }
+        productService.save(userId,productId,shoppingCart_count,request);
         String url="redirect:/ProductListController/toProduct?productId="+productId+"&userId="+userId;
         return new ModelAndView(url);
     }
@@ -94,7 +109,13 @@ public class ProductListController {
      * @description 添加收藏
      */
     @RequestMapping("/addCollectionProduct")
-    public  ModelAndView addCollectionProduct(long userId,long productId,HttpServletRequest request){
+    public  ModelAndView addCollectionProduct(long productId,HttpServletRequest request){
+        long userId = 0;
+        HttpSession session = request.getSession();
+        System.out.println(productId);
+        if(session.getAttribute("userId")!=null){
+            userId = (long) session.getAttribute("userId");
+        }
         productService.saveCollection(userId,productId,request);
         String url="redirect:/ProductListController/toProduct?productId="+productId+"&userId="+userId;
         return new ModelAndView(url);
@@ -216,13 +237,13 @@ public class ProductListController {
      */
     @RequestMapping("/searchWord")
     public void searchWord(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String product_keywords = request.getParameter("product_keywords");
-        //product_keywords = "2";
-        List<Product> products = productService.findProductByWord(product_keywords);
-
+        String category_name = request.getParameter("product_keywords");
+        //category_name = "2";
+        List<ProductCategory> productCategories = productService.findProductByWord(category_name);
+        System.out.println(productCategories);
         List<Object> productKeywordList = new ArrayList<Object>();
-        for (int i = 0; i < products.size(); i++) {
-            productKeywordList.add(products.get(i).getProduct_keywords());
+        for (int i = 0; i < productCategories.size(); i++) {
+            productKeywordList.add(productCategories.get(i).getCategory_name());
         }
         Gson gson = new Gson();
         String json = gson.toJson(productKeywordList);
@@ -236,10 +257,10 @@ public class ProductListController {
      * @description 前台模糊搜索商品
      */
     @RequestMapping("/searchProductList")
-    public ModelAndView searchProductList(Model model, String product_keywords, @RequestParam(value = "page",defaultValue = "0") int page,
+    public ModelAndView searchProductList(Model model, String product_category, @RequestParam(value = "page",defaultValue = "0") int page,
                                           @RequestParam(value = "limit",defaultValue = "12") int limit){
         if(page != 0) page--;
-        Page pages =  productService.getProductListPage(product_keywords,page,limit);
+        Page<Product> pages = productService.findProductByTwoCategory(product_category, page, limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
         List<Product> products = pages.getContent();
@@ -253,7 +274,7 @@ public class ProductListController {
             }
         }
         model.addAttribute("products", products);//查询的当前页的集合
-        model.addAttribute("product_keywords",product_keywords);
+        model.addAttribute("product_category",product_category);
         //遍历一级二级分类
         List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();
         model.addAttribute("productOneCategories", productOneCategories);
@@ -261,7 +282,6 @@ public class ProductListController {
         model.addAttribute("productTwoCategories", productTwoCategories);
         return new ModelAndView("productList");
     }
-
     //积分商品展示
     @RequestMapping("/integralProduct")
     public ModelAndView findByProduct_isRedeemable(Model model) {

@@ -180,9 +180,8 @@ public class UserManagementController {
      *@Description:跳转到修改邮箱
      */
     @RequestMapping("toChangeEmail")
-    public ModelAndView toChangeEmail(Model model,Long userId){
-        User user = userService.findUserById(userId);
-        model.addAttribute("user", user);
+    public ModelAndView toChangeEmail(){
+        System.out.println("123123");
         return new ModelAndView("changeEmail");
     }
 
@@ -197,13 +196,14 @@ public class UserManagementController {
     public ModelAndView changeEmail(Model model,String user_mail,Long userId){
         //检查邮箱是否存在
         if(logUserService.selectEmail(user_mail)){//可以继续
-            User user = userService.findUserById(userId);
             model.addAttribute("mgs", "修改成功");
+            System.out.println("user_mail=============="+user_mail);
             userService.changeEmail(user_mail,userId);//修改
+            User user = userService.findUserById(userId);
             model.addAttribute("user", user);
             return new ModelAndView("information");
         }else{
-            String url = "redirect:/UserManagementController/toChangeEmail?userId="+userId;
+            String url = "redirect:/UserManagementController/toChangeEmail";
             return new ModelAndView(url);
         }
     }
@@ -216,12 +216,11 @@ public class UserManagementController {
      *@Description:跳转到修改密码
      */
     @RequestMapping("toChangePassword")
-    public ModelAndView toChangePassword(Model model,Long userId){
-        model.addAttribute("userId",userId);
+    public ModelAndView toChangePassword(){
         return new ModelAndView("changePassword");
     }
 
-    /**
+    /**+
      * @param
      * @return
      * @author 胡亚星
@@ -232,14 +231,17 @@ public class UserManagementController {
     public ModelAndView checkPassword(Model model, HttpServletRequest request, Long userId) {
         String user_password = request.getParameter("user_password");
         String user_rePassword = request.getParameter("user_rePassword");
+        System.out.println(user_password);
+        System.out.println(user_rePassword);
         if (userService.checkPassWord(user_password, userId)) {//正确ze修改密码
+            System.out.println("正确");
             model.addAttribute("mgs", "修改成功");
             userService.changePassword(user_rePassword, userId);
             return new ModelAndView("login");
         } else {//原密码错误
             model.addAttribute("userId",userId);
             model.addAttribute("mgs", "原密码错误");
-            return new ModelAndView("toChangePassword");
+            return new ModelAndView("redirect:/toChangePassword");
         }
     }
 

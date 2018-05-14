@@ -19,9 +19,6 @@ window.onload = function() {
                         "shopping_cart_id":shopcartid,
                         "shopping_cart_count":num,
                     },
-                    // async:true,
-                    // cache:true,
-                    // traditional:false,
                     dataType:"text",
                     success:function(data){
                         document.getElementsByClassName("qian")[i].value=renminbi;

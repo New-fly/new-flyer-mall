@@ -75,6 +75,6 @@ $(document).ready(function(){
 		$(".frame").attr("src","/AdminActivityController/activityProducts")
 	})
 	$("#src7").click(function(){
-		$(".frame").attr("src","..............")
+		$(".frame").attr("src","/AdminActivityController/activityProducts")
 	})
 })

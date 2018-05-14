@@ -1,62 +1,338 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>商品表</title>
-    <link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.css}">
-    <link th:href="@{/css/productList.css}" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
-    <link rel="stylesheet" th:href="@{font/css/font-awesome.min.css}">
-	<script th:src="@{/js/productList.js}"></script>
+    <title>高级检索-新飞商城</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/search.css}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/bootstrap/dist/js/bootstrap.min.js}"></script>
 </head>
 <body>
-	<table class="table table-bordered able-box" id="mytable">
-	    <thead style="background-color: #F2F2F2;">
-	    <tr>
-	        <th>库存</th>
-	        <th>是否可兑换</th>
-	        <th>上架状态</th>
-	        <th>专柜价格</th>
-	        <th>商城价格</th>
-	        <th>是否热门</th>
-	        <th>图片</th>
-	        <th>商品详情</th>
-	    </tr>
-	    </thead>
-	    <tbody>
-	    <tr>
-	        <td>John</td>
-	        <td>Doe</td>
-	        <td>john@example.com</td>
-	        <td></td>
-	        <td></td>
-	        <td></td>
-	        <td></td>
-	        <td class="ttdd">
-	            <!--<button type="button" class="btn btn-primary" style="background-color: #fff;color: #000;">添加</button>-->
-	            <a class="aa1">删除</a>
-	            <a href="./change.html"><button type="button" class="btn btn-primary modifi" style="background-color:#007BFF" >修改</button></a>
-	            <button type="button" class="btn btn-warning">查看</button>
-	        </td>
-	    </tr>
-	    <tr>
-	        <td>Mary</td>
-	        <td>Moe</td>
-	        <td>mary@example.com</td>
-	        <td></td>
-	        <td></td>
-	        <td></td>
-	        <td></td>
-	        <td>
-	            <!--<button type="button" class="btn btn-primary" style="background-color: #fff;color: #000;">添加</button>-->
-	            <a class="aa1">删除</a>
-	            <button type="button" class="btn btn-primary  modifi" style="background-color: #007BFF">修改</button>
-	            <button type="button" class="btn btn-warning">查看</button>
-	        </td>
-	    </tr>
-	    </tbody>
-	</table>
-	<button type="button" class="btn btn-primary add" style="background-color: green;color: #fff;float: right;">添加</button>
+<div class="top">
+    <div class="top-left">
+        <ul>
+            <li><a href="#"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
+            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;登录</a></li>
+            <li><a href="#"><span class="red">立即注册</span></a></li>
+        </ul>
+    </div>
+    <div class="top-right">
+        <ul>
+            <li><a href="#"><i class="fa fa-paw" style="color: #336699"></i>&nbsp;&nbsp;购物车</a></li>
+            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a></li>
+            <li><a href="#">我的淘宝</a></li>
+            <li><a href="#">111111</a></li>
+            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;管理系统</a></li>
+        </ul>
+    </div>
+</div>
+<div class="top-search">
+    <div class="con-wrap">
+        <a>
+            <img th:src="@{/images/logo.png}" class="xflogo">
+        </a>
+
+        <div class="search-box">
+            <form th:action="@{/ProductListController/searchProductList}" method="post">
+                <span class=""><input type="text" name="product_category" th:value="*{product_category}" class="ipt1" placeholder="请输入要搜索的内容"></span>
+                <input type="submit" value="搜索" class="submit">
+            </form>
+
+        </div>
+        <div class="search-links">
+            <a th:each="oneCategory : ${productOneCategories}"
+               th:href="@{/ProductListController/searchProductList(product_category=${oneCategory.category_name})}"
+               th:text="${oneCategory.category_name}" class="alinks"></a>
+        </div>
+    </div>
+</div>
+<div class="page-search">
+    <!--//筛选头-->
+    <div class="search-table">
+        <div class="filter-group-list">
+            <div class="list-left">品牌</div>
+            <div class="list-right">
+                <a href="">新飞</a>
+            </div>
+        </div>
+        <div class="filter-group-list">
+            <div class="list-left">电器分类</div>
+            <div class="list-right">
+                <a th:each="oneCategory : ${productOneCategories}"
+                   th:href="@{/ProductListController/searchProductList(product_category=${oneCategory.category_name})}"
+                   th:text="${oneCategory.category_name}"></a>
+            </div>
+        </div>
+        <div class="filter-group-list">
+            <div class="list-left">详细分类</div>
+            <div class="list-right" style="height: auto">
+                <a th:each="product_category : ${productTwoCategories}"
+                   th:href="@{/ProductListController/searchProductList(product_category=${product_category.category_name})}"
+                   th:text="${product_category.category_name}">一级</a>
+            </div>
+        </div>
+        <div class="filter-group-list">
+            <div class="list-left">价格区间(死数据)</div>
+            <div class="list-right">
+                <a href="">1000元以下</a>
+                <a href="">1000-2000</a>
+                <a href="">2001-3000</a>
+                <a href="">3001-5000</a>
+                <a href="">5001-8000</a>
+                <a href="">8001-10000</a>
+                <a href="">10000以上</a>
+            </div>
+        </div>
+        <!--<div class="filter-group-list">
+>>>>>>> 30843ed7f7d1cc1551a24409b022c9d7f05c82d7
+            <div class="list-left">控温方式</div>
+            <div class="list-right">
+                <a href="">机械温控</a>
+                <a href="">电脑温控</a>
+                <a href="">电子温控</a>
+            </div>
+        </div>
+        <div class="filter-group-list">
+            <div class="list-left">智能类型</div>
+            <div class="list-right">
+                <a href="">支持智能</a>
+                <a href="">不支持智能</a>
+            </div>
+        </div>
+        <div class="filter-group-list">
+            <div class="list-left">冰箱制冷类型</div>
+            <div class="list-right">
+                <a href="">直冷</a>
+                <a href="">风冷</a>
+                <a href="">风直混冷</a>
+            </div>
+<<<<<<< HEAD
+        </div>
+=======
+        </div>-->
+    </div>
+    <div class="sort-row">
+        <div class="filter-group-list" style="border: 1px solid #e8e8e8;">
+            <div class="list-left">综合排名</div>
+            <div class="list-right" style="background-color:#FAFAFA;">
+                <div class="time">上市时间</div>
+                <div class="price">
+                    价格从高到低
+                </div>
+                <div class="price">
+                    价格从低到高
+                </div>
+                <input type="text" class="priceipt" placeholder="¥"><em>-</em>
+                <input type="text" class="priceipt" placeholder="¥">
+                <input type="submit" value="确定" class="queding">
+            </div>
+        </div>
+    </div>
+    <div class="show-product">
+        <div class="product" th:each="product:${products}">
+            <div class="img-box">
+                <a th:href="@{/ProductListController/toProduct(productId=${product.productId})}">
+                    <img th:src="${product.product_picture}" alt="" style="width: 256px;height: 250px;">
+                </a>
+            </div>
+            <div class="info-font">
+                <div class="title-row">
+                    <a th:href="@{/ProductListController/toProduct(productId=${product.productId})}" class="fonta1"
+                       th:text="${product.product_keywords}">新飞BCD-572WDENU1</a>
+                </div>
+                <div class="sale-row">
+                    <span><strong style="font-size: 14px;color: red;" th:text="'商城价：¥'+${product.product_mallPrice}">¥3543</strong></span>
+                    <span style="float: right;">4869人付款</span>
+                    <div class="dianping" th:text="'专柜价：¥'+${product.product_counterPrice}"></div>
+                </div>
+                <div class="seller">共有88家商家在售</div>
+            </div>
+        </div>
+
+        <!--分页功能-->
+
+        <div class="fenye" th:if="${TotalPages > 0}" style="text-align: center">
+
+            <ul class="pagination" th:if="${Number == 1} and ${TotalPages > 1}">
+                <!--//如果当前页等于1，总页数大于1（不显示上一页）   Number&ndash;&gt;当前页-->
+                <li><a th:href="@{/ProductListController/toProductList(page=1)}">首页</a></li>
+                <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
+                    <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
+                    <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);"
+                       th:text="${i}">#</a><!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
+                    <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
+                       th:href="@{/ProductListController/toProductList(page=${i})}" th:text="${i}"
+                       style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
+                </li>
+                <li><a th:href="@{/ProductListController/toProductList(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
+            </ul>
+
+            <ul class="pagination" th:if="${Number > 1} and ${Number > 1}"><!--//显示上一页-->
+                <li><a th:href="@{/ProductListController/toProductList(page=1)}">首页</a></li><!--//跳转至第一页-->
+                <li><a th:href="@{/ProductListController/toProductList(page=${Number-1})}">上一页</a></li><!--//请求页数-1-->
+                <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
+                    <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
+                    <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);"
+                       th:text="${i}">#</a><!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
+                    <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
+                       th:href="@{/ProductListController/toProductList(page=${i})}" th:text="${i}"
+                       style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
+                </li>
+                <li th:if="${Number != TotalPages}"><a
+                        th:href="@{/ProductListController/toProductList(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
+                <li><a th:href="@{/ProductListController/toProductList(page=${Number})}">尾页</a></li><!--//跳转至第Number页-->
+            </ul>
+
+        </div>
+
+        <div class="back-to-top" onclick="pageScroll()">
+            <i class="iconfont">&#xe614;</i>
+            <span class="b-to-t">返回顶部</span>
+        </div>
+        <div class="headersell">掌柜热卖（死数据）</div>
+        <div class="hotsell">
+            <figure>
+                <img th:src="@{/images/bingxiang2.webp}" style="width: 232px;height: 232px;">
+                <span style="color: red; font-size: 20px">¥6666</span>&nbsp;&nbsp;<s>¥5555</s>
+                <a href="#" class="jieshao">新飞除菌新飞除菌新飞除菌新飞除菌</a>
+                <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
+                <div class="xinfi">
+                    <a href="#" style="display: block;"> <img th:src="@{/images/xflogo.ico}" class="lettle"></a>
+                </div>
+            </figure>
+            <figure>
+                <img th:src="@{/images/bingxiang2.webp}" style="width: 232px;height: 232px;">
+                <span style="color: red; font-size: 20px">¥6666</span>&nbsp;&nbsp;<s>¥5555</s>
+                <a href="#" class="jieshao">新飞除菌新飞除菌新飞除菌新飞除菌</a>
+                <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
+                <div class="xinfi">
+                    <a href="#" style="display: block;"> <img th:src="@{/images/xflogo.ico}" class="lettle"></a>
+                </div>
+            </figure>
+            <figure>
+                <img th:src="@{/images/bingxiang2.webp}" style="width: 232px;height: 232px;">
+                <span style="color: red; font-size: 20px">¥6666</span>&nbsp;&nbsp;<s>¥5555</s>
+                <a href="#" class="jieshao">新飞除菌新飞除菌新飞除菌新飞除菌</a>
+                <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
+                <div class="xinfi">
+                    <a href="#" style="display: block;"> <img th:src="@{/images/xflogo.ico}" class="lettle"></a>
+                </div>
+            </figure>
+            <figure>
+                <img th:src="@{/images/bingxiang2.webp}" style="width: 232px;height: 232px;">
+                <span style="color: red; font-size: 20px">¥6666</span>&nbsp;&nbsp;<s>¥5555</s>
+                <a href="#" class="jieshao">新飞除菌新飞除菌新飞除菌新飞除菌</a>
+                <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
+                <div class="xinfi">
+                    <a href="#" style="display: block;"> <img th:src="@{/images/xflogo.ico}" class="lettle"></a>
+                </div>
+            </figure>
+        </div>
+        <div class="search2">
+            <form th:action="@{/ProductListController/searchProductList}" method="post">
+                <input type="text" placeholder="请输入搜索内容" class="ipt1 ipt2"><input type="submit" name="product_keywords"
+                                                                                  class="submit submit2" value="搜索">
+            </form>
+        </div>
+    </div>
+    <div class="gray_all">
+        <div class="gray_text1">
+            <div class="color">购物指南</div>
+            免费注册<br/>
+            开通支付宝<br/>
+            支付宝充值
+        </div>
+        <div class="gray_text1">
+            <div class="color">新飞保障</div>
+            发票保障<br/>
+            售后规则<br/>
+            缺货赔付
+        </div>
+        <div class="gray_text1">
+            <div class="color">支付方式</div>
+            快捷支付<br/>
+            信用卡<br/>
+            余额宝<br/>
+            蚂蚁花呗<br/>
+            货到付款
+        </div>
+        <div class="gray_text1">
+            <div class="color">商家服务</div>
+            新飞规则<br/>
+            商家入驻<br/>
+            商家中心<br/>
+            物流服务<br/>
+            运营服务
+        </div>
+        <div style="padding-top: 50px;"><img th:src="@{/images/qr-code.png}"/></div>
+    </div>
+    <div class="foots">
+        <div class="foots_all">
+            <div class="logo" style="position: absolute;top: 25px;left: 25px;">
+                <a href="#"><img th:src="@{/images/logo-foot.png}" width="110px" height="50px"/></a>
+            </div>
+            <div class="foots_text1">
+                服务邮箱：xf800@xinfei.com
+                全国客服中心电话：400-609-8888<br/>
+                有任何购物问题请联系我们在线客服 | 工作时间：周一至周日 8:00－23:00
+                Copyright 2017-2020新飞电器 版权所有 豫ICP备 05017920号
+            </div>
+            <div class="foots_text2">友情链接</div>
+            <div class="foots_text3">
+                <a href="#">交通查询 </a> |
+                <a href="#">租租车 </a> |
+                <a href="#">美术教育 </a> |
+                <a href="#">中国交通网 </a> |
+                <a href="#">长途汽车票 </a> |
+                <a href="#">旅游网 </a> |
+                <a href="#">首都航空 </a> |
+                <a href="#">在线教育 </a> |
+                <a href="#">金运之旅 </a> |
+                <a href="#">豌豆荚 </a> |
+                <a href="#">安卓市场 </a> |
+                <a href="#">凤凰网旅游 </a> |
+                <a href="#">凯撒旅游 </a> |
+                <a href="#">神州租车 </a> |
+                <a href="#">国际租车 </a> |
+                <a href="#">携程攻略 </a> |
+                <a href="#">社区蜂鸟网 </a> |
+                <a href="#">天巡国际 </a> |
+                <a href="#">机票 </a> |
+                <a href="#">游谱旅行网 </a> |
+                <a href="#">中国签证 </a> |
+                <a href="#">资讯网 </a> |
+                <a href="#">梦之旅 </a> |
+                <a href="#">交通查询 </a> |
+                <a href="#">租租车 </a> |
+                <a href="#">美术教育 </a> |
+                <a href="#">中国交通网 </a> |
+                <a href="#">长途汽车票 </a> |
+                <a href="#">旅游网 </a> |
+                <a href="#">首都航空 </a> |
+                <a href="#">在线教育 </a> |
+                <a href="#">金运之旅 </a> |
+                <a href="#">豌豆荚 </a> |
+                <a href="#">安卓市场 </a> |
+                <a href="#">凤凰网旅游 </a> |
+                <a href="#">凯撒旅游 </a> |
+                <a href="#">神州租车 </a> |
+                <a href="#">国际租车 </a> |
+                <a href="#">携程攻略 </a> |
+                <a href="#">社区蜂鸟网 </a> |
+                <a href="#">天巡国际 </a> |
+                <a href="#">机票 </a> |
+                <a href="#">游谱旅行网 </a> |
+                <a href="#">中国签证 </a> |
+                <a href="#">资讯网 </a> |
+                <a href="#">梦之旅 </a> |
+            </div>
+        </div>
+    </div>
+</div>
+    <script th:src="@{/js/search.js}"></script>
 </body>
 </html>

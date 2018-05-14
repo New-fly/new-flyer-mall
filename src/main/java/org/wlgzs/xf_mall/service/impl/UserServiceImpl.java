@@ -12,6 +12,8 @@ import org.wlgzs.xf_mall.dao.UserRepository;
 import org.wlgzs.xf_mall.service.UserService;
 import org.wlgzs.xf_mall.util.PageUtil;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -45,7 +47,15 @@ public class UserServiceImpl implements UserService {
 
     //后台删除用户
     @Override
-    public void delete(long userId) {
+    public void delete(long userId, HttpServletRequest request) {
+        User user = userRepository.findById(userId);
+        String img = user.getUser_avatar();
+        String path = request.getSession().getServletContext().getRealPath("/");
+        File file = new File(path+""+img.substring(1,img.length()));
+        System.out.println(path+""+img.substring(1,img.length()));
+        if (!img.equals("/headPortrait/morende.jpg") && file.exists() && file.isFile()) {
+            file.delete();
+        }
         userRepository.deleteById(userId);
     }
 
@@ -102,8 +112,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(String user_password, long userId) {
-        userRepository.changePassword(user_password,userId);
+    public void changePassword(String user_rePassword, long userId) {
+        userRepository.changePassword(user_rePassword,userId);
     }
 
     @Override
@@ -112,7 +122,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeEmail(String user_mail, Long userId) {
+    public void changeEmail(String user_mail, long userId) {
+        System.out.println("123123");
+        System.out.println(user_mail);
+        System.out.println(userId);
         userRepository.changeEmail(user_mail,userId);
     }
 }

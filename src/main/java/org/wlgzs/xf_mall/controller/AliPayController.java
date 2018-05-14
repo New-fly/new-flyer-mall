@@ -53,10 +53,8 @@ public class AliPayController {
         if(user_name == null){
             HttpSession session = request.getSession(true);
             user_name = (String) session.getAttribute("name");
-            System.out.println(user_name);
         }
         List<ShippingAddress> shippingAddressList = shippingAddressService.getShippingAddressList(user_name);
-        System.out.println(shippingAddressList);
         model.addAttribute("shippingAddressList", shippingAddressList);
         return new ModelAndView("indent");
     }
@@ -68,11 +66,11 @@ public class AliPayController {
      */
     @RequestMapping("oneToPay")
     public ModelAndView oneToPay(Model model, @RequestParam(value = "productId",defaultValue = "224") long productId,
-                                 @RequestParam(value = "shoppingCount",defaultValue = "3") int shoppingCount,String user_name){
+                                 @RequestParam(value = "shoppingCart_count",defaultValue = "3") int shoppingCart_count,String user_name){
         List<Product> shoppingCarts = productService.findProductListById(productId);
         model.addAttribute("shoppingCarts",shoppingCarts);
-        System.out.println(shoppingCount);
-        model.addAttribute("shoppingCount",shoppingCount);
+        System.out.println(shoppingCart_count);
+        model.addAttribute("shoppingCart_count",shoppingCart_count);
         List<ShippingAddress> shippingAddressList = shippingAddressService.getShippingAddressList(user_name);
         model.addAttribute("shippingAddressList", shippingAddressList);
         return new ModelAndView("indent");
@@ -94,7 +92,7 @@ public class AliPayController {
      * @description 付款
      */
     @RequestMapping("aliPaySum")
-    public ModelAndView aliPay(@RequestParam(value = "productId",defaultValue = "233,232") String productId,
+    public ModelAndView aliPay(@RequestParam(value = "productId",defaultValue = "441,442") String productId,
                                @RequestParam(value = "userId",defaultValue = "46") long userId,
                                @RequestParam(value = "shoppingCount",defaultValue = "3,2") String shoppingCount,
                                HttpServletResponse response, HttpServletRequest request) throws IOException, AlipayApiException {

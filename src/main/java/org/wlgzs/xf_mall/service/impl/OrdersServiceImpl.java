@@ -158,6 +158,9 @@ public class OrdersServiceImpl implements OrdersService {
             ordersRepository.save(order);
             user.setUserIntegral(user.getUserIntegral()+product.getProduct_getPoints());
             userRepository.save(user);
+            //商品表
+            product.setProduct_inventory(product.getProduct_inventory()-1);
+            productRepository.save(product);
             //积分表
             UserIntegral userIntegral = new UserIntegral();
             userIntegral.setOrder_purchaseTime(data);
@@ -226,6 +229,9 @@ public class OrdersServiceImpl implements OrdersService {
         ordersRepository.save(order);
         user.setUserIntegral(user.getUserIntegral()-product.getProduct_needPoints());
         userRepository.save(user);
+        //商品表
+        product.setProduct_inventory(product.getProduct_inventory()-1);
+        productRepository.save(product);
         //积分表
         UserIntegral userIntegral = new UserIntegral();
         userIntegral.setOrder_purchaseTime(data);

@@ -20,4 +20,10 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     public void save(Authorization authorization) {
         authorizationRepository.save(authorization);
     }
+
+    @Override
+    public Authorization isBinding(long githubId) {
+        Authorization authorization = authorizationRepository.isBinding(githubId);
+        return authorization;
+    }
 }

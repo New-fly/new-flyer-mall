@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.wlgzs.xf_mall.entity.User ;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public interface UserService {
 
     void edit(User user);
 
-    void delete(long userId);
+    void delete(long userId, HttpServletRequest request);
 
     void save(List<User> users);
 
@@ -33,11 +34,11 @@ public interface UserService {
     boolean checkPassWord(String user_password,long userId);
 
     //修改用户密码
-    void changePassword(String user_password,long userId);
+    void changePassword(String user_rePassword,long userId);
 
     //修改用户密码
     void changePassword(String user_password,String user_mail);
 
     //修改邮箱
-    void changeEmail(String user_mail,Long userId);
+    void changeEmail(String user_mail,long userId);
 }
