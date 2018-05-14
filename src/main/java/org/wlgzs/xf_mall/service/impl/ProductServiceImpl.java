@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.wlgzs.xf_mall.dao.CollectionRepository;
 import org.wlgzs.xf_mall.dao.ProductCategoryRepository;
@@ -138,21 +139,31 @@ public class ProductServiceImpl implements ProductService {
 
     //删除商品
     @Override
-    public void delete(long id) {
-        productRepository.deleteById(id);
+    public void delete(long productId, HttpServletRequest request) {
+        Product product = productRepository.findById(productId);
+        String path = request.getSession().getServletContext().getRealPath("/");
+        String image = product.getProduct_picture();
+
+        String[] img = image.split(",");
+        for (int i = 0; i < img.length; i++) {
+            File file = new File(path+""+img[i].substring(1,img[0].length()));
+            if (file.exists() && file.isFile()) {
+                file.delete();
+            }
+        }
+        productRepository.deleteById(productId);
     }
 
     //通过id查找商品
     @Override
     public Product findProductById(long productId) {
-        Product product = productRepository.findById(productId);
-        String img;
+        /*String img;
         if (product.getProduct_picture().contains(",")) {
             img = product.getProduct_picture();
             img = img.substring(0, img.indexOf(","));
             product.setProduct_picture(img);
-        }
-        return product;
+        }*/
+        return  productRepository.findById(productId);
     }
 
     //通过id查询商品  返回集合
@@ -496,8 +507,8 @@ public class ProductServiceImpl implements ProductService {
 
     //搜索提示
     @Override
-    public List<Product> findProductByWord(String product_keywords) {
-        return productRepository.findProductByWord(product_keywords);
+    public List<ProductCategory> findProductByWord(String category_name) {
+        return productCategoryRepository.findProductByWord(category_name);
     }
 
     //积分商品展示

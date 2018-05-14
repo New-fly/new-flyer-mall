@@ -31,7 +31,7 @@ public interface ProductService {
     void edit(Product product, String product_details, MultipartFile[] myFileNames, HttpSession session,
               HttpServletRequest request);
 
-    void delete(long productId);
+    void delete(long productId, HttpServletRequest request);
 
     Product findProductById(long productId);
 
@@ -87,7 +87,7 @@ public interface ProductService {
 
     List<Collection> findCollections(String product_keywords, long userId);
 
-    List<Product> findProductByWord(String product_keywords);
+    List<ProductCategory> findProductByWord(String category_name);
 
     List<Product> findByProduct_isRedeemable();
 
