@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Product;
 import org.wlgzs.xf_mall.entity.ProductCategory;
 import org.wlgzs.xf_mall.service.ProductService;
@@ -21,9 +22,7 @@ import java.util.List;
  */
 @RequestMapping("ProductCategoryController")
 @RestController
-public class ProductCategoryController {
-    @Resource
-    ProductService productService;
+public class ProductCategoryController extends BaseController {
 
     /**
      * @param [model]

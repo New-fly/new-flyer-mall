@@ -3,10 +3,8 @@ package org.wlgzs.xf_mall.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.ShippingAddress;
-import org.wlgzs.xf_mall.service.ShippingAddressService;
-
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -18,9 +16,7 @@ import java.util.List;
  **/
 @RequestMapping("UserAddressController")
 @Controller
-public class ShippingAddressController {
-    @Resource
-    ShippingAddressService shippingAddressService;
+public class ShippingAddressController extends BaseController {
 
     /**
      * @param

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Orders;
 import org.wlgzs.xf_mall.entity.ProductEstimate;
 import org.wlgzs.xf_mall.service.OrdersService;
@@ -24,11 +25,8 @@ import java.util.List;
  */
 @RequestMapping("/EstimateController")
 @RestController
-public class ProductEstimateController extends HttpServlet {
-    @Resource
-    ProductEstimateService productEstimateService;
-    @Resource
-    OrdersService ordersService;
+public class ProductEstimateController extends BaseController {
+
     //通过订单id跳转到评论界面
     @RequestMapping("/toAddEstimate")
     public ModelAndView toAdd(Model model, Long id) {
