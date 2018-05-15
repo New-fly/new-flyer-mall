@@ -1,5 +1,6 @@
 package org.wlgzs.xf_mall.service.impl;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -12,6 +13,8 @@ import org.wlgzs.xf_mall.util.RandonNumberUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 /**
  * @author:胡亚星
@@ -66,6 +69,14 @@ public class LogUserServiceImpl implements LogUserService {
     //注册
     @Override
     public User registered(User user,HttpServletRequest request) {
+        Map<String, String[]> properties = request.getParameterMap();
+        try {
+            BeanUtils.populate(user, properties);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
         RandonNumberUtils randonNumberUtils = new RandonNumberUtils();
         String name = randonNumberUtils.getNumber(6);
         String user_name = "XF_" + name;

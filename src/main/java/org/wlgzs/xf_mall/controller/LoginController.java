@@ -1,25 +1,19 @@
 package org.wlgzs.xf_mall.controller;
 
 import net.sf.json.JSONObject;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Authorization;
 import org.wlgzs.xf_mall.entity.User;
-import org.wlgzs.xf_mall.service.AuthorizationService;
-import org.wlgzs.xf_mall.service.LogUserService;
-import org.wlgzs.xf_mall.service.UserService;
 import org.wlgzs.xf_mall.util.AuthUtils;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
 
 /**
  * @author:胡亚星
@@ -28,15 +22,7 @@ import java.util.Map;
  **/
 
 @Controller
-public class LoginController {
-    @Resource
-    LogUserService logUserService;
-
-    @Resource
-    UserService userService;
-
-    @Resource
-    AuthorizationService authorizationService;
+public class LoginController extends BaseController {
 
     @RequestMapping("/registeredMail")
     public String register(HttpServletRequest request, Model model, User user, String code) {
@@ -70,15 +56,7 @@ public class LoginController {
 
     @RequestMapping("/registered")
     public String register(Model model, HttpServletRequest request, HttpSession session) {
-        Map<String, String[]> properties = request.getParameterMap();
         User user = new User();
-        try {
-            BeanUtils.populate(user, properties);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
         user = logUserService.registered(user,request);
         userService.save(user);
         return "sign-up3";
