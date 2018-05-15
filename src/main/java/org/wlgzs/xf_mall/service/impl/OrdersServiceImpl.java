@@ -107,13 +107,10 @@ public class OrdersServiceImpl implements OrdersService {
 
         //商户订单号，商户网站订单系统中唯一订单号，必填
         String order_number = new String(request.getParameter("WIDorder_number"));
-        System.out.println(order_number);
         //付款金额，必填
         String total_amount = new String(request.getParameter("WIDtotal_amount"));
-        System.out.println(total_amount);
         //订单名称，必填
         String subject = new String(request.getParameter("WIDsubject"));
-        System.out.println(subject);
         aliPayRequest.setBizContent("{\"out_trade_no\":\""+ order_number +"\","
                 + "\"total_amount\":\""+ total_amount +"\","
                 + "\"subject\":\""+ subject +"\","

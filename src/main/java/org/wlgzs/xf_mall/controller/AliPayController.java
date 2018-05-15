@@ -69,8 +69,9 @@ public class AliPayController {
                                  @RequestParam(value = "shoppingCart_count",defaultValue = "3") int shoppingCart_count,String user_name){
         List<Product> shoppingCarts = productService.findProductListById(productId);
         model.addAttribute("shoppingCarts",shoppingCarts);
-        System.out.println(shoppingCart_count);
-        model.addAttribute("shoppingCart_count",shoppingCart_count);
+        System.out.println("购买商品id："+productId);
+        System.out.println("单个购买数量："+shoppingCart_count);
+        model.addAttribute("shoppingCount",shoppingCart_count);
         List<ShippingAddress> shippingAddressList = shippingAddressService.getShippingAddressList(user_name);
         model.addAttribute("shippingAddressList", shippingAddressList);
         return new ModelAndView("indent");
@@ -92,10 +93,12 @@ public class AliPayController {
      * @description 付款
      */
     @RequestMapping("aliPaySum")
-    public ModelAndView aliPay(@RequestParam(value = "productId",defaultValue = "630,637") String productId,
+    public ModelAndView aliPay(@RequestParam(value = "productId",defaultValue = "494,495") String productId,
                                @RequestParam(value = "userId",defaultValue = "46") long userId,
                                @RequestParam(value = "shoppingCount",defaultValue = "3,4") String shoppingCount,
                                HttpServletResponse response, HttpServletRequest request) throws IOException, AlipayApiException {
+        System.out.println("付款商品id："+productId);
+        System.out.println("购买商品数量："+shoppingCount);
         ordersService.save(request,response,productId,userId,shoppingCount);
         return new ModelAndView("aliPay");
     }

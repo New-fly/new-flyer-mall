@@ -15,7 +15,7 @@
 <div class="top">
     <div class="top-left">
         <ul>
-            <li><a href="#"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
+            <li><a th:href="@{/HomeController/homeProduct}"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
             <li th:if="${session.user != null }">
                 <span th:text="'欢迎您'+${session.user.user_name}"></span>&nbsp;&nbsp;&nbsp;
                 <a th:href="@{/cancellation}" style="cursor: pointer">退出</a>
@@ -53,7 +53,7 @@
     </div>
 </div>
 <div class="title">
-    <img th:src="@{/images/logo.png}" th:width="300px" style="float: left;"/>
+    <img th:href="@{/HomeController/homeProduct}" th:src="@{/images/logo.png}" th:width="300px" style="float: left;"/>
     <div class="ipt">
         <input class="ipt-1"/>
         <div class="ipt-2">搜索</div>
@@ -101,7 +101,7 @@
             <div>金色</div>
             <div>银色</div>
         </div>
-        <form th:action="@{/pay/aliPay/oneToPay(productId=${product.productId})}">
+        <form th:action="@{/pay/aliPay/oneToPay(productId = ${product.productId})}" method="post">
             <div class="number">
                 <span class="gray">数量：</span>
                 <div id="subtract">-</div>
@@ -296,4 +296,3 @@
 </div>
 </body>
 </html>
->>>>>>> 283944777de64e43051b9576735cf5e31564a2b8-->

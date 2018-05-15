@@ -31,14 +31,11 @@ public class ShippingAddressController {
      */
     @RequestMapping("shippingAddress")
     public String toShippingAddress(HttpServletRequest request, Model model, String user_name) {
-        System.out.println(user_name);
         if(user_name == null){
             HttpSession session = request.getSession(true);
             user_name = (String) session.getAttribute("name");
-            System.out.println(user_name);
         }
         List<ShippingAddress> shippingAddresslists = shippingAddressService.getShippingAddressList(user_name);
-        System.out.println(shippingAddresslists);
         model.addAttribute("shippingAddresslists", shippingAddresslists);
         return "shippingAddress";
     }
@@ -51,13 +48,18 @@ public class ShippingAddressController {
      * @Description:新增收货地址
      */
     @RequestMapping("addShippingAddress")
-    public String addShippingAddress(ShippingAddress shippingAddress) {
-        System.out.println(shippingAddress);
+    public String addShippingAddress(ShippingAddress shippingAddress,HttpServletRequest request, String user_name) {
         //是否默认
         int address_is_default = shippingAddress.getAddress_is_default();
         System.out.println("address_is_default===="+address_is_default);
         //1变为0
         if(address_is_default == 1)shippingAddressService.modifyState(0,1);
+        if(user_name == null){
+            HttpSession session = request.getSession(true);
+            user_name = (String) session.getAttribute("name");
+        }
+        System.out.println(user_name+"_________");
+        shippingAddress.setUser_name(user_name);
         shippingAddressService.addShippingAddress(shippingAddress);
         return "redirect:shippingAddress";
     }

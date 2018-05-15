@@ -71,8 +71,8 @@
             <input type="hidden" name="address_shipping" id="text2" value="">
         </div>
         <div class="item1">
-            <label>收货人姓名</label><input type="text" th:value="${session.user.user_name}" readonly th:name="user_name"
-                                       placeholder="请输入你的用户名" class="ipt1">
+            <label>收货人姓名</label><input type="text" name="address_name"
+                                       placeholder="请输入收货人姓名" class="ipt1">
         </div>
         <div class="item1">
             <label>手机号码&nbsp;&nbsp;&nbsp;</label><input type="text" th:name="address_phone" placeholder="请输入你的手机号"
