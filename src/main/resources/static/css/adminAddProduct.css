@@ -9,7 +9,7 @@
 }
 .popup-windows{
     position: absolute;
-    left: 29%;
+    left: 25%;
     z-index: 999;
     width: 690px;
     display: block;

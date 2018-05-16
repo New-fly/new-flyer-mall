@@ -1,18 +1,26 @@
 //1.获取所有删除按钮标签
-var adelbtns=document.getElementsByClassName("aa2");
-function delA(){
-    var tr=this.parentNode.parentNode;
-    //获取要删除的名字
-    var name=tr.children[0].innerHTML;
-    var flag=confirm("确定要删除"+name+"吗？");
-    if(flag){
-        tr.parentNode.removeChild(tr);
+// var adelbtns=document.getElementsByClassName("aa2");
+// function delA(){
+//     var tr=this.parentNode.parentNode;
+//     //获取要删除的名字
+//     var name=tr.children[0].innerHTML;
+//     var flag=confirm("确定要删除"+name+"吗？");
+//     if(flag){
+//         tr.parentNode.removeChild(tr);
+//     }
+// }
+// for(i=0;i<adelbtns.length;i++){
+//     adelbtns[i].onclick=delA;
+// }
+function deleteProduct(productId) {
+    var isDel = confirm("您确认要删除吗？");
+    if(isDel){
+        //要删除
+        location.href = "/AdminProductController/adminDeleteProduct?productId="+productId;
     }
 }
-for(i=0;i<adelbtns.length;i++){
-    adelbtns[i].onclick=delA;
-}
-//2.点击添加出现弹窗
+
+// //2.点击添加出现弹窗
 function tanchuang(){
     var modifi = document.getElementsByClassName("windoww")[0];
     modifi.style.display = "block";

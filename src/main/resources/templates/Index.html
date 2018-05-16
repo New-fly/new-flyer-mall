@@ -105,14 +105,34 @@
 			<div class="classify-left-top">全部商品分类</div>
 			<div class="classify-left-bottom">
 				<ul class="classify-left-bottom-ul">
-					<li>电脑<br><span>电脑专区应有尽有</span></li>
-					<li>冰箱<br><span>电脑专区应有尽有</span></li>
-					<li>电视机<br><span>电脑专区应有尽有</span></li>
-					<li>冰柜<br><span>电脑专区应有尽有</span></li>
-					<li>配件<br><span>电脑专区应有尽有</span></li>
-					<li>抽油烟机<br><span>电脑专区应有尽有</span></li>
-					<li>饮水机<br><span>电脑专区应有尽有</span></li>
-					<li>电磁炉<br><span>电脑专区应有尽有</span></li>
+					<li th:each="oneCategory : ${productOneCategories}">
+                        <img th:src="@{/images/donghua.png}" class="donghua">
+                        <a th:href="@{/ProductListController/searchProductList(product_category=${oneCategory.category_name})}"
+                           th:text="${oneCategory.category_name}" class="a"></a><br />
+                        <span th:text="${'淘你想要的'+oneCategory.category_name}">
+                        </span>
+                        <div class="classify-list">
+                            <div class="classify-fiexd">
+                                <a th:href="@{/ProductListController/searchProductList(product_category=${oneCategory.category_name})}">
+                                    <i class="fa fa-paw"></i>
+                                </a>
+                            </div>
+                            <div class="classify-list-top" th:text="${oneCategory.category_name}+'专区'"><br style="color: gray" /></div>
+                            <div class="classify-list-body">
+                                <a th:each="TwoCategories : ${productTwoCategories}"
+                                   th:href="@{/ProductListController/searchProductList(product_category=${TwoCategories.category_name})}"
+                                   th:text="${TwoCategories.category_name}"
+                                   th:if="${TwoCategories.parent_name}==${oneCategory.category_name}">
+                                </a>
+                            </div>
+                            <div class="classify-list-foot">
+                                 <div class="classify-list-foot-div">
+                                     <img th:src="@{/images/05.jpg}"/>
+                                     <div class="classify-list-foot-text">多个梵蒂冈梵蒂冈梵蒂冈辅导活合<span>￥：5662元</span></div>
+                                 </div>
+                            </div>
+                        </div>
+                    </li>
 				</ul>
 			</div>
 		</div>
@@ -121,25 +141,21 @@
                 <!--轮播-->
             </div>
         </a>
-		<div class="classify-list">
-			<div class="classify-list-top">电脑专区<span class="right"><a href="">>>></a></span></div>
-			<div class="classify-list-body">
-				<span>液晶电视</span>
-				<span>老版古董电视机</span>
-				<span>以旧换新</span>
-				<span>电视机支架</span>
-				<span>电视机遮布</span>
-				<span>遥控器大全</span>
-				<span>电视机维修工具</span>
-				<span>必备零件</span>
-			</div>
-			<div class="classify-list-foot">
-				<div class="classify-list-foot-div">
-					<img th:src="@{/images/05.jpg}"/>
-					<div class="classify-list-foot-text">多个梵蒂冈梵蒂冈梵蒂冈辅导活合<span>￥：5662元</span></div>
-				</div>
-			</div>
-		</div>
+		<!--<div class="classify-list">-->
+			<!--<div class="classify-list-top">电脑专区<span class="right"><a href="">>>></a></span></div>-->
+			<!--<div class="classify-list-body">-->
+                    <!--<a th:each="TwoCategories : ${productTwoCategories}"-->
+                       <!--th:href="@{/ProductListController/searchProductList(product_category=${TwoCategories.category_name})}"-->
+                       <!--th:text="${TwoCategories.category_name}"-->
+                       <!--th:if="${TwoCategories.parent_name}eq''">-->
+                    <!--</a>-->
+			<!--<div class="classify-list-foot">-->
+				<!--<div class="classify-list-foot-div">-->
+					<!--<img th:src="@{/images/05.jpg}"/>-->
+					<!--<div class="classify-list-foot-text">多个梵蒂冈梵蒂冈梵蒂冈辅导活合<span>￥：5662元</span></div>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
 	</div>
 	<div class="recommend">今日推荐</div>
 	<div class="today">

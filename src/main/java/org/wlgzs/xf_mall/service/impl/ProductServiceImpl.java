@@ -205,10 +205,9 @@ public class ProductServiceImpl implements ProductService {
 
     //修改商品
     @Override
-    public void edit(Product product, String product_details, MultipartFile[] myFileNames, HttpSession session,
+    public void edit(long productId, String product_details, MultipartFile[] myFileNames, HttpSession session,
                      HttpServletRequest request) {
         String realName = "";
-        System.out.println(myFileNames.length);
         String[] str = new String[myFileNames.length];
         for (int i = 0; i < myFileNames.length; i++) {
             if (!myFileNames[i].getOriginalFilename().equals("")) {
@@ -217,7 +216,6 @@ public class ProductServiceImpl implements ProductService {
 
                 // 生成实际存储的真实文件名
                 realName = UUID.randomUUID().toString() + fileNameExtension;
-
                 // "/upload"是你自己定义的上传目录
                 String realPath = session.getServletContext().getRealPath("/upload");
                 File uploadFile = new File(realPath, realName);
@@ -239,7 +237,7 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         String product_picture = stringBuffer.substring(0, stringBuffer.length() - 1);
-
+        Product product = productRepository.findById(productId);
         Map<String, String[]> properties = request.getParameterMap();
         try {
             BeanUtils.populate(product, properties);

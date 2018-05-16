@@ -137,9 +137,9 @@ public class ProductController {
      * @description 修改商品
      */
     @RequestMapping("/adminEditProduct")
-    public ModelAndView edit(Product product,String product_details, @RequestParam("file") MultipartFile[] myFileNames, HttpSession session,
+    public ModelAndView edit(long productId,String product_details, @RequestParam("file") MultipartFile[] myFileNames, HttpSession session,
                              HttpServletRequest request) {
-        productService.edit(product,product_details,myFileNames,session,request);
+        productService.edit(productId,product_details,myFileNames,session,request);
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
     }
     /**
