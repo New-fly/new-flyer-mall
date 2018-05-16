@@ -13,7 +13,7 @@
 <div class="top">
     <div class="top-left">
         <ul>
-            <li><a href="#"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span>欢迎来到新飞商城！</a></li>
+            <li><a th:href="@{/HomeController/homeProduct}"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span>欢迎来到新飞商城！</a></li>
             <li th:if="${session.user != null }">
                 <span th:text="'欢迎您'+${session.user.user_name}"></span>&nbsp;&nbsp;&nbsp;
                 <a th:href="@{/cancellation}" style="cursor: pointer">退出</a>

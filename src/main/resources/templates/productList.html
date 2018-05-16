@@ -16,7 +16,7 @@
 <div class="top">
     <div class="top-left">
         <ul>
-            <li><a href="#"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
+            <li><a th:href="@{/HomeController/homeProduct}"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
             <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;登录</a></li>
             <li><a href="#"><span class="red">立即注册</span></a></li>
         </ul>
@@ -34,7 +34,7 @@
 <div class="top-search">
     <div class="con-wrap">
         <a>
-            <img th:src="@{/images/logo.png}" class="xflogo">
+            <img th:href="@{/HomeController/homeProduct}" th:src="@{/images/logo.png}" class="xflogo">
         </a>
 
         <div class="search-box">

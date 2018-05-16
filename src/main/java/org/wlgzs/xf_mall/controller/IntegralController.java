@@ -3,6 +3,7 @@ package org.wlgzs.xf_mall.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.UserIntegral;
 import org.wlgzs.xf_mall.service.UserIntegralService;
 
@@ -16,9 +17,8 @@ import java.util.List;
  * @Description:积分管理
  */
 @Controller
-public class IntegralController {
-    @Resource
-    UserIntegralService userIntegralService;
+public class IntegralController extends BaseController {
+
 /*
 //通过id查询用户积分
     @RequestMapping("/IntegralController/toChangeIntegralController")

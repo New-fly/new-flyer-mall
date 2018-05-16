@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Footprint;
 import org.wlgzs.xf_mall.service.FootprintService;
 
@@ -19,9 +20,7 @@ import java.util.List;
  */
 @RequestMapping("FootprintController")
 @RestController
-public class FootprintController {
-    @Resource
-    FootprintService footprintService;
+public class FootprintController extends BaseController {
 
     /**
      * @author 李晓珊

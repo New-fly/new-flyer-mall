@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Collection;
 import org.wlgzs.xf_mall.entity.Product;
 import org.wlgzs.xf_mall.entity.ProductCategory;
@@ -29,11 +30,8 @@ import java.util.List;
  */
 @RequestMapping("ProductListController")
 @RestController
-public class ProductListController {
-    @Resource
-    ProductService productService;
-    @Resource
-    FootprintService footprintService;
+public class ProductListController extends BaseController {
+
     /**
      * @author 阿杰
      * @param [model]

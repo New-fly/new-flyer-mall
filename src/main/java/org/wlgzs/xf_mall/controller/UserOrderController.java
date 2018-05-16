@@ -4,6 +4,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Orders;
 import org.wlgzs.xf_mall.service.OrdersService;
 
@@ -17,10 +18,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("UserOrderController")
-public class UserOrderController {
-
-    @Resource
-    OrdersService ordersService;
+public class UserOrderController extends BaseController {
 
     //订单详情   前后台
     @RequestMapping("/orderDetails")
