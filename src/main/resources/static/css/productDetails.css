@@ -79,7 +79,7 @@ body{
 	position: relative;
 }
 .all-left{
-	width: 420px;
+	width: 410px;
 	height: 530px;
 	float: left;
 }
@@ -259,8 +259,11 @@ body{
 	width: 100%;
 	text-align: center;
 }
-.details>img{
-    width: 100%;
+.details>p>img{
+    display: block;
+    width: 1000px;
+    height: auto;
+    margin: 0 auto;
     text-align: center;
 }
 #subtract{
@@ -286,4 +289,33 @@ body{
 	right: 5px;
 	top: 1px;
 	cursor: pointer;
+}
+.collection{
+	border: 0;
+	color:red;
+    background-color: white;
+}
+.buy{
+    background-color: #FFE4D0;
+    border: 0;
+    font-weight: bold;
+    color:#CC0510;
+}
+.secess{
+	width: 150px;
+	height: 45px;
+    font-size: 18px;
+    text-align: center;
+    line-height: 45px;
+    font-family: "华文楷体";
+    border-radius: 10px;
+    color: white;
+	background-color: #0C1021;
+	opacity: 0.5;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -25px;
+	margin-left: -75px;
+    display: none;
 }
