@@ -28,7 +28,7 @@ import java.util.List;
  * @Description: 支付  退款
  */
 @RestController
-@RequestMapping("pay/aliPay")
+@RequestMapping("aliPay")
 public class AliPayController extends BaseController {
 
     /**
@@ -61,12 +61,17 @@ public class AliPayController extends BaseController {
      */
     @RequestMapping("oneToPay")
     public ModelAndView oneToPay(Model model, @RequestParam(value = "productId",defaultValue = "494") long productId,
-                                 @RequestParam(value = "shoppingCart_count",defaultValue = "3") int shoppingCart_count,String user_name){
+                                 @RequestParam(value = "shoppingCart_count",defaultValue = "3") int shoppingCart_count,
+                                 String user_name,HttpServletRequest request){
         List<Product> shoppingCarts = productService.findProductListById(productId);
         model.addAttribute("shoppingCarts",shoppingCarts);
         System.out.println("购买商品id："+productId);
         System.out.println("单个购买数量："+shoppingCart_count);
         model.addAttribute("shoppingCount",shoppingCart_count);
+        if(user_name == null){
+            HttpSession session = request.getSession(true);
+            user_name = (String) session.getAttribute("name");
+        }
         List<ShippingAddress> shippingAddressList = shippingAddressService.getShippingAddressList(user_name);
         model.addAttribute("shippingAddressList", shippingAddressList);
         return new ModelAndView("indent");
