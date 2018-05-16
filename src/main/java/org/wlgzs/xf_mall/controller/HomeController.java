@@ -4,6 +4,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Activity;
 import org.wlgzs.xf_mall.entity.Product;
 import org.wlgzs.xf_mall.entity.ProductCategory;
@@ -21,11 +22,8 @@ import java.util.List;
  */
 @RequestMapping("HomeController")
 @RestController
-public class HomeController {
-    @Resource
-    ProductService productService;
-    @Resource
-    ActivityService activityService;
+public class HomeController extends BaseController {
+
     /**
      * @author 阿杰
      * @param [model]

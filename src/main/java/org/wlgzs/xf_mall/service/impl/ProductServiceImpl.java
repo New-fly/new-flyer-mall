@@ -405,10 +405,10 @@ public class ProductServiceImpl implements ProductService {
         List<ShoppingCart> shoppingCarts = shoppingCartRepository.findByUserIdCart(userId);
         String img;
         for (int i = 0; i < shoppingCarts.size(); i++) {
+            System.out.println("跳转至购物车");
             if (shoppingCarts.get(i).getProduct_picture().contains(",")) {
                 img = shoppingCarts.get(i).getProduct_picture();
                 img = img.substring(0, img.indexOf(","));
-                System.out.println(img);
                 shoppingCarts.get(i).setProduct_picture(img);
             }
         }
@@ -419,7 +419,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void moveToCollectionProduct(long shoppingCartId, long userId, long productId, HttpServletRequest request) {
         shoppingCartRepository.deleteById(shoppingCartId);
-
         Product product = productRepository.findById(productId);
 
         Map<String, String[]> properties = request.getParameterMap();

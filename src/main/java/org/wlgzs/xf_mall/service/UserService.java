@@ -3,9 +3,12 @@ package org.wlgzs.xf_mall.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.web.multipart.MultipartFile;
 import org.wlgzs.xf_mall.entity.User ;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -41,4 +44,10 @@ public interface UserService {
 
     //修改邮箱
     void changeEmail(String user_mail,long userId);
+
+    //修改用户名
+    void ModifyName(HttpServletRequest request,User user);
+
+    //修改用户头像
+    User ModifyAvatar(HttpSession session,HttpServletRequest request,MultipartFile myFileName) throws IOException;
 }

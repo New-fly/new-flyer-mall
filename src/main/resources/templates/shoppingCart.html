@@ -16,7 +16,7 @@
 <div class="top">
     <div class="top-left">
         <ul>
-            <li><a href="#"><span><i class="fa fa-paw"></i></span>H I ,欢迎来到新飞商城！</a></li>
+            <li><a th:href="@{/HomeController/homeProduct}"><span><i class="fa fa-paw"></i></span>H I ,欢迎来到新飞商城！</a></li>
             <li th:if="${session.user != null }">
                 <span th:text="'欢迎您'+${session.user.user_name}"></span>&nbsp;&nbsp;&nbsp;
                 <a th:href="@{/cancellation}" style="cursor: pointer">退出</a>
@@ -54,13 +54,13 @@
     </div>
 </div>
 <div class="title">
-    <img th:src="@{/images/logo.png}" height="100%" style="float: left;"/>
+    <img th:src="@{/images/logo.png}" th:href="@{/HomeController/homeProduct}" height="100%" style="float: left;"/>
     <div class="ipt">
         <input class="ipt-1"/>
         <div class="ipt-2">搜索</div>
     </div>
 </div>
-<form th:action="@{/pay/aliPay/toPay}"><div>
+<form th:action="@{/aliPay/toPay}"><div>
     <div class="all">
         <div style="padding-left: 20px;">全部商品&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;积分兑换</div>
         <div class="right">
