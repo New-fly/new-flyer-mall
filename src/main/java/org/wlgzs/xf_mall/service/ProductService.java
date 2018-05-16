@@ -28,7 +28,7 @@ public interface ProductService {
 
     String[] uploadImg(MultipartFile myFileName, HttpSession session, HttpServletRequest request);
 
-    void edit(Product product, String product_details, MultipartFile[] myFileNames, HttpSession session,
+    void edit(long productId, String product_details, MultipartFile[] myFileNames, HttpSession session,
               HttpServletRequest request);
 
     void delete(long productId, HttpServletRequest request);

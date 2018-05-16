@@ -8,9 +8,16 @@
     <link th:href="@{/css/adminActivityList.css}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
     <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
-    <script th:src="@{/js/adminActivityList.js}"></script>
+    <!--<script th:src="@{/js/adminActivityList.js}"></script>-->
 </head>
 <body>
+<div class="header">
+    <form th:action="@{/AdminActivityController/adminFindActivityProduct}" method="post">
+        <h1 class="h1-sty">活动列表</h1>
+        <input type="text" name="activity_name" placeholder="关键字" th:value="*{activity_name}" class="ipt">
+        <input type="submit" value="搜索" class="a1">
+    </form>
+</div>
 <div class="mytable">
     <table class="table table-bordered able-box" id="mytable">
         <thead style="background-color: #F2F2F2;">
@@ -35,7 +42,7 @@
                 <td th:text="${activitie.product_mallPrice}"></td>
                 <td th:text="${activitie.activityId}"></td>
                 <td>
-                    <button class="btn btn-success">
+                    <button class="btn">
                         <a class="a2" th:href="@{/AdminActivityController/adminDeleteActivity(activityId=${activitie.activityId})}">删除</a>
                     </button>
                     <button type="button" class="btn btn-primary modifi" style="background-color:#007BFF">

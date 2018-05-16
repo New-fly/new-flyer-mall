@@ -1,7 +1,7 @@
 *{
-     padding: 0 0;
-     margin: 0;
- }
+    padding: 0 0;
+    margin: 0;
+}
 .header{
     padding: 0 20px;
 }
@@ -57,24 +57,4 @@ a1:hover{
 }
 .btn{
     opacity: 0.7;
-}
-.btn>a{
-    color: white;
-}
-.btn:hover{
-    opacity: 1;
-}
-th,td{
-    text-align: center;
-}
-.add{
-    float: right;
-    color: #fff;
-}
-.add:hover{
-    cursor: pointer;
-}
-img{
-    width: 50px;
-    height: auto;
 }

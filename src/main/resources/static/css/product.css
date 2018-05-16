@@ -1,20 +1,15 @@
 *{
-     padding: 0 0;
-     margin: 0;
- }
+    padding: 0 0px;
+    margin: 0;
+}
 .header{
     padding: 0 20px;
 }
 .a1{
     color: #fff;
     opacity: 0.7;
-    background-color: red;
-    border: 0;
-    width: 68px;
-    height: 25px;
-    border-radius: 8px;
 }
-a1:hover{
+a:hover{
     color: #fff;
     text-decoration: none;
     cursor: pointer;
@@ -58,9 +53,6 @@ a1:hover{
 .btn{
     opacity: 0.7;
 }
-.btn>a{
-    color: white;
-}
 .btn:hover{
     opacity: 1;
 }
@@ -74,7 +66,31 @@ th,td{
 .add:hover{
     cursor: pointer;
 }
-img{
-    width: 50px;
-    height: auto;
+.windoww{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(01,01,01,0.3);
+    top: 0;
+    left: 0;
+    z-index: 999;
+    display: none;
+}
+
+.popup-windows{
+    position: absolute;
+    left: 40%;
+    top: 15%;
+    z-index: 999;
+    width: 400px;
+    /*height: 600px;*/
+    display: block;
+    background-color: #fff;
+    padding: 0px 20px 20px 20px;
+    border-radius: 10px;
+}
+.ipt2{
+    width: 80px;
+    outline: none;
+    padding-left: 5px;
 }
