@@ -171,7 +171,7 @@ public class ActivityController {
         }
         model.addAttribute("activities", activities);//查询的当前页的集合
         model.addAttribute("activity_name",activity_name);
-        return new ModelAndView("admin/adminOnlyActivityList");
+        return new ModelAndView("admin/adminActivityList");
     }
     /**
      * @author 阿杰

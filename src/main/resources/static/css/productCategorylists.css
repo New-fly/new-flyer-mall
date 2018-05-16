@@ -1,3 +1,58 @@
+*{
+    padding: 0 0;
+    margin: 0;
+}
+.header{
+    padding: 0 20px;
+}
+.a1{
+    color: #fff;
+    opacity: 0.7;
+    background-color: red;
+    border: 0;
+    width: 68px;
+    height: 25px;
+    border-radius: 8px;
+}
+a1:hover{
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 1;
+}
+.search{
+    display: inline-block;
+    width: 54px;
+    height: 24px;
+    background-color: red;
+    border-radius: 10px;
+    text-align: center;
+    padding-top: 2px;
+    vertical-align: middle;
+    opacity: 0.7;
+}
+.search:hover{
+    opacity: 1;
+}
+.h1-sty{
+    margin-bottom: 30px;
+}
+.a2{
+    color: #fff;
+    border-radius: 5px;
+    height: 20px;
+    display: inline-block;
+    text-align: center;
+    padding-top: 7px;
+    opacity: 0.7;
+}
+.ipt{
+    outline: none;
+}
+.mytable{
+    padding: 0 20px;
+    margin-top: 10px;
+}
 .table-box{
     margin: 30px auto;
 }

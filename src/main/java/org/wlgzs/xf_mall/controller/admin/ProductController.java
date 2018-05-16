@@ -37,7 +37,7 @@ public class ProductController {
      */
     @RequestMapping(value = "/adminProductList")
     public ModelAndView list(Model model, @RequestParam(value = "page",defaultValue = "0") int page,
-                             @RequestParam(value = "limit",defaultValue = "10") int limit) {
+                             @RequestParam(value = "limit",defaultValue = "8") int limit) {
         String product_keywords ="";
         if(page != 0) page--;
         Page pages =  productService.getProductListPage(product_keywords,page,limit);
@@ -64,7 +64,7 @@ public class ProductController {
      */
     @RequestMapping("/adminFindProduct")
     public  ModelAndView findProduct(Model model, String product_keywords, @RequestParam(value = "page",defaultValue = "0") int page,
-                                     @RequestParam(value = "limit",defaultValue = "10") int limit){
+                                     @RequestParam(value = "limit",defaultValue = "8") int limit){
         if(page != 0) page--;
         Page pages =  productService.getProductListPage(product_keywords,page,limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
@@ -137,9 +137,9 @@ public class ProductController {
      * @description 修改商品
      */
     @RequestMapping("/adminEditProduct")
-    public ModelAndView edit(Product product,String product_details, @RequestParam("file") MultipartFile[] myFileNames, HttpSession session,
+    public ModelAndView edit(long productId,String product_details, @RequestParam("file") MultipartFile[] myFileNames, HttpSession session,
                              HttpServletRequest request) {
-        productService.edit(product,product_details,myFileNames,session,request);
+        productService.edit(productId,product_details,myFileNames,session,request);
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
     }
     /**
@@ -161,7 +161,7 @@ public class ProductController {
      */
     @RequestMapping("/productCategoryList")
     public ModelAndView category(Model model, @RequestParam(value = "page",defaultValue = "0") int page,
-                                 @RequestParam(value = "limit",defaultValue = "10") int limit){
+                                 @RequestParam(value = "limit",defaultValue = "8") int limit){
         String category_name ="";
         if(page != 0) page--;
         Page pages =  productService.getProductCategoryList(category_name,page,limit);

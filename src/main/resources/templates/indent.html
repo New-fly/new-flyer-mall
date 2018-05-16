@@ -63,7 +63,7 @@
 <div class="title">
     <img th:href="@{/HomeController/homeProduct}" th:src="@{/images/logo.png}" height="100%" style="float: left;"/>
 </div>
-<form th:action="@{/pay/aliPay/aliPaySum}">
+<form th:action="@{/aliPay/aliPaySum}">
     <div class="text">选择收货地址</div>
     <div class="address">
         <div class="shoppingaddress" th:each="shippingAddress : ${shippingAddressList}">

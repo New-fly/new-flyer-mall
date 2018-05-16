@@ -131,8 +131,7 @@ a:hover{
 }
 .list-left{
     float: left;
-    width: 105px;
-    border-right: 1px solid #e8e8e8;
+    width: 115px;
     padding: 10px;
     color: #B3B3B3;
 }
@@ -140,8 +139,9 @@ a:hover{
     float: left;
     width: 1053px;
     height: 37px;
+    border-left: 1px solid #e8e8e8;
     line-height: 37px;
-
+    padding-left: 35px;
 }
 .filter-group-list>.list-right>a{
     margin-right: 12px;
@@ -176,8 +176,12 @@ a:hover{
     height: 20px;
 }
 .queding{
-    width: 40px;
+    width: 43px;
+    height: 21px;
+    line-height: 20px;
+    letter-spacing: 5px;
     background: red;
+    margin-left: 7px;
     outline: none;
     border: 0;
     border-radius: 3px;
@@ -225,6 +229,11 @@ a:hover{
 .title-row,.sale-row,.seller{
     line-height: 20px;
     padding: 5px 10px 15px;
+}
+.title-row{
+    width: 236px;
+    height: 45px;
+    overflow: hidden;
 }
 .dianping{
     margin-top: 5px;

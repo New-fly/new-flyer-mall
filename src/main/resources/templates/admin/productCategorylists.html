@@ -12,9 +12,21 @@
 	<link th:href="@{/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
 	<script th:src="@{/bootstrap/dist/js/bootstrap.min.js}"></script>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/productCategorylists.css}">
-	<script type="text/javascript" th:src="@{/js/productCategorylists.js}"></script>
 </head>
 <body>
+<div class="header">
+	<form th:action="@{/AdminProductController/findProductCategory}" method="post">
+		<h1 class="h1-sty">商品分类管理</h1>
+		<input type="text" name="category_name" placeholder="关键字" th:value="*{category_name}">
+		<input type="submit" value="搜索" class="a1">
+		<button type="button" class="btn btn-primary add" style="background-color: green;color: #fff;float: right;">
+			<a th:href="@{/AdminProductController/toAddProductCategory}" th:class="a2">添加二级分类</a>
+		</button>
+		<button type="button" class="btn btn-primary add" style="background-color: green;color: #fff;float: right;margin-right: 10px">
+			<a th:href="@{/AdminProductController/toAddProductOneCategory}" th:class="a2">添加一级分类</a>
+		</button>
+	</form>
+</div>
 	<table class="table table-bordered able-box" id="mytable">
 	    <thead style="background-color: #F2F2F2;">
 	    <tr>
@@ -30,9 +42,10 @@
 				<td th:if="${!Categorie.parent_name.equals('0')}" th:text="${Categorie.parent_name}">Doe</td>
                 <td th:if="${Categorie.parent_name.equals('0')}">一级分类</td>
 				<!--<td th:text="${Categorie.categoryId}"></td>-->
-				<td class="ttdd">
+				<td>
 					<!--<button type="button" class="btn btn-primary" style="background-color: #fff;color: #000;">添加</button>-->
-					<a class="aa1" th:href="@{/AdminProductController/deleteProductCategory(categoryId=${Categorie.categoryId})}">删除</a>
+					<!--<a class="aa1" th:href="@{/AdminProductController/deleteProductCategory(categoryId=${Categorie.categoryId})}">删除</a>-->
+					<a class="aa1" href="javascript:void(0);" th:onclick="'javascript:deleteProduct('+${Categorie.categoryId}+');'">删除</a>
 					<button type="button" th:if="${!Categorie.parent_name.equals('0')}" class="btn btn-primary modifi" style="background-color:#007BFF" >
 						<a th:href="@{/AdminProductController/toAdminEditProductCategory(categoryId=${Categorie.categoryId})}">修改</a>
 					</button>
@@ -40,12 +53,7 @@
 			</tr>
 	    </tbody>
 	</table>
-    <button type="button" class="btn btn-primary add" style="background-color: green;color: #fff;float: right;">
-        <a th:href="@{/AdminProductController/toAddProductCategory}">添加二级分类</a>
-    </button>
-	<button type="button" class="btn btn-primary add" style="background-color: green;color: #fff;float: right;">
-        <a th:href="@{/AdminProductController/toAddProductOneCategory}">添加一级分类</a>
-    </button>
+
     <div class="fenye" th:if="${TotalPages > 0}">
 
         <ul class="pagination" th:if="${Number == 1} and ${TotalPages > 1}">
@@ -73,10 +81,13 @@
                    th:href="@{/AdminProductController/productCategoryList(page=${i})}" th:text="${i}"
                    style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
             </li>
-            <li th:if="${Number != TotalPages}"><a
-                    th:href="@{/AdminProductController/productCategoryList(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
+            <li th:if="${Number != TotalPages}">
+				<a th:href="@{/AdminProductController/productCategoryList(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
             <li><a th:href="@{/AdminProductController/productCategoryList(page=${Number})}">尾页</a></li><!--//跳转至第Number页-->
         </ul>
 
     </div>
+<script type="text/javascript" th:src="@{/js/productCategorylists.js}"></script>
+
 </body>
+</html>

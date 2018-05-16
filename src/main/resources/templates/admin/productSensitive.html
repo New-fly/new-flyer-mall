@@ -15,7 +15,15 @@
 	<script type="text/javascript" th:src="@{/js/productSensitive.js}"></script>
 </head>
 <body>
-    <div class="aa">
+<div class="header">
+	<form th:action="@{/AdminProductController/adminFindProduct}" method="post">
+		<h1 class="h1-sty">敏感词汇管理</h1>
+		<!--<input type="text" name="" placeholder="关键字" th:value="*{}">-->
+		<!--<input type="submit" value="搜索" class="a1">-->
+	</form>
+</div>
+<div th:class="mytable">
+	<div class="aa">
         <div class="aa-one" th:each="search : ${searchShields}">
             <form th:action="@{/SearchShieldController/deleteProductSensitive}">
                 <input type="hidden" th:value="${search.searchShieldId}" th:name="searchShieldId">
@@ -33,4 +41,43 @@
 			</form>
 		</div>
 	</div>
+</div>
+	<div class="fenye" th:if="${TotalPages > 0}">
+
+		<ul class="pagination" th:if="${Number == 1} and ${TotalPages > 1}">
+			<!--//如果当前页等于1，总页数大于1（不显示上一页）   Number&ndash;&gt;当前页-->
+			<li><a th:href="@{/SearchShieldController/toProductSensitive(page=1)}">首页</a></li>
+			<li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
+				<!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
+				<a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);" th:text="${i}">#</a>
+				<!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
+				<a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
+				   th:href="@{/AdminProductController/productCategoryList(page=${i})}" th:text="${i}"
+				   style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
+			</li>
+			<li><a th:href="@{/SearchShieldController/toProductSensitive(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
+		</ul>
+
+		<ul class="pagination" th:if="${Number > 1} and ${Number > 1}"><!--//显示上一页-->
+			<li><a th:href="@{/SearchShieldController/toProductSensitive(page=1)}">首页</a></li><!--//跳转至第一页-->
+			<li><a th:href="@{/SearchShieldController/toProductSensitive(page=${Number-1})}">上一页</a></li><!--//请求页数-1-->
+			<li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
+				<!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
+				<a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);" th:text="${i}">#</a>
+				<!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
+				<a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
+				   th:href="@{/SearchShieldController/toProductSensitive(page=${i})}" th:text="${i}"
+				   style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
+			</li>
+			<li th:if="${Number != TotalPages}">
+				<a th:href="@{/SearchShieldController/toProductSensitive(page=${Number+1})}">下一页</a>
+			</li><!--//请求页数+1-->
+			<li>
+				<a th:href="@{/SearchShieldController/toProductSensitive(page=${Number})}">尾页</a>
+			</li><!--//跳转至第Number页-->
+		</ul>
+
+	</div>
+
 </body>
+</html>

@@ -1,0 +1,96 @@
+*{
+    padding: 0 0px;
+    margin: 0;
+}
+.header{
+    padding: 0 20px;
+}
+.a1{
+    color: #fff;
+    opacity: 0.7;
+}
+a:hover{
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 1;
+}
+.search{
+    display: inline-block;
+    width: 54px;
+    height: 24px;
+    background-color: red;
+    border-radius: 10px;
+    text-align: center;
+    padding-top: 2px;
+    vertical-align: middle;
+    opacity: 0.7;
+}
+.search:hover{
+    opacity: 1;
+}
+.h1-sty{
+    margin-bottom: 30px;
+}
+.ipt{
+    outline: none;
+}
+.mytable{
+    padding: 0 20px;
+    margin-top: 10px;
+}
+.a2{
+    background-color: red;
+    color: #fff;
+    border-radius: 5px;
+    width: 54px;
+    height: 34px;
+    display: inline-block;
+    text-align: center;
+    padding-top: 7px;
+    opacity: 0.7;
+}
+.btn{
+    opacity: 0.7;
+}
+.btn:hover{
+    opacity: 1;
+}
+th,td{
+    text-align: center;
+}
+.add{
+    float: right;
+    color: #fff;
+}
+.add:hover{
+    cursor: pointer;
+}
+.windoww{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(01,01,01,0.3);
+    top: 0;
+    left: 0;
+    z-index: 999;
+    display: none;
+}
+
+.popup-windows{
+    position: absolute;
+    left: 40%;
+    top: 15%;
+    z-index: 999;
+    width: 400px;
+    /*height: 600px;*/
+    display: block;
+    background-color: #fff;
+    padding: 0px 20px 20px 20px;
+    border-radius: 10px;
+}
+.ipt2{
+    width: 80px;
+    outline: none;
+    padding-left: 5px;
+}

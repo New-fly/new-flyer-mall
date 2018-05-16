@@ -33,10 +33,11 @@ public class SearchShieldController {
     public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
                        @RequestParam(value = "limit", defaultValue = "10") int limit) {
         String search_keywords = "";
+        if(page != 0) page--;
         Page pages = searchShieldService.getSearchShieldListPage(search_keywords,page,limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("TotalElements", pages.getTotalElements());//查询的总记录数
-        model.addAttribute("Number", pages.getNumber());//查询的当前第几页
+        model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
         List<SearchShield> searchShields = pages.getContent();
 
         model.addAttribute("searchShields", searchShields);//查询的当前页的集合
