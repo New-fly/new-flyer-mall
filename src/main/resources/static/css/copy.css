@@ -1,0 +1,133 @@
+.top{
+    width: 100%;
+    height: 25px;
+    background-color: #F2F2F2;
+}
+.top-left{
+    margin-left: 30px;
+}
+.top-right{
+    margin-right: 50px;
+}
+.top-left>ul{
+    float: left;
+    margin: 0;
+}
+.top-right>ul{
+    float: right;
+    margin: 0;
+}
+.top-left>ul>li,.top-right>ul>li{
+    float: left;
+    list-style-type: none;
+    font-size: 12px;
+    line-height: 25px;
+    margin: 0 12px;
+}
+.top-left>ul>li>a,.top-right>ul>li>a{
+    height: 100%;
+    text-decoration: none;
+    color: #838383;
+}
+.top-left>ul>li>a:hover,.top-right>ul>li>a:hover{
+    color: #336699;
+}
+.top-left>ul>li>a>span,.top-right>ul>li>a>span{
+    color: #336699;
+}
+.img{
+    width: 1100px;
+    height: 80px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+.img>div{
+    width: 275px;
+    height: 80px;
+    float: left;
+    line-height: 40px;
+    font-size: 16px;
+    letter-spacing:2px;
+    font-weight: bold;
+}
+.img>div>img{
+    float: left;
+}
+.arrange{
+    width: 1100px;
+    height: 250px;
+    margin: 0 auto;
+    background-color: pink;
+}
+.gray_all{
+    width: 1000px;
+    height: 225px;
+    margin: 0 auto;
+}
+.gray_all>div{
+    width: 200px;
+    height: 225px;
+    float: left;
+}
+.gray_text1{
+    margin-top: 40px;
+    line-height: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #B1B1B1;
+}
+.color{
+    line-height: 15px;
+    margin-left: -15px;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    color:gray;
+    border-left: 4px solid #F66181;
+}
+.foots{
+    width: 100%;
+    height: auto;
+    background-color: black;
+}
+.foots_all{
+    width: 1200px;
+    height: 190px;
+    margin: 0 auto;
+    position: relative;
+}
+.foots_text1{
+    width: 850px;
+    height: 70px;
+    position: absolute;
+    left: 150px;
+    top: 25px;
+    font-size: 12px;
+    color: #B1B1B1;
+    cursor: pointer;
+}
+.foots_text2{
+    position: absolute;
+    left: 70px;
+    top: 90px;
+    font-size: 12px;
+    color: #3F3F3F;
+    cursor: pointer;
+}
+.foots_text3{
+    width: 1000px;
+    height: 100px;
+    position: absolute;
+    left: 150px;
+    top: 90px;
+    font-size: 12px;
+    line-height: 20px;
+    color: #3F3F3F;
+}
+.foots_text3>a{
+    color: #3F3F3F;
+    text-decoration: none;
+    cursor: pointer;
+}
+.foots_text3>a:hover{
+    color: #B1B1B1;
+}

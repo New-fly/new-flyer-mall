@@ -1,16 +1,4 @@
 window.onload=function(){
-    function fun1(){
-        document.getElementById("small").style.display="inline-block";
-    }
-    function fun2(){
-        document.getElementById("small").style.display="none";
-    }
-    function fun3(){
-        aa=setTimeout(function(){document.getElementById("small").style.display="none";},1000);
-    }
-    function fun4(){
-        clearTimeout(aa);
-    }
     var dele=document.getElementsByClassName("deleat-one");
     for(let i = 0 ; i < dele.length ; i++){
         dele[i].onclick=function(){
@@ -38,4 +26,4 @@ window.onload=function(){
             });
         }
     }
-}
+};

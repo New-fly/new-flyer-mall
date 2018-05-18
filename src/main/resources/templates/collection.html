@@ -7,65 +7,16 @@
     <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
     <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
     <link th:href="@{/css/collection.css}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/cope.css}">
     <script th:src="@{/js/jquery.js}"></script>
 </head>
 <body>
-<div class="top">
-    <div class="top-left">
-        <ul>
-            <li><a th:href="@{/HomeController/homeProduct}"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span>欢迎来到新飞商城！</a></li>
-            <li th:if="${session.user != null }">
-                <span th:text="'欢迎您'+${session.user.user_name}"></span>&nbsp;&nbsp;&nbsp;
-                <a th:href="@{/cancellation}" style="cursor: pointer">退出</a>
-            </li>
-            <li th:if="${session.user == null }">
-                <a th:href="@{/login}"><i class="fa fa-paw"></i>&nbsp;&nbsp;<span>登录</span></a>
-                <a th:href="@{/toRegistered}"><span class="red">立即注册</span></a>
-            </li>
-        </ul>
-    </div>
-    <div class="top-right">
-        <ul>
-            <li th:if="${session.user != null }">
-                <a th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}">
-                    <i class="fa fa-paw" style="color: #336699"></i>
-                    &nbsp;&nbsp;购物车</a>
-            </li>
-            <li th:if="${session.user == null }">
-                <a th:href="@{/login}">
-                    <i class="fa fa-paw" style="color: #336699"></i>
-                    &nbsp;&nbsp;购物车</a>
-            </li>
-            <li th:if="${session.user != null }">
-                <a th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}">
-                    <i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a>
-            </li>
-            <li th:if="${session.user == null }">
-                <a th:href="@{/login}">
-                    <i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a>
-            </li>
-            <li><a href="#">我的淘宝</a></li>
-            <li><a th:href="@{/ProductListController/toProductList}">商品列表</a></li>
-            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;管理系统</a></li>
-        </ul>
-    </div>
-</div>
+<div th:include="common/top_header :: copy"></div>
 <div class="nav">
-    <div class="navheader"><a href="">我的收藏</a></div>
+    <div class="navheader"><a href="">全部收藏</a></div>
 </div>
 <div class="allcoection">
-    <!--<div class="allcoectionheader">全部宝贝</div>
-    <div class="baby">
-        <figure class="showall">
-            <div class="showpic"><img th:src="@{/images/05.jpg}" alt="" class="showpic"></div>
-            <div class="describe">
-                <div class="describe1"><a href="">清凉一夏，热卖中</a></div>
-                <div><font style="color:red;">¥888</font>&nbsp;<s style="color: #3C3F41;">¥666</s></div>
-            </div>
-        </figure>
-    </div>-->
     <div class="hotsell">
-        <div class="hotsellheader">全部收藏</div>
         <div class="today">
             <div class="block-2" th:each="collection : ${collections}">
                 <a th:href="@{/ProductListController/toProduct(productId=${collection.productId},userId=${session.userId})}">
@@ -74,13 +25,27 @@
                 <div class="block-2-div">
                     <span class="money" th:text="'商城价：¥'+${collection.product_mallPrice}">6456元</span>
                     <span class="old-money"><s>4153元</s></span><br/>
-                    <span class="block-2-text"><a th:href="@{/ProductListController/toProduct(productId=${collection.productId},userId=${session.userId})}" style='color: green' th:text="${collection.product_keywords}"></a>
-                        新飞BCD-450WGSV 多门冰箱 五重除菌气调保鲜 波光纹钢化玻璃面板</span><br/>
-                    <!--<div class="block-2-div-foot">本月已成交6263件<span class="right">评论466条</span></div>-->
+                    <div style="height: 48px;overflow: hidden">
+                        <span class="block-2-text">
+                            <a th:href="@{/ProductListController/toProduct(productId=${collection.productId},userId=${session.userId})}" style='color: green'
+                               th:text="${collection.product_keywords}"></a>
+                        </span>
+                    </div>
+                    <div class="block-2-div-foot">本月已成交6263件<span class="right">评论466条</span></div>
                 </div>
             </div>
         </div>
-
+        <div class="allcoectionheader">精品推荐</div>
+            <div class="baby">
+                <figure class="showall">
+                    <div class="showpic"><img th:src="@{/images/05.jpg}" alt="" class="showpic"></div>
+                    <div class="describe">
+                        <div class="describe1"><a href="">清凉一夏，热卖中</a></div>
+                        <div><font style="color:red;">¥888</font>&nbsp;<s style="color: #3C3F41;">¥666</s></div>
+                    </div>
+                </figure>
+            </div>
+        </div>
         <footer>
             <ul>
                 <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|

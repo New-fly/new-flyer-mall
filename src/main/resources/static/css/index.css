@@ -102,7 +102,6 @@
 		left: -100px;
 		opacity: 1;
 }
-
 .side-bar-3:hover .side-bar-2-hidden{
 		left: -100px;
 		opacity: 1;
@@ -118,43 +117,6 @@
 .side-bar-6:hover .side-bar-1-hidden{
 		left: -100px;
 		opacity: 1;
-}
-.top{
-		width: 100%;
-		height: 25px;
-		background-color: #F2F2F2;
-}
-.top-left{
-		margin-left: 30px;
-}
-.top-right{
-		margin-right: 50px;
-}
-.top-left>ul{
-		float: left;
-		margin: 0;
-}
-.top-right>ul{
-		float: right;
-		margin: 0;
-}
-.top-left>ul>li,.top-right>ul>li{
-		float: left;
-		list-style-type: none;
-		font-size: 12px;
-		line-height: 25px;
-		margin: 0 12px;
-}
-.top-left>ul>li>a,.top-right>ul>li>a{
-		height: 100%;
-		text-decoration: none;
-		color: #838383;
-}
-.top-left>ul>li>a:hover,.top-right>ul>li>a:hover{
-		color: #336699;
-}
-.top-left>ul>li>a>span,.top-right>ul>li>a>span{
-		color: #336699;
 }
 .title{
 	width: 1100px;
@@ -227,9 +189,16 @@
 	width: 1000px;
 	height: 400px;
 	float: left;
-	background-image: url("./../images/01.jpg");
-	background-size: 100% 100%;
-	transition: 0.4s;
+	overflow: hidden;
+	position: relative;
+}
+.classify-right-long{
+	width:5000px;
+	height: 400px;
+	transition: 1s;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 .classify-left-top{
 	width: 100%;
@@ -263,7 +232,7 @@
 }
 .classify-left-bottom-ul>li>a{
     position: relative;
-    left: -30px;
+    left: -20px;
     color: chocolate;
     text-decoration: none;
     transition: 0.4s;
@@ -275,7 +244,7 @@
     color: chocolate;
 }
 .classify-left-bottom-ul>li>img{
-    width: 30px;
+    width: 20px;
     position: relative;
     top: 0;
     left: 80px;
@@ -299,12 +268,16 @@
 }
 .classify-list-foot-text{
 	width: 119px;
-	height: 79px;
+	height: 45px;
 	text-align: center;
 	font-size: 14px;
 	line-height: 25px;
+    overflow: hidden;
 }
-.classify-list-foot-text>span{
+.classify-list-foot-span{
+    width: 119px;
+    height: 35px;
+    text-align: center;
 	color: red;
 	font-size: 17px;
 }
@@ -317,17 +290,21 @@
 	z-index: 10;
     display: none;
     background-color: white;
+    overflow: hidden;
 }
 .right{
 	float: right;
 }
 .classify-list-top{
-	width: 600px;
-	height: 60px;
-	padding:0 50px;
-	line-height: 60px;
+    width: 600px;
+    height: 60px;
+    padding: 0 50px;
+    line-height: 60px;
     text-align: left;
-	border-bottom: solid 1px black;
+    font-size: 26px;
+    border-bottom: solid 1px lightgray;
+    background-color: white;
+    color: burlywood;
 }
 .classify-list-body{
 	width: 600px;
@@ -347,7 +324,7 @@
     text-decoration: none;
 }
 .classify-list-body>a:hover{
-    counter-reset: gray;
+    color: gray;
 }
 .classify-list-foot{
 	width: 700px;
@@ -360,9 +337,27 @@
 	padding: 10px;
 	float: left;
 }
+.classify-fiexd{
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    line-height: 60px;
+    display: inline;
+}
+.classify-fiexd>a{
+    color: burlywood;
+    text-decoration: none;
+}
 .classify-list-foot-div>img{
 	width:120px;
     height: 120px;
+}
+.lunbo{
+    width: 1000px;
+    height: 400px;
+	float: left;
 }
 .recommend{
     width: 1180px;
@@ -575,134 +570,6 @@
 	cursor:pointer;
 	color: #6A6A6A;
 }
-.similarily{
-	width: 100%;
-	height: 100%;
-	background-color: white;
-	position: absolute;
-	left: 0;
-	top: 0;
-	background: rgba(255, 255, 255, 0.7);
-	opacity: 0;
-	transition: 0.5s;
-}
-.similarity{
-	width: 50px;
-	height: 50px;
-	border-radius: 35px;
-	position: absolute;
-	left: 85px;
-	bottom: 50px;
-	color: white;
-	font-size: 12px;
-	background-color:midnightblue;
-	text-align: center;
-	line-height: 50px;
-	cursor:pointer;
-	transition: 0.5s;
-}
-#similar:hover .similarily{
-	opacity: 1;
-}
-.img{
-	width: 1100px;
-	height: 80px;
-	margin: 0 auto;
-	margin-top: 50px;
-}
-.img>div{
-	width: 275px;
-	height: 80px;
-	float: left;
-	line-height: 40px;
-	font-size: 16px;
-	letter-spacing:2px;
-	font-weight: bold;
-}
-.img>div>img{
-	float: left;
-}
-.arrange{
-	width: 1100px;
-	height: 250px;
-	margin: 0 auto;
-	background-color: pink;
-}
-.gray_all{
-	width: 1000px;
-	height: 225px;
-	margin: 0 auto;
-}
-.gray_all>div{
-	width: 200px;
-	height: 225px;
-	float: left;
-}
-.gray_text1{
-	margin-top: 40px;
-	line-height: 30px;
-	font-size: 14px;
-	cursor: pointer;
-	color: #B1B1B1;
-}
-.color{
-	line-height: 15px;
-	margin-left: -15px;
-	padding-left: 15px;
-	margin-bottom: 10px;
-	color:gray;
-	border-left: 4px solid #F66181;
-}
-.foots{
-	width: 100%;
-	height: auto;
-	background-color: black;
-}
-.foots_all{
-	width: 1200px;
-	height: 190px;
-	margin: 0 auto;
-	position: relative;
-}
-.free_1{
-	color: green;
-}
-.foots_text1{
-	width: 850px;
-	height: 70px;
-	position: absolute;
-	left: 150px;
-	top: 25px;
-	font-size: 12px;
-	color: #B1B1B1;
-	cursor: pointer;
-}
-.foots_text2{
-	position: absolute;
-	left: 70px;
-	top: 90px;
-	font-size: 12px;
-	color: #3F3F3F;
-	cursor: pointer;
-}
-.foots_text3{
-	width: 1000px;
-	height: 100px;
-	position: absolute;
-	left: 150px;
-	top: 90px;
-	font-size: 12px;
-	line-height: 20px;
-	color: #3F3F3F;
-}
-.foots_text3>a{
-	color: #3F3F3F;
-	text-decoration: none;
-	cursor: pointer;
-}
-.foots_text3>a:hover{
-	color: #B1B1B1;
-}
 .hint{
 	width: 410px;
 	height: auto;
@@ -725,12 +592,57 @@
 .hint>div:hover{
 	background-color: gainsboro;
 }
-.classify-fiexd{
-    width: 60px;
-    height: 60px;
+.last{
+    width: 120px;
+    height: 400px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.last:hover{
+    background: linear-gradient(to left,rgba(0,0,0,0),#000000);
+    opacity: 0.7;
+}
+.next{
+    width: 120px;
+    height: 400px;
     position: absolute;
     top: 0;
     right: 0;
-    line-height: 60px;
-    display: inline;
+}
+.next:hover{
+    background: linear-gradient(to right,rgba(0,0,0,0),#000000);
+    opacity: 0.7;
+}
+.next_1,.last_1{
+    width: 30px;
+    height: 50px;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    margin-top: -25px;
+    margin-left: -15px;
+    display: none;
+    color: white;
+}
+.last:hover .last_1{
+    display: block;
+}
+.next:hover .next_1{
+    display: block;
+}
+.page{
+    width: 180px;
+    height: 20px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    margin-left: -90px;
+}
+.page>div{
+    width: 31px;
+    height: 12px;
+    float: left;
+    background-color: white;
+    margin: 4px 7px;
 }

@@ -11,10 +11,13 @@ window.onload=function(){
 			num+=1;
 		}
 	};
+	var address_name=" ";
+	var address_phone=" ";
+	var address_shipping=" ";
     var shoppingaddress=document.getElementsByClassName("shoppingaddress");
     for(let i=0;i<shoppingaddress.length;i++){
         shoppingaddress[i].onclick=function(){
-            for(let j=0;j<shoppingaddress.length-1;j++){
+            for(let j=0;j<shoppingaddress.length;j++){
                 this.parentNode.children[j].style.border="dashed 3px gray";
                 this.parentNode.children[j].style.backgroundColor="white";
                 this.parentNode.children[j].children[0].style.backgroundColor="white";
@@ -26,6 +29,13 @@ window.onload=function(){
             this.children[0].style.backgroundColor="pink";
             this.children[2].style.backgroundColor="pink";
             this.children[3].style.backgroundColor="pink";
+            //将下面的信息改为选择内容
+            address_name=document.getElementsByClassName("address_name")[i].value;
+            address_phone=document.getElementsByClassName("address_phone")[i].value;
+            address_shipping=document.getElementsByClassName("address_shipping")[i].value;
+            document.getElementsByClassName("addressname")[0].value=address_name;
+            document.getElementsByClassName("addressphone")[0].value=address_phone;
+            document.getElementsByClassName("addressshipping")[0].value=address_shipping;
         }
     }
 	var count=document.getElementsByClassName("count");
