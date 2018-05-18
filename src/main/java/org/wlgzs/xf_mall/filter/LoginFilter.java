@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 public class LoginFilter implements Filter {
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DemoFilter.class);
 
+    //不需要过滤
     protected static List<Pattern> patterns = new ArrayList<Pattern>();
 
     @Override
