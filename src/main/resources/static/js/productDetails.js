@@ -1,7 +1,5 @@
-"use static"
 window.onload=function(){
-    var add  = document.getElementById('add');
-    add.onclick = function(){
+        document.getElementById('add').onclick = function(){
 		var num = document.getElementById("number").value;
 		num *= 1;
 		num = num + 1;
@@ -41,26 +39,32 @@ window.onload=function(){
                 "shoppingCart_count":shoppingCart_count
             },
             type:"POST",
-            success:function(){
+            success:function(data){
+                document.getElementsByClassName("secess")[0].innerHTML=data;
                 document.getElementsByClassName("secess")[0].style.display="block";
                 setTimeout(function(){
                     document.getElementsByClassName("secess")[0].style.display="none";
                 },1000)
             },
             error:function(){
+                document.getElementsByClassName("secess")[0].innerHTML="添加失败";
                 document.getElementsByClassName("secess")[0].style.display="block";
                 setTimeout(function(){
                     document.getElementsByClassName("secess")[0].style.display="none";
                 },1000)
-            }
+            },
         });
     };
-    var dfgsdgd = document.getElementsByClassName("img");
-    for(let i=0;i<dfgsdgd.length;i++){
-        dfgsdgd[i].onclick=function(){
-            window.console.log(this.parentNode.childNodes);
-	        this.parentNode.childNodes.style.backgroundColor="red";
-	        this.style.backgroundColor="green";
+    var image = document.getElementsByClassName("img-sm");
+    for(let i=0;i<image.length;i++){
+        image[i].onmousemove=function(){
+            var src=this.children[0].src;
+            document.getElementsByClassName("img-big")[0].children[0].src=src;
+            var asd=document.getElementsByClassName("img-sm");
+            for(i=1;i<=asd.length;i++){
+                this.parentNode.children[i].style.border="solid 2px white";
+            }
+            this.style.border="solid 2px red";
         }
     }
 };

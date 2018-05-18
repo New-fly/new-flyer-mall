@@ -9,128 +9,94 @@
     <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
     <title>新飞商城购物车</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/shoppingcart.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/copy.css}">
     <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
     <script type="text/javascript" th:src="@{/js/shoppingcart.js}"></script>
 </head>
 <body>
-<div class="top">
-    <div class="top-left">
-        <ul>
-            <li><a th:href="@{/HomeController/homeProduct}"><span><i class="fa fa-paw"></i></span>H I ,欢迎来到新飞商城！</a></li>
-            <li th:if="${session.user != null }">
-                <span th:text="'欢迎您'+${session.user.user_name}"></span>&nbsp;&nbsp;&nbsp;
-                <a th:href="@{/cancellation}" style="cursor: pointer">退出</a>
-            </li>
-            <li th:if="${session.user == null }">
-                <a th:href="@{/login}"><i class="fa fa-paw"></i>&nbsp;&nbsp;<span>登录</span></a>
-                <a th:href="@{/toRegistered}"><span class="red">立即注册</span></a>
-            </li>
-        </ul>
-    </div>
-    <div class="top-right">
-        <ul>
-            <li th:if="${session.user != null }">
-                <a th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}">
-                    <i class="fa fa-paw" style="color: #336699"></i>
-                    &nbsp;&nbsp;购物车</a>
-            </li>
-            <li th:if="${session.user == null }">
-                <a th:href="@{/login}">
-                    <i class="fa fa-paw" style="color: #336699"></i>
-                    &nbsp;&nbsp;购物车</a>
-            </li>
-            <li th:if="${session.user != null }">
-                <a th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}">
-                    <i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a>
-            </li>
-            <li th:if="${session.user == null }">
-                <a th:href="@{/login}">
-                    <i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a>
-            </li>
-            <li><a href="#">我的淘宝</a></li>
-            <li><a href="#">111111</a></li>
-            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;管理系统</a></li>
-        </ul>
-    </div>
-</div>
-<div class="title">
-    <img th:src="@{/images/logo.png}" th:href="@{/HomeController/homeProduct}" height="100%" style="float: left;"/>
-    <div class="ipt">
-        <input class="ipt-1"/>
-        <div class="ipt-2">搜索</div>
-    </div>
-</div>
-<form th:action="@{/aliPay/toPay}"><div>
-    <div class="all">
-        <div style="padding-left: 20px;">全部商品&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;积分兑换</div>
-        <div class="right">
-            <div style="display: inline-block;">
-                <input th:value="0" class="zongjiage"
-                       style="float: right; color: red;background-color: white;margin: 10px 0; font-size: 14px;width: 50px;border: 0"
-                       readonly>
-                <span style="font-size: 12px;color: gray;">已选商品（不包含运费）</span>
-            </div>
-            <input id="jiesuan" type="submit" th:value="结算"
-                   style="border:solid 3px #AAAAAA;background-color: #AAAAAA;color: white;"/>
+    <div th:include="common/top_header :: copy"></div>
+    <div class="title">
+        <img th:src="@{/images/logo.png}" th:href="@{/HomeController/homeProduct}" height="100%" style="float: left;"/>
+        <div class="ipt">
+            <input class="ipt-1"/>
+            <div class="ipt-2">搜索</div>
         </div>
     </div>
-    <div class="annotation">
-        <div><input type="checkbox" id="all"/>全选</div>
-        <div>商品信息</div>
-        <div></div>
-        <div></div>
-        <div>单价</div>
-        <div>数量</div>
-        <div>金额</div>
-        <div>操作</div>
-    </div>
-    <div class="list" th:each="product,productStats : ${shoppingCarts}">
-        <div class="single">
-            <input type="text" class="aa" style="display: none" th:value="${product.shoppingCartId}">
-            <input type="text" style="display: none" th:value="${product.userId}">
-            <input type="checkbox" name="aaa" style="float: left;"/>
-            <div class="single-introduce">
-                <a th:href="@{/ProductListController/toProduct(productId=${product.productId},userId=${session.userId})}">
-                    <img th:src="${product.product_picture}" height="100%"/></a>
-                <input class="yanse" type="text" readonly style="color: red;background-color: #FCFCFC;border: 0;vertical-align:top"
-                       th:src="${product.product_keywords}">
-            </div>
-            <div class="norms">规格：
-                <input class="yanse" th:value="${product.product_specification}" readonly
-                       style="background-color: #FCFCFC;border: 0"/>
-            </div>
-            <div class="single-text-a">
-                <form th:action="@{/ProductListController/moveToCollectionProduct(productId=*{product.productId},shoppingCartId=*{product.shoppingCartId},userId=${session.user.userId})}"
-                      method="post">
-                    <input style="height: 24px;border: 0;background-color: #FCFCFC" value="移入收藏夹" type="submit"
-                           class="qwe yanse">
-                </form>
-                <form th:action="@{/ProductListController/deleteShoppingProduct(shoppingCartId=*{product.shoppingCartId},userId=${session.user.userId})}"
-                      method="post">
-                    <input style="height: 24px;border: 0;background-color: #FCFCFC" value="删除" type="submit" class="qwe yanse">
-                </form>
-                <a href="#">相似宝贝</a>
-            </div>
-            <div class="single-text">
-                <!--商品的总价格-->
-                <input type="text" class="qian yanse" readonly style="color: red;background-color: #FCFCFC;border: 0;"
-                       th:value="${product.shoppingCart_count}*${product.product_mallPrice}">
-            </div>
-            <div class="single-text">
-                <div class="subtract" style="margin-right: -5px;">-</div>
-                <input class="number" type="text" th:value="${product.shoppingCart_count}" readonly/>
-                <div class="add" style="margin-left: -6px;">+</div>
-            </div>
-            <div class="single-text" style="text-align: center;">
-                <a href="">
-                    <input class="qqqq yanse" th:value="${product.product_mallPrice}" readonly
-                           style="background-color: #FCFCFC;border: 0;"/><br/>
-                    <input class="yanse" th:value="'￥'+${product.product_counterPrice}" readonly disabled="disabled"
-                           style="background-color: #FCFCFC;border: 0;"/>
-                </a>
+    <form th:action="@{/aliPay/toPay}"><div>
+        <input type="submit" style="opacity:0;" value=" " class="produc" name="productId" />
+        <input type="submit" style="opacity:0;" th:value="${session.userId}" name="userId" />
+        <div class="all">
+            <div style="padding-left: 20px;">全部商品&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;积分兑换</div>
+            <div class="right">
+                <div style="display: inline-block;">
+                    <input th:value="0" class="zongjiage"
+                           style="float: right; color: red;background-color: white;margin: 10px 0; font-size: 14px;width: 50px;border: 0"
+                           readonly>
+                    <span style="font-size: 12px;color: gray;">已选商品（不包含运费）</span>
+                </div>
+                <input id="jiesuan" type="submit" th:value="结算"
+                       style="border:solid 3px #AAAAAA;background-color: #AAAAAA;color: white;"/>
             </div>
         </div>
-    </div></div>
+        <div class="annotation">
+            <div><input type="checkbox" id="all"/>全选</div>
+            <div>商品信息</div>
+            <div></div>
+            <div></div>
+            <div>单价</div>
+            <div>数量</div>
+            <div>金额</div>
+            <div>操作</div>
+        </div>
+        <div class="list" th:each="product,productStats : ${shoppingCarts}">
+            <div class="single">
+                <input type="text" class="aa" style="display: none" th:value="${product.shoppingCartId}">
+                <input type="text" style="display: none" th:value="${product.userId}">
+                <input type="checkbox" name="aaa" style="float: left;"/>
+                <div class="single-introduce">
+                    <a th:href="@{/ProductListController/toProduct(productId=${product.productId},userId=${session.userId})}">
+                        <img th:src="${product.product_picture}" height="100%"/></a>
+                    <input class="yanse" type="text" readonly style="color: red;background-color: #FCFCFC;border: 0;vertical-align:top"
+                           th:src="${product.product_keywords}">
+                </div>
+                <div class="norms">规格：
+                    <input class="yanse" th:value="${product.product_specification}" readonly
+                           style="background-color: #FCFCFC;border: 0"/>
+                </div>
+                <div class="single-text-a">
+                    <form th:action="@{/ProductListController/moveToCollectionProduct(productId=*{product.productId},shoppingCartId=*{product.shoppingCartId},userId=${session.user.userId})}"
+                          method="post">
+                        <input style="height: 24px;border: 0;background-color: #FCFCFC" value="移入收藏夹" type="submit"
+                               class="qwe yanse">
+                    </form>
+                    <form th:action="@{/ProductListController/deleteShoppingProduct(shoppingCartId=*{product.shoppingCartId},userId=${session.user.userId})}"
+                          method="post">
+                        <input style="height: 24px;border: 0;background-color: #FCFCFC" value="删除" type="submit" class="qwe yanse">
+                    </form>
+                    <a href="#">相似宝贝</a>
+                </div>
+                <div class="single-text">
+                    <!--商品的总价格-->
+                    <input type="text" class="qian yanse" readonly style="color: red;background-color: #FCFCFC;border: 0;"
+                           th:value="${product.shoppingCart_count}*${product.product_mallPrice}">
+                </div>
+                <div class="single-text">
+                    <div class="subtract" style="margin-right: -5px;">-</div>
+                    <input class="number" type="text" th:value="${product.shoppingCart_count}" readonly/>
+                    <div class="add" style="margin-left: -6px;">+</div>
+                </div>
+                <div class="single-text" style="text-align: center;">
+                    <a href="">
+                        <input class="qqqq yanse" th:value="${product.product_mallPrice}" readonly
+                               style="background-color: #FCFCFC;border: 0;"/><br/>
+                        <input class="yanse" th:value="'￥'+${product.product_counterPrice}" readonly disabled="disabled"
+                               style="background-color: #FCFCFC;border: 0;"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:include="common/top_header :: duplicate"></div>
 </form>
 </body>
 </html>

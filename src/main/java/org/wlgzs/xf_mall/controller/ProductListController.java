@@ -12,10 +12,7 @@ import org.wlgzs.xf_mall.entity.Collection;
 import org.wlgzs.xf_mall.entity.Product;
 import org.wlgzs.xf_mall.entity.ProductCategory;
 import org.wlgzs.xf_mall.entity.ShoppingCart;
-import org.wlgzs.xf_mall.service.FootprintService;
-import org.wlgzs.xf_mall.service.ProductService;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -90,15 +87,16 @@ public class ProductListController extends BaseController {
      * @description 添加购物车
      */
     @RequestMapping("/addShoppingProduct")
-    public  ModelAndView addShoppingProduct(long productId,int shoppingCart_count,HttpServletRequest request){
+    public  String addShoppingProduct(long productId,int shoppingCart_count,HttpServletRequest request){
         long userId = 0;
         HttpSession session = request.getSession();
         if(session.getAttribute("userId")!=null){
             userId = (long) session.getAttribute("userId");
         }
         productService.save(userId,productId,shoppingCart_count,request);
-        String url="redirect:/ProductListController/toProduct?productId="+productId+"&userId="+userId;
-        return new ModelAndView(url);
+        //String url="redirect:/ProductListController/toProduct?productId="+productId+"&userId="+userId;
+        //return new ModelAndView(url);
+        return "添加成功";
     }
     /**
      * @author 阿杰

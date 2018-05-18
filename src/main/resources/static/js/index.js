@@ -1,15 +1,36 @@
 window.onload = function(){
-    // document.getElementsByClassName("houxuan")[0].onclick=function(){
-    //     var word = document.getElementsByClassName("houxuan")[0].innerHTML;
-    //     document.getElementsByClassName("int-1").value=word;
-    // };
-	//轮播翻页效果
-    var n = 0;
-    var abc=["/images/01.jpg","/images/03.jpg"];
-    setInterval(function(){n++;var deg = 180*(n%2);
-        document.getElementsByClassName("classify-right")[0].style.transform="rotateX("+deg+"deg)";
-        setTimeout(function(){document.getElementsByClassName("classify-right")[0].style.backgroundImage="url("+abc[deg/180]+")";},200)
-    },4000);
+    var place=0;
+    setInterval(function(){
+        place=place-1000;
+        if(place<-4000){
+            document.getElementsByClassName("classify-right-long")[0].style.transition="0s";
+            place=0; document.getElementsByClassName("classify-right-long")[0].style.left=place+"px";
+        }
+        else{
+            document.getElementsByClassName("classify-right-long")[0].style.transition="1s";
+            document.getElementsByClassName("classify-right-long")[0].style.left=place+"px";
+        }
+    },3000);
+    document.getElementsByClassName("last_1")[0].onclick=function(){
+        place=place-1000;
+        if(place<-4000){
+            document.getElementsByClassName("classify-right-long")[0].style.transition="0s";
+            place=0; document.getElementsByClassName("classify-right-long")[0].style.left=place+"px";
+        }else {
+            document.getElementsByClassName("classify-right-long")[0].style.transition="1s";
+            document.getElementsByClassName("classify-right-long")[0].style.left=place+"px";
+        }
+    };
+    document.getElementsByClassName("next_1")[0].onclick=function(){
+        place=place+1000;
+        if(place>-1000) {
+            document.getElementsByClassName("classify-right-long")[0].style.transition = "0s";
+            place = -4000; document.getElementsByClassName("classify-right-long")[0].style.left=place+"px";
+        }else{
+            document.getElementsByClassName("classify-right-long")[0].style.transition="1s";
+            document.getElementsByClassName("classify-right-long")[0].style.left=place+"px";
+        }
+    };
     //限时抢购倒计时
     function tow(n) {
         return n >= 0 && n < 10 ? '0' + n : '' + n;
@@ -17,7 +38,7 @@ window.onload = function(){
     function getDate(){
         var oDate = new Date();
         var oldTime = oDate.getTime();
-        var newDate = new Date("2018/5/18 0:00:00");
+        var newDate = new Date("2018/5/28 0:00:00");
         var newTime = newDate.getTime();
         var second = Math.floor((newTime - oldTime)/1000);
         // var day = Math.floor(second/86400);

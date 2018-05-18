@@ -5,59 +5,25 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <!--<link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">-->
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
     <title>商品介绍</title>
     <script th:src="@{/js/jquery.js}"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/productDetails.css}">
     <script type="text/javascript" th:src="@{/js/productDetails.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/copy.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/productDetails.css}">
 </head>
 <body th:object="${product}">
-<div class="top">
-    <div class="top-left">
-        <ul>
-            <li><a th:href="@{/HomeController/homeProduct}"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
-            <li th:if="${session.user != null }">
-                <span th:text="'欢迎您'+${session.user.user_name}"></span>&nbsp;&nbsp;&nbsp;
-                <a th:href="@{/cancellation}" style="cursor: pointer">退出</a>
-            </li>
-            <li th:if="${session.user == null }">
-                <a th:href="@{/login}"><i class="fa fa-paw"></i>&nbsp;&nbsp;<span>登录</span></a>
-                <a th:href="@{/toRegistered}"><span class="red">立即注册</span></a>
-            </li>
-        </ul>
-    </div>
-    <div class="top-right">
-        <ul>
-            <li th:if="${session.user != null }">
-                <a th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}">
-                    <i class="fa fa-paw" style="color: #336699"></i>
-                    &nbsp;&nbsp;购物车</a>
-            </li>
-            <li th:if="${session.user == null }">
-                <a th:href="@{/login}">
-                    <i class="fa fa-paw" style="color: #336699"></i>
-                    &nbsp;&nbsp;购物车</a>
-            </li>
-            <li th:if="${session.user != null }">
-                <a th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}">
-                    <i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a>
-            </li>
-            <li th:if="${session.user == null }">
-                <a th:href="@{/login}">
-                    <i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a>
-            </li>
-            <li><a href="#">我的淘宝</a></li>
-            <li><a href="#">111111</a></li>
-            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;管理系统</a></li>
-        </ul>
-    </div>
-</div>
+<div th:include="common/top_header :: copy"></div>
 <div class="title">
     <img th:href="@{/HomeController/homeProduct}" th:src="@{/images/logo.png}" th:width="300px" style="float: left;"/>
-    <div class="ipt">
-        <input class="ipt-1"/>
-        <div class="ipt-2">搜索</div>
-    </div>
+    <form th:action="@{/ProductListController/searchProductList/}">
+        <div class="ipt">
+            <input name="product_category" class="ipt-1"/>
+            <div class="ipt-2">
+                <input type="submit" value="搜索" class="sou">
+            </div>
+        </div>
+    </form>
 </div>
 <hr style="color: gray;"/>
 <div class="all">
@@ -65,12 +31,12 @@
         <div class="img-big">
             <img th:src="${images[0]}"/>
         </div>
-        <div class="img" th:each="image : ${images}">
+        <div class="img-sm" th:each="image : ${images}">
             <img th:src="${image}"/>
         </div>
         <br />
         <form th:action="@{/ProductListController/addCollectionProduct(productId=*{productId},userId=${session.userId})}" method="post">
-            <input class="collection" value="收藏商品" type="submit">
+            <br/><input class="collection" value="收藏商品" type="submit" style="display: block">
         </form>
     </div>
     <div class="all-right">
@@ -94,9 +60,9 @@
         </div>
         <div class="gray" style="border: 0;width: 80px;display: inline-block">颜色分类：</div>
         <div class="classify">
-            <div>红色</div>
-            <div>金色</div>
-            <div>银色</div>
+            <div th:text="*{product_specification}"></div>
+            <!--<div>金色</div>-->
+            <!--<div>银色</div>-->
         </div>
         <form th:action="@{/aliPay/oneToPay(productId = ${product.productId})}" method="post">
             <div class="number">
@@ -133,13 +99,14 @@
         <div class="berelated-goods-long" th:object="${product}">
             <div>
                 <img th:src="${images[0]}"/>
-                <span></span><br/>
+                <span>xinfei</span><br/>
                 <span th:text="'￥'+*{product_mallPrice}" style="color: red"></span>
             </div>
         </div>
     </div>
 </div>
 <div class="details" th:utext="*{product_details}"></div>
+<div th:include="common/top_header :: duplicate"></div>
 <div class="secess">添加成功</div>
 </body>
 </html>

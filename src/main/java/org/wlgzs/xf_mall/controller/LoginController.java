@@ -55,7 +55,7 @@ public class LoginController extends BaseController {
     }
 
     @RequestMapping("/registered")
-    public String register(Model model, HttpServletRequest request, HttpSession session) {
+    public String register(Model model, HttpServletRequest request) {
         User user = new User();
         user = logUserService.registered(user,request);
         userService.save(user);

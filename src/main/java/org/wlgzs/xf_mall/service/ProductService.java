@@ -1,8 +1,6 @@
 package org.wlgzs.xf_mall.service;
 
 import org.springframework.data.domain.Page;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.wlgzs.xf_mall.entity.Collection;
 import org.wlgzs.xf_mall.entity.Product;
@@ -45,7 +43,9 @@ public interface ProductService {
 
     List<ProductCategory> findProductTwoCategoryList();
 
-    List<ProductCategory> findProductByOneCategory(String category, int page, int limit);
+    List<ProductCategory> findProductByOneCategory(String category);
+
+    List<Product> productByOneCategory(String category_name);
 
     Page<Product> findProductByTwoCategory(String product_category, int page, int limit);
 
@@ -53,9 +53,9 @@ public interface ProductService {
 
     void save(ProductCategory productCategory);
 
-    void saveOne(ProductCategory productCategory);
+    void saveOne(ProductCategory productCategory, MultipartFile myFileName, HttpSession session, HttpServletRequest request);
 
-    void editCategory(ProductCategory productCategory);
+    void editCategory(ProductCategory productCategory, MultipartFile myFileName, HttpSession session, HttpServletRequest request);
 
     void deleteCategory(long categoryId);
 
@@ -90,5 +90,4 @@ public interface ProductService {
     List<ProductCategory> findProductByWord(String category_name);
 
     List<Product> findByProduct_isRedeemable();
-
 }
