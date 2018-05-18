@@ -32,7 +32,7 @@ public class IntegralController extends BaseController {
     public String integralList(Model model,long userId) {
         List<UserIntegral> integralLists = userIntegralService.getUserIntegral(userId);
         model.addAttribute("integralLists", integralLists);
-        return "UserIntegralList";
+        return "integralProduct";
     }
 
     //遍历用户收入积分
@@ -40,7 +40,7 @@ public class IntegralController extends BaseController {
     public String incomeList(Model model,long userId) {
         List<UserIntegral> integralLists = userIntegralService.getUserIntegralIncome(userId);
         model.addAttribute("integralLists", integralLists);
-        return "UserIntegralList";
+        return "integralProduct";
     }
 
     //遍历用户支出积分
@@ -48,7 +48,7 @@ public class IntegralController extends BaseController {
     public String expendList(Model model,long userId) {
         List<UserIntegral> integralLists = userIntegralService.getUserIntegralExpend(userId);
         model.addAttribute("integralLists", integralLists);
-        return "UserIntegralList";
+        return "integralProduct";
     }
 
     //在购买的同时添加积分明细
@@ -61,6 +61,6 @@ public class IntegralController extends BaseController {
     @RequestMapping("/UserIntegralController/deleteUserIntegral")
     public String delete(long userIntegralId,long userId) {
         userIntegralService.delete(userIntegralId);
-        return "redirect:/IntegralController/UserIntegralList?userId=" + userId;
+        return "redirect:/IntegralController/integralList?userId=" + userId;
     }
 }
