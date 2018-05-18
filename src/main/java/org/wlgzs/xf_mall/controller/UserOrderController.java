@@ -51,8 +51,8 @@ public class UserOrderController extends BaseController {
      */
     @RequestMapping("/userAccepted")
     public ModelAndView userAccepted(long orderId){
-        ordersService.userAccepted(orderId);
-        return new ModelAndView();
+            ordersService.userAccepted(orderId);
+            return new ModelAndView();
     }
 
 }
