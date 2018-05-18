@@ -282,8 +282,17 @@ public class ProductListController extends BaseController {
     @RequestMapping("/integralProduct")
     public ModelAndView findByProduct_isRedeemable(Model model) {
         List<Product> products = productService.findByProduct_isRedeemable();
+        String img;
+        for(int i = 0; i < products.size(); i++) {
+            if (products.get(i).getProduct_picture().contains(",")){
+                img = products.get(i).getProduct_picture();
+                img = img.substring(0,img.indexOf(","));
+                System.out.println("前台积分商品");
+                products.get(i).setProduct_picture(img);
+            }
+        }
         model.addAttribute("products", products);
-        return new ModelAndView("integralProductList");
+        return new ModelAndView("integralProduct");
     }
 
 }

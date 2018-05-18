@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>账号管理-安全设置</title>
+    <link th:href="@{/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
     <link th:href="@{/css/am-safety.css}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
     <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
-    <script th:src="@{/js/jquery.js}"></script>
+
 </head>
 <body>
 <div class="top">
@@ -49,11 +50,36 @@
             <div class="infomain">
                 <ul>
                     <li><span class="span1">会员名</span><span class="span2" th:text="${user.user_name}"></span></li>
-                    <li><span class="span1">邮箱</span><span class="span2" th:text="${user.user_mail}"></span><span class="span3"><a th:href="@{/UserManagementController/toChangeEmail}">修改邮箱</a></span></li>
-                    <li><span class="span1">绑定手机</span><span class="span2">*****</span><span class="span3"><a href="#">修改手机</a></span></li>
+                     <li><span class="span1">邮箱</span><span class="span2" th:text="${user.user_mail}"></span><span class="span3"><a th:href="@{/UserManagementController/toChangeEmail}">修改邮箱</a></span></li>
+                    <li><span class="span1">绑定手机</span><span class="span2">*****</span><span class="span3"><button  data-toggle="modal" data-target="#myModal"><a href="#">修改手机</a></button></span></li>
                 </ul>
             </div>
         </div>
+        <!--//模态框-->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            模态框（Modal）标题
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        在这里添加一些文本
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                            提交更改
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+
         <div class="info">
             你的安全服务
             <div class="infomain">
@@ -74,8 +100,9 @@
     </div>
 
 </div>
-
+</div>
 </body>
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/bootstrap/js/modal.js}"></script>
 
-</body>
 </html>

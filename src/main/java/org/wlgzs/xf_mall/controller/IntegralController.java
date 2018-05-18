@@ -5,9 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.UserIntegral;
-import org.wlgzs.xf_mall.service.UserIntegralService;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -63,6 +61,6 @@ public class IntegralController extends BaseController {
     @RequestMapping("/UserIntegralController/deleteUserIntegral")
     public String delete(long userIntegralId,long userId) {
         userIntegralService.delete(userIntegralId);
-        return "redirect:/IntegralController/integralList?userId=" + userId;
+        return "redirect:/IntegralController/UserIntegralList?userId=" + userId;
     }
 }

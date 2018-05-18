@@ -15,19 +15,19 @@
 	<script type="text/javascript" th:src="@{/js/productSensitive.js}"></script>
 </head>
 <body>
-<div class="header">
-	<form th:action="@{/AdminProductController/adminFindProduct}" method="post">
+<div class="header1">
+	<form th:action="@{/SearchShieldController/findProductSensitive}" method="post">
 		<h1 class="h1-sty">敏感词汇管理</h1>
-		<!--<input type="text" name="" placeholder="关键字" th:value="*{}">-->
-		<!--<input type="submit" value="搜索" class="a1">-->
+		<input type="text" name="search_keywords" placeholder="关键字" th:value="*{search_keywords}">
+		<input type="submit" value="搜索" class="a1">
 	</form>
 </div>
 <div th:class="mytable">
 	<div class="aa">
         <div class="aa-one" th:each="search : ${searchShields}">
             <form th:action="@{/SearchShieldController/deleteProductSensitive}">
-                <input type="hidden" th:value="${search.searchShieldId}" th:name="searchShieldId">
-                <input type="submit" th:value="${search.searchShield_Sensitive}" class="delete"/>
+                <input type="hidden" th:value="${search.searchShieldId}" th:name="searchShieldId" th:class="ipt2">
+                <input type="submit" th:value="${search.searchShield_Sensitive}" class="delete"th:class="ipt2">
 			</form>
         </div>
     </div>
@@ -36,7 +36,9 @@
 		<div class="black-input">
 			<form th:action="@{/SearchShieldController/addProductSensitive}">
 				<button type="button" class="close" aria-hidden="true" style="margin: 10px;">&times;</button>
-				<input class="bb" name="searchShield_Sensitive" onkeyup="this.value=this.value.replace(/[^\u4E00-\u9FA5]/g,'')">
+				<!--<input class="bb" name="searchShield_Sensitive" onkeyup="this.value=this.value.replace(/[^\u4E00-\u9FA5]/g,'')" th:class="ipt2">-->
+
+				<input class="bb" name="searchShield_Sensitive" onkeyup="this.value=this.value.replace(/[^\u4e00-\u9fa5a-zA-Z]+$/g,'')" th:class="ipt2">
 				<button class="ad">添加</button>
 			</form>
 		</div>

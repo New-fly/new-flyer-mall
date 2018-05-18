@@ -21,9 +21,9 @@
 		<div class="center-right"></div>
 	</div>
 	<div class="all-list">
-		<div class="list" th:each="integralLists : ${integralLists}">
-			<img th:src="${integralLists.}" style="width: 100%;"/>
-			<div class="list-fen" th:text="${integralLists.userIntegral_vary}">35453积分</div>
+		<div class="list" th:each="product : ${products}">
+			<img th:src="${product.product_picture}" style="width: 100%;"/>
+			<div class="list-fen" th:text="${product.product_needPoints}">35453积分</div>
 			<input class="list-button" type="submit" value="立即兑换" />
 		</div>
 	</div>
