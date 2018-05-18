@@ -65,7 +65,6 @@ public class FootprintController extends BaseController {
     public ModelAndView findFootprintProducts(Model model,String product_keywords,long userId){
         List<Footprint> footprints = footprintService.findFootprints(product_keywords,userId);
         model.addAttribute("footprints",footprints);
-        System.out.println(footprints);
         String url="redirect:/FootprintController/userFootprint?userId="+userId;
         return new ModelAndView(url);
     }

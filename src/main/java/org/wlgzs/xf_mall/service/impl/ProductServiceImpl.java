@@ -156,12 +156,6 @@ public class ProductServiceImpl implements ProductService {
     //通过id查找商品
     @Override
     public Product findProductById(long productId) {
-        /*String img;
-        if (product.getProduct_picture().contains(",")) {
-            img = product.getProduct_picture();
-            img = img.substring(0, img.indexOf(","));
-            product.setProduct_picture(img);
-        }*/
         return  productRepository.findById(productId);
     }
 
@@ -398,8 +392,6 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(productId);
 
         ShoppingCart shoppingCart = new ShoppingCart();
-        /*int count = Integer.parseInt(request.getParameter("shoppingCart_count"));*/
-        System.out.println(shoppingCart_count+"---");
         shoppingCart.setShoppingCart_count(shoppingCart_count);
         ShoppingCart findShoppingCart = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
         if (findShoppingCart != null) {
@@ -408,7 +400,12 @@ public class ProductServiceImpl implements ProductService {
         }
         if (findShoppingCart == null) {
             shoppingCart.setProductId(productId);
-            shoppingCart.setProduct_picture(product.getProduct_picture());
+            String img = null;
+            if (product.getProduct_picture().contains(",")){
+                img = product.getProduct_picture();
+                img = img.substring(0,img.indexOf(","));
+            }
+            shoppingCart.setProduct_picture(img);
             shoppingCart.setProduct_counterPrice(product.getProduct_counterPrice());
             shoppingCart.setProduct_keywords(product.getProduct_keywords());
             shoppingCart.setProduct_mallPrice(product.getProduct_mallPrice());
@@ -437,7 +434,12 @@ public class ProductServiceImpl implements ProductService {
         }
         if (findCollection == null) {
             collection.setProductId(productId);
-            collection.setProduct_picture(product.getProduct_picture());
+            String img = null;
+            if (product.getProduct_picture().contains(",")){
+                img = product.getProduct_picture();
+                img = img.substring(0,img.indexOf(","));
+            }
+            collection.setProduct_picture(img);
             collection.setProduct_keywords(product.getProduct_keywords());
             collection.setProduct_mallPrice(product.getProduct_mallPrice());
             collection.setUserId(userId);
@@ -454,17 +456,7 @@ public class ProductServiceImpl implements ProductService {
     //用户的购物车
     @Override
     public List<ShoppingCart> findByUserIdCart(long userId) {
-        List<ShoppingCart> shoppingCarts = shoppingCartRepository.findByUserIdCart(userId);
-        String img;
-        for (int i = 0; i < shoppingCarts.size(); i++) {
-            System.out.println("跳转至购物车");
-            if (shoppingCarts.get(i).getProduct_picture().contains(",")) {
-                img = shoppingCarts.get(i).getProduct_picture();
-                img = img.substring(0, img.indexOf(","));
-                shoppingCarts.get(i).setProduct_picture(img);
-            }
-        }
-        return shoppingCarts;
+        return shoppingCartRepository.findByUserIdCart(userId);
     }
 
     //购物车移至收藏
@@ -489,7 +481,12 @@ public class ProductServiceImpl implements ProductService {
         }
         if (findCollection == null) {
             collection.setProductId(productId);
-            collection.setProduct_picture(product.getProduct_picture());
+            String img = null;
+            if (product.getProduct_picture().contains(",")){
+                img = product.getProduct_picture();
+                img = img.substring(0,img.indexOf(","));
+            }
+            collection.setProduct_picture(img);
             collection.setProduct_keywords(product.getProduct_keywords());
             collection.setProduct_mallPrice(product.getProduct_mallPrice());
             collection.setUserId(userId);
@@ -523,17 +520,7 @@ public class ProductServiceImpl implements ProductService {
     //用户的收藏
     @Override
     public List<Collection> findByUserIdCollection(long userId) {
-        List<Collection> collections = collectionRepository.findByUserIdCollection(userId);
-        String img;
-        for (int i = 0; i < collections.size(); i++) {
-            if (collections.get(i).getProduct_picture().contains(",")) {
-                img = collections.get(i).getProduct_picture();
-                img = img.substring(0, img.indexOf(","));
-                System.out.println(" ");
-                collections.get(i).setProduct_picture(img);
-            }
-        }
-        return collections;
+        return collectionRepository.findByUserIdCollection(userId);
     }
 
     //删除收藏

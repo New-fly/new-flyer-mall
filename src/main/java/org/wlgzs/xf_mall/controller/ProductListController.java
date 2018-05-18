@@ -94,8 +94,6 @@ public class ProductListController extends BaseController {
             userId = (long) session.getAttribute("userId");
         }
         productService.save(userId,productId,shoppingCart_count,request);
-        //String url="redirect:/ProductListController/toProduct?productId="+productId+"&userId="+userId;
-        //return new ModelAndView(url);
         return "添加成功";
     }
     /**

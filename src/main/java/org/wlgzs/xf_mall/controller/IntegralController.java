@@ -17,22 +17,12 @@ import java.util.List;
 @Controller
 public class IntegralController extends BaseController {
 
-/*
-//通过id查询用户积分
-    @RequestMapping("/IntegralController/toChangeIntegralController")
-    public String toEdit(Model model, Long id) {
-        UserIntegral userIntegral=userIntegralService.findUserIntegralById(id);
-        model.addAttribute("userIntegral", userIntegral);
-        return "admin/adminEditUserIntegral";
-    }
-* */
-
     //遍历用户积分明细
     @RequestMapping("/IntegralController/integralList")
     public String integralList(Model model,long userId) {
         List<UserIntegral> integralLists = userIntegralService.getUserIntegral(userId);
         model.addAttribute("integralLists", integralLists);
-        return "integralProduct";
+        return "userIntegralList";
     }
 
     //遍历用户收入积分
@@ -40,7 +30,7 @@ public class IntegralController extends BaseController {
     public String incomeList(Model model,long userId) {
         List<UserIntegral> integralLists = userIntegralService.getUserIntegralIncome(userId);
         model.addAttribute("integralLists", integralLists);
-        return "integralProduct";
+        return "userIntegralList";
     }
 
     //遍历用户支出积分
@@ -48,7 +38,7 @@ public class IntegralController extends BaseController {
     public String expendList(Model model,long userId) {
         List<UserIntegral> integralLists = userIntegralService.getUserIntegralExpend(userId);
         model.addAttribute("integralLists", integralLists);
-        return "integralProduct";
+        return "userIntegralList";
     }
 
     //在购买的同时添加积分明细
