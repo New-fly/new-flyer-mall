@@ -65,7 +65,12 @@ public class UerIntegralServiceImpl implements UserIntegralService {
         userIntegral.setOrder_purchaseTime(data);
         userIntegral.setUserId(userId);
         userIntegral.setProduct_keyword(product.getProduct_keywords());
-        userIntegral.setProduct_picture(product.getProduct_picture());
+        String img = null;
+        if (product.getProduct_picture().contains(",")){
+            img = product.getProduct_picture();
+            img = img.substring(0,img.indexOf(","));
+        }
+        userIntegral.setProduct_picture(img);
         userIntegral.setUserIntegral_vary(product.getProduct_getPoints());
         userIntegralRepository.save(userIntegral);
     }

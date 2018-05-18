@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * @author:胡亚星
  * @createTime 2018-04-22 16:18
- * @description:用户信息修改控制层
+ * @description: 用户信息修改控制层
  **/
 @RequestMapping("UserManagementController")
 @RestController
@@ -27,7 +27,7 @@ public class UserManagementController extends BaseController {
      * @return
      * @author 胡亚星
      * @date 2018/4/23 21:29
-     * @Description:展示用户信息
+     * @Description: 展示用户信息
      */
     @RequestMapping("information")
     public ModelAndView displayInformation(Model model, Long userId) {
@@ -41,7 +41,7 @@ public class UserManagementController extends BaseController {
      * @return
      * @author 胡亚星
      * @date 2018/5/1 8:16
-     * @Description:修改用户名(个人信息展示页面)
+     * @Description: 修改用户名(个人信息展示页面)
      */
     @RequestMapping("changeInformation")
     public ModelAndView ModifyName(Model model, HttpServletRequest request,Long userId) {
@@ -58,7 +58,7 @@ public class UserManagementController extends BaseController {
      * @return
      * @author 胡亚星
      * @date 2018/5/1 8:11
-     * @Description:点击用户头像跳转到头像修改页面
+     * @Description: 点击用户头像跳转到头像修改页面
      */
     @RequestMapping("toModifyAvatar")
     public ModelAndView toModifyAvatar(Model model, Long userId) {
@@ -73,7 +73,7 @@ public class UserManagementController extends BaseController {
      * @return
      * @author 胡亚星
      * @date 2018/4/23 21:28
-     * @Description:实现用户头像的修改 文件上传，替换原来的地址
+     * @Description: 实现用户头像的修改 文件上传，替换原来的地址
      */
     @RequestMapping("/ModifyAvatar")
     public ModelAndView add(@RequestParam("file") MultipartFile myFileName, HttpSession session,
@@ -88,7 +88,7 @@ public class UserManagementController extends BaseController {
      * @date 2018/5/8 21:55
      * @param
      * @return
-     *@Description:跳转到安全设置
+     *@Description: 跳转到安全设置
      */
     @RequestMapping("toSafety")
     public ModelAndView toSafety(Model model, Long userId){
@@ -102,7 +102,7 @@ public class UserManagementController extends BaseController {
      * @date 2018/5/9 17:51
      * @param
      * @return
-     *@Description:跳转到修改邮箱
+     *@Description: 跳转到修改邮箱
      */
     @RequestMapping("toChangeEmail")
     public ModelAndView toChangeEmail(){
@@ -138,7 +138,7 @@ public class UserManagementController extends BaseController {
      * @date 2018/5/5 10:17  
      * @param   
      * @return   
-     *@Description:跳转到修改密码
+     *@Description: 跳转到修改密码
      */
     @RequestMapping("toChangePassword")
     public ModelAndView toChangePassword(){
@@ -150,7 +150,7 @@ public class UserManagementController extends BaseController {
      * @return
      * @author 胡亚星
      * @date 2018/5/2 18:03
-     * @Description:修改密码,判断原先密码是否正确
+     * @Description: 修改密码,判断原先密码是否正确
      */
     @RequestMapping("checkPassword")
     public ModelAndView checkPassword(Model model, HttpServletRequest request, Long userId) {
@@ -176,7 +176,7 @@ public class UserManagementController extends BaseController {
      * @return
      * @author 胡亚星
      * @date 2018/4/27 20:06
-     * @Description:发送验证码
+     * @Description: 发送验证码
      */
     @RequestMapping("sendChangePhone")
     public void sendChangePhone(HttpServletRequest request) {

@@ -35,17 +35,7 @@ public class ProductActivityServiceImp implements ProductActivityService {
     //前台活动商品展示（不分页）
     @Override
     public List<ProductActivity> activityProductList() {
-        List<ProductActivity> productActivities = productActivityRepository.findAll();
-        String img;
-        for(int i = 0; i < productActivities.size(); i++) {
-            if (productActivities.get(i).getProduct_picture().contains(",")){
-                img = productActivities.get(i).getProduct_picture();
-                img = img.substring(0,img.indexOf(","));
-                System.out.println("   ");
-                productActivities.get(i).setProduct_picture(img);
-            }
-        }
-        return productActivities;
+        return productActivityRepository.findAll();
     }
 
     //活动页面分页
@@ -68,7 +58,12 @@ public class ProductActivityServiceImp implements ProductActivityService {
         int amount = Integer.parseInt(request.getParameter("activity_discount"));
         productActivity.setActivity_discount(amount);
         productActivity.setProductId(productId);
-        productActivity.setProduct_picture(product.getProduct_picture());
+        String img = null;
+        if (product.getProduct_picture().contains(",")){
+            img = product.getProduct_picture();
+            img = img.substring(0,img.indexOf(","));
+        }
+        productActivity.setProduct_picture(img);
         productActivity.setProduct_counterPrice(product.getProduct_counterPrice());
         productActivity.setProduct_mallPrice(product.getProduct_mallPrice());
         productActivity.setProduct_keywords(product.getProduct_keywords());

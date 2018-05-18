@@ -42,15 +42,6 @@ public class ProductActivityController extends BaseController {
         model.addAttribute("ActivityTotalPages", activityPages.getTotalPages());//查询的页数
         model.addAttribute("ActivityNumber", activityPages.getNumber()+1);//查询的当前第几页
         List<ProductActivity> activities = activityPages.getContent();
-        String activityImg;
-        for(int i = 0; i < activities.size(); i++) {
-            if (activities.get(i).getProduct_picture().contains(",")){
-                activityImg = activities.get(i).getProduct_picture();
-                activityImg = activityImg.substring(0,activityImg.indexOf(","));
-                System.out.println("前台活动页面");
-                activities.get(i).setProduct_picture(activityImg);
-            }
-        }
         model.addAttribute("activities", activities);//查询的当前页的集合
 
         return new ModelAndView("productActivityList");
