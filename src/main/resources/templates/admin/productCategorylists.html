@@ -46,7 +46,7 @@
 					<!--<button type="button" class="btn btn-primary" style="background-color: #fff;color: #000;">添加</button>-->
 					<!--<a class="aa1" th:href="@{/AdminProductController/deleteProductCategory(categoryId=${Categorie.categoryId})}">删除</a>-->
 					<a class="aa1" href="javascript:void(0);" th:onclick="'javascript:deleteProduct('+${Categorie.categoryId}+');'">删除</a>
-					<button type="button" th:if="${!Categorie.parent_name.equals('0')}" class="btn btn-primary modifi" style="background-color:#007BFF" >
+					<button type="button" class="btn btn-primary modifi" style="background-color:#007BFF" >
 						<a th:href="@{/AdminProductController/toAdminEditProductCategory(categoryId=${Categorie.categoryId})}">修改</a>
 					</button>
 				</td>

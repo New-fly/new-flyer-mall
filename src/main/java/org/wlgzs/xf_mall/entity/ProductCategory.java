@@ -24,4 +24,8 @@ public class ProductCategory {
     private String category_name;  //类别名称
     @Column(nullable = false,length = 10)
     private String parent_name; //父分类名字
+    @Column(nullable = false,length = 50)
+    private String category_img; //该分类展示图
+    @Column(nullable = false)
+    private int category_show; //主页是否显示该分类
 }

@@ -42,7 +42,7 @@
                 <tr>
                     <th>是否可兑换</th>
                     <td>
-                        <select name="product_isRedeemable">
+                        <select name="product_isRedeemable" th:field="*{product_isRedeemable}">
                             <option value="1">是</option>
                             <option value="0">否</option>
                         </select>
@@ -52,7 +52,7 @@
                 <tr>
                     <th>是否上架</th>
                     <td>
-                        <select name="product_isShelf">
+                        <select name="product_isShelf"  th:field="*{product_isShelf}">
                             <option value="1">是</option>
                             <option value="0">否</option>
                         </select>
@@ -62,7 +62,7 @@
                 <tr>
                     <th>是否热门</th>
                     <td>
-                        <select name="product_isTop">
+                        <select name="product_isTop"  th:field="*{product_isTop}">
                             <option value="1">是</option>
                             <option value="0">否</option>
                         </select>
