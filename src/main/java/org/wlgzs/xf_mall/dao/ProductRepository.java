@@ -3,7 +3,9 @@ package org.wlgzs.xf_mall.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.wlgzs.xf_mall.entity.Product;
+import org.wlgzs.xf_mall.entity.ShoppingCart;
 
 import java.util.List;
 
@@ -31,4 +33,9 @@ public interface ProductRepository extends JpaRepository<Product, Long>,JpaSpeci
     @Query(value = "SELECT * FROM product WHERE product_is_redeemable = 1 ",nativeQuery = true)
     List<Product> findByProduct_isRedeemable();
 
+    @Query(value = "SELECT * FROM product WHERE product_category = ? limit 0,4",nativeQuery = true)
+    List<Product> findByTwoCategory(String product_category);
+
+    @Query("SELECT o FROM Product o WHERE o.product_category in :product_categories")
+    List<Product> findProductByTwoCategory(@Param(value = "product_categories") String [] product_categories);
 }

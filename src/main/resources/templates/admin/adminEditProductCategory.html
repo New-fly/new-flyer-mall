@@ -18,9 +18,9 @@
 <div class="windoww">
     <div class="popup-windows">
         <h2 style="text-align: center">修改数据</h2>
-        <form th:action="@{/AdminProductController/adminEditProductCategory(categoryId=*{categoryId})}" th:object="${productCategory}" method="post">
+        <form th:action="@{/AdminProductController/adminEditProductCategory(categoryId=*{categoryId})}" th:object="${productCategory}" method="post" enctype="multipart/form-data">
             <table class="table table-hover table-bordered">
-                <tr>
+                <tr th:if="*{!parent_name.equals('0')}">
                     <th>上一级</th>
                     <td>
                         <select name="parent_name">
@@ -31,6 +31,21 @@
                 <tr>
                     <th>分类名称</th>
                     <td><input type="text" name="category_name" th:value="*{category_name}" class="form-control" id="userphoto" /></td>
+                </tr>
+                <tr th:if="*{parent_name.equals('0')}">
+                    <th>是否在主页显示该分类</th>
+                    <td>
+                        <select name="category_show" th:field="*{category_show}">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr th:if="*{parent_name.equals('0')}">
+                    <th style="padding-top: 64px;">上传图片</th>
+                    <td>
+                        <input type="file" name="file" id="input1"/>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">

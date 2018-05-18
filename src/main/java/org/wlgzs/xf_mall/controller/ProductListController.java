@@ -12,10 +12,7 @@ import org.wlgzs.xf_mall.entity.Collection;
 import org.wlgzs.xf_mall.entity.Product;
 import org.wlgzs.xf_mall.entity.ProductCategory;
 import org.wlgzs.xf_mall.entity.ShoppingCart;
-import org.wlgzs.xf_mall.service.FootprintService;
-import org.wlgzs.xf_mall.service.ProductService;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;

@@ -13,7 +13,7 @@
 <body>
 <div class="header">
     <form th:action="@{/OrderController/userFindOrder}" method="post">
-        <h1 class="h1-sty">商品订单列表</h1>
+        <h1 class="h1-sty">订单列表</h1>
         <input type="text" name="order_number" placeholder="请输入订单号" th:value="*{order_number}" class="ipt">
         <input type="submit" value="搜索" class="a1">
     </form>
@@ -23,26 +23,27 @@
         <thead style="background-color: #F2F2F2;">
         <tr>
             <th>#</th>
-            <th>Address Name</th>
-            <th>Order Number</th>
-            <th>Product Picture</th>
-            <th>Product Keywords</th>
-            <th>Order Deal Time</th>
-            <th>Address shipping</th>
-            <th>Operate</th>
+            <th>收货人</th>
+            <th>订单号</th>
+            <th>商品图片</th>
+            <th>商品关键字</th>
+            <th>成交时间</th>
+            <th>收货地址</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
             <tr th:each="order : ${orders}">
                 <td></td>
-                <td th:text="${order.address_name}">#</td>
-                <td th:text="${order.order_number}">Doe</td>
+                <td th:text="${order.address_name}"></td>
+                <td th:text="${order.order_number}"></td>
                 <td><img th:src="${order.product_picture}"></td>
                 <td th:text="${order.product_keywords}"></td>
+                <td th:text="${order.getOrder_dealTime()}"></td>
                 <td th:text="${order.address_shipping}"></td>
-                <td></td>
+
                 <td>
-                    <a class="a2" th:href="@{/OrderController/deleteOrder(id=${order.orderId})}">删除</a>
+                    <a class="a2" href="javascript:void(0);" th:onclick="'javascript:deleteOrder('+${order.order_number}+');'">删除</a>
                     <button type="button" class="btn btn-primary modifi" style="background-color:#007BFF">
                         <a th:href="@{/OrderController/toChangeProductOrders(id=${order.orderId})}">修改</a>
                     </button>

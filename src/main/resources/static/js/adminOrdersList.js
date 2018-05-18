@@ -10,6 +10,13 @@ window.onload=function () {
             tr.parentNode.removeChild(tr);
         }
     }
+    function deleteOrder(id) {
+        var isDel = confirm("您确认要删除吗？");
+        if(isDel){
+            //要删除
+            location.href = "/OrderController/deleteOrder?id="+id;
+        }
+    }
     //console.log(allas);
     //为每个button绑定一个单击相应函数
     for(i=0;i<allas.length;i++){

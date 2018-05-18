@@ -8,9 +8,20 @@
     <link th:href="@{/css/commodity.css}" rel="stylesheet" type="text/css">
     <link  th:href="@{/images/xflogo.ico}" rel="shortcut icon"  type="image/x-icon"/>
     <link  th:href="@{/font/css/font-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{/css/adminProductList.css}" rel="stylesheet" type="text/css">
     <script th:src="@{/js/commodity.js}"></script>
+    <script th:src="@{/js/jquery-1.11.3.min.js}"></script>
 </head>
 <body>
+<div class="header">
+    <form th:action="@{/AdminProductController/adminFindProduct}" method="post">
+        <h1 class="h1-sty">物品管理</h1>
+        <input type="text" name="product_keywords" placeholder="关键字" th:value="*{product_keywords}" class="ipt">
+        <input type="submit" value="搜索" class="a1">
+        <a class="adda" th:href="@{/AdminProductController/toAdminAddProduct}">添加</a>
+    </form>
+</div>
+<div class="mytable">
 <table class="table table-bordered able-box" id="mytable">
     <thead style="background-color: #F2F2F2;">
     <tr>
@@ -23,10 +34,10 @@
         <th>是否热门</th>
         <th>关键字</th>
         <th>商城价</th>
-        <th>需要积分</th>
-        <th>得到积分</th>
-        <th>服务类型</th>
-        <th>商品规格</th>
+        <!--<th>需要积分</th>-->
+        <!--<th>得到积分</th>-->
+        <!--<th>服务类型</th>-->
+        <!--<th>商品规格</th>-->
         <th>操作</th>
     </tr>
     </thead>
@@ -41,18 +52,52 @@
         <td th:text="${product.product_isTop}"></td>
         <td th:text="${product.product_keywords}" style="width: 200px"></td>
         <td th:text="${product.product_mallPrice}"></td>
-        <td th:text="${product.product_needPoints}"></td>
-        <td th:text="${product.product_getPoints}"></td>
-        <td th:text="${product.product_serviceType}"></td>
-        <td th:text="${product.product_specification}"></td>
+        <!--<td th:text="${product.product_needPoints}"></td>-->
+        <!--<td th:text="${product.product_getPoints}"></td>-->
+        <!--<td th:text="${product.product_serviceType}"></td>-->
+        <!--<td th:text="${product.product_specification}"></td>-->
         <td>
-            <a class="aa1 aa" th:href="@{/AdminProductController/toAdminAddProduct}">添加</a>
-            <a class="aa2" th:href="@{/AdminProductController/adminDeleteProduct(productId=${product.productId})}">删除</a>
+            <a th:href="@{/AdminActivityController/toAdminAddActivity(productId=${product.productId})}" class="aa2" style="width: 85px;">添加为活动</a>
+            <a class="aa2" href="javascript:void(0);" th:onclick="'javascript:deleteProduct('+${product.productId}+');'">删除</a>
             <a class="aa3 aa" th:href="@{/AdminProductController/toAdminEditProduct(productId=${product.productId})}">修改</a>
         </td>
     </tr>
     </tbody>
 </table>
+</div>
+<div class="fenye" th:if="${TotalPages > 0}">
+
+    <ul class="pagination" th:if="${Number == 1} and ${TotalPages > 1}">
+        <!--//如果当前页等于1，总页数大于1（不显示上一页）   Number&ndash;&gt;当前页-->
+        <li><a th:href="@{/AdminProductController/productCategoryList(page=1)}">首页</a></li>
+        <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
+            <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
+            <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);" th:text="${i}">#</a>
+            <!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
+            <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
+               th:href="@{/AdminProductController/productCategoryList(page=${i})}" th:text="${i}"
+               style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
+        </li>
+        <li><a th:href="@{/AdminProductController/productCategoryList(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
+    </ul>
+
+    <ul class="pagination" th:if="${Number > 1} and ${Number > 1}"><!--//显示上一页-->
+        <li><a th:href="@{/AdminProductController/productCategoryList(page=1)}">首页</a></li><!--//跳转至第一页-->
+        <li><a th:href="@{/AdminProductController/productCategoryList(page=${Number-1})}">上一页</a></li><!--//请求页数-1-->
+        <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
+            <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
+            <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);" th:text="${i}">#</a>
+            <!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
+            <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
+               th:href="@{/AdminProductController/productCategoryList(page=${i})}" th:text="${i}"
+               style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
+        </li>
+        <li th:if="${Number != TotalPages}">
+            <a th:href="@{/AdminProductController/productCategoryList(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
+        <li><a th:href="@{/AdminProductController/productCategoryList(page=${Number})}">尾页</a></li><!--//跳转至第Number页-->
+    </ul>
+
+</div>
 <!--遮屏弹窗  修改内容-->
 <div class="windoww">
 <div class="popup-windows">

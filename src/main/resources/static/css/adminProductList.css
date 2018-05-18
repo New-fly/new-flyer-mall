@@ -37,15 +37,6 @@ a1:hover{
 .h1-sty{
     margin-bottom: 30px;
 }
-.a2{
-    color: #fff;
-    border-radius: 5px;
-    height: 20px;
-    display: inline-block;
-    text-align: center;
-    padding-top: 7px;
-    /*opacity: 0.7;*/
-}
 .ipt{
     outline: none;
 }
@@ -53,21 +44,7 @@ a1:hover{
     padding: 0 20px;
     margin-top: 10px;
 }
-.table-box{
-    margin: 30px auto;
-}
-tr:hover{
-    /*background-color: #F2F2F2;*/
-}
-td,th{
-    text-align: center;
-}
-/*增删查改格*/
-.ttdd{
-    width: 300px;
-  }
-
-.aa1{
+.a2{
     background-color: red;
     color: #fff;
     border-radius: 5px;
@@ -76,12 +53,20 @@ td,th{
     display: inline-block;
     text-align: center;
     padding-top: 7px;
+    opacity: 0.7;
 }
-.aa1:hover{
-    text-decoration: none;
+.btn{
+    opacity: 0.7;
+}
+.adda {
     color: #fff;
-    cursor: pointer;
-}
-.btn>a{
-    color: white;
+    opacity: 0.7;
+    background-color: green;
+    border: 0;
+    width: 68px;
+    height: 30px;
+    border-radius: 8px;
+    float: right;
+    line-height: 18px;
+    vertical-align: bottom;
 }

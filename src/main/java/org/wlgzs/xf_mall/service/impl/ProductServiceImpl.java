@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.wlgzs.xf_mall.dao.CollectionRepository;
 import org.wlgzs.xf_mall.dao.ProductCategoryRepository;
@@ -205,10 +204,9 @@ public class ProductServiceImpl implements ProductService {
 
     //修改商品
     @Override
-    public void edit(Product product, String product_details, MultipartFile[] myFileNames, HttpSession session,
+    public void edit(long productId, String product_details, MultipartFile[] myFileNames, HttpSession session,
                      HttpServletRequest request) {
         String realName = "";
-        System.out.println(myFileNames.length);
         String[] str = new String[myFileNames.length];
         for (int i = 0; i < myFileNames.length; i++) {
             if (!myFileNames[i].getOriginalFilename().equals("")) {
@@ -217,7 +215,6 @@ public class ProductServiceImpl implements ProductService {
 
                 // 生成实际存储的真实文件名
                 realName = UUID.randomUUID().toString() + fileNameExtension;
-
                 // "/upload"是你自己定义的上传目录
                 String realPath = session.getServletContext().getRealPath("/upload");
                 File uploadFile = new File(realPath, realName);
@@ -239,7 +236,7 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         String product_picture = stringBuffer.substring(0, stringBuffer.length() - 1);
-
+        Product product = productRepository.findById(productId);
         Map<String, String[]> properties = request.getParameterMap();
         try {
             BeanUtils.populate(product, properties);
@@ -277,8 +274,21 @@ public class ProductServiceImpl implements ProductService {
 
     //通过一级分类查找分类名
     @Override
-    public List<ProductCategory> findProductByOneCategory(String category, int page, int limit) {
+    public List<ProductCategory> findProductByOneCategory(String category) {
         return productCategoryRepository.findByCategoryParentName(category);
+    }
+
+    //通过二级分类查找商品
+    @Override
+    public List<Product> productByOneCategory(String category_name) {
+        List<ProductCategory> productCategories = productCategoryRepository.findByCategoryParentName(category_name);
+        ProductCategory[] toBeStored = productCategories.toArray(new ProductCategory[productCategories.size()]);
+        String[] str = new String[toBeStored.length];
+        for (int i = 0; i < toBeStored.length; i++) {
+            str[i] = toBeStored[i].getCategory_name();
+        }
+        List<Product> products = productRepository.findProductByTwoCategory(str);//查询的当前页商品的集合
+        return products;
     }
 
     //通过二级分类查找商品  分页
@@ -299,7 +309,23 @@ public class ProductServiceImpl implements ProductService {
 
     //增加一级分类
     @Override
-    public void saveOne(ProductCategory productCategory) {
+    public void saveOne(ProductCategory productCategory, MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
+        String realName = "";
+        if (myFileName != null) {
+            String fileName = myFileName.getOriginalFilename();
+            String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
+            // 生成实际存储的真实文件名
+            realName = UUID.randomUUID().toString() + fileNameExtension;
+            // "/category"是你自己定义的上传目录
+            String realPath = session.getServletContext().getRealPath("/category");
+            File uploadFile = new File(realPath, realName);
+            try {
+                myFileName.transferTo(uploadFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        productCategory.setCategory_img(request.getContextPath() + "/category/" + realName);
         productCategory.setParent_name("0");
         productCategoryRepository.save(productCategory);
     }
@@ -307,6 +333,8 @@ public class ProductServiceImpl implements ProductService {
     //增加二级分类
     @Override
     public void save(ProductCategory productCategory) {
+        productCategory.setCategory_show(0);
+        productCategory.setCategory_img("0");
         productCategoryRepository.save(productCategory);
     }
 
@@ -316,9 +344,6 @@ public class ProductServiceImpl implements ProductService {
         ProductCategory productCategory = productCategoryRepository.findById(categoryId);
         if(productCategory.getParent_name().equals("0")){
             List<ProductCategory> productCategories = productCategoryRepository.findByCategoryParentName(productCategory.getCategory_name());
-            System.out.println(productCategories);
-
-            System.out.println(productCategories.size()!=0);
             if(productCategories.size()!=0){
                 long[] Ids = new long[productCategories.size()];
                 for (int i = 0; i < Ids.length; i++) {
@@ -332,7 +357,32 @@ public class ProductServiceImpl implements ProductService {
 
     //修改分类
     @Override
-    public void editCategory(ProductCategory productCategory) {
+    public void editCategory(ProductCategory productCategory, MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
+        System.out.println(productCategory);
+        if(productCategory.getParent_name()!=null){
+            productCategory.setCategory_show(0);
+            productCategory.setCategory_img("0");
+        }
+        if(productCategory.getParent_name()==null){
+            String realName = "";
+            if (myFileName != null) {
+                System.out.println("修改分类图片");
+                String fileName = myFileName.getOriginalFilename();
+                String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
+                // 生成实际存储的真实文件名
+                realName = UUID.randomUUID().toString() + fileNameExtension;
+                // "/category"是你自己定义的上传目录
+                String realPath = session.getServletContext().getRealPath("/category");
+                File uploadFile = new File(realPath, realName);
+                try {
+                    myFileName.transferTo(uploadFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            productCategory.setCategory_img(request.getContextPath() + "/category/" + realName);
+            productCategory.setParent_name("0");
+        }
         productCategoryRepository.save(productCategory);
     }
 
