@@ -4,6 +4,7 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.wlgzs.xf_mall.dao.OrdersRepository;
 import org.wlgzs.xf_mall.dao.ProductRepository;
 import org.wlgzs.xf_mall.dao.UserIntegralRepository;
@@ -271,4 +273,31 @@ public class OrdersServiceImpl implements OrdersService {
             out.println("验签失败");
         }
     }*/
+
+    //前台订单查询
+    @Override
+    public Page<Orders> searchOrder(String order_word, int page, int limit) {
+        Sort sort = new Sort(Sort.Direction.DESC,"orderId");
+        Pageable pageable = new PageRequest(page,limit,sort);
+        Specification<Orders> specification = new PageUtil<Orders>(order_word).getPage("product_specification","order_number","address_name","user_name");
+        Page pages = ordersRepository.findAll(specification,pageable);
+        System.out.println(pages);
+        return pages;
+    }
+
+    @Override
+    public Page<Orders> adminSearchOrder(String order_word, int page, int limit) {
+        Sort sort = new Sort(Sort.Direction.DESC,"orderId");
+        Pageable pageable = new PageRequest(page,limit,sort);
+        Specification<Orders> specification = new PageUtil<Orders>(order_word).getPage("product_specification","");
+        Page pages = ordersRepository.findAll(specification,pageable);
+        System.out.println(pages);
+        return pages;
+    }
+
+    @Override
+    public List<Orders> searchOrder(String order_word, long userId) {
+        List<Orders> orders = ordersRepository.searchOrder(userId,order_word);
+        return orders;
+    }
 }

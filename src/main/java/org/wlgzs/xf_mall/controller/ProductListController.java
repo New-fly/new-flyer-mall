@@ -272,6 +272,7 @@ public class ProductListController extends BaseController {
             }
         }
         model.addAttribute("products", products);//查询的当前页的集合
+        System.out.println(products);
         model.addAttribute("product_category",product_category);
         //遍历一级二级分类
         List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();

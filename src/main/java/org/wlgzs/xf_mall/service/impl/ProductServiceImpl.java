@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> getProductListPage(String product_keywords, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
-        Specification<Product> specification = new PageUtil<Product>(product_keywords).getPage("product_keywords");
+        Specification<Product> specification = new PageUtil<Product>(product_keywords).getPage("product_keywords","product_serviceType","product_category");
         Page pages = productRepository.findAll(specification, pageable);
         return pages;
     }
@@ -183,7 +183,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     /**
-     * @param [Ids]
+     * @param
      * @return java.util.List<org.wlgzs.xf_mall.entity.Product>
      * @author 阿杰
      * @description 结算商品
@@ -281,13 +281,18 @@ public class ProductServiceImpl implements ProductService {
 
     //通过二级分类查找商品  分页
     @Override
-    public Page<Product> findProductByTwoCategory(String product_category, int page, int limit) {
+    public Page<Product> findProductByTwoCategory(String product_category,int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
-        Specification<Product> specification = new PageUtil<Product>(product_category).getPage("product_category");
+        //商品分类，活动，服务类型三种方式
+        Specification<Product> specification = new PageUtil<Product>(product_category).getPage("product_category","product_serviceType","product_activity");
         Page pages = productRepository.findAll(specification, pageable);
+        System.out.println(pages);
         return pages;
     }
+
+    //通过多条件查询商品  分页
+
 
     //通过二级分类查找商品  不分页
     @Override
