@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @Auther: 阿杰
  * @Date: 2018/4/24 16:44
- * @Description: 有关商品  商品分类的操作
+ * @Description: 商品  购物车  收藏  搜索
  */
 @RequestMapping("ProductListController")
 @RestController
@@ -268,6 +268,7 @@ public class ProductListController extends BaseController {
             }
         }
         model.addAttribute("products", products);//查询的当前页的集合
+        System.out.println(products);
         model.addAttribute("product_category",product_category);
         //遍历一级二级分类
         List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();

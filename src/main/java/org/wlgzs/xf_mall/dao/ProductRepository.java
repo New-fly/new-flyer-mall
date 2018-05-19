@@ -38,4 +38,10 @@ public interface ProductRepository extends JpaRepository<Product, Long>,JpaSpeci
 
     @Query("SELECT o FROM Product o WHERE o.product_category in :product_categories")
     List<Product> findProductByTwoCategory(@Param(value = "product_categories") String [] product_categories);
+
+    @Query("SELECT o FROM Product o WHERE o.productId in :productIds")
+    List<Product> findProductByProductId(@Param(value = "productIds") long [] productIds);
+
+    @Query("SELECT o FROM Product o WHERE o.productId in :productIds")
+    List<Product> findProductByProductId(@Param(value = "productIds") Long[] orderProductIds);
 }

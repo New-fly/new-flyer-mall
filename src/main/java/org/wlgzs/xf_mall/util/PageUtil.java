@@ -11,9 +11,6 @@ public class PageUtil<T> {
 
     private String searchKeywords;//模糊搜索关键字
 
-    public PageUtil() {
-
-    }
     public PageUtil(String searchKeywords) {
         this.searchKeywords=searchKeywords;
     }
@@ -35,6 +32,9 @@ public class PageUtil<T> {
                 List<Predicate> predicates = new ArrayList<Predicate>();
                 for (String s:strings){
                     Path<String> $name = root.get(s);
+                    System.out.println($name);
+                    System.out.println(s);
+                    System.out.println(searchKeywords);
                     Predicate _name = criteriaBuilder.like($name, "%" + searchKeywords + "%");
                     predicates.add(_name);
                 }
