@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>账号管理-安全设置</title>
+    <link th:href="@{/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
     <link th:href="@{/css/am-safety.css}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
     <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
-    <script th:src="@{/js/jquery.js}"></script>
+
 </head>
 <body>
 <div class="top">
@@ -49,7 +50,7 @@
             <div class="infomain">
                 <ul>
                     <li><span class="span1">会员名</span><span class="span2" th:text="${user.user_name}"></span></li>
-                    <li><span class="span1">邮箱</span><span class="span2" th:text="${user.user_mail}"></span><span class="span3"><a th:href="@{/UserManagementController/toChangeEmail}">修改邮箱</a></span></li>
+                     <li><span class="span1">邮箱</span><span class="span2" th:text="${user.user_mail}"></span><span class="span3"><a th:href="@{/UserManagementController/toChangeEmail}">修改邮箱</a></span></li>
                     <li><span class="span1">绑定手机</span><span class="span2">*****</span><span class="span3"><a href="#">修改手机</a></span></li>
                 </ul>
             </div>
@@ -74,8 +75,9 @@
     </div>
 
 </div>
-
+</div>
 </body>
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/bootstrap/js/modal.js}"></script>
 
-</body>
 </html>

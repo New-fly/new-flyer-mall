@@ -22,7 +22,7 @@
     <table class="table table-bordered able-box" id="mytable">
         <thead style="background-color: #F2F2F2;">
         <tr>
-            <th>#</th>
+
             <th>收货人</th>
             <th>订单号</th>
             <th>商品图片</th>
@@ -34,12 +34,11 @@
         </thead>
         <tbody>
             <tr th:each="order : ${orders}">
-                <td></td>
                 <td th:text="${order.address_name}"></td>
                 <td th:text="${order.order_number}"></td>
                 <td><img th:src="${order.product_picture}"></td>
-                <td th:text="${order.product_keywords}"></td>
-                <td th:text="${order.getOrder_dealTime()}"></td>
+                <td th:text="${order.product_keywords}" style="width: 200px;"></td>
+                <td th:text="${order.order_dealTime}"></td>
                 <td th:text="${order.address_shipping}"></td>
 
                 <td>

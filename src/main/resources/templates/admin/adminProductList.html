@@ -29,9 +29,9 @@
         <th>活动名称</th>
         <th>类别</th>
         <th>图片</th>
-        <th>是否可兑换</th>
-        <th>是否上架</th>
-        <th>是否热门</th>
+        <!--<th>是否可兑换</th>-->
+        <!--<th>是否上架</th>-->
+        <!--<th>是否热门</th>-->
         <th>关键字</th>
         <th>商城价</th>
         <!--<th>需要积分</th>-->
@@ -47,9 +47,9 @@
         <td th:text="${product.product_activity}"></td>
         <td th:text="${product.product_category}"></td>
         <td><img th:src="${product.product_picture}" style="width: 45px;height: 45px;"></td>
-        <td th:text="${product.product_isRedeemable}"></td>
-        <td th:text="${product.product_isShelf}"></td>
-        <td th:text="${product.product_isTop}"></td>
+        <!--<td th:text="${product.product_isRedeemable}"></td>-->
+        <!--<td th:text="${product.product_isShelf}"></td>-->
+        <!--<td th:text="${product.product_isTop}"></td>-->
         <td th:text="${product.product_keywords}" style="width: 200px"></td>
         <td th:text="${product.product_mallPrice}"></td>
         <!--<td th:text="${product.product_needPoints}"></td>-->
@@ -69,32 +69,32 @@
 
     <ul class="pagination" th:if="${Number == 1} and ${TotalPages > 1}">
         <!--//如果当前页等于1，总页数大于1（不显示上一页）   Number&ndash;&gt;当前页-->
-        <li><a th:href="@{/AdminProductController/productCategoryList(page=1)}">首页</a></li>
+        <li><a th:href="@{/AdminProductController/adminProductList(page=1)}">首页</a></li>
         <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
             <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
             <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);" th:text="${i}">#</a>
             <!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
             <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
-               th:href="@{/AdminProductController/productCategoryList(page=${i})}" th:text="${i}"
+               th:href="@{/AdminProductController/adminProductList(page=${i})}" th:text="${i}"
                style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
         </li>
-        <li><a th:href="@{/AdminProductController/productCategoryList(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
+        <li><a th:href="@{/AdminProductController/adminProductList(page=${Number+1})}"  style="width: 70px">下一页</a></li><!--//请求页数+1-->
     </ul>
 
     <ul class="pagination" th:if="${Number > 1} and ${Number > 1}"><!--//显示上一页-->
-        <li><a th:href="@{/AdminProductController/productCategoryList(page=1)}">首页</a></li><!--//跳转至第一页-->
-        <li><a th:href="@{/AdminProductController/productCategoryList(page=${Number-1})}">上一页</a></li><!--//请求页数-1-->
+        <li><a th:href="@{/AdminProductController/adminProductList(page=1)}">首页</a></li><!--//跳转至第一页-->
+        <li><a th:href="@{/AdminProductController/adminProductList(page=${Number-1})}"  style="width: 70px">上一页</a></li><!--//请求页数-1-->
         <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
             <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
             <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);" th:text="${i}">#</a>
             <!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
             <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
-               th:href="@{/AdminProductController/productCategoryList(page=${i})}" th:text="${i}"
+               th:href="@{/AdminProductController/adminProductList(page=${i})}" th:text="${i}"
                style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
         </li>
         <li th:if="${Number != TotalPages}">
-            <a th:href="@{/AdminProductController/productCategoryList(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
-        <li><a th:href="@{/AdminProductController/productCategoryList(page=${Number})}">尾页</a></li><!--//跳转至第Number页-->
+            <a th:href="@{/AdminProductController/adminProductList(page=${Number+1})}"  style="width: 70px">下一页</a></li><!--//请求页数+1-->
+        <li><a th:href="@{/AdminProductController/adminProductList(page=${Number})}">尾页</a></li><!--//跳转至第Number页-->
     </ul>
 
 </div>

@@ -57,7 +57,7 @@ $(document).ready(function(){
 			}
 		}
 	$("#src1").click(function(){
-		$(".frame").attr("src","/SearchShieldController/toProductSensitive")
+		$(".frame").attr("src","/SearchShieldController/toProductSensitive");
 	})
 	$("#src2").click(function(){
 		$(".frame").attr("src","/AdminProductController/productCategoryList")
@@ -77,4 +77,36 @@ $(document).ready(function(){
 	$("#src7").click(function(){
 		$(".frame").attr("src","/AdminActivityController/activityProducts")
 	})
+
+
+    //下拉框选中切换
+    $("#sensitive").click(function(){
+        $(".frame").attr("src","/SearchShieldController/toProductSensitive")
+    })
+    $("#Category").click(function(){
+        $(".frame").attr("src","/AdminProductController/productCategoryList")
+    })
+    $("#user").click(function(){
+        $(".frame").attr("src","/AdminUserController/adminUserList")
+    })
+    $("#product").click(function(){
+        $(".frame").attr("src","/AdminProductController/adminProductList")
+    })
+    $("#order").click(function(){
+        $(".frame").attr("src","/OrderController/allProductOrdersLists")
+    })
+    $("#src6").click(function(){
+        $(".frame").attr("src","/AdminActivityController/activityProducts")
+    })
+    $("#src7").click(function(){
+        $(".frame").attr("src","/AdminActivityController/activityProducts")
+    });
+$('#one').click(function () {
+	$('.frame').attr("src","/AdminProductController/adminProductList");
 })
+    $('#two').click(function () {
+        $('.frame').attr("src","/AdminUserController/adminUserList");
+    })
+
+})
+

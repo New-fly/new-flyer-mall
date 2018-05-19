@@ -98,8 +98,9 @@ dd>a:hover{
 .content{
     width: 853px;
     height: 500px;
-    float: left;
+    /*float: left;*/
     border: 1px solid #5e5e5e;
+    margin-left: 130px;
 }
 .info{
     /*border-bottom: 1px solid #5e5e5e;*/

@@ -41,7 +41,7 @@ public class Orders {
     @Column(nullable = false)
     private float order_freight;//运费
     @Column(nullable = false)
-    private int order_discount=1;//          折扣
+    private int order_discount=1;// 折扣
     @Column(nullable = false)
     private int activity_discount=1;//折扣
     @Column(nullable = false)

@@ -29,7 +29,7 @@
             <th>活动折扣</th>
             <th>商品价格</th>
             <th>商品......</th>
-            <th></th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
@@ -42,9 +42,9 @@
                 <td th:text="${activitie.product_mallPrice}"></td>
                 <td th:text="${activitie.activityId}"></td>
                 <td>
-                    <button class="btn">
+
                         <a class="a2" th:href="@{/AdminActivityController/adminDeleteActivity(activityId=${activitie.activityId})}">删除</a>
-                    </button>
+
                     <button type="button" class="btn btn-primary modifi" style="background-color:#007BFF">
                         <a th:href="@{/AdminActivityController/toAdminEditActivity(activityId=${activitie.activityId})}" style="color: white">修改</a>
                     </button>
