@@ -9,6 +9,8 @@ import org.wlgzs.xf_mall.entity.Activity;
 import org.wlgzs.xf_mall.entity.Product;
 import org.wlgzs.xf_mall.entity.ProductCategory;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class HomeController extends BaseController {
      * @description 主页商品数据
      */
     @RequestMapping("/homeProduct")
-    public ModelAndView homeProduct(Model model){
+    public ModelAndView homeProduct(Model model, HttpServletRequest request){
         List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();
         model.addAttribute("productOneCategories", productOneCategories);
         List<ProductCategory> productTwoCategories = productService.findProductTwoCategoryList();
@@ -52,6 +54,13 @@ public class HomeController extends BaseController {
         model.addAttribute("productsFour",productsFour);//主页部分第四分类商品
         List<Product> productsFive = productService.productByOneCategory(productOneCategories.get(4).getCategory_name());
         model.addAttribute("productsFive",productsFive);//主页部分第五分类商品
+        HttpSession session = request.getSession();
+        //推荐商品
+        if(session!=null){
+            long userId = (long) session.getAttribute("userId");
+            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+            model.addAttribute("recommendedProducts", recommendedProducts);
+        }
         return new ModelAndView("Index");
     }
 }

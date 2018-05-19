@@ -22,16 +22,16 @@ import java.util.List;
 @RestController
 public class FootprintController extends BaseController {
 
-    /**
+    /* *
      * @author 李晓珊
      * @param [request, userId, productId]
      * @return void
      * @description 增加足迹
      */
-    @RequestMapping("/addFootprint")
+    /*@RequestMapping("/addFootprint")
     public void addFootprint(HttpServletRequest request, long userId, long productId){
         footprintService.save(request,userId,productId);
-    }
+    }*/
     /**
      * @author 阿杰
      * @param [footprintId]

@@ -90,4 +90,6 @@ public interface ProductService {
     List<ProductCategory> findProductByWord(String category_name);
 
     List<Product> findByProduct_isRedeemable();
+
+    List<Product> recommendedByUserId(long userId);
 }

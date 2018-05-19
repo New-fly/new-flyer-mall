@@ -1,5 +1,6 @@
 package org.wlgzs.xf_mall.service.impl;
 
+import javafx.css.StyleOrigin;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,14 +10,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.wlgzs.xf_mall.dao.CollectionRepository;
-import org.wlgzs.xf_mall.dao.ProductCategoryRepository;
-import org.wlgzs.xf_mall.dao.ProductRepository;
-import org.wlgzs.xf_mall.dao.ShoppingCartRepository;
+import org.wlgzs.xf_mall.dao.*;
+import org.wlgzs.xf_mall.entity.*;
 import org.wlgzs.xf_mall.entity.Collection;
-import org.wlgzs.xf_mall.entity.Product;
-import org.wlgzs.xf_mall.entity.ProductCategory;
-import org.wlgzs.xf_mall.entity.ShoppingCart;
 import org.wlgzs.xf_mall.service.ProductService;
 import org.wlgzs.xf_mall.util.IdsUtil;
 import org.wlgzs.xf_mall.util.PageUtil;
@@ -26,9 +22,8 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Auther: 阿杰
@@ -46,6 +41,10 @@ public class ProductServiceImpl implements ProductService {
     private ShoppingCartRepository shoppingCartRepository;
     @Autowired
     private CollectionRepository collectionRepository;
+    @Autowired
+    FootprintRepository footprintRepository;
+    @Autowired
+    private OrdersRepository ordersRepository;
 
     //分页遍历商品  搜索商品
     @Override
@@ -553,6 +552,119 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findByProduct_isRedeemable() {
         return productRepository.findByProduct_isRedeemable();
+    }
+
+    //商品推荐
+    @Override
+    public List<Product> recommendedByUserId(long userId) {
+        //通过用户id查询最新足迹商品
+        List<Footprint> footprints = footprintRepository.recommendedByUserId(userId);
+        List<Product> products = new ArrayList<Product>();
+        if(footprints!=null){
+            long[] productIds = new long[footprints.size()];
+            for (int i = 0; i < footprints.size(); i++) {
+                productIds[i] = footprints.get(i).getProductId();
+            }
+            //通过足迹商品id查询商品
+            List<Product> productsOne = productRepository.findProductByProductId(productIds);
+            List<String> productCategories = new ArrayList<String>();
+            for (int i = 0; i < productsOne.size(); i++) {
+                productCategories.add(productsOne.get(i).getProduct_category());
+            }
+            String[] category_names = productCategories.toArray(new String[productCategories.size()]);
+            //通过商品二级分类查询一级分类
+            List<ProductCategory> productCategoryList = productCategoryRepository.findOneCategoryByCategoryName(category_names);
+            List<String> oneCategoryList = new ArrayList<String>();
+            for (int i = 0; i < productCategoryList.size(); i++) {
+                oneCategoryList.add(productCategoryList.get(i).getParent_name());
+            }
+            //去重 利用set顺序不变
+            Set set = new HashSet();
+            List<String> newOneCategoryList = new  ArrayList<String>();
+            for (String cd:oneCategoryList) {
+                if(set.add(cd)){
+                    newOneCategoryList.add(cd);
+                }
+            }
+
+            //查询用户的订单
+            List<Orders> orders = ordersRepository.userOrderList(userId);
+            if(orders!=null){
+                Date data = new Date();
+                SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+                //将近半年的订单放在一个集合中
+                List<Orders> ordersList = new ArrayList<Orders>();
+                for (int i = 0; i < orders.size(); i++) {
+                    double between = (double)(data.getTime() - orders.get(i).getOrder_purchaseTime().getTime())/(double)(1000*60*60*24);
+                    if(between < 180){
+                        ordersList.add(orders.get(i));
+                    }
+                }
+                //将近半年订单的商品id放在一个数组里
+                long [] orderProductId = new long[ordersList.size()];
+                for (int i = 0; i < ordersList.size(); i++) {
+                    double between = (double)(data.getTime() - orders.get(i).getOrder_purchaseTime().getTime())/(double)(1000*60*60*24);
+                    if(between < 180){
+                        orderProductId[i] = ordersList.get(i).getProductId();
+                    }
+                }
+                //通过商品id查询商品
+                List<Product> orderProducts = productRepository.findProductByProductId(orderProductId);
+                //把商品的分类放在一个集合中
+                List<String> categoryOne = new ArrayList<String>();
+                for (int i = 0; i < orderProducts.size(); i++) {
+                    categoryOne.add(orderProducts.get(i).getProduct_category());
+                }
+                String[] orderCategory_names = categoryOne.toArray(new String[categoryOne.size()]);
+                //通过商品二级分类查询一级分类
+                List<ProductCategory> orderProductCategoryList = productCategoryRepository.findOneCategoryByCategoryName(orderCategory_names);
+                List<String> orderOneCategoryList = new ArrayList<String>();
+                for (int i = 0; i < orderProductCategoryList.size(); i++) {
+                    orderOneCategoryList.add(orderProductCategoryList.get(i).getParent_name());
+                }
+                //去重 利用set顺序不变
+                Set orderSet = new HashSet();
+                List<String> orderNewOneCategoryList = new  ArrayList<String>();
+                for (String cd:orderOneCategoryList) {
+                    if(orderSet.add(cd)){
+                        orderNewOneCategoryList.add(cd);
+                    }
+                }
+                //从所推荐的一级分类中 去除 半年内订单商品分类对应的一级分类
+                Iterator<String> it = newOneCategoryList.iterator();
+                while(it.hasNext()){
+                    String x = it.next();
+                    for (int j = 0; j < orderNewOneCategoryList.size(); j++) {
+                        if(x.equals(orderNewOneCategoryList.get(j))){
+                            it.remove();
+                        }
+                    }
+                }
+            }
+            if(newOneCategoryList.size()!=0){
+                String[] parent_names = newOneCategoryList.toArray(new String[newOneCategoryList.size()]);
+                //通过一级分类查询二级分类
+                List<ProductCategory> productOneCategories = productCategoryRepository.findCategoryByParentName(parent_names);
+                List<String> categories = new ArrayList<String>();
+                for (int i = 0; i < productOneCategories.size(); i++) {
+                    categories.add(productOneCategories.get(i).getCategory_name());
+                }
+                String[] product_categories = categories.toArray(new String[categories.size()]);
+                //通过二级分类查询商品
+                products = productRepository.findProductByTwoCategory(product_categories);
+                String img;
+                for(int i = 0; i < products.size(); i++) {
+                    System.out.println("推荐商品");
+                    if (products.get(i).getProduct_picture().contains(",")){
+                        img = products.get(i).getProduct_picture();
+                        img = img.substring(0,img.indexOf(","));
+                        products.get(i).setProduct_picture(img);
+                    }
+                }
+            }
+        }
+        System.out.println(products);
+        return products;
     }
 
 }
