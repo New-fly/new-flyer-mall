@@ -38,4 +38,10 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
     @Modifying
     @Query("DELETE FROM ProductCategory p WHERE p.categoryId in :Ids")
     void deleteByIds(@Param(value = "Ids") long [] Ids);
+
+    @Query("SELECT p FROM ProductCategory p WHERE p.category_name in :category_names")
+    List<ProductCategory> findOneCategoryByCategoryName(@Param(value = "category_names") String [] category_names);
+
+    @Query("SELECT p FROM ProductCategory p WHERE p.parent_name in :parent_names")
+    List<ProductCategory> findCategoryByParentName(@Param(value = "parent_names") String [] parent_names);
 }

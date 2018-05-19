@@ -56,6 +56,10 @@
     line-height: 54px;
     font-size: 20px;
 }
+.navheader>a{
+    font-size: 20px;
+    color: white;
+}
 .allcoection{
     width: 1200px;
     margin: 0 auto;
@@ -106,15 +110,16 @@
 }
 .today{
     width: 1220px;
-    height: 600px;
+    height:auto;
     position: relative;
     margin: 0 auto;
+    overflow: hidden;
 }
 .block-2{
-    width: 198px;
-    height: 258px;
+    width: 204px;
+    height: 265px;
     margin: 10px;
-    padding: 10px;
+    padding: 7px;
     border: solid 1px red;
     float: left;
     position: relative;
@@ -130,6 +135,8 @@
 }
 .block-2-text{
     cursor:pointer;
+    height: 48px;
+    overflow: hidden;
 }
 .money{
     font-size: 17px;

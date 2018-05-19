@@ -1,5 +1,6 @@
 package org.wlgzs.xf_mall.service.impl;
 
+import javafx.css.StyleOrigin;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,16 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
-import org.wlgzs.xf_mall.dao.CollectionRepository;
-import org.wlgzs.xf_mall.dao.ProductCategoryRepository;
-import org.wlgzs.xf_mall.dao.ProductRepository;
-import org.wlgzs.xf_mall.dao.ShoppingCartRepository;
+import org.wlgzs.xf_mall.dao.*;
+import org.wlgzs.xf_mall.entity.*;
 import org.wlgzs.xf_mall.entity.Collection;
-import org.wlgzs.xf_mall.entity.Product;
-import org.wlgzs.xf_mall.entity.ProductCategory;
-import org.wlgzs.xf_mall.entity.ShoppingCart;
 import org.wlgzs.xf_mall.service.ProductService;
 import org.wlgzs.xf_mall.util.IdsUtil;
 import org.wlgzs.xf_mall.util.PageUtil;
@@ -27,9 +22,8 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Auther: 阿杰
@@ -47,6 +41,10 @@ public class ProductServiceImpl implements ProductService {
     private ShoppingCartRepository shoppingCartRepository;
     @Autowired
     private CollectionRepository collectionRepository;
+    @Autowired
+    FootprintRepository footprintRepository;
+    @Autowired
+    private OrdersRepository ordersRepository;
 
     //分页遍历商品  搜索商品
     @Override
@@ -157,12 +155,6 @@ public class ProductServiceImpl implements ProductService {
     //通过id查找商品
     @Override
     public Product findProductById(long productId) {
-        /*String img;
-        if (product.getProduct_picture().contains(",")) {
-            img = product.getProduct_picture();
-            img = img.substring(0, img.indexOf(","));
-            product.setProduct_picture(img);
-        }*/
         return  productRepository.findById(productId);
     }
 
@@ -275,8 +267,21 @@ public class ProductServiceImpl implements ProductService {
 
     //通过一级分类查找分类名
     @Override
-    public List<ProductCategory> findProductByOneCategory(String category, int page, int limit) {
+    public List<ProductCategory> findProductByOneCategory(String category) {
         return productCategoryRepository.findByCategoryParentName(category);
+    }
+
+    //通过二级分类查找商品
+    @Override
+    public List<Product> productByOneCategory(String category_name) {
+        List<ProductCategory> productCategories = productCategoryRepository.findByCategoryParentName(category_name);
+        ProductCategory[] toBeStored = productCategories.toArray(new ProductCategory[productCategories.size()]);
+        String[] str = new String[toBeStored.length];
+        for (int i = 0; i < toBeStored.length; i++) {
+            str[i] = toBeStored[i].getCategory_name();
+        }
+        List<Product> products = productRepository.findProductByTwoCategory(str);//查询的当前页商品的集合
+        return products;
     }
 
     //通过二级分类查找商品  分页
@@ -302,7 +307,23 @@ public class ProductServiceImpl implements ProductService {
 
     //增加一级分类
     @Override
-    public void saveOne(ProductCategory productCategory) {
+    public void saveOne(ProductCategory productCategory, MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
+        String realName = "";
+        if (myFileName != null) {
+            String fileName = myFileName.getOriginalFilename();
+            String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
+            // 生成实际存储的真实文件名
+            realName = UUID.randomUUID().toString() + fileNameExtension;
+            // "/category"是你自己定义的上传目录
+            String realPath = session.getServletContext().getRealPath("/category");
+            File uploadFile = new File(realPath, realName);
+            try {
+                myFileName.transferTo(uploadFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        productCategory.setCategory_img(request.getContextPath() + "/category/" + realName);
         productCategory.setParent_name("0");
         productCategoryRepository.save(productCategory);
     }
@@ -310,6 +331,8 @@ public class ProductServiceImpl implements ProductService {
     //增加二级分类
     @Override
     public void save(ProductCategory productCategory) {
+        productCategory.setCategory_show(0);
+        productCategory.setCategory_img("0");
         productCategoryRepository.save(productCategory);
     }
 
@@ -319,9 +342,6 @@ public class ProductServiceImpl implements ProductService {
         ProductCategory productCategory = productCategoryRepository.findById(categoryId);
         if(productCategory.getParent_name().equals("0")){
             List<ProductCategory> productCategories = productCategoryRepository.findByCategoryParentName(productCategory.getCategory_name());
-            System.out.println(productCategories);
-
-            System.out.println(productCategories.size()!=0);
             if(productCategories.size()!=0){
                 long[] Ids = new long[productCategories.size()];
                 for (int i = 0; i < Ids.length; i++) {
@@ -335,7 +355,32 @@ public class ProductServiceImpl implements ProductService {
 
     //修改分类
     @Override
-    public void editCategory(ProductCategory productCategory) {
+    public void editCategory(ProductCategory productCategory, MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
+        System.out.println(productCategory);
+        if(productCategory.getParent_name()!=null){
+            productCategory.setCategory_show(0);
+            productCategory.setCategory_img("0");
+        }
+        if(productCategory.getParent_name()==null){
+            String realName = "";
+            if (myFileName != null) {
+                System.out.println("修改分类图片");
+                String fileName = myFileName.getOriginalFilename();
+                String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
+                // 生成实际存储的真实文件名
+                realName = UUID.randomUUID().toString() + fileNameExtension;
+                // "/category"是你自己定义的上传目录
+                String realPath = session.getServletContext().getRealPath("/category");
+                File uploadFile = new File(realPath, realName);
+                try {
+                    myFileName.transferTo(uploadFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            productCategory.setCategory_img(request.getContextPath() + "/category/" + realName);
+            productCategory.setParent_name("0");
+        }
         productCategoryRepository.save(productCategory);
     }
 
@@ -351,8 +396,6 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(productId);
 
         ShoppingCart shoppingCart = new ShoppingCart();
-        /*int count = Integer.parseInt(request.getParameter("shoppingCart_count"));*/
-        System.out.println(shoppingCart_count+"---");
         shoppingCart.setShoppingCart_count(shoppingCart_count);
         ShoppingCart findShoppingCart = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
         if (findShoppingCart != null) {
@@ -361,7 +404,12 @@ public class ProductServiceImpl implements ProductService {
         }
         if (findShoppingCart == null) {
             shoppingCart.setProductId(productId);
-            shoppingCart.setProduct_picture(product.getProduct_picture());
+            String img = null;
+            if (product.getProduct_picture().contains(",")){
+                img = product.getProduct_picture();
+                img = img.substring(0,img.indexOf(","));
+            }
+            shoppingCart.setProduct_picture(img);
             shoppingCart.setProduct_counterPrice(product.getProduct_counterPrice());
             shoppingCart.setProduct_keywords(product.getProduct_keywords());
             shoppingCart.setProduct_mallPrice(product.getProduct_mallPrice());
@@ -390,7 +438,12 @@ public class ProductServiceImpl implements ProductService {
         }
         if (findCollection == null) {
             collection.setProductId(productId);
-            collection.setProduct_picture(product.getProduct_picture());
+            String img = null;
+            if (product.getProduct_picture().contains(",")){
+                img = product.getProduct_picture();
+                img = img.substring(0,img.indexOf(","));
+            }
+            collection.setProduct_picture(img);
             collection.setProduct_keywords(product.getProduct_keywords());
             collection.setProduct_mallPrice(product.getProduct_mallPrice());
             collection.setUserId(userId);
@@ -407,17 +460,7 @@ public class ProductServiceImpl implements ProductService {
     //用户的购物车
     @Override
     public List<ShoppingCart> findByUserIdCart(long userId) {
-        List<ShoppingCart> shoppingCarts = shoppingCartRepository.findByUserIdCart(userId);
-        String img;
-        for (int i = 0; i < shoppingCarts.size(); i++) {
-            System.out.println("跳转至购物车");
-            if (shoppingCarts.get(i).getProduct_picture().contains(",")) {
-                img = shoppingCarts.get(i).getProduct_picture();
-                img = img.substring(0, img.indexOf(","));
-                shoppingCarts.get(i).setProduct_picture(img);
-            }
-        }
-        return shoppingCarts;
+        return shoppingCartRepository.findByUserIdCart(userId);
     }
 
     //购物车移至收藏
@@ -442,7 +485,12 @@ public class ProductServiceImpl implements ProductService {
         }
         if (findCollection == null) {
             collection.setProductId(productId);
-            collection.setProduct_picture(product.getProduct_picture());
+            String img = null;
+            if (product.getProduct_picture().contains(",")){
+                img = product.getProduct_picture();
+                img = img.substring(0,img.indexOf(","));
+            }
+            collection.setProduct_picture(img);
             collection.setProduct_keywords(product.getProduct_keywords());
             collection.setProduct_mallPrice(product.getProduct_mallPrice());
             collection.setUserId(userId);
@@ -476,17 +524,7 @@ public class ProductServiceImpl implements ProductService {
     //用户的收藏
     @Override
     public List<Collection> findByUserIdCollection(long userId) {
-        List<Collection> collections = collectionRepository.findByUserIdCollection(userId);
-        String img;
-        for (int i = 0; i < collections.size(); i++) {
-            if (collections.get(i).getProduct_picture().contains(",")) {
-                img = collections.get(i).getProduct_picture();
-                img = img.substring(0, img.indexOf(","));
-                System.out.println(" ");
-                collections.get(i).setProduct_picture(img);
-            }
-        }
-        return collections;
+        return collectionRepository.findByUserIdCollection(userId);
     }
 
     //删除收藏
@@ -519,6 +557,119 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findByProduct_isRedeemable() {
         return productRepository.findByProduct_isRedeemable();
+    }
+
+    //商品推荐
+    @Override
+    public List<Product> recommendedByUserId(long userId) {
+        //通过用户id查询最新足迹商品
+        List<Footprint> footprints = footprintRepository.recommendedByUserId(userId);
+        List<Product> products = new ArrayList<Product>();
+        if(footprints!=null){
+            long[] productIds = new long[footprints.size()];
+            for (int i = 0; i < footprints.size(); i++) {
+                productIds[i] = footprints.get(i).getProductId();
+            }
+            //通过足迹商品id查询商品
+            List<Product> productsOne = productRepository.findProductByProductId(productIds);
+            List<String> productCategories = new ArrayList<String>();
+            for (int i = 0; i < productsOne.size(); i++) {
+                productCategories.add(productsOne.get(i).getProduct_category());
+            }
+            String[] category_names = productCategories.toArray(new String[productCategories.size()]);
+            //通过商品二级分类查询一级分类
+            List<ProductCategory> productCategoryList = productCategoryRepository.findOneCategoryByCategoryName(category_names);
+            List<String> oneCategoryList = new ArrayList<String>();
+            for (int i = 0; i < productCategoryList.size(); i++) {
+                oneCategoryList.add(productCategoryList.get(i).getParent_name());
+            }
+            //去重 利用set顺序不变
+            Set set = new HashSet();
+            List<String> newOneCategoryList = new  ArrayList<String>();
+            for (String cd:oneCategoryList) {
+                if(set.add(cd)){
+                    newOneCategoryList.add(cd);
+                }
+            }
+
+            //查询用户的订单
+            List<Orders> orders = ordersRepository.userOrderList(userId);
+            if(orders!=null){
+                Date data = new Date();
+                SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+                //将近半年的订单放在一个集合中
+                List<Orders> ordersList = new ArrayList<Orders>();
+                for (int i = 0; i < orders.size(); i++) {
+                    double between = (double)(data.getTime() - orders.get(i).getOrder_purchaseTime().getTime())/(double)(1000*60*60*24);
+                    if(between < 180){
+                        ordersList.add(orders.get(i));
+                    }
+                }
+                //将近半年订单的商品id放在一个数组里
+                long [] orderProductId = new long[ordersList.size()];
+                for (int i = 0; i < ordersList.size(); i++) {
+                    double between = (double)(data.getTime() - orders.get(i).getOrder_purchaseTime().getTime())/(double)(1000*60*60*24);
+                    if(between < 180){
+                        orderProductId[i] = ordersList.get(i).getProductId();
+                    }
+                }
+                //通过商品id查询商品
+                List<Product> orderProducts = productRepository.findProductByProductId(orderProductId);
+                //把商品的分类放在一个集合中
+                List<String> categoryOne = new ArrayList<String>();
+                for (int i = 0; i < orderProducts.size(); i++) {
+                    categoryOne.add(orderProducts.get(i).getProduct_category());
+                }
+                String[] orderCategory_names = categoryOne.toArray(new String[categoryOne.size()]);
+                //通过商品二级分类查询一级分类
+                List<ProductCategory> orderProductCategoryList = productCategoryRepository.findOneCategoryByCategoryName(orderCategory_names);
+                List<String> orderOneCategoryList = new ArrayList<String>();
+                for (int i = 0; i < orderProductCategoryList.size(); i++) {
+                    orderOneCategoryList.add(orderProductCategoryList.get(i).getParent_name());
+                }
+                //去重 利用set顺序不变
+                Set orderSet = new HashSet();
+                List<String> orderNewOneCategoryList = new  ArrayList<String>();
+                for (String cd:orderOneCategoryList) {
+                    if(orderSet.add(cd)){
+                        orderNewOneCategoryList.add(cd);
+                    }
+                }
+                //从所推荐的一级分类中 去除 半年内订单商品分类对应的一级分类
+                Iterator<String> it = newOneCategoryList.iterator();
+                while(it.hasNext()){
+                    String x = it.next();
+                    for (int j = 0; j < orderNewOneCategoryList.size(); j++) {
+                        if(x.equals(orderNewOneCategoryList.get(j))){
+                            it.remove();
+                        }
+                    }
+                }
+            }
+            if(newOneCategoryList.size()!=0){
+                String[] parent_names = newOneCategoryList.toArray(new String[newOneCategoryList.size()]);
+                //通过一级分类查询二级分类
+                List<ProductCategory> productOneCategories = productCategoryRepository.findCategoryByParentName(parent_names);
+                List<String> categories = new ArrayList<String>();
+                for (int i = 0; i < productOneCategories.size(); i++) {
+                    categories.add(productOneCategories.get(i).getCategory_name());
+                }
+                String[] product_categories = categories.toArray(new String[categories.size()]);
+                //通过二级分类查询商品
+                products = productRepository.findProductByTwoCategory(product_categories);
+                String img;
+                for(int i = 0; i < products.size(); i++) {
+                    System.out.println("推荐商品");
+                    if (products.get(i).getProduct_picture().contains(",")){
+                        img = products.get(i).getProduct_picture();
+                        img = img.substring(0,img.indexOf(","));
+                        products.get(i).setProduct_picture(img);
+                    }
+                }
+            }
+        }
+        System.out.println(products);
+        return products;
     }
 
 }

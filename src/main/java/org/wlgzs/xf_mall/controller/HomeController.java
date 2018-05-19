@@ -8,10 +8,9 @@ import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Activity;
 import org.wlgzs.xf_mall.entity.Product;
 import org.wlgzs.xf_mall.entity.ProductCategory;
-import org.wlgzs.xf_mall.service.ActivityService;
-import org.wlgzs.xf_mall.service.ProductService;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +30,12 @@ public class HomeController extends BaseController {
      * @description 主页商品数据
      */
     @RequestMapping("/homeProduct")
-    public ModelAndView homeProduct(Model model){
+    public ModelAndView homeProduct(Model model, HttpServletRequest request){
         List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();
         model.addAttribute("productOneCategories", productOneCategories);
         List<ProductCategory> productTwoCategories = productService.findProductTwoCategoryList();
         model.addAttribute("productTwoCategories", productTwoCategories);
+        //活动商品  轮播图
         List<Activity> activities = activityService.getActivity();
         List<Object> activityPictureList = new ArrayList<Object>();
         for (int i = 0; i < activities.size(); i++) {
@@ -43,17 +43,24 @@ public class HomeController extends BaseController {
         }
         model.addAttribute("activities",activities);
         model.addAttribute("activityPictureList",activityPictureList);
-        List<Product> products = productService.getProductList();
-        String img;
-        for(int i = 0; i < products.size(); i++) {
-            if (products.get(i).getProduct_picture().contains(",")){
-                img = products.get(i).getProduct_picture();
-                img = img.substring(0,img.indexOf(","));
-                System.out.println("主页");
-                products.get(i).setProduct_picture(img);
-            }
+        //商品展示
+        List<Product> productsOne = productService.productByOneCategory(productOneCategories.get(0).getCategory_name());
+        model.addAttribute("productsOne",productsOne);//主页部分第一分类商品
+        List<Product> productsTwo = productService.productByOneCategory(productOneCategories.get(1).getCategory_name());
+        model.addAttribute("productsTwo",productsTwo);//主页部分第二分类商品
+        List<Product> productsThree = productService.productByOneCategory(productOneCategories.get(2).getCategory_name());
+        model.addAttribute("productsThree",productsThree);//主页部分第三分类商品
+        List<Product> productsFour = productService.productByOneCategory(productOneCategories.get(3).getCategory_name());
+        model.addAttribute("productsFour",productsFour);//主页部分第四分类商品
+        List<Product> productsFive = productService.productByOneCategory(productOneCategories.get(4).getCategory_name());
+        model.addAttribute("productsFive",productsFive);//主页部分第五分类商品
+        HttpSession session = request.getSession();
+        //推荐商品
+        if(session!=null){
+            long userId = (long) session.getAttribute("userId");
+            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+            model.addAttribute("recommendedProducts", recommendedProducts);
         }
-        model.addAttribute("products",products);
         return new ModelAndView("Index");
     }
 }

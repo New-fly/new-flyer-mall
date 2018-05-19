@@ -137,7 +137,9 @@ window.onload = function() {
                 allid=allid+document.getElementsByClassName("aa")[i].value+",";
             }
         }
-        console.log(allid)
+        console.log(allid);
+        allid = allid.substring(0, allid.lastIndexOf(','));
+        document.getElementsByClassName("produc")[0].value=allid;
     }
 
 };

@@ -44,8 +44,13 @@ public class FootprintServiceImpl implements FootprintService {
             footprint.setUserId(userId);
             footprint.setProductId(productId);
             footprint.setProduct_keywords(product.getProduct_keywords());
+            String img = null;
+            if (product.getProduct_picture().contains(",")){
+                img = product.getProduct_picture();
+                img = img.substring(0,img.indexOf(","));
+            }
             footprint.setProduct_mallPrice(product.getProduct_mallPrice());
-            footprint.setProduct_picture(product.getProduct_picture());
+            footprint.setProduct_picture(img);
             footprintRepository.save(footprint);
         }
     }
@@ -73,16 +78,6 @@ public class FootprintServiceImpl implements FootprintService {
     //遍历用户足迹商品
     @Override
     public List<Footprint> findFootprintByUserId(long userId) {
-        List<Footprint> footprints = footprintRepository.findByUserId(userId);
-        String img;
-        for (int i = 0; i < footprints.size(); i++) {
-            System.out.println("跳转至足迹");
-            if (footprints.get(i).getProduct_picture().contains(",")) {
-                img = footprints.get(i).getProduct_picture();
-                img = img.substring(0, img.indexOf(","));
-                footprints.get(i).setProduct_picture(img);
-            }
-        }
         return footprintRepository.findByUserId(userId);
     }
 

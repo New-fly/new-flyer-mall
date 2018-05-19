@@ -45,6 +45,7 @@ public class UserServiceImpl implements UserService {
     //后台增加用户
     @Override
     public void save(User user) {
+        user.setUser_avatar("/headPortrait/morende.jpg ");
         userRepository.save(user);
     }
 

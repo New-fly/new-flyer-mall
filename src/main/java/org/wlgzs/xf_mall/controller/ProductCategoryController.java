@@ -75,7 +75,7 @@ public class ProductCategoryController extends BaseController {
     public ModelAndView byOneCategoryFindProduct(Model model, String category, @RequestParam(value = "page", defaultValue = "0") int page,
                                                  @RequestParam(value = "limit", defaultValue = "12") int limit) {
         if(page != 0) page--;
-        List<ProductCategory> productCategories = productService.findProductByOneCategory(category, page, limit);
+        List<ProductCategory> productCategories = productService.findProductByOneCategory(category);
 
         ProductCategory[] toBeStored = productCategories.toArray(new ProductCategory[productCategories.size()]);
         String[] strs = new String[toBeStored.length];
@@ -84,13 +84,11 @@ public class ProductCategoryController extends BaseController {
         List<Product> products = new ArrayList<Product>();
         for (int i = 0; i < toBeStored.length; i++) {
             strs[i] = toBeStored[i].getCategory_name();
-            System.out.println(strs[i]);
             Page<Product> pages = productService.findProductByTwoCategory(strs[i], page, limit);
             TotalPages = TotalPages + pages.getTotalPages();  //查询的页数
             Number = Number + pages.getNumber() + 1;//查询的当前第几页
             products.addAll(pages.getContent());//查询的当前页的集合
         }
-        System.out.println(products);
         model.addAttribute("TotalPages",TotalPages);//查询的页数
         model.addAttribute("Number",Number);//查询的当前第几页
         model.addAttribute("products",products);//查询的当前页的集合
@@ -111,7 +109,6 @@ public class ProductCategoryController extends BaseController {
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber() + 1);//查询的当前第几页
         model.addAttribute("products", pages.getContent());//查询的当前页的集合
-        System.out.println(pages.getContent());
         return new ModelAndView("productList");
     }
     /**
@@ -123,7 +120,6 @@ public class ProductCategoryController extends BaseController {
     @RequestMapping("/byCategoryFindProduct")
     public ModelAndView byCategoryFindProduct(Model model, String product_category) {
         List<Product> products = productService.findProductByCategory(product_category);
-        System.out.println(products);
         model.addAttribute("products", products);
         return new ModelAndView("productList");
     }

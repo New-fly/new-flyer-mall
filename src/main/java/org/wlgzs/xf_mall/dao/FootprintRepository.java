@@ -1,5 +1,6 @@
 package org.wlgzs.xf_mall.dao;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -30,4 +31,7 @@ public interface FootprintRepository extends JpaRepository<Footprint, Long>,JpaS
 
     @Query(value = "SELECT f FROM Footprint f WHERE f.product_keywords like %?1% AND f.userId=?2")
     List<Footprint> findFootprints(String product_keywords, long userId);
+
+    @Query(value = "select * from footprint where user_id=? order by footprint_id desc limit 0,3",nativeQuery = true)
+    List<Footprint> recommendedByUserId(@Param("userId") long userId);
 }
