@@ -110,14 +110,9 @@ public class UserServiceImpl implements UserService {
         }*/
         Sort sort = new Sort(Sort.Direction.DESC, "userId");
         Pageable pageable = new PageRequest(page,limit, sort);
-        Specification<User> specification = new PageUtil<User>(user_name).getPage("user_name");
+        Specification<User> specification = new PageUtil<User>(user_name).getPage("user_name","user_role","user_mail");
         Page pages = userRepository.findAll(specification,pageable);
         return pages;
-    }
-
-    @Override
-    public void modifyAvatar(String user_avatar,long userId) {
-        userRepository.ModifyAvatar(user_avatar,userId);
     }
 
     @Override

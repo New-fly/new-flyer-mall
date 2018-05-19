@@ -286,30 +286,22 @@ public class OrdersServiceImpl implements OrdersService {
         }
     }*/
 
-    //前台订单查询
-    @Override
-    public Page<Orders> searchOrder(String order_word, int page, int limit) {
-        Sort sort = new Sort(Sort.Direction.DESC,"orderId");
-        Pageable pageable = new PageRequest(page,limit,sort);
-        Specification<Orders> specification = new PageUtil<Orders>(order_word).getPage("product_specification","order_number","address_name","user_name");
-        Page pages = ordersRepository.findAll(specification,pageable);
-        System.out.println(pages);
-        return pages;
-    }
-
+    //后台订单查询
     @Override
     public Page<Orders> adminSearchOrder(String order_word, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC,"orderId");
         Pageable pageable = new PageRequest(page,limit,sort);
-        Specification<Orders> specification = new PageUtil<Orders>(order_word).getPage("product_specification","");
+        Specification<Orders> specification = new PageUtil<Orders>(order_word).getPage("product_specification","order_number","user_name","address_name");
         Page pages = ordersRepository.findAll(specification,pageable);
         System.out.println(pages);
         return pages;
     }
 
+    //前台查询
     @Override
     public List<Orders> searchOrder(String order_word, long userId) {
         List<Orders> orders = ordersRepository.searchOrder(userId,order_word);
         return orders;
     }
+
 }

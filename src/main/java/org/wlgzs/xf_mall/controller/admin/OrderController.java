@@ -117,7 +117,7 @@ public class OrderController {
     public ModelAndView findOrders(Model model, String order_word, @RequestParam(value = "page",defaultValue = "0")int page,
                                    @RequestParam(value = "limit",defaultValue = "6")int limit){
         if(page != 0) page--;
-        Page<Orders> pages = ordersService.searchOrder(order_word,page,limit);
+        Page<Orders> pages = ordersService.adminSearchOrder(order_word,page,limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
         List<Orders> orders = pages.getContent();
