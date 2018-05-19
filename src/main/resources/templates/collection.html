@@ -37,8 +37,8 @@
         </div>
         <div class="allcoectionheader">精品推荐</div>
             <div class="baby">
-                <figure class="showall">
-                    <div class="showpic"><img th:src="@{/images/05.jpg}" alt="" class="showpic"></div>
+                <figure class="showall" th:each="recommendedProducts : ${recommendedProducts}">
+                    <div class="showpic"><img th:src="${recommendedProducts.}" alt="" class="showpic"></div>
                     <div class="describe">
                         <div class="describe1"><a href="">清凉一夏，热卖中</a></div>
                         <div><font style="color:red;">¥888</font>&nbsp;<s style="color: #3C3F41;">¥666</s></div>

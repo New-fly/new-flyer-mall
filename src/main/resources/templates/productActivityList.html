@@ -11,27 +11,10 @@
 
 </head>
 <body>
-<div class="top">
-    <div class="top-left">
-        <ul>
-            <li><a href="#"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
-            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;登录</a></li>
-            <li><a href="#"><span class="red">立即注册</span></a></li>
-        </ul>
-    </div>
-    <div class="top-right">
-        <ul>
-            <li><a th:href="@{/ProductListController/shoppingCart(userId=46)}"><i class="fa fa-paw" style="color: #336699"></i>&nbsp;&nbsp;购物车</a></li>
-            <li><a th:href="@{/ProductListController/collectionProduct(userId=46)}"><i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a></li>
-            <li><a href="#">我的淘宝</a></li>
-            <li><a href="#">111111</a></li>
-            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;管理系统</a></li>
-        </ul>
-    </div>
-</div>
+<div th:include="common/top_header :: copy"></div>
 <div class="bacg" >
     <div class="countdown">
-        <img src="images/dingzi.png" alt="" class="dingzi">
+        <img th:src="@{/images/dingzi.png}" alt="" class="dingzi">
         <p class="cure" style="margin-top: 20px">距离活动</p>
         <p class="cure">仅剩</p>
         <div class="countborder">
@@ -52,29 +35,27 @@
     <div class="main-content">
         <p class="p-font">全国定制热销中</p>
         <div class="photoshow">
-            <div class="pro-list">
-                <div class="item" th:each="activity : ${activities}">
-                    <a href="#" target="_blank">
-                        <div class="imgs">
-                            <a th:href="@{/ProductListController/toProduct(productId=${activity.productId})}">
-                                <img th:src="${activity.product_picture}" width="190px" height="190px">
-                            </a>
-                        </div>
-                        <div class="wenzi">
-                            <div class="js-title">
-                                <a href="#" style='color: green' th:text="${activity.product_keywords}"></a>
-                            </div>
-                            <div class="discount"><a href="">满88减3</a></div>
-                            <div class="price">
-                                <span class="price" th:text="'商城价：¥'+${activity.product_mallPrice}">¥1500</span>
-                                <s class="display">¥2000</s>
-                            </div>
-
-                        </div>
-                    </a>
-                </div>
-
+            <div class="time">
+                <ul class="uull">
+                    <li class="llii">12:00抢购开始</li>
+                    <li class="llii">18:00结束</li>
+                </ul>
             </div>
+            <div class="picture">
+                <div class="item" th:each="activity:${activities}">
+                    <img th:src="${activity.product_picture}" alt="" class="imgsty">
+                    <div class="keywords">
+                        <a href="" th:text="${activity.product_keywords}">新飞（Frestec）BCD-501WHCC8C 501升 风冷无</a>
+                        <p class="price" th:text="'专柜价：¥'+${activity.setProduct_mallPrice}">1499元<del th:text="'专柜价：¥'+${activity.product_counterPrice}">1899</del></p>
+                        <a href="" class="btn">提醒我</a>
+                        <p class="person">已有11人设置提醒</p>
+                    </div>
+                </div>
+                <div class="item"></div>
+                <div class="item"></div>
+            </div>
+
+
         </div>
     </div>
 </div>
@@ -96,7 +77,7 @@
     </div>
 
 </footer>
-<script th:src="@{js/activityProducts.js}"></script>
+<script th:src="@{/js/activityProducts.js}"></script>
 
 </body>
 </html>

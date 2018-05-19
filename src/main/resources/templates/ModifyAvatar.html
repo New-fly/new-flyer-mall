@@ -10,27 +10,7 @@
     <script th:src="@{/js/jquery.js}"></script>
 </head>
 <body>
-<div class="top">
-    <div class="top-left">
-        <ul>
-            <li><a href="#"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
-            <li><a th:href="@{/toLogin}"><i class="fa fa-paw"></i>&nbsp;&nbsp;登录</a></li>
-            <li><a th:href="@{/toRegistered}"><span class="red">立即注册</span></a></li>
-        </ul>
-    </div>
-    <div class="top-right">
-        <ul>
-            <li><a th:href="@{/ProductListController/shoppingCart(userId=46)}"><i class="fa fa-paw"
-                                                                                  style="color: #336699"></i>&nbsp;&nbsp;购物车</a>
-            </li>
-            <li><a th:href="@{/ProductListController/collectionProduct(userId=46)}"><i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a>
-            </li>
-            <li><a href="#">我的淘宝</a></li>
-            <li><a href="#">111111</a></li>
-            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;管理系统</a></li>
-        </ul>
-    </div>
-</div>
+<div th:include="common/top_header :: copy"></div>
 <div class="nav">
     <div class="navheader">账号管理</div>
 </div>
