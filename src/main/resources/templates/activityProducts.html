@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>活动页面-新飞商城</title>
+    <link th:href="@{/css/activityProducts.css}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+
+</head>
+<body>
+<div class="top">
+    <div class="top-left">
+        <ul>
+            <li><a href="#"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
+            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;登录</a></li>
+            <li><a href="#"><span class="red">立即注册</span></a></li>
+        </ul>
+    </div>
+    <div class="top-right">
+        <ul>
+            <li><a th:href="@{/ProductListController/shoppingCart(userId=46)}"><i class="fa fa-paw" style="color: #336699"></i>&nbsp;&nbsp;购物车</a></li>
+            <li><a th:href="@{/ProductListController/collectionProduct(userId=46)}"><i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a></li>
+            <li><a href="#">我的淘宝</a></li>
+            <li><a href="#">111111</a></li>
+            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;管理系统</a></li>
+        </ul>
+    </div>
+</div>
+<div class="bacg" >
+    <div class="countdown">
+        <img src="images/dingzi.png" alt="" class="dingzi">
+        <p class="cure" style="margin-top: 20px">距离活动</p>
+        <p class="cure">仅剩</p>
+        <div class="countborder">
+            <div class="countbox" id="day"></div>
+            <div class="countbox" id="hour"></div>
+            <div class="countbox" id="minute"></div>
+            <div class="countbox" id="second"></div>
+            <div class="description">day</div>
+            <div class="description">hour</div>
+            <div class="description">min</div>
+            <div class="description">second</div>
+        </div>
+
+
+    </div>
+</div>
+<div class="main">
+    <div class="main-content">
+        <p class="p-font">全国定制热销中</p>
+        <div class="photoshow">
+            <div class="pro-list">
+                <div class="item" th:each="activity : ${activities}">
+                    <a href="#" target="_blank">
+                        <div class="imgs">
+                            <a th:href="@{/ProductListController/toProduct(productId=${activity.productId})}">
+                                <img th:src="${activity.product_picture}" width="190px" height="190px">
+                            </a>
+                        </div>
+                        <div class="wenzi">
+                            <div class="js-title">
+                                <a href="#" style='color: green' th:text="${activity.product_keywords}"></a>
+                            </div>
+                            <div class="discount"><a href="">满88减3</a></div>
+                            <div class="price">
+                                <span class="price" th:text="'商城价：¥'+${activity.product_mallPrice}">¥1500</span>
+                                <s class="display">¥2000</s>
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="lianjie">
+        <ul>
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li><br><li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"> <a href="#">招贤纳士</a></li>|
+            <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|<br>
+            &nbsp;<p style="display: inline;color: #6C6C6C">网络文化经营许可证：<a style="display: inline">文网文[2010]40号</a></p>&nbsp&nbsp<p style="display: inline;color: #6C6C6C">信息网络传播视听节目许可证：1109364号</p>
+        </ul>
+    </div>
+
+</footer>
+<script th:src="@{js/activityProducts.js}"></script>
+
+</body>
+</html>
