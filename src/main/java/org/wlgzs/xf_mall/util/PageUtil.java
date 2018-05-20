@@ -29,6 +29,9 @@ public class PageUtil<T> {
                 if(searchKeywords==null){ //不模糊查询直接返回
                     return null;
                 }
+                if(searchKeywords.equals("")){ //不模糊查询直接返回
+                    return null;
+                }
                 List<Predicate> predicates = new ArrayList<Predicate>();
                 for (String s:strings){
                     Predicate _name = null;
