@@ -44,4 +44,7 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
 
     @Query("SELECT p FROM ProductCategory p WHERE p.parent_name in :parent_names")
     List<ProductCategory> findCategoryByParentName(@Param(value = "parent_names") String [] parent_names);
+
+    @Query("SELECT p FROM ProductCategory p WHERE p.parent_name in :parent_names and p.category_show = '2'")
+    List<ProductCategory> findCategoryByParentNameTwo(@Param(value = "parent_names") String [] parent_names);
 }

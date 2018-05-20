@@ -21,9 +21,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>,JpaSpeci
     @Query(value = "SELECT * FROM product WHERE product_id = ? ",nativeQuery = true)
     List<Product> findByIdReturnOne(long productId);
 
-    @Query(value = "SELECT p FROM Product p WHERE p.product_keywords like %?1%")
-    List<Product> findByProductKeywords(String product_keywords);
-
     @Query(value = "SELECT * FROM product WHERE product_category = ?",nativeQuery = true)
     List<Product> findByCategory(String product_category);
 
@@ -33,15 +30,10 @@ public interface ProductRepository extends JpaRepository<Product, Long>,JpaSpeci
     @Query(value = "SELECT * FROM product WHERE product_is_redeemable = 1 ",nativeQuery = true)
     List<Product> findByProduct_isRedeemable();
 
-    @Query(value = "SELECT * FROM product WHERE product_category = ? limit 0,4",nativeQuery = true)
-    List<Product> findByTwoCategory(String product_category);
-
     @Query("SELECT o FROM Product o WHERE o.product_category in :product_categories")
     List<Product> findProductByTwoCategory(@Param(value = "product_categories") String [] product_categories);
 
     @Query("SELECT o FROM Product o WHERE o.productId in :productIds")
     List<Product> findProductByProductId(@Param(value = "productIds") long [] productIds);
 
-    @Query("SELECT o FROM Product o WHERE o.productId in :productIds")
-    List<Product> findProductByProductId(@Param(value = "productIds") Long[] orderProductIds);
 }

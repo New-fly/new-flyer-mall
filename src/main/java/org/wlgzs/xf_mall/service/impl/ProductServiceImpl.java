@@ -1,6 +1,5 @@
 package org.wlgzs.xf_mall.service.impl;
 
-import javafx.css.StyleOrigin;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -56,17 +55,10 @@ public class ProductServiceImpl implements ProductService {
         return pages;
     }
 
-    //遍历所有商品
-    @Override
-    public List<Product> getProductList() {
-        return productRepository.findAll();
-    }
-
     //添加商品
     @Override
     public void saveProduct(String product_details, MultipartFile[] myFileNames, HttpSession session, HttpServletRequest request) {
         String realName = "";
-        System.out.println(myFileNames.length);
         String[] str = new String[myFileNames.length];
         for (int i = 0; i < myFileNames.length; i++) {
             if (!myFileNames[i].getOriginalFilename().equals("")) {
@@ -331,6 +323,14 @@ public class ProductServiceImpl implements ProductService {
         productCategoryRepository.save(productCategory);
     }
 
+    //添加二级分类配件
+    @Override
+    public void saveTwo(ProductCategory productCategory) {
+        productCategory.setCategory_show(2);
+        productCategory.setCategory_img("0");
+        productCategoryRepository.save(productCategory);
+    }
+
     //删除分类
     @Override
     public void deleteCategory(long categoryId) {
@@ -350,13 +350,21 @@ public class ProductServiceImpl implements ProductService {
 
     //修改分类
     @Override
-    public void editCategory(ProductCategory productCategory, MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
-        System.out.println(productCategory);
-        if(productCategory.getParent_name()!=null){
-            productCategory.setCategory_show(0);
-            productCategory.setCategory_img("0");
+    public void editCategory(long categoryId, MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
+        ProductCategory productCategory = productCategoryRepository.findById(categoryId);
+        productCategory.setCategory_name(request.getParameter("category_name"));
+        if(!productCategory.getParent_name().equals("0")){
+            productCategory.setParent_name(request.getParameter("parent_name"));
+            if(productCategory.getCategory_show()==2){
+                productCategory.setCategory_show(2);
+                productCategory.setCategory_img("0");
+            }
+            if(productCategory.getCategory_show()!=2) {
+                productCategory.setCategory_show(0);
+                productCategory.setCategory_img("0");
+            }
         }
-        if(productCategory.getParent_name()==null){
+        if(productCategory.getParent_name().equals("0")){
             String realName = "";
             if (myFileName != null) {
                 System.out.println("修改分类图片");
@@ -412,12 +420,6 @@ public class ProductServiceImpl implements ProductService {
             shoppingCart.setUserId(userId);
             shoppingCartRepository.save(shoppingCart);
         }
-    }
-
-    //查找用户购物车是否存在
-    @Override
-    public ShoppingCart findByUserIdAndProductId(long userId, long productId) {
-        return shoppingCartRepository.findByUserIdAndProductId(userId, productId);
     }
 
     //添加收藏
@@ -589,6 +591,7 @@ public class ProductServiceImpl implements ProductService {
 
             //查询用户的订单
             List<Orders> orders = ordersRepository.userOrderList(userId);
+            List<String> productOneCategoriesTwo = new ArrayList<String>();
             if(orders!=null){
                 Date data = new Date();
                 SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
@@ -630,6 +633,14 @@ public class ProductServiceImpl implements ProductService {
                         orderNewOneCategoryList.add(cd);
                     }
                 }
+                //查询该一级分类下的配件
+                String[] parent_names = orderOneCategoryList.toArray(new String[orderOneCategoryList.size()]);
+                List<ProductCategory> productOneCategories = productCategoryRepository.findCategoryByParentNameTwo(parent_names);
+                if(productOneCategories!=null){
+                    for (int i = 0; i < productOneCategories.size(); i++) {
+                        productOneCategoriesTwo.add(productOneCategories.get(i).getCategory_name());
+                    }
+                }
                 //从所推荐的一级分类中 去除 半年内订单商品分类对应的一级分类
                 Iterator<String> it = newOneCategoryList.iterator();
                 while(it.hasNext()){
@@ -641,6 +652,7 @@ public class ProductServiceImpl implements ProductService {
                     }
                 }
             }
+
             if(newOneCategoryList.size()!=0){
                 String[] parent_names = newOneCategoryList.toArray(new String[newOneCategoryList.size()]);
                 //通过一级分类查询二级分类
@@ -648,6 +660,9 @@ public class ProductServiceImpl implements ProductService {
                 List<String> categories = new ArrayList<String>();
                 for (int i = 0; i < productOneCategories.size(); i++) {
                     categories.add(productOneCategories.get(i).getCategory_name());
+                }
+                if(productOneCategoriesTwo.size()!=0){
+                    categories.addAll(productOneCategoriesTwo);
                 }
                 String[] product_categories = categories.toArray(new String[categories.size()]);
                 //通过二级分类查询商品
