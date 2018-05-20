@@ -15,7 +15,7 @@ public interface ProductActivityService {
 
     List<ProductActivity> activityProductList();
 
-    Page<ProductActivity> activityProductList(String activity_name, int page, int limit);
+    Page<ProductActivity> activityProductList(String product_keywords, int page, int limit);
 
     void adminAddActivity(long productId, HttpServletRequest request);
 

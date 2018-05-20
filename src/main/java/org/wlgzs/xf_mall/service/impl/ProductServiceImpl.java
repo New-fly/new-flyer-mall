@@ -288,9 +288,7 @@ public class ProductServiceImpl implements ProductService {
         return pages;
     }
 
-    //通过多条件查询商品  分页
-
-
+    //通过多条件查询商品    分页
     //通过二级分类查找商品  不分页
     @Override
     public List<Product> findProductByCategory(String product_category) {
