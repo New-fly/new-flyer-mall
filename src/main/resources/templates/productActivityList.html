@@ -3,35 +3,64 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>找回密码</title>
-    <link th:href="@{/css/get-back-password2.css}" rel="stylesheet" type="text/css">
-    <link th:href="@{/images/xflogo.ico}" rel="shortcut icon" type="image/x-icon"/>
-    <link  th:href="@{/font/css/font-awesome.min.css}" rel="stylesheet">
+    <title>活动页面-新飞商城</title>
+    <link th:href="@{/css/activityProducts.css}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
     <script th:src="@{/js/jquery.js}"></script>
+
 </head>
 <body>
-<div class="contenter">
-    <div class="header">
-        <img th:src="@{/images/logo.png}" class="xflogo">
-        <p class="register">重置登录密码</p>
+<div th:include="common/top_header :: copy"></div>
+<div class="bacg" >
+    <div class="countdown">
+        <img th:src="@{/images/dingzi.png}" alt="" class="dingzi">
+        <p class="cure" style="margin-top: 20px">距离活动</p>
+        <p class="cure">仅剩</p>
+        <div class="countborder">
+            <div class="countbox" id="day"></div>
+            <div class="countbox" id="hour"></div>
+            <div class="countbox" id="minute"></div>
+            <div class="countbox" id="second"></div>
+            <div class="description">day</div>
+            <div class="description">hour</div>
+            <div class="description">min</div>
+            <div class="description">second</div>
+        </div>
+
+
     </div>
-    <div class="yanzheng">
-        <form th:action="@{UserManagementController/retrievePassword}" method="post" class="form-list">
-            <p th:value="'账户名：'+${session.user.user_name}"></p>
-            <div class="list">
-                <input type="text"  placeholder="请输入新的密码" name="user_password" id="password" th:onchange="'javascript:test()'"><br>
-                <font class="error font1"></font>
+</div>
+<div class="main">
+    <div class="main-content">
+        <p class="p-font">全国定制热销中</p>
+        <div class="photoshow">
+            <div class="time">
+                <ul class="uull">
+                    <li class="llii">12:00抢购开始</li>
+                    <li class="llii">18:00结束</li>
+                </ul>
             </div>
-            <div  style="display: inline-block">
-                <input type="text"  placeholder="确认新的密码"  id="passwordagain" name="user_code"><br>
-                <font class="error font1"></font>
+            <div class="picture">
+                <div class="item" th:each="activity:${activities}">
+                    <img th:src="${activity.product_picture}" alt="" class="imgsty">
+                    <div class="keywords">
+                        <a href="" th:text="${activity.product_keywords}">新飞（Frestec）BCD-501WHCC8C 501升 风冷无</a>
+                        <p class="price" th:text="'专柜价：¥'+${activity.setProduct_mallPrice}">1499元<del th:text="'专柜价：¥'+${activity.product_counterPrice}">1899</del></p>
+                        <a href="" class="btn">提醒我</a>
+                        <p class="person">已有11人设置提醒</p>
+                    </div>
+                </div>
+                <div class="item"></div>
+                <div class="item"></div>
             </div>
-            <div>
-                <input type="submit" value="确定" name="submit" class="affirm" id="aff">
-            </div>
-        </form>
+
+
+        </div>
     </div>
-    <footer>
+</div>
+<footer>
+    <div class="lianjie">
         <ul>
             <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
             <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
@@ -43,10 +72,12 @@
             <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|
             <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"> <a href="#">招贤纳士</a></li>|
             <li class="listyle"><a href="#">企业文化</a></li>|<li class="listyle"><a href="3">品质科技</a></li>|<li class="listyle"><a href="#">新闻中心</a></li>|<li class="listyle"><a href="#">招贤纳士</a></li>|<br>
-            &nbsp;&nbsp;<p style="display: inline;color: #6C6C6C">网络文化经营许可证：<a>文网文[2010]40号</a></p>&nbsp&nbsp<p style="display: inline;color: #6C6C6C">信息网络传播视听节目许可证：1109364号</p>
+            &nbsp;<p style="display: inline;color: #6C6C6C">网络文化经营许可证：<a style="display: inline">文网文[2010]40号</a></p>&nbsp&nbsp<p style="display: inline;color: #6C6C6C">信息网络传播视听节目许可证：1109364号</p>
         </ul>
-    </footer>
-</div>
-<script th:src="@{/js/get-back-password2.js}"></script>
+    </div>
+
+</footer>
+<script th:src="@{/js/activityProducts.js}"></script>
+
 </body>
 </html>

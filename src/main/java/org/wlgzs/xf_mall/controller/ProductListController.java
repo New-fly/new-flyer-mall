@@ -124,6 +124,9 @@ public class ProductListController extends BaseController {
     public ModelAndView toShoppingCart(Model model,long userId){
         List<ShoppingCart> shoppingCarts = productService.findByUserIdCart(userId);
         model.addAttribute("shoppingCarts",shoppingCarts);
+        //推荐商品
+        List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+        model.addAttribute("recommendedProducts", recommendedProducts);
         return new ModelAndView("shoppingCart");
     }
     /**
@@ -183,6 +186,9 @@ public class ProductListController extends BaseController {
     public ModelAndView toCollection(Model model,long userId){
         List<Collection> collections = productService.findByUserIdCollection(userId);
         model.addAttribute("collections",collections);
+        //推荐商品
+        List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+        model.addAttribute("recommendedProducts", recommendedProducts);
         return new ModelAndView("collection");
     }
     /**
@@ -216,11 +222,18 @@ public class ProductListController extends BaseController {
      * @description 搜索收藏商品
      */
     @RequestMapping("/findCollectionProducts")
-    public ModelAndView findCollectionProducts(Model model,String product_keywords,long userId){
-        List<Collection> collections = productService.findCollections(product_keywords,userId);
-        model.addAttribute("collections",collections);
-        System.out.println(collections);
-        String url="redirect:/ProductListController/collectionProduct?userId="+userId;
+    public ModelAndView findCollectionProducts(Model model, HttpServletRequest request,String product_keywords){
+        String url="";
+        //推荐商品
+        HttpSession session = request.getSession();
+        if(session!=null){
+            long userId = (long) session.getAttribute("userId");
+            List<Collection> collections = productService.findCollections(product_keywords,userId);
+            model.addAttribute("collections",collections);
+            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+            model.addAttribute("recommendedProducts", recommendedProducts);
+            url="redirect:/ProductListController/collectionProduct?userId="+userId;
+        }
         return new ModelAndView(url);
     }
     /**
@@ -251,7 +264,7 @@ public class ProductListController extends BaseController {
      * @description 前台模糊搜索商品
      */
     @RequestMapping("/searchProductList")
-    public ModelAndView searchProductList(Model model, String product_category, @RequestParam(value = "page",defaultValue = "0") int page,
+    public ModelAndView searchProductList(Model model, HttpServletRequest request, String product_category, @RequestParam(value = "page",defaultValue = "0") int page,
                                           @RequestParam(value = "limit",defaultValue = "12") int limit){
         if(page != 0) page--;
         Page<Product> pages = productService.findProductByTwoCategory(product_category, page, limit);
@@ -268,20 +281,37 @@ public class ProductListController extends BaseController {
             }
         }
         model.addAttribute("products", products);//查询的当前页的集合
+        System.out.println(products);
         model.addAttribute("product_category",product_category);
         //遍历一级二级分类
         List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();
         model.addAttribute("productOneCategories", productOneCategories);
         List<ProductCategory> productTwoCategories = productService.findProductTwoCategoryList();
         model.addAttribute("productTwoCategories", productTwoCategories);
+        //推荐商品
+        HttpSession session = request.getSession();
+        if(session!=null){
+            long userId = (long) session.getAttribute("userId");
+            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+            model.addAttribute("recommendedProducts", recommendedProducts);
+        }
         return new ModelAndView("productList");
     }
     //积分商品展示
     @RequestMapping("/integralProduct")
     public ModelAndView findByProduct_isRedeemable(Model model) {
         List<Product> products = productService.findByProduct_isRedeemable();
+        String img;
+        for(int i = 0; i < products.size(); i++) {
+            if (products.get(i).getProduct_picture().contains(",")){
+                img = products.get(i).getProduct_picture();
+                img = img.substring(0,img.indexOf(","));
+                System.out.println("前台积分商品");
+                products.get(i).setProduct_picture(img);
+            }
+        }
         model.addAttribute("products", products);
-        return new ModelAndView("integralProductList");
+        return new ModelAndView("integralProduct");
     }
 
 }

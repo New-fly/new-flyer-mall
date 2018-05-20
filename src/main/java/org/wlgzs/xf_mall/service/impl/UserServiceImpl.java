@@ -110,14 +110,9 @@ public class UserServiceImpl implements UserService {
         }*/
         Sort sort = new Sort(Sort.Direction.DESC, "userId");
         Pageable pageable = new PageRequest(page,limit, sort);
-        Specification<User> specification = new PageUtil<User>(user_name).getPage("user_name");
+        Specification<User> specification = new PageUtil<User>(user_name).getPage("user_name","user_role","user_mail");
         Page pages = userRepository.findAll(specification,pageable);
         return pages;
-    }
-
-    @Override
-    public void modifyAvatar(String user_avatar,long userId) {
-        userRepository.ModifyAvatar(user_avatar,userId);
     }
 
     @Override
@@ -163,17 +158,19 @@ public class UserServiceImpl implements UserService {
         String user_name1 = user.getUser_name();
         String user_name = request.getParameter("user_name");
         //判断用户名是否存在
-        if(logUserRepository.selectName(user_name) == null){
-            user.setUser_name(user_name);
-            userRepository.saveAndFlush(user);
-            //修改收货地址表中的用户名
-            shippingAddressRepository.modifyName(user_name,user_name1);
-            //从新存入session
-            HttpSession session = request.getSession(true);
-            session.setMaxInactiveInterval(60 * 20);
-            session.setAttribute("name", user.getUser_name());//之后用过滤器实现
-            session.setAttribute("userId", user.getUserId());
-            session.setAttribute("user",user);
+        if(user_name1 != null && !user_name1.equals("")){
+            if(logUserRepository.selectName(user_name) == null){
+                user.setUser_name(user_name);
+                userRepository.saveAndFlush(user);
+                //修改收货地址表中的用户名
+                shippingAddressRepository.modifyName(user_name,user_name1);
+                //从新存入session
+                HttpSession session = request.getSession(true);
+                session.setMaxInactiveInterval(60 * 20);
+                session.setAttribute("name", user.getUser_name());//之后用过滤器实现
+                session.setAttribute("userId", user.getUserId());
+                session.setAttribute("user",user);
+            }
         }
     }
 

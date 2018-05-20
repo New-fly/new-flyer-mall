@@ -13,30 +13,12 @@
     <script th:src="@{/js/productList.js}"></script>
 </head>
 <body>
-<div class="top">
-    <div class="top-left">
-        <ul>
-            <li><a th:href="@{/HomeController/homeProduct}"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
-            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;登录</a></li>
-            <li><a href="#"><span class="red">立即注册</span></a></li>
-        </ul>
-    </div>
-    <div class="top-right">
-        <ul>
-            <li><a href="#"><i class="fa fa-paw" style="color: #336699"></i>&nbsp;&nbsp;购物车</a></li>
-            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a></li>
-            <li><a href="#">我的淘宝</a></li>
-            <li><a href="#">111111</a></li>
-            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;管理系统</a></li>
-        </ul>
-    </div>
-</div>
+<div th:include="common/top_header :: copy"></div>
 <div class="top-search">
     <div class="con-wrap">
         <a>
             <img th:href="@{/HomeController/homeProduct}" th:src="@{/images/logo.png}" class="xflogo">
         </a>
-
         <div class="search-box">
             <form th:action="@{/ProductListController/searchProductList}" method="post">
                 <span class=""><input type="text" name="product_category" th:value="*{product_category}" class="ipt1" placeholder="请输入要搜索的内容"></span>

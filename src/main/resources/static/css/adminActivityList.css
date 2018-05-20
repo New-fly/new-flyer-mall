@@ -55,6 +55,17 @@ a1:hover{
     padding-top: 7px;
     opacity: 0.7;
 }
+.a2:hover{
+    color: #fff;
+    text-decoration: none;
+}
+
 .btn{
     opacity: 0.7;
+}
+th{
+    text-align: center;
+}
+td{
+    padding: 25px;
 }

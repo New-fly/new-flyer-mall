@@ -111,32 +111,19 @@ public class OrderController {
         model.addAttribute("order", order);
         return new ModelAndView("admin/adminOrderInfo");
     }
-    /**
-     * @author 阿杰
-     * @param [model, userId]
-     * @return org.springframework.web.servlet.ModelAndView
-     * @description 用户订单 全部  未收货 未评价
-     */
-    @RequestMapping("/userOrderList")
-    public ModelAndView userOrderList(Model model,long userId){
-        List<Orders> orders = ordersService.userOrderList(userId);
+
+    //后台多条件查询订单 分页
+    @RequestMapping("/findOrders")
+    public ModelAndView findOrders(Model model, String order_word, @RequestParam(value = "page",defaultValue = "0")int page,
+                                   @RequestParam(value = "limit",defaultValue = "6")int limit){
+        if(page != 0) page--;
+        Page<Orders> pages = ordersService.adminSearchOrder(order_word,page,limit);
+        model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
+        model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
+        List<Orders> orders = pages.getContent();
         model.addAttribute("orders",orders);
-        List<Orders> unacceptedOrder = ordersService.userUnacceptedOrder(userId);
-        model.addAttribute("unacceptedOrder",unacceptedOrder);
-        List<Orders> unEstimateOrder = ordersService.userUnEstimateOrder(userId);
-        model.addAttribute("unEstimateOrder",unEstimateOrder);
-        return new ModelAndView("userOrder");
+        return new ModelAndView("userOrdersList");
     }
-    /**
-     * @author 阿杰
-     * @param [orderId]
-     * @return org.springframework.web.servlet.ModelAndView
-     * @description 收货
-     */
-    @RequestMapping("/userAccepted")
-    public ModelAndView userAccepted(long orderId){
-        ordersService.userAccepted(orderId);
-        return new ModelAndView();
-    }
+
 
 }

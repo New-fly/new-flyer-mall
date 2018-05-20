@@ -11,9 +11,6 @@ public class PageUtil<T> {
 
     private String searchKeywords;//模糊搜索关键字
 
-    public PageUtil() {
-
-    }
     public PageUtil(String searchKeywords) {
         this.searchKeywords=searchKeywords;
     }
@@ -34,8 +31,17 @@ public class PageUtil<T> {
                 }
                 List<Predicate> predicates = new ArrayList<Predicate>();
                 for (String s:strings){
+                    Predicate _name = null;
                     Path<String> $name = root.get(s);
-                    Predicate _name = criteriaBuilder.like($name, "%" + searchKeywords + "%");
+                    System.out.println($name);
+                    System.out.println(s);
+                    System.out.println(searchKeywords);
+                    if(s.equals("order_number") || s.equals("user_name")){
+                        System.out.println("精确查询");
+                        _name = criteriaBuilder.equal($name,searchKeywords);
+                    }else{
+                        _name = criteriaBuilder.like($name, "%" + searchKeywords + "%");
+                    }
                     predicates.add(_name);
                 }
                 return criteriaBuilder.or(predicates

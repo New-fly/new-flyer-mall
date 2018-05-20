@@ -30,9 +30,6 @@ public interface UserService {
 
     Page<User> findUserPage(String user_name,int pa,int limit);
 
-    //修改用户头像路径
-    void modifyAvatar(String user_avatar,long userId);
-
     //判断修改密码密码是否正确
     boolean checkPassWord(String user_password,long userId);
 
