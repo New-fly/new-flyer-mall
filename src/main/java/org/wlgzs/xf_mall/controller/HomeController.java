@@ -56,7 +56,7 @@ public class HomeController extends BaseController {
         model.addAttribute("productsFive",productsFive);//主页部分第五分类商品
         //推荐商品
         HttpSession session = request.getSession();
-        if(session!=null){
+        if(session.getAttribute("user")!=null){
             long userId = (long) session.getAttribute("userId");
             List<Product> recommendedProducts = productService.recommendedByUserId(userId);
             model.addAttribute("recommendedProducts", recommendedProducts);

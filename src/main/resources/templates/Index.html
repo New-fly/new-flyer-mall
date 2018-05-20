@@ -118,18 +118,19 @@
                 <div><a th:href="@{/ProductListController/searchProductList(product_category='热水壶')}">热水壶</a></div>
             </div>
 		</div>
-		<div class="block-2" th:each="product : ${products}">
-            <a th:href="@{/ProductListController/toProduct(productId=${product.productId})}">
-			    <img th:src="${product.product_picture}" style="width:100%;height:170px"/>
+		<!--//推荐商品-->
+		<div class="block-2" th:each="recommendedProducts : ${recommendedProducts}">
+            <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}">
+			    <img th:src="${recommendedProducts.product_picture}" style="width:100%;height:170px"/>
             </a>
 			<div class="block-2-div">
-				<span class="money" th:text="${product.product_counterPrice}">6456元</span>
-				<span class="old-money"><s th:text="${product.product_mallPrice}">4153元</s></span><br/>
+				<span class="money" th:text="${recommendedProducts.product_counterPrice}">6456元</span>
+				<span class="old-money"><s th:text="${recommendedProducts.product_mallPrice}">4153元</s></span><br/>
 				<div style="height: 48px;overflow: hidden">
-					<span class="block-2-text" th:text="${product.product_keywords}">新飞BCD-450WGSV 多门冰箱 五重除菌气调保鲜 波光纹钢化玻璃面板</span><br/>
+					<span class="block-2-text" th:text="${recommendedProducts.product_keywords}">新飞BCD-450WGSV 多门冰箱 五重除菌气调保鲜 波光纹钢化玻璃面板</span><br/>
 				</div>
-				<div class="block-2-div-foot" th:text="'购买获得'+${product.product_getPoints}+'积分'">
-					<span class="right" th:text="'库存'+${product.product_inventory}+'件'"></span>
+				<div class="block-2-div-foot" th:text="'购买获得'+${recommendedProducts.product_getPoints}+'积分'">
+					<span class="right" th:text="'库存'+${recommendedProducts.product_inventory}+'件'"></span>
                 </div>
 			</div>
 		</div>
