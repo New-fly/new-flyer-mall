@@ -72,6 +72,8 @@ public class ProductListController extends BaseController {
             footprintService.save(request,userId,productId);
         }
         Product product = productService.findProductById(productId);
+        long count = ordersService.searchProductCount(productId);
+        model.addAttribute("count",count);
         String [] images = new String[0];
         if (product.getProduct_picture().contains(",")) {
             images = product.getProduct_picture().split(",");
@@ -281,7 +283,6 @@ public class ProductListController extends BaseController {
             }
         }
         model.addAttribute("products", products);//查询的当前页的集合
-        System.out.println(products);
         model.addAttribute("product_category",product_category);
         //遍历一级二级分类
         List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();
@@ -290,7 +291,7 @@ public class ProductListController extends BaseController {
         model.addAttribute("productTwoCategories", productTwoCategories);
         //推荐商品
         HttpSession session = request.getSession();
-        if(session!=null){
+        if(session.getAttribute("user")!=null){
             long userId = (long) session.getAttribute("userId");
             List<Product> recommendedProducts = productService.recommendedByUserId(userId);
             model.addAttribute("recommendedProducts", recommendedProducts);

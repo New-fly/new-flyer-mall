@@ -104,7 +104,7 @@ public class OrderController {
         return new ModelAndView("userOrdersList");
     }
 
-    //订单详情   前后台
+    //订单详情
     @RequestMapping("/orderDetails")
     public ModelAndView orderInfo(Model model, Long id) {
         Orders order=ordersService.findOrdersById(id);

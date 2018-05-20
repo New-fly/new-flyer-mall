@@ -1,7 +1,5 @@
 package org.wlgzs.xf_mall.controller;
 
-import org.hibernate.criterion.Order;
-import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,9 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Orders;
-import org.wlgzs.xf_mall.service.OrdersService;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -23,7 +19,7 @@ import java.util.List;
 @RequestMapping("UserOrderController")
 public class UserOrderController extends BaseController {
 
-    //订单详情   前后台
+    //订单详情
     @RequestMapping("/orderDetails")
     public ModelAndView orderInfo(Model model, Long id) {
         Orders order=ordersService.findOrdersById(id);

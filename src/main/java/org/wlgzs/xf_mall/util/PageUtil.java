@@ -33,9 +33,6 @@ public class PageUtil<T> {
                 for (String s:strings){
                     Predicate _name = null;
                     Path<String> $name = root.get(s);
-                    System.out.println($name);
-                    System.out.println(s);
-                    System.out.println(searchKeywords);
                     if(s.equals("order_number") || s.equals("user_name")){
                         System.out.println("精确查询");
                         _name = criteriaBuilder.equal($name,searchKeywords);
