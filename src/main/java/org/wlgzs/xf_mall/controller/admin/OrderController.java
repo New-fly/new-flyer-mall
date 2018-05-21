@@ -54,8 +54,13 @@ public class OrderController {
     @RequestMapping("/toChangeProductOrders")
     public ModelAndView toEdit(Model model, Long id) {
         Orders order=ordersService.findOrdersById(id);
-        model.addAttribute("order", order);
-        return new ModelAndView("admin/adminEditOrders");
+        if(order != null){
+            model.addAttribute("order", order);
+            return new ModelAndView("admin/adminEditOrders");
+        }else{
+            model.addAttribute("mag","该数据不存在");
+            return new ModelAndView("redirect:/OrderController/allProductOrdersLists");
+        }
     }
     //后台通过订单号查询订单
     @RequestMapping("/findOrder")
@@ -67,14 +72,16 @@ public class OrderController {
     }
     //后台修改订单信息
     @RequestMapping("/changeProductOrder")
-    public String edit(long orderId, HttpServletRequest request) {
-        ordersService.edit(orderId, request);
-        return "redirect:/OrderController/allProductOrdersLists";
+    public ModelAndView edit(Model model,long orderId, HttpServletRequest request) {
+        String mag = ordersService.edit(orderId, request);
+        model.addAttribute("mag",mag);
+        return new ModelAndView("redirect:/OrderController/allProductOrdersLists");
     }
     //后台删除订单
     @RequestMapping("/deleteOrder")
-    public ModelAndView delete(long orderId){
-        ordersService.delete(orderId);
+    public ModelAndView delete(Model model,long orderId){
+        String mag = ordersService.delete(orderId);
+        model.addAttribute("mag",mag);
         return new ModelAndView("redirect:/OrderController/allProductOrdersLists");
     }
     //根据用户名查询订单
@@ -89,8 +96,13 @@ public class OrderController {
     @RequestMapping("/orderDetails")
     public ModelAndView orderInfo(Model model, Long id) {
         Orders order=ordersService.findOrdersById(id);
-        model.addAttribute("order", order);
-        return new ModelAndView("admin/adminOrderInfo");
+        if(order != null){
+            model.addAttribute("order", order);
+            return new ModelAndView("admin/adminOrderInfo");
+        }else{
+            model.addAttribute("mag","该订单不存在");
+            return new ModelAndView("redirect:/OrderController/allProductOrdersLists");
+        }
     }
 
     //后台多条件查询订单 分页

@@ -22,9 +22,9 @@ public interface UserService {
 
     void save(User user);
 
-    void edit(User user);
+    String edit(User user);
 
-    void delete(long userId, HttpServletRequest request);
+    String delete(long userId, HttpServletRequest request);
 
     void save(List<User> users);
 

@@ -75,18 +75,27 @@ public class OrdersServiceImpl implements OrdersService {
 
     //后台修改订单
     @Override
-    public void edit(long orderId,HttpServletRequest request) {
+    public String edit(long orderId,HttpServletRequest request) {
         Orders orders = ordersRepository.findById(orderId);
-        orders.setAddress_name(request.getParameter("address_name"));
-        orders.setAddress_phone(request.getParameter("address_phone"));
-        orders.setAddress_shipping(request.getParameter("address_shipping"));
-        ordersRepository.save(orders);
+        if(orders != null){
+            orders.setAddress_name(request.getParameter("address_name"));
+            orders.setAddress_phone(request.getParameter("address_phone"));
+            orders.setAddress_shipping(request.getParameter("address_shipping"));
+            ordersRepository.save(orders);
+            return "成功";
+        }
+            return "未知错误";
     }
 
     //后台删除订单
     @Override
-    public void delete(long id) {
-        ordersRepository.deleteById(id);
+    public String delete(long id) {
+        Orders orders = ordersRepository.findById(id);
+        if(orders != null){
+            ordersRepository.deleteById(id);
+            return "成功";
+        }
+            return "未知错误";
     }
 
     //按照用户名查询订单
@@ -126,8 +135,11 @@ public class OrdersServiceImpl implements OrdersService {
         User user = userRepository.findById(userId);
 
         IdsUtil idsUtil = new IdsUtil();
+        productId  = productId.substring(1,productId.length()-1);
+        System.out.println(productId);
         long[] Ids = idsUtil.IdsUtils(productId);
         IdsUtil idsUtilTwo = new IdsUtil();
+        shoppingCount = shoppingCount.substring(1,shoppingCount.length()-1);
         long[] shoppingCounts = idsUtilTwo.IdsUtils(shoppingCount);
         for (int i = 0; i < Ids.length; i++) {
             Product product = productRepository.findById(Ids[i]);
@@ -291,7 +303,7 @@ public class OrdersServiceImpl implements OrdersService {
     public Page<Orders> adminSearchOrder(String order_word, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC,"orderId");
         Pageable pageable = new PageRequest(page,limit,sort);
-        Specification<Orders> specification = new PageUtil<Orders>(order_word).getPage("product_specification","order_number","user_name","address_name");
+        Specification<Orders> specification = new PageUtil<Orders>(order_word).getPage("product_specification","order_number","user_name","product_keywords");
         Page pages = ordersRepository.findAll(specification,pageable);
         System.out.println(pages);
         return pages;

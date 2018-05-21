@@ -32,7 +32,7 @@ window.onload=function(){
     document.getElementsByClassName("shoppingcart")[0].onclick=function(){
         $.ajax({
             url:"/ProductListController/addShoppingProduct",
-            dataType:"JSON",
+            dataType:"TEXT",
             data:{
                 "productId":productId,
                 "userId":userId,
