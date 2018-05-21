@@ -75,7 +75,7 @@ $(document).ready(function(){
 		$(".frame").attr("src","/AdminActivityController/activityProducts")
 	})
 	$("#src7").click(function(){
-		$(".frame").attr("src","/AdminActivityController/activityProducts")
+		$(".frame").attr("src","/AdminActivityController/activity")
 	})
 
 
@@ -99,7 +99,7 @@ $(document).ready(function(){
         $(".frame").attr("src","/AdminActivityController/activityProducts")
     })
     $("#src7").click(function(){
-        $(".frame").attr("src","/AdminActivityController/activityProducts")
+        $(".frame").attr("src","/AdminActivityController/activity")
     });
 $('#one').click(function () {
 	$('.frame').attr("src","/AdminProductController/adminProductList");

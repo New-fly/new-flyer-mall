@@ -25,7 +25,7 @@ public class Activity {
     @Column(nullable = false,length = 30)
     private String activity_name;   //活动名称
     @Column(nullable = false)
-    private int activity_discount;   //活动折扣
+    private float activity_discount;   //活动折扣
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date activity_time;   //活动结束时间
     @Column(nullable = false,length = 100)

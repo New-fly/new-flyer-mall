@@ -11,8 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -23,7 +24,7 @@ import java.util.UUID;
  * @Description:
  */
 @Service
-public class ActivityServiceImp  implements ActivityService {
+public class ActivityServiceImp implements ActivityService {
     @Autowired
     private ActivityRepository activityRepository;
 
@@ -31,16 +32,6 @@ public class ActivityServiceImp  implements ActivityService {
     @Override
     public List<Activity> getActivity() {
         return activityRepository.findAll();
-    }
-    //遍历所有活动名称
-    @Override
-    public List<String> getActivityName() {
-        List<Activity> activities = activityRepository.findAll();
-        List<String> activityList = new ArrayList<String>();
-        for (int i = 0; i < activities.size(); i++) {
-            activityList.add(activities.get(i).getActivity_name());
-        }
-        return activityList;
     }
 
     //添加活动
@@ -50,13 +41,11 @@ public class ActivityServiceImp  implements ActivityService {
         if (myFileName != null) {
             String fileName = myFileName.getOriginalFilename();
             String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
-
             // 生成实际存储的真实文件名
             realName = UUID.randomUUID().toString() + fileNameExtension;
-
             // "/upload"是你自己定义的上传目录
-            String realPath = session.getServletContext().getRealPath("/upload");
-            System.out.println(realPath);
+            String realPath = session.getServletContext().getRealPath("/activity");
+            System.out.println("后台添加活动");
             File uploadFile = new File(realPath, realName);
             try {
                 myFileName.transferTo(uploadFile);
@@ -64,14 +53,20 @@ public class ActivityServiceImp  implements ActivityService {
                 e.printStackTrace();
             }
         }
-        String str = request.getContextPath() + "/upload/" + realName;
+        String str = request.getContextPath() + "/activity/" + realName;
         Activity activity = new Activity();
         activity.setActivity_name(request.getParameter("activity_name"));
         int amount = Integer.parseInt(request.getParameter("activity_discount"));
         activity.setActivity_discount(amount);
-        Date data = new Date();
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
-        activity.setActivity_time(data);
+        String time = request.getParameter("activity_time");
+        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
+        try {
+            date = dateFormat.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        activity.setActivity_time(date);
         activity.setActivity_picture(str);
         activityRepository.save(activity);
     }
@@ -80,5 +75,48 @@ public class ActivityServiceImp  implements ActivityService {
     @Override
     public Activity findActivity(long activitySumId) {
         return activityRepository.findById(activitySumId);
+    }
+
+    //修改活动
+    @Override
+    public void editActivity(long activitySumId, MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
+        Activity activity = activityRepository.findById(activitySumId);
+        String realName = "";
+        if (myFileName != null) {
+            String fileName = myFileName.getOriginalFilename();
+            String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
+            // 生成实际存储的真实文件名
+            realName = UUID.randomUUID().toString() + fileNameExtension;
+            // "/upload"是你自己定义的上传目录
+            String realPath = session.getServletContext().getRealPath("/activity");
+            System.out.println("后台修改活动");
+            File uploadFile = new File(realPath, realName);
+            try {
+                myFileName.transferTo(uploadFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        String str = request.getContextPath() + "/activity/" + realName;
+        activity.setActivity_name(request.getParameter("activity_name"));
+        int amount = Integer.parseInt(request.getParameter("activity_discount"));
+        activity.setActivity_discount(amount);
+        String time = request.getParameter("activity_time");
+        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
+        try {
+            date = dateFormat.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        activity.setActivity_time(date);
+        activity.setActivity_picture(str);
+        activityRepository.save(activity);
+    }
+
+    //删除活动
+    @Override
+    public void deleteActivity(long activityId) {
+        activityRepository.deleteById(activityId);
     }
 }
