@@ -78,13 +78,15 @@
     font-size: 16px;
 }
 .baby{
-    width: 1200px;
-    margin: 0 auto;
+    width: 1180px;
+    margin: 10px;
+
 }
 .showall{
     width: 150px;
    background-color: #fff;
-
+    display: inline-block;
+    margin: 10px;
 }
 .showpic{
     width: 148px;

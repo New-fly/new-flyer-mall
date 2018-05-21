@@ -23,10 +23,18 @@ public class PageUtil<T> {
      */
     public Specification<T> getPage(String...strings){
         return  new Specification<T>() {
+            /*
+            * root就是我们要查询的类型
+            * query添加查询条件
+            * criteriaBuilder构建Predicate
+            * */
             @Override
             public Predicate toPredicate(Root<T> root,
                                          CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 if(searchKeywords==null){ //不模糊查询直接返回
+                    return null;
+                }
+                if(searchKeywords.equals("")){ //不模糊查询直接返回
                     return null;
                 }
                 List<Predicate> predicates = new ArrayList<Predicate>();

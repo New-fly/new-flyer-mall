@@ -38,10 +38,16 @@
         <div class="allcoectionheader">精品推荐</div>
             <div class="baby">
                 <figure class="showall" th:each="recommendedProducts : ${recommendedProducts}">
-                    <div class="showpic"><img th:src="${recommendedProducts.}" alt="" class="showpic"></div>
+                    <div class="showpic">
+                        <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">
+                            <img th:src="${recommendedProducts.product_picture}" alt="" class="showpic">
+                        </a>
+                    </div>
                     <div class="describe">
-                        <div class="describe1"><a href="">清凉一夏，热卖中</a></div>
-                        <div><font style="color:red;">¥888</font>&nbsp;<s style="color: #3C3F41;">¥666</s></div>
+                        <div class="describe1">
+                            <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}" th:text="${recommendedProducts.product_keywords}">清凉一夏，热卖中</a>
+                        </div>
+                        <div><font style="color:red;" th:text="${recommendedProducts.product_mallPrice}">¥888</font>&nbsp;<s style="color: #3C3F41;" th:text="${recommendedProducts.product_counterPrice}">¥666</s></div>
                     </div>
                 </figure>
             </div>

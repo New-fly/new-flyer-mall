@@ -54,4 +54,13 @@ public class ShippingAddressServiceImpl implements ShippingAddressService {
     public void modifyName(String user_name1,String user_name2) {
         shippingAddressRepository.modifyName(user_name1,user_name2);
     }
+
+    @Override
+    public boolean findState() {
+        ShippingAddress shippingAddress = shippingAddressRepository.findState();
+        if(shippingAddress != null){
+            return true;
+        }
+        return false;
+    }
 }

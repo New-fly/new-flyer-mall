@@ -24,4 +24,6 @@ public interface ShippingAddressService {
     void modifyState(int stateOne,int stateTwo);
     //修改用户名
     void modifyName(String user_name1,String user_name2);
+    //查询数据是否有默认的
+    boolean findState();
 }

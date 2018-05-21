@@ -42,7 +42,7 @@
                 <td th:text="${order.address_shipping}"></td>
 
                 <td>
-                    <a class="a2" href="javascript:void(0);" th:onclick="'javascript:deleteOrder('+${order.order_number}+');'">删除</a>
+                    <a class="a2" href="javascript:void(0);" th:onclick="'javascript:deleteOrder('+${order.orderId}+');'">删除</a>
                     <button type="button" class="btn btn-primary modifi" style="background-color:#007BFF">
                         <a th:href="@{/OrderController/toChangeProductOrders(id=${order.orderId})}">修改</a>
                     </button>

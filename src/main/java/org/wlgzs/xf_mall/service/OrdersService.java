@@ -17,13 +17,13 @@ import java.util.List;
 public interface OrdersService {
     Page<Orders> getOrdersList(String order_number, int page, int limit);
 
-    void edit(long orderId,HttpServletRequest request);
+    String edit(long orderId,HttpServletRequest request);
 
     List<Orders> findOrdersByOrderNumber(String order_number);
 
     Orders findOrdersById(long id);
 
-    void delete(long id);
+    String delete(long id);
 
     List<Orders> findOrdersByUserName(String user_name);
 

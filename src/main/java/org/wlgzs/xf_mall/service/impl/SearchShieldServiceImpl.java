@@ -45,8 +45,11 @@ public class SearchShieldServiceImpl implements SearchShieldService {
 
     //删除敏感词汇
     @Override
-    public void delete(Long searchShield){
-        searchShieldRepository.deleteById(searchShield);
+    public void delete(long searchShield){
+        SearchShield searchShield1 = searchShieldRepository.findById(searchShield);
+        if(searchShield1 != null){
+            searchShieldRepository.deleteById(searchShield);
+        }
     }
 
 
