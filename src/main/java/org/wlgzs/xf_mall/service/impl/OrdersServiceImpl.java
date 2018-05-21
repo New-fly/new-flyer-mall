@@ -135,8 +135,11 @@ public class OrdersServiceImpl implements OrdersService {
         User user = userRepository.findById(userId);
 
         IdsUtil idsUtil = new IdsUtil();
+        productId  = productId.substring(1,productId.length()-1);
+        System.out.println(productId);
         long[] Ids = idsUtil.IdsUtils(productId);
         IdsUtil idsUtilTwo = new IdsUtil();
+        shoppingCount = shoppingCount.substring(1,shoppingCount.length()-1);
         long[] shoppingCounts = idsUtilTwo.IdsUtils(shoppingCount);
         for (int i = 0; i < Ids.length; i++) {
             Product product = productRepository.findById(Ids[i]);
