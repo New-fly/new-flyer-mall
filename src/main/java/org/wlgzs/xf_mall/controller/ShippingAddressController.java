@@ -48,13 +48,18 @@ public class ShippingAddressController extends BaseController {
         //是否默认
         int address_is_default = shippingAddress.getAddress_is_default();
         System.out.println("address_is_default===="+address_is_default);
-        //1变为0
-        if(address_is_default == 1)shippingAddressService.modifyState(0,1);
-        if(user_name == null){
-            HttpSession session = request.getSession(true);
-            user_name = (String) session.getAttribute("name");
+        //查询数据是否有默认的
+        if(shippingAddressService.findState()){//有
+            //1变为0
+            if(address_is_default == 1)shippingAddressService.modifyState(0,1);
+            if(user_name == null){
+                HttpSession session = request.getSession(true);
+                user_name = (String) session.getAttribute("name");
+            }
+            shippingAddress.setUser_name(user_name);
+        }else{
+            if(address_is_default == 0)shippingAddress.setAddress_is_default(1);
         }
-        shippingAddress.setUser_name(user_name);
         shippingAddressService.addShippingAddress(shippingAddress);
         return "redirect:shippingAddress";
     }

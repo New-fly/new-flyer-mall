@@ -26,10 +26,10 @@ public interface ProductService {
 
     String[] uploadImg(MultipartFile myFileName, HttpSession session, HttpServletRequest request);
 
-    void edit(long productId, String product_details, MultipartFile[] myFileNames, HttpSession session,
+    String edit(long productId, String product_details, MultipartFile[] myFileNames, HttpSession session,
               HttpServletRequest request);
 
-    void delete(long productId, HttpServletRequest request);
+    String delete(long productId, HttpServletRequest request);
 
     Product findProductById(long productId);
 
@@ -57,7 +57,7 @@ public interface ProductService {
 
     void editCategory(ProductCategory productCategory, MultipartFile myFileName, HttpSession session, HttpServletRequest request);
 
-    void deleteCategory(long categoryId);
+    String deleteCategory(long categoryId);
 
     ProductCategory findProductCategoryById(long categoryId);
 

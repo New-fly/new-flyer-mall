@@ -32,4 +32,9 @@ public interface ShippingAddressRepository extends JpaRepository<ShippingAddress
     @Modifying
     @Transactional
     void modifyName(String user_name1,String user_name2);
+
+    //查询数据是否有默认的
+    @Query("SELECT s FROM ShippingAddress s WHERE s.address_is_default=1")
+    ShippingAddress findState();
+
 }

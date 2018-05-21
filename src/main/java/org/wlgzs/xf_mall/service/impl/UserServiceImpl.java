@@ -57,25 +57,34 @@ public class UserServiceImpl implements UserService {
 
     //后台修改用户
     @Override
-    public void edit(User user) {
-        userRepository.saveAndFlush(user);
+    public String edit(User user) {
+        User user0 = userRepository.findById(user.getUserId());
+        if(user0 != null){
+            userRepository.saveAndFlush(user);
+            return "成功";
+        }
+        return "失败";
     }
 
     //后台删除用户
     @Override
-    public void delete(long userId, HttpServletRequest request) {
+    public String delete(long userId, HttpServletRequest request) {
         User user = userRepository.findById(userId);
-        String img = user.getUser_avatar();
-        String path = request.getSession().getServletContext().getRealPath("/");
-        if(img!=null){
-            File file = new File(path+""+img.substring(1,img.length()));
-            System.out.println(path+""+img.substring(1,img.length()));
-            if (!img.equals("/headPortrait/morende.jpg") && file.exists() && file.isFile()) {
-                file.delete();
+        if(user != null){
+            String img = user.getUser_avatar();
+            String path = request.getSession().getServletContext().getRealPath("/");
+            if(img!=null){
+                File file = new File(path+""+img.substring(1,img.length()));
+                System.out.println(path+""+img.substring(1,img.length()));
+                if (!img.equals("/headPortrait/morende.jpg") && file.exists() && file.isFile()) {
+                    file.delete();
+                }
             }
+            System.out.println(123);
+            userRepository.deleteById(userId);
+            return "成功";
         }
-        System.out.println(123);
-        userRepository.deleteById(userId);
+        return "失败";
     }
 
     @Override

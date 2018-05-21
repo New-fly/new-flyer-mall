@@ -133,8 +133,14 @@ public class ProductController {
     @RequestMapping("/toAdminEditProduct")
     public ModelAndView toEdit(Model model, long productId) {
         Product product = productService.findProductById(productId);
-        model.addAttribute("product", product);
-        return new ModelAndView("admin/adminEditProduct");
+        if(product != null){
+            model.addAttribute("mag","修改商品");
+            model.addAttribute("product", product);
+            return new ModelAndView("admin/adminEditProduct");
+        }else{
+            model.addAttribute("mag","该商品不存在");
+            return new ModelAndView("redirect:/AdminProductController/adminProductList");
+        }
     }
 
     /**
@@ -144,9 +150,10 @@ public class ProductController {
      * @description 修改商品
      */
     @RequestMapping("/adminEditProduct")
-    public ModelAndView edit(long productId, String product_details, @RequestParam("file") MultipartFile[] myFileNames, HttpSession session,
+    public ModelAndView edit(Model model,long productId, String product_details, @RequestParam("file") MultipartFile[] myFileNames, HttpSession session,
                              HttpServletRequest request) {
-        productService.edit(productId, product_details, myFileNames, session, request);
+        String mag = productService.edit(productId, product_details, myFileNames, session, request);
+        model.addAttribute("mag",mag);
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
     }
 
@@ -157,8 +164,9 @@ public class ProductController {
      * @description 删除商品
      */
     @RequestMapping("/adminDeleteProduct")
-    public ModelAndView delete(long productId, HttpServletRequest request) {
-        productService.delete(productId, request);
+    public ModelAndView delete(Model model,long productId, HttpServletRequest request) {
+        String mag = productService.delete(productId, request);
+        model.addAttribute("mag",mag);
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
     }
 
@@ -237,8 +245,9 @@ public class ProductController {
      * @description 删除分类
      */
     @RequestMapping("/deleteProductCategory")
-    public ModelAndView deleteCategory(Long categoryId) {
-        productService.deleteCategory(categoryId);
+    public ModelAndView deleteCategory(Model model,Long categoryId) {
+        String mag = productService.deleteCategory(categoryId);
+        model.addAttribute("mag",mag);
         return new ModelAndView("redirect:/AdminProductController/productCategoryList");
     }
 
@@ -253,8 +262,12 @@ public class ProductController {
         List<ProductCategory> productCategories = productService.findProductOneCategoryList();
         model.addAttribute("productCategories", productCategories);
         ProductCategory productCategory = productService.findProductCategoryById(categoryId);
-        model.addAttribute("productCategory", productCategory);
-        return new ModelAndView("admin/adminEditProductCategory");
+        if(productCategory != null){
+            model.addAttribute("productCategory", productCategory);
+            return new ModelAndView("admin/adminEditProductCategory");
+        }
+        model.addAttribute("mag","不存在");
+        return  new ModelAndView("redirect:/AdminProductController/productCategoryList");
     }
 
     /**

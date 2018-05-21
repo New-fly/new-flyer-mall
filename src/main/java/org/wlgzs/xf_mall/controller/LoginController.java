@@ -224,6 +224,7 @@ public class LoginController extends BaseController {
         String sessioncode = "";
         if (logUserService.contrastCode(request, user_mail, sessionMail, usercode, sessioncode)) { //对比两个code是否正确
             model.addAttribute("user_mail", user_mail);
+            model.addAttribute("mag", "验证通过");
             System.out.println(user_mail);
             System.out.println("验证码正确");
             return "sign-up2";
