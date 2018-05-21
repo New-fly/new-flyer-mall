@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>活动</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.css}">
+    <link th:href="@{/css/adminActivityList.css}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <!--<script th:src="@{/js/adminActivityList.js}"></script>-->
+</head>
+<body>
+<div class="header">
+    <form th:action="@{/AdminActivityController/adminFindActivityProduct}" method="post">
+        <h1 class="h1-sty">活动列表</h1>
+        <!--<input type="text" name="product_keywords" placeholder="商品名称" th:value="*{product_keywords}" class="ipt">
+        <input type="submit" value="搜索" class="a1">-->
+        <a class="adda" th:href="@{/AdminActivityController/toAddActivity}">添加</a>
+    </form>
+</div>
+<div class="mytable">
+    <table class="table table-bordered able-box" id="mytable">
+        <thead style="background-color: #F2F2F2;">
+        <tr>
+            <th>活动名称</th>
+            <th>活动折扣</th>
+            <th>相关图片</th>
+            <th>活动结束时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="activitie : ${activities}">
+            <td th:text="${activitie.activity_name}">Doe</td>
+            <td th:text="${activitie.activity_discount}"></td>
+            <td><img th:src="${activitie.activity_picture}" style="width: 50px;"></td>
+            <td th:text="${activitie.activity_time}"></td>
+            <td>
+                <a class="a2"
+                   th:href="@{/AdminActivityController/deleteActivity(activitySumId=${activitie.activitySumId})}">删除</a>
+                <button type="button" class="btn btn-primary modifi" style="background-color:#007BFF">
+                    <a th:href="@{/AdminActivityController/toEditActivity(activitySumId=${activitie.activitySumId})}"
+                       style="color: white">修改</a>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

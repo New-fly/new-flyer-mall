@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="Shortcut Icon" th:href="@{/images/logo.icon}">
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <title>修改活动</title>
+    <script th:src="@{/js/jquery.js}"></script>
+    <link th:href="@{/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/addProductOneCategory.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/test/jeDate-test.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/skin/jedate.css}">
+    <script type="text/javascript" th:src="@{/src/jedate.js}"></script>
+    <script type="text/javascript" th:src="@{/js/addProductCategory.js}"></script>
+</head>
+<body>
+<div class="windoww">
+    <div class="popup-windows">
+        <h2 style="text-align: center">修改活动</h2>
+        <form th:action="@{/AdminActivityController/editActivity(activitySumId=*{activitySumId})}" th:object="${activity}" method="post" enctype="multipart/form-data">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th>活动名称</th>
+                    <td><input type="text" name="activity_name" th:value="*{activity_name}" class="form-control" id="userphoto" /></td>
+                </tr>
+                <tr>
+                    <th>活动折扣</th>
+                    <td>
+                        <select name="activity_discount" th:field="*{activity_discount}" style="width: 267px;height: 33px;">
+                            <option value="7">七折</option>
+                            <option value="8">八折</option>
+                            <option value="9">九折</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>活动图片</th>
+                    <td>
+                        <input type="file" name="file" id="input1"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>活动时间</th>
+                    <td>
+                        <label class="jelabel">年月日时分秒选择</label>
+                        <div class="jeinpbox">
+                            <input type="text" name="activity_time" class="jeinput" id="test04" placeholder="YYYY-MM-DD hh:mm:ss">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="reset" value="重置" class="btn btn-primary" id="reset" />
+                        <input type="submit" value="修改" class="btn btn-success" id="add"/>
+                        <a th:href="@{/AdminActivityController/activity}">
+                            <input type="button" value="取消" class="btn btn-info" style="background-color: orangered"/>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/test/demo.js}"></script>
+</body>
+</html>

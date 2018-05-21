@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>活动</title>
+    <title>活动商品列表</title>
     <link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.css}">
     <link th:href="@{/css/adminActivityList.css}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
@@ -13,7 +13,7 @@
 <body>
 <div class="header">
     <form th:action="@{/AdminActivityController/adminFindActivityProduct}" method="post">
-        <h1 class="h1-sty">活动列表</h1>
+        <h1 class="h1-sty">活动商品列表</h1>
         <input type="text" name="product_keywords" placeholder="商品名称" th:value="*{product_keywords}" class="ipt">
         <input type="submit" value="搜索" class="a1">
     </form>
@@ -22,7 +22,6 @@
     <table class="table table-bordered able-box" id="mytable">
         <thead style="background-color: #F2F2F2;">
         <tr>
-            <th>商品名称</th>
             <th>商品简介</th>
             <th>相关图片</th>
             <th>活动名称</th>
@@ -33,7 +32,6 @@
         </thead>
         <tbody>
         <tr th:each="activitie : ${activities}">
-            <td th:text="${activitie.productId}"></td>
             <td th:text="${activitie.product_keywords}"></td>
             <td><img th:src="${activitie.product_picture}" style="width: 50px;"></td>
             <td th:text="${activitie.activity_name}">Doe</td>
