@@ -1,23 +1,42 @@
 window.onload = function(){
     var place=0;
     setInterval(function(){
+        if(place*(-1)==0||place*(-1)==4000){
+            color();
+            document.getElementsByClassName('footnav')[0].style.backgroundColor="red";
+        }
+        if(place*(-1)==1000){
+            color();
+            document.getElementsByClassName('footnav')[1].style.backgroundColor="red";
+        }
+        if(place*(-1)==2000){
+            color();
+            document.getElementsByClassName('footnav')[2].style.backgroundColor="red";
+        }
+        if(place*(-1)==3000){
+            color();
+            document.getElementsByClassName('footnav')[3].style.backgroundColor="red";
+        }
+        },100);
+    setInterval(function(){
         place=place-1000;
         if(place<-4000){
             document.getElementsByClassName("classify-right-long")[0].style.transition="0s";
-            place=0; document.getElementsByClassName("classify-right-long")[0].style.left=place+"px";
-        }
-        else{
-            document.getElementsByClassName("classify-right-long")[0].style.transition="1s";
+            place=0;
             document.getElementsByClassName("classify-right-long")[0].style.left=place+"px";
         }
-    },3000);
+        else{
+            document.getElementsByClassName("classify-right-long")[0].style.transition="2s";
+            document.getElementsByClassName("classify-right-long")[0].style.left=place+"px";
+        };
+    },5000);
     document.getElementsByClassName("last_1")[0].onclick=function(){
         place=place-1000;
         if(place<-4000){
             document.getElementsByClassName("classify-right-long")[0].style.transition="0s";
             place=0; document.getElementsByClassName("classify-right-long")[0].style.left=place+"px";
         }else {
-            document.getElementsByClassName("classify-right-long")[0].style.transition="1s";
+            document.getElementsByClassName("classify-right-long")[0].style.transition="2s";
             document.getElementsByClassName("classify-right-long")[0].style.left=place+"px";
         }
     };
@@ -27,7 +46,7 @@ window.onload = function(){
             document.getElementsByClassName("classify-right-long")[0].style.transition = "0s";
             place = -4000; document.getElementsByClassName("classify-right-long")[0].style.left=place+"px";
         }else{
-            document.getElementsByClassName("classify-right-long")[0].style.transition="1s";
+            document.getElementsByClassName("classify-right-long")[0].style.transition="2s";
             document.getElementsByClassName("classify-right-long")[0].style.left=place+"px";
         }
     };
@@ -101,5 +120,11 @@ window.onload = function(){
                 alert("请求失败！！")
             }
         })
+    }
+    function color(){
+        var allfootnav=document.getElementsByClassName("footnav")
+        for(let i=0;i<allfootnav.length;i++){
+            allfootnav[i].style.backgroundColor="white";
+        }
     }
 };

@@ -23,8 +23,8 @@
         </div>
     </div>
     <form th:action="@{/aliPay/toPay}"><div>
-        <input type="submit" style="opacity:0;" value=" " class="produc" name="productId" />
-        <input type="submit" style="opacity:0;" th:value="${session.userId}" name="userId" />
+        <input type="text" style="opacity:0;" value=" " class="produc" name="shoppingCartId" />
+        <input type="text" style="opacity:0;" th:value="${session.userId}" name="userId" />
         <div class="all">
             <div style="padding-left: 20px;">全部商品&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;积分兑换</div>
             <div class="right">

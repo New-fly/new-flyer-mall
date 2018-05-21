@@ -9,7 +9,6 @@
     <link rel="stylesheet" th:href="@{font/css/font-awesome.min.css}">
     <title>新飞官方网上商城</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/indent.css}">
-    <script type="text/javascript" th:src="@{/js/indent.js}"></script>
     <style>
         .ipt{
             border: 0;
@@ -75,6 +74,14 @@
                 <div class="single-text" th:if="${shoppingCount != 0}">
                     <input type="text" class="ipt" readonly name="shoppingCart_count" th:value="${shoppingCount}" style="background-color: #FCFCFC">
                 </div>
+                <div th:if="${shoppingCount == 0}">
+                    <input type="text" readonly class="count1" style="display: none" th:value="${shoppingCart.shoppingCart_count}">
+                    <input type="text" readonly class="pid" style="display: none" th:value="${shoppingCart.productId}">
+                </div>
+                <div th:if="${shoppingCount != 0}">
+                    <input type="text" readonly class="count1" style="display: none" th:value="${shoppingCount}">
+                    <input type="text" readonly class="pid" style="display: none" th:value="${shoppingCart.productId}">
+                </div>
                 <div class="single-text">
                     <input type="text" class="ipt" readonly name="product_mallPrice"
                            th:value="${shoppingCart.product_mallPrice}" style="background-color: #FCFCFC">
@@ -96,16 +103,19 @@
                 <input class="money total_amount" type="text" readonly name="WIDtotal_amount" style="width: 100px;border: 0"><br/>
                 <span class="font">
                     <b>寄送至：</b>
-                    <input type="text" name="address_shipping" readonly class="addressshipping" value=" ">
+                    <input type="text" name="address_shipping" readonly class="addressshipping">
                 </span>
                 <br/>
                 <span class="font">
                     <b>收货人:</b>
-                    <input type="text" name="address_name" class="addressname" value=" " readonly>
-                    <input type="text" name="address_phone" readonly class="addressphone" value=" ">
+                    <input type="text" name="address_name" class="addressname" readonly>
+                    <input type="text" name="address_phone" readonly class="addressphone">
                 </span>
             </div>
         </div>
+        <input type="text" value=" " class="productId" name="productId" />
+        <input type="text" value=" " class="shoppingCount" name="shoppingCount" />
+        <!--readonly-->
         <div class="pay2">
             <div class="pay2-block">
                 <input value="提交订单" style="border: 0;background-color: red" type="submit">
@@ -131,4 +141,5 @@
     }
     GetDateNow();
 </script>
+<script type="text/javascript" th:src="@{/js/indent.js}"></script>
 </html>
