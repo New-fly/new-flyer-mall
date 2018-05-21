@@ -44,7 +44,7 @@ public interface ProductService {
      * @return void
      * @description 修改商品
      */
-    void edit(long productId, String product_details, MultipartFile[] myFileNames, HttpSession session,
+    String edit(long productId, String product_details, MultipartFile[] myFileNames, HttpSession session,
               HttpServletRequest request);
     /**
      * @author 阿杰
@@ -52,7 +52,7 @@ public interface ProductService {
      * @return void
      * @description 删除商品
      */
-    void delete(long productId, HttpServletRequest request);
+    String delete(long productId, HttpServletRequest request);
     /**
      * @author 阿杰
      * @param [model, id]
@@ -157,7 +157,7 @@ public interface ProductService {
      * @return void
      * @description 删除分类
      */
-    void deleteCategory(long categoryId);
+    String deleteCategory(long categoryId);
     /**
      * @author 阿杰
      * @param [categoryId]
