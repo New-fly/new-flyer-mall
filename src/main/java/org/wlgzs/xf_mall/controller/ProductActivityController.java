@@ -34,17 +34,9 @@ public class ProductActivityController extends BaseController {
      * @description 跳转至活动页面
      */
     @RequestMapping("/activityProducts")
-    public ModelAndView activityProductList(Model model, HttpServletRequest request, long activitySumId, @RequestParam(value = "page",defaultValue = "0") int page,
-                                            @RequestParam(value = "limit",defaultValue = "10") int limit){
-        Activity activity = activityService.findActivity(activitySumId);
-        model.addAttribute("activity",activity);
-        String activity_name = activity.getActivity_name();
-        if(page != 0) page--;
-        Page activityPages =  productActivityService.activityProductList(activity_name,page,limit);
-        model.addAttribute("ActivityTotalPages", activityPages.getTotalPages());//查询的页数
-        model.addAttribute("ActivityNumber", activityPages.getNumber()+1);//查询的当前第几页
-        List<ProductActivity> activities = activityPages.getContent();
-        model.addAttribute("activities", activities);//查询的当前页的集合
+    public ModelAndView activityProductList(Model model, HttpServletRequest request){
+        List<ProductActivity> productActivities = productActivityService.activityProductList();
+        model.addAttribute("productActivities",productActivities);
         //推荐商品
         HttpSession session = request.getSession();
         if(session!=null){

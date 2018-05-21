@@ -6,9 +6,9 @@
     <title>我的新飞-订单</title>
     <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
     <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <script th:src="@{/js/jquery.js}"></script>
     <link th:href="@{/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
-    <script th:src="@{/js/jqurey.js}"></script>
-	<script th:src="@{/bootstrap/dist/js/bootstrap.min.js}"></script>
+	<script th:src="@{/bootstrap/dist/js/bootstrap.js}"></script>
     <script th:src="@{/js/myxinfei.js}"></script>
     <link th:href="@{/css/myxinfei.css}" rel="stylesheet" type="text/css">
 </head>
@@ -47,8 +47,7 @@
 				<!--&lt;!&ndash;第一块内容 ;&gt;所有订单-->
 				<div class="tab-pane fade in active" id="home">
 					<div class="annotation">
-						<div><input type="checkbox" id="all"/>全选</div>
-						<div>宝贝</div>
+                        <div>宝贝</div>
 						<div>单价</div>
 						<div>数量</div>
 						<div>商品操作</div>
@@ -58,7 +57,6 @@
 					</div>
 					<div class="list">
 						<div class="single" th:each="order : ${orders}">
-							<input type="checkbox" name="aaa" style="float: left;"/>
 							<div class="single-introduce">
 								<img th:src="${order.product_picture}" height="100%" style="float: left;"/>
 								<a href="#" th:text="${order.product_keywords}"></a>法规的所发生的累计开发阶段水立方到佳木斯都是顾客收到广东省
@@ -75,13 +73,14 @@
 								<a href="#">申请售后</a>
 							</div>
 							<div class="single-text">
-								<a th:text="${order.product_PaidPrice}">￥5133元</a>
+								<a th:text="${order.product_PaidPrice}" style="margin-left: 72px;">￥5133元</a>
 							</div>
-							<div class="single-text" style="text-align: right;">
-								<a href="#"th:text="${order.order_status}">待发货</a>
+							<div class="single-text" style="text-align: right;margin-left: 72px;">
+								<a href="#" th:if="${order.order_status.equals('未发货')}" th:text="${order.order_status}" >待发货</a>
+								<a href="#" th:if="${order.order_status.equals('已评价')}" th:text="${order.order_status}" >已评价</a>
 							</div>
 							<!--//交易操作-->
-							<div class="single-text">
+							<div class="single-text" style="margin-left: 68px;">
 								<a href="#">提醒发货</a><br/>
 								<a href="#">追加评价</a><br/>
 								<a href="#">再次购买</a>
@@ -89,89 +88,87 @@
 						</div>
 					</div>
 				</div>
-				<!-待收货-->
+				<!--<!-待收货&ndash;&gt;-->
 				<div class="tab-pane fade" id="ejb">
-					<div class="annotation">
-						<div><input type="checkbox" id="all"/>全选</div>
-						<div>宝贝</div>
-						<div>单价</div>
-						<div>数量</div>
-						<div>商品操作</div>
-						<div>实际付款</div>
-						<div>交易状态</div>
-						<div>交易操作</div>
-					</div>
-					<div class="list">
-						<div class="single" th:each="order : ${orders}">
-							<input type="checkbox" name="aaa" style="float: left;" />
-							<div class="single-introduce">
-								<img th:src="${order.product_picture}" height="100%" style="float: left;"/>
-								<a href="#" th:text="${order.product_keywords}"></a>法规的所发生的累计开发阶段水立方到佳木斯都是顾客收到广东省
-							</div>
-							<div class="norms">
-								<a th:text="${order.product_PaidPrice}">￥5133元</a><br /><s th:text="${order.product_mallPrice}">￥5323元</s>
-							</div>
-							<div class="single-text">
-								<a th:text="${order.order_quantity}">数量</a>
-							</div>
-							<div class="single-text-a" style="text-align: right;">
-								<a href="#">投诉</a><br />
-								<a href="#">退货、退款</a><br />
-							</div>
-							<div class="single-text">
-								<a th:text="${order.product_PaidPrice}">￥5133元</a>
-							</div>
-							<div class="single-text" style="text-align: right;">
-								<a href="#"th:text="${order.order_status}">待收货</a>
-							</div>
-							<!--//交易操作-->
-							<div class="single-text">
-								<a href="#">确认收货</a><br />
-								<a href="#">再次购买</a>
-							</div>
+                    <div class="annotation">
+                        <div>宝贝</div>
+                        <div>单价</div>
+                        <div>数量</div>
+                        <div>商品操作</div>
+                        <div>实际付款</div>
+                        <div>交易状态</div>
+                        <div>交易操作</div>
+                    </div>
+                    <div class="list">
+                        <div class="single" th:each="order : ${orders}">
+                            <div class="single-introduce">
+                                <img th:src="${order.product_picture}" height="100%" style="float: left;"/>
+                                <a href="#" th:text="${order.product_keywords}"></a>法规的所发生的累计开发阶段水立方到佳木斯都是顾客收到广东省
+                            </div>
+                            <div class="norms">
+                                <a th:text="${order.product_PaidPrice}">￥5133元</a><br /><s th:text="${order.product_mallPrice}">￥5323元</s>
+                            </div>
+                            <div class="single-text">
+                                <a th:text="${order.order_quantity}">数量</a>
+                            </div>
+                            <div class="single-text-a" style="text-align: right;">
+                                <a href="#">投诉</a><br />
+                                <a href="#">退货、退款</a><br />
+                            </div>
+                            <div class="single-text">
+                                <a th:text="${order.product_PaidPrice}" style="margin-left: 72px;">￥5133元</a>
+                            </div>
+                            <div class="single-text" style="text-align: right;margin-left: 72px;">
+                                <a href="#" th:if="${order.order_status.equals('未发货')}" th:text="${order.order_status}" >待发货</a>
+                                <a href="#" th:if="${order.order_status.equals('已评价')}" th:text="${order.order_status}" >已评价</a>
+                            </div>
+                            <!--//交易操作-->
+                            <div class="single-text" style="margin-left: 68px;">
+                                <a href="#">确认收货</a><br/>
+                                <a href="#">再次购买</a>
+                            </div>
 						</div>
 					</div>
 					<button type="button" class="btn btn-default">确认收货</button>
 				</div>
 				<!--待评价 -->
-				<div class="tab-pane fade" id="ejb">
-					<div class="annotation">
-						<div><input type="checkbox" id="all"/>全选</div>
-						<div>宝贝</div>
-						<div>单价</div>
-						<div>数量</div>
-						<div>商品操作</div>
-						<div>实际付款</div>
-						<div>交易状态</div>
-						<div>交易操作</div>
-					</div>
-					<div class="list">
-						<div class="single" th:each="order : ${orders}">
-							<input type="checkbox" name="aaa" style="float: left;" />
-							<div class="single-introduce">
-								<img th:src="${order.product_picture}" height="100%" style="float: left;"/>
-								<a href="#" th:text="${order.product_keywords}"></a>法规的所发生的累计开发阶段水立方到佳木斯都是顾客收到广东省
-							</div>
-							<div class="norms">
-								<a th:text="${order.product_PaidPrice}">￥5133元</a><br /><s th:text="${order.product_mallPrice}">￥5323元</s>
-							</div>
-							<div class="single-text">
-								<a th:text="${order.order_quantity}">数量</a>
-							</div>
-							<div class="single-text-a" style="text-align: right;">
-								<a href="#">投诉</a><br />
-								<a href="#">申请售后</a><br />
-							</div>
-							<div class="single-text">
-								<a th:text="${order.product_PaidPrice}">￥5133元</a>
-							</div>
-							<div class="single-text" style="text-align: right;">
-								<a href="#"th:text="${order.order_status}">待收货</a>
-							</div>
-							<!--//交易操作-->
-							<div class="single-text">
-								<a href="#">立即评价</a>
-							</div>
+				<div class="tab-pane fade" id="ejba">
+                    <div class="annotation">
+                        <div>宝贝</div>
+                        <div>单价</div>
+                        <div>数量</div>
+                        <div>商品操作</div>
+                        <div>实际付款</div>
+                        <div>交易状态</div>
+                        <div>交易操作</div>
+                    </div>
+                    <div class="list">
+                        <div class="single" th:each="order : ${orders}">
+                            <div class="single-introduce">
+                                <img th:src="${order.product_picture}" height="100%" style="float: left;"/>
+                                <a href="#" th:text="${order.product_keywords}"></a>法规的所发生的累计开发阶段水立方到佳木斯都是顾客收到广东省
+                            </div>
+                            <div class="norms">
+                                <a th:text="${order.product_PaidPrice}">￥5133元</a><br /><s th:text="${order.product_mallPrice}">￥5323元</s>
+                            </div>
+                            <div class="single-text">
+                                <a th:text="${order.order_quantity}">数量</a>
+                            </div>
+                            <div class="single-text-a" style="text-align: right;">
+                                <a href="#">投诉</a><br />
+                                <a href="#">申请售后</a>
+                            </div>
+                            <div class="single-text">
+                                <a th:text="${order.product_PaidPrice}" style="margin-left: 72px;">￥5133元</a>
+                            </div>
+                            <div class="single-text" style="text-align: right;margin-left: 72px;">
+                                <a href="#" th:if="${order.order_status.equals('未发货')}" th:text="${order.order_status}" >待发货</a>
+                                <a href="#" th:if="${order.order_status.equals('已评价')}" th:text="${order.order_status}" >已评价</a>
+                            </div>
+                            <!--//交易操作-->
+                            <div class="single-text" style="margin-left: 68px;">
+                                <a href="#">立即评价</a><br/>
+                            </div>
 						</div>
 					</div>
 					<button type="button" class="btn btn-default">稍后评价</button>
@@ -210,12 +207,12 @@
 		    物流服务<br />
 		    运营服务
 		</div>
-		<div style="padding-top: 50px;"><img src="./images/qr-code.png"/></div>
+		<div style="padding-top: 50px;"><img th:src="@{/images/qr-code.png}"/></div>
 	</div>
 	<div class="foots">
 		<div class="foots_all">
 			<div class="logo" style="position: absolute;top: 25px;left: 25px;">
-				<a href="#"><img src="./images/logo-foot.png" width="110px" height="50px" /></a>
+				<a href="#"><img th:src="@{/images/logo-foot.png}" width="110px" height="50px" /></a>
 			</div>
 			<div class="foots_text1">
 				服务邮箱：xf800@xinfei.com
