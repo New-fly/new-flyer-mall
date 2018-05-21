@@ -34,17 +34,8 @@ public class OrderController {
         Page pages =  ordersService.getOrdersList(order_number,page,limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
-        List<Orders> orders = pages.getContent();
-        String img;
-        for(int i = 0; i < orders.size(); i++) {
-            if (orders.get(i).getProduct_picture().contains(",")){
-                img = orders.get(i).getProduct_picture();
-                img = img.substring(0,img.indexOf(","));
-                System.out.println("后台列表");
-                orders.get(i).setProduct_picture(img);
-            }
-        }
         model.addAttribute("orders", pages.getContent());
+        System.out.println(pages.getContent());
         return "admin/adminOrdersList";
     }
     //后台订单列表  搜索商品
@@ -55,16 +46,6 @@ public class OrderController {
         Page pages =  ordersService.getOrdersList(order_number,page,limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
-        List<Orders> orders = pages.getContent();
-        String img;
-        for(int i = 0; i < orders.size(); i++) {
-            if (orders.get(i).getProduct_picture().contains(",")){
-                img = orders.get(i).getProduct_picture();
-                img = img.substring(0,img.indexOf(","));
-                System.out.println("后台搜索订单");
-                orders.get(i).setProduct_picture(img);
-            }
-        }
         model.addAttribute("order_number",order_number);
         model.addAttribute("orders", pages.getContent());
         return "admin/adminOrdersList";
@@ -73,8 +54,13 @@ public class OrderController {
     @RequestMapping("/toChangeProductOrders")
     public ModelAndView toEdit(Model model, Long id) {
         Orders order=ordersService.findOrdersById(id);
-        model.addAttribute("order", order);
-        return new ModelAndView("admin/adminEditOrders");
+        if(order != null){
+            model.addAttribute("order", order);
+            return new ModelAndView("admin/adminEditOrders");
+        }else{
+            model.addAttribute("mag","该数据不存在");
+            return new ModelAndView("redirect:/OrderController/allProductOrdersLists");
+        }
     }
     //后台通过订单号查询订单
     @RequestMapping("/findOrder")
@@ -86,14 +72,16 @@ public class OrderController {
     }
     //后台修改订单信息
     @RequestMapping("/changeProductOrder")
-    public String edit(long orderId, HttpServletRequest request) {
-        ordersService.edit(orderId, request);
-        return "redirect:/OrderController/allProductOrdersLists";
+    public ModelAndView edit(Model model,long orderId, HttpServletRequest request) {
+        String mag = ordersService.edit(orderId, request);
+        model.addAttribute("mag",mag);
+        return new ModelAndView("redirect:/OrderController/allProductOrdersLists");
     }
     //后台删除订单
     @RequestMapping("/deleteOrder")
-    public ModelAndView delete(Long id){
-        ordersService.delete(id);
+    public ModelAndView delete(Model model,long orderId){
+        String mag = ordersService.delete(orderId);
+        model.addAttribute("mag",mag);
         return new ModelAndView("redirect:/OrderController/allProductOrdersLists");
     }
     //根据用户名查询订单
@@ -104,39 +92,31 @@ public class OrderController {
         return new ModelAndView("userOrdersList");
     }
 
-    //订单详情   前后台
+    //订单详情
     @RequestMapping("/orderDetails")
     public ModelAndView orderInfo(Model model, Long id) {
         Orders order=ordersService.findOrdersById(id);
-        model.addAttribute("order", order);
-        return new ModelAndView("admin/adminOrderInfo");
+        if(order != null){
+            model.addAttribute("order", order);
+            return new ModelAndView("admin/adminOrderInfo");
+        }else{
+            model.addAttribute("mag","该订单不存在");
+            return new ModelAndView("redirect:/OrderController/allProductOrdersLists");
+        }
     }
-    /**
-     * @author 阿杰
-     * @param [model, userId]
-     * @return org.springframework.web.servlet.ModelAndView
-     * @description 用户订单 全部  未收货 未评价
-     */
-    @RequestMapping("/userOrderList")
-    public ModelAndView userOrderList(Model model,long userId){
-        List<Orders> orders = ordersService.userOrderList(userId);
+
+    //后台多条件查询订单 分页
+    @RequestMapping("/findOrders")
+    public ModelAndView findOrders(Model model, String order_word, @RequestParam(value = "page",defaultValue = "0")int page,
+                                   @RequestParam(value = "limit",defaultValue = "6")int limit){
+        if(page != 0) page--;
+        Page<Orders> pages = ordersService.adminSearchOrder(order_word,page,limit);
+        model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
+        model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
+        List<Orders> orders = pages.getContent();
         model.addAttribute("orders",orders);
-        List<Orders> unacceptedOrder = ordersService.userUnacceptedOrder(userId);
-        model.addAttribute("unacceptedOrder",unacceptedOrder);
-        List<Orders> unEstimateOrder = ordersService.userUnEstimateOrder(userId);
-        model.addAttribute("unEstimateOrder",unEstimateOrder);
-        return new ModelAndView("userOrder");
+        return new ModelAndView("userOrdersList");
     }
-    /**
-     * @author 阿杰
-     * @param [orderId]
-     * @return org.springframework.web.servlet.ModelAndView
-     * @description 收货
-     */
-    @RequestMapping("/userAccepted")
-    public ModelAndView userAccepted(long orderId){
-        ordersService.userAccepted(orderId);
-        return new ModelAndView();
-    }
+
 
 }

@@ -14,6 +14,8 @@ import org.wlgzs.xf_mall.service.ActivityService;
 import org.wlgzs.xf_mall.service.ProductActivityService;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -32,7 +34,7 @@ public class ProductActivityController extends BaseController {
      * @description 跳转至活动页面
      */
     @RequestMapping("/activityProducts")
-    public ModelAndView activityProductList(Model model,long activitySumId, @RequestParam(value = "page",defaultValue = "0") int page,
+    public ModelAndView activityProductList(Model model, HttpServletRequest request, long activitySumId, @RequestParam(value = "page",defaultValue = "0") int page,
                                             @RequestParam(value = "limit",defaultValue = "10") int limit){
         Activity activity = activityService.findActivity(activitySumId);
         model.addAttribute("activity",activity);
@@ -42,17 +44,14 @@ public class ProductActivityController extends BaseController {
         model.addAttribute("ActivityTotalPages", activityPages.getTotalPages());//查询的页数
         model.addAttribute("ActivityNumber", activityPages.getNumber()+1);//查询的当前第几页
         List<ProductActivity> activities = activityPages.getContent();
-        String activityImg;
-        for(int i = 0; i < activities.size(); i++) {
-            if (activities.get(i).getProduct_picture().contains(",")){
-                activityImg = activities.get(i).getProduct_picture();
-                activityImg = activityImg.substring(0,activityImg.indexOf(","));
-                System.out.println("前台活动页面");
-                activities.get(i).setProduct_picture(activityImg);
-            }
-        }
         model.addAttribute("activities", activities);//查询的当前页的集合
-
+        //推荐商品
+        HttpSession session = request.getSession();
+        if(session!=null){
+            long userId = (long) session.getAttribute("userId");
+            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+            model.addAttribute("recommendedProducts", recommendedProducts);
+        }
         return new ModelAndView("productActivityList");
     }
 }

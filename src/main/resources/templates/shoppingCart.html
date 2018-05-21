@@ -95,6 +95,20 @@
                 </div>
             </div>
         </div>
+        <!--推荐商品-->
+        <div class="recommended">
+            <h1 class="h1sty">精品推荐</h1>
+                <div class="recommendedProduct" th:each="recommendedProducts:${recommendedProducts}">
+                    <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">
+                        <img th:src="${recommendedProducts.product_picture}" style="height: 170px;width: 170px;"/>
+                    </a>
+                    <a href="#" class="asty" th:text="${recommendedProducts.product_mallPrice}">199元</a><s th:text="${recommendedProducts.product_counterPrice}">599元</s><br>
+                    <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">
+                        <span class="spansty" th:text="${recommendedProducts.product_keywords}">新飞新飞新飞新飞新飞新飞新飞新飞新飞新飞新飞新飞</span>
+                    </a>
+                </div>
+
+        </div>
     </div>
     <div th:include="common/top_header :: duplicate"></div>
 </form>

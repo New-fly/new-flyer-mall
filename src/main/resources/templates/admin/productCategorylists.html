@@ -20,6 +20,9 @@
 		<input type="text" name="category_name" placeholder="关键字" th:value="*{category_name}">
 		<input type="submit" value="搜索" class="a1">
 		<button type="button" class="btn btn-primary add" style="background-color: green;color: #fff;float: right;">
+			<a th:href="@{/AdminProductController/toAddProductCategoryTwo}" th:class="a2">添加二级分类配件</a>
+		</button>&nbsp;&nbsp;&nbsp;
+		<button type="button" class="btn btn-primary add" style="background-color: green;color: #fff;float: right;">
 			<a th:href="@{/AdminProductController/toAddProductCategory}" th:class="a2">添加二级分类</a>
 		</button>
 		<button type="button" class="btn btn-primary add" style="background-color: green;color: #fff;float: right;margin-right: 10px">
@@ -33,7 +36,7 @@
 	        <th>名称</th>
 	        <th>上一级</th>
 	        <!--<th>id</th>-->
-	        <th></th>
+	        <th>操作</th>
 	    </tr>
 	    </thead>
 	    <tbody>

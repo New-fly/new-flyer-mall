@@ -141,5 +141,4 @@ window.onload = function() {
         allid = allid.substring(0, allid.lastIndexOf(','));
         document.getElementsByClassName("produc")[0].value=allid;
     }
-
 };

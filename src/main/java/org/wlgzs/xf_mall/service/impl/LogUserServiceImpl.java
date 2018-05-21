@@ -11,10 +11,13 @@ import org.wlgzs.xf_mall.entity.User;
 import org.wlgzs.xf_mall.service.LogUserService;
 import org.wlgzs.xf_mall.util.RandonNumberUtils;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author:胡亚星
@@ -77,13 +80,22 @@ public class LogUserServiceImpl implements LogUserService {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-        RandonNumberUtils randonNumberUtils = new RandonNumberUtils();
-        String name = randonNumberUtils.getNumber(6);
-        String user_name = "XF_" + name;
-        String user_avatar = request.getContextPath() + "/headPortrait/morende.jpg ";
-        user.setUser_name(user_name);
-        user.setUser_avatar(user_avatar);
-        user.setUser_role("普通用户");
+        Pattern p =  Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");//复杂匹配
+        Matcher m = p.matcher(user.getUser_mail());
+        HttpSession session = request.getSession();
+        String SessionMail = (String)session.getAttribute("user_mail");
+        if(SessionMail.equals(user.getUser_mail())){
+            if(m.matches() && user.getUser_mail() != null && !user.getUser_mail().equals("")){
+                RandonNumberUtils randonNumberUtils = new RandonNumberUtils();
+                String name = randonNumberUtils.getNumber(8);
+                String user_name = "XF_" + name;
+                String user_avatar = request.getContextPath() + "/headPortrait/morende.jpg";
+                System.out.println("====="+user.getUser_role());
+                user.setUser_name(user_name);
+                user.setUser_avatar(user_avatar);
+                user.setUser_role("普通用户");
+            }
+        }
         return user;
     }
 

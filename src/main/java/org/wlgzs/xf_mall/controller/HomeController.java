@@ -9,6 +9,8 @@ import org.wlgzs.xf_mall.entity.Activity;
 import org.wlgzs.xf_mall.entity.Product;
 import org.wlgzs.xf_mall.entity.ProductCategory;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,19 +30,14 @@ public class HomeController extends BaseController {
      * @description 主页商品数据
      */
     @RequestMapping("/homeProduct")
-    public ModelAndView homeProduct(Model model){
+    public ModelAndView homeProduct(Model model, HttpServletRequest request){
         List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();
         model.addAttribute("productOneCategories", productOneCategories);
         List<ProductCategory> productTwoCategories = productService.findProductTwoCategoryList();
         model.addAttribute("productTwoCategories", productTwoCategories);
         //活动商品  轮播图
         List<Activity> activities = activityService.getActivity();
-        List<Object> activityPictureList = new ArrayList<Object>();
-        for (int i = 0; i < activities.size(); i++) {
-            activityPictureList.add(activities.get(i).getActivity_picture());
-        }
         model.addAttribute("activities",activities);
-        model.addAttribute("activityPictureList",activityPictureList);
         //商品展示
         List<Product> productsOne = productService.productByOneCategory(productOneCategories.get(0).getCategory_name());
         model.addAttribute("productsOne",productsOne);//主页部分第一分类商品
@@ -52,6 +49,13 @@ public class HomeController extends BaseController {
         model.addAttribute("productsFour",productsFour);//主页部分第四分类商品
         List<Product> productsFive = productService.productByOneCategory(productOneCategories.get(4).getCategory_name());
         model.addAttribute("productsFive",productsFive);//主页部分第五分类商品
+        //推荐商品
+        HttpSession session = request.getSession();
+        if(session.getAttribute("user")!=null){
+            long userId = (long) session.getAttribute("userId");
+            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+            model.addAttribute("recommendedProducts", recommendedProducts);
+        }
         return new ModelAndView("Index");
     }
 }

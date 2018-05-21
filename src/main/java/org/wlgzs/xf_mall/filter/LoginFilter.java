@@ -33,6 +33,7 @@ public class LoginFilter implements Filter {
         patterns.add(Pattern.compile("ProductListController/toProductList"));
         patterns.add(Pattern.compile("ProductListController/toProduct"));
         patterns.add(Pattern.compile("ProductListController/searchWord"));
+        patterns.add(Pattern.compile("ProductListController/searchProductList"));
         patterns.add(Pattern.compile("ProductListController/searchProductList/"));
         patterns.add(Pattern.compile("ProductListController/integralProduct"));
     }

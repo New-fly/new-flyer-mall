@@ -17,13 +17,13 @@ import java.util.List;
 public interface OrdersService {
     Page<Orders> getOrdersList(String order_number, int page, int limit);
 
-    void edit(long orderId,HttpServletRequest request);
+    String edit(long orderId,HttpServletRequest request);
 
     List<Orders> findOrdersByOrderNumber(String order_number);
 
     Orders findOrdersById(long id);
 
-    void delete(long id);
+    String delete(long id);
 
     List<Orders> findOrdersByUserName(String user_name);
 
@@ -40,4 +40,14 @@ public interface OrdersService {
     void estimatePaySave(HttpServletRequest request, long productId, long userId);
 
     //void aliReturn(HttpServletResponse response, HttpServletRequest request) throws IOException, AlipayApiException;
+
+    //后台多条件查询
+    Page<Orders> adminSearchOrder(String order_word,int page,int limit);
+
+
+    //前台按用户查询,多条件,分页
+    List<Orders> searchOrder(String order_word,long userId);
+
+    long searchProductCount(long productId);
+
 }

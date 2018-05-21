@@ -4,6 +4,11 @@
     font-size: 12px;
     font-family: "微软雅黑";
 }
+.all{
+    width: 100%;
+    height: auto;
+    background-color: #F7F7F7;
+}
 .top{
     width: 100%;
     margin: 0 auto;
@@ -73,13 +78,15 @@
     font-size: 16px;
 }
 .baby{
-    width: 1200px;
-    margin: 0 auto;
+    width: 1180px;
+    margin: 10px;
+
 }
 .showall{
     width: 150px;
-    height: 230px;
-
+   background-color: #fff;
+    display: inline-block;
+    margin: 10px;
 }
 .showpic{
     width: 148px;
@@ -117,21 +124,22 @@
 }
 .block-2{
     width: 204px;
-    height: 265px;
+    /*height: 265px;*/
     margin: 10px;
-    padding: 7px;
-    border: solid 1px red;
+    padding: 5px;
     float: left;
     position: relative;
     background-color: white;
+    border: 1px solid #F7F7F7;
 }
 .block-2:hover{
-    box-shadow: 3px 3px 5px white;
+    border: 1px solid red;
 }
 .block-2-div{
     width: 198px;
     height: 80px;
     font-size: 12px;
+    padding-top: 5px;
 }
 .block-2-text{
     cursor:pointer;

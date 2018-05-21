@@ -1,5 +1,6 @@
 package org.wlgzs.xf_mall.controller.admin;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -111,8 +112,13 @@ public class UserController {
     @RequestMapping("/toAdminEditUser")
     public String toEdit(Model model, Long userId) {
         User user = userService.findUserById(userId);
-        model.addAttribute("user", user);
-        return "admin/adminEditUser";
+        if(user != null){
+            model.addAttribute("user", user);
+            return "admin/adminEditUser";
+        }else{
+            model.addAttribute("mag","该用户不存在");
+            return "redirect:/AdminUserController/adminUserList";
+        }
     }
     /**
      * @author 阿杰
@@ -121,8 +127,9 @@ public class UserController {
      * @description 后台修改用户
      */
     @RequestMapping("/adminEditUser")
-    public String edit(User user) {
-        userService.edit(user);
+    public String edit(Model model,User user) {
+        String mag = userService.edit(user);
+        model.addAttribute("mag",mag);
         return "redirect:/AdminUserController/adminUserList";
     }
     /**
@@ -132,8 +139,9 @@ public class UserController {
      * @description 后台删除用户
      */
     @RequestMapping("/adminDeleteUser")
-    public String delete(Long userId, HttpServletRequest request) {
-        userService.delete(userId, request);
+    public String delete(Model model,Long userId, HttpServletRequest request) {
+        String mag = userService.delete(userId, request);
+        model.addAttribute("mag",mag);
         return "redirect:/AdminUserController/adminUserList";
     }
 }

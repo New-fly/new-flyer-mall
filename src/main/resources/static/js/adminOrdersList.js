@@ -1,29 +1,19 @@
+function deleteOrder(orderId) {
+    var isDel = confirm("您确认要删除吗？");
+    if(isDel){
+        //要删除
+        location.href = "/OrderController/deleteOrder?orderId="+orderId;
+    }
+}
 window.onload=function () {
-    //获取所有a标签
-    var allas=document.getElementsByClassName("a2");
-    function delA() {
-        var tr=this.parentNode.parentNode;
-        //获取要删除的名字
-        var Addressname=tr.children[0].innerHTML;
-        var flag=confirm("确定要删除"+Addressname+"吗？");
-        if(flag){
-            tr.parentNode.removeChild(tr);
-        }
-    }
-    function deleteOrder(id) {
-        var isDel = confirm("您确认要删除吗？");
-        if(isDel){
-            //要删除
-            location.href = "/OrderController/deleteOrder?id="+id;
-        }
-    }
+
     //console.log(allas);
     //为每个button绑定一个单击相应函数
-    for(i=0;i<allas.length;i++){
+    /*for(i=0;i<allas.length;i++){
         allas[i].onclick=delA;
     }
     var allmodifibtns=document.getElementsByClassName("btn btn-primary modifi");
-    //console.log(allmodifibtns);
+    *///console.log(allmodifibtns);
     //为每个修改按钮添加一个单击向应函数
     var tr;
     for(i=0;i<allmodifibtns.length;i++){

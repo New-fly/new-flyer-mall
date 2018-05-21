@@ -37,7 +37,7 @@ public class FilterConfiguration {
         //注入过滤器
         registration.setFilter(new LoginFilter());
         //拦截规则
-        registration.addUrlPatterns("/pay/aliPay/*");
+        registration.addUrlPatterns("/aliPay/*");
         registration.addUrlPatterns("/FootprintController/*");
         registration.addUrlPatterns("/IntegralController/*");
         registration.addUrlPatterns("/ActivityController/*");

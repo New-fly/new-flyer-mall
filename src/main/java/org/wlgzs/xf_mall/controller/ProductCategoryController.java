@@ -109,7 +109,6 @@ public class ProductCategoryController extends BaseController {
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber() + 1);//查询的当前第几页
         model.addAttribute("products", pages.getContent());//查询的当前页的集合
-        System.out.println(pages.getContent());
         return new ModelAndView("productList");
     }
     /**
@@ -121,7 +120,6 @@ public class ProductCategoryController extends BaseController {
     @RequestMapping("/byCategoryFindProduct")
     public ModelAndView byCategoryFindProduct(Model model, String product_category) {
         List<Product> products = productService.findProductByCategory(product_category);
-        System.out.println(products);
         model.addAttribute("products", products);
         return new ModelAndView("productList");
     }

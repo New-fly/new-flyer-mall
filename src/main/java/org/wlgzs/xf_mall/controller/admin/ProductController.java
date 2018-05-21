@@ -29,7 +29,6 @@ import java.util.List;
 public class ProductController {
     @Resource
     ProductService productService;
-
     /**
      * @param [model]
      * @return java.lang.String
@@ -57,7 +56,6 @@ public class ProductController {
         System.out.println(products);
         return new ModelAndView("admin/adminProductList");
     }
-
     /**
      * @param [model, product_keywords]
      * @return java.lang.String
@@ -85,7 +83,6 @@ public class ProductController {
         model.addAttribute("product_keywords", product_keywords);
         return new ModelAndView("admin/adminProductList");
     }
-
     /**
      * @return java.lang.String
      * @author 阿杰
@@ -97,7 +94,6 @@ public class ProductController {
         model.addAttribute("productCategories", productCategories);
         return new ModelAndView("admin/adminAddProduct");
     }
-
     /**
      * @param [myFileName, session, request]
      * @return org.wlgzs.xf_mall.entity.Result
@@ -109,7 +105,6 @@ public class ProductController {
         String[] str = productService.uploadImg(myFileName, session, request);
         return ResultUtil.success(str);
     }
-
     /**
      * @param [product]
      * @return java.lang.String
@@ -123,7 +118,6 @@ public class ProductController {
         model.addAttribute("product_details", product_details);
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
     }
-
     /**
      * @param [model, id]
      * @return java.lang.String
@@ -133,10 +127,15 @@ public class ProductController {
     @RequestMapping("/toAdminEditProduct")
     public ModelAndView toEdit(Model model, long productId) {
         Product product = productService.findProductById(productId);
-        model.addAttribute("product", product);
-        return new ModelAndView("admin/adminEditProduct");
+        if(product != null){
+            model.addAttribute("mag","修改商品");
+            model.addAttribute("product", product);
+            return new ModelAndView("admin/adminEditProduct");
+        }else{
+            model.addAttribute("mag","该商品不存在");
+            return new ModelAndView("redirect:/AdminProductController/adminProductList");
+        }
     }
-
     /**
      * @param [product]
      * @return java.lang.String
@@ -144,12 +143,12 @@ public class ProductController {
      * @description 修改商品
      */
     @RequestMapping("/adminEditProduct")
-    public ModelAndView edit(long productId, String product_details, @RequestParam("file") MultipartFile[] myFileNames, HttpSession session,
+    public ModelAndView edit(Model model,long productId, String product_details, @RequestParam("file") MultipartFile[] myFileNames, HttpSession session,
                              HttpServletRequest request) {
-        productService.edit(productId, product_details, myFileNames, session, request);
+        String mag = productService.edit(productId, product_details, myFileNames, session, request);
+        model.addAttribute("mag",mag);
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
     }
-
     /**
      * @param [id]
      * @return java.lang.String
@@ -157,11 +156,11 @@ public class ProductController {
      * @description 删除商品
      */
     @RequestMapping("/adminDeleteProduct")
-    public ModelAndView delete(long productId, HttpServletRequest request) {
-        productService.delete(productId, request);
+    public ModelAndView delete(Model model,long productId, HttpServletRequest request) {
+        String mag = productService.delete(productId, request);
+        model.addAttribute("mag",mag);
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
     }
-
     /**
      * @param [model]
      * @return java.lang.String
@@ -180,7 +179,6 @@ public class ProductController {
         model.addAttribute("productCategories", productCategories);//查询的当前页的集合
         return new ModelAndView("admin/productCategorylists");
     }
-
     /**
      * @param []
      * @return java.lang.String
@@ -191,7 +189,6 @@ public class ProductController {
     public ModelAndView toAddOneCategory() {
         return new ModelAndView("admin/addProductOneCategory");
     }
-
     /**
      * @param [productCategory]
      * @return java.lang.String
@@ -199,12 +196,11 @@ public class ProductController {
      * @description 添加一级分类
      */
     @RequestMapping("/addProductOneCategory")
-    public ModelAndView addOneCategory(ProductCategory productCategory, @RequestParam("file") MultipartFile myFileName, HttpSession session,
+    public ModelAndView addProductOneCategory(ProductCategory productCategory, @RequestParam("file") MultipartFile myFileName, HttpSession session,
                                        HttpServletRequest request) {
         productService.saveOne(productCategory, myFileName, session, request);
         return new ModelAndView("redirect:/AdminProductController/productCategoryList");
     }
-
     /**
      * @param []
      * @return java.lang.String
@@ -212,12 +208,11 @@ public class ProductController {
      * @description 跳转至添加二级分类页面
      */
     @RequestMapping("/toAddProductCategory")
-    public ModelAndView toAddCategory(Model model) {
+    public ModelAndView toAddProductCategory(Model model) {
         List<ProductCategory> productCategories = productService.findProductOneCategoryList();
         model.addAttribute("productCategories", productCategories);
         return new ModelAndView("admin/addProductCategory");
     }
-
     /**
      * @param [productCategory]
      * @return java.lang.String
@@ -225,11 +220,33 @@ public class ProductController {
      * @description 添加二级分类
      */
     @RequestMapping("/addProductCategory")
-    public ModelAndView addCategory(ProductCategory productCategory) {
+    public ModelAndView addProductCategory(ProductCategory productCategory) {
         productService.save(productCategory);
         return new ModelAndView("redirect:/AdminProductController/productCategoryList");
     }
-
+    /**
+     * @author 阿杰  
+     * @param [model]  
+     * @return org.springframework.web.servlet.ModelAndView  
+     * @description 跳转至添加配件
+     */ 
+    @RequestMapping("/toAddProductCategoryTwo")
+    public ModelAndView toAddProductCategoryTwo(Model model) {
+        List<ProductCategory> productCategories = productService.findProductOneCategoryList();
+        model.addAttribute("productCategories", productCategories);
+        return new ModelAndView("admin/addProductCategoryTwo");
+    }
+    /**
+     * @author 阿杰
+     * @param [productCategory]
+     * @return org.springframework.web.servlet.ModelAndView
+     * @description 添加二级分类配件
+     */
+    @RequestMapping("/addProductCategoryTwo")
+    public ModelAndView addCategoryTwo(ProductCategory productCategory) {
+        productService.saveTwo(productCategory);
+        return new ModelAndView("redirect:/AdminProductController/productCategoryList");
+    }
     /**
      * @param [id]
      * @return java.lang.String
@@ -237,11 +254,11 @@ public class ProductController {
      * @description 删除分类
      */
     @RequestMapping("/deleteProductCategory")
-    public ModelAndView deleteCategory(Long categoryId) {
-        productService.deleteCategory(categoryId);
+    public ModelAndView deleteCategory(Model model,Long categoryId) {
+        String mag = productService.deleteCategory(categoryId);
+        model.addAttribute("mag",mag);
         return new ModelAndView("redirect:/AdminProductController/productCategoryList");
     }
-
     /**
      * @param [model, id]
      * @return java.lang.String
@@ -253,10 +270,13 @@ public class ProductController {
         List<ProductCategory> productCategories = productService.findProductOneCategoryList();
         model.addAttribute("productCategories", productCategories);
         ProductCategory productCategory = productService.findProductCategoryById(categoryId);
-        model.addAttribute("productCategory", productCategory);
-        return new ModelAndView("admin/adminEditProductCategory");
+        if(productCategory != null){
+            model.addAttribute("productCategory", productCategory);
+            return new ModelAndView("admin/adminEditProductCategory");
+        }
+        model.addAttribute("mag","不存在");
+        return  new ModelAndView("redirect:/AdminProductController/productCategoryList");
     }
-
     /**
      * @param [productCategory]
      * @return java.lang.String
@@ -264,11 +284,10 @@ public class ProductController {
      * @description 修改分类
      */
     @RequestMapping("/adminEditProductCategory")
-    public ModelAndView editCategory(ProductCategory productCategory, @RequestParam("file") MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
-        productService.editCategory(productCategory, myFileName, session, request);
+    public ModelAndView editCategory(long categoryId, @RequestParam("file") MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
+        productService.editCategory(categoryId, myFileName, session, request);
         return new ModelAndView("redirect:/AdminProductController/productCategoryList");
     }
-
     /**
      * @param [model, category_name]
      * @return java.lang.String

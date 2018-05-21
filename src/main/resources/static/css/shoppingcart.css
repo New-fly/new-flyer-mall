@@ -168,3 +168,36 @@ body{
 input{
     text-align:center;
 }
+.recommended{
+	width: 1000px;
+	margin: 0 auto;
+	height: auto;
+}
+.h1sty{
+	color: red;
+	height: 54px;
+	line-height: 54px;
+	font-size: 16px;
+}
+.recommendedProduct{
+	width: 170px;
+	height: auto;
+	display: inline-block;
+	/*background-color: #FCFCFC;*/
+	margin: 10px;
+	border: 1px solid grey;
+}
+.asty{
+	color: red;
+	font-size: 14px;
+	text-decoration: none;
+}
+s{
+	color: #E5E5E5;
+	font-size: 12px;
+	margin-left: 15px;
+}
+.spansty{
+	color: gray;
+	font-size: 14px;
+}

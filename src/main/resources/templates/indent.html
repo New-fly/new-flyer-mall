@@ -86,15 +86,6 @@
                     <input type="text" class="ipt" readonly name="product_mallPrice"
                            th:value="${shoppingCart.product_mallPrice}" style="background-color: #FCFCFC">
                 </div>
-                <div class="single-text" style="display: none">
-                    <input type="text" name="WIDorder_number" id="WIDorder_number" style="background-color: #FCFCFC">
-                </div>
-                <div class="single-text" style="display: none">
-                    <input type="text" name="order_expressNumber" id="order_expressNumber" style="background-color: #FCFCFC">
-                </div>
-                <div class="single-text" style="display: none">
-                    <input type="text" name="WIDsubject" id="WIDsubject" style="background-color: #FCFCFC">
-                </div>
             </div>
         </div>
         <div class="pay">
@@ -124,22 +115,4 @@
     </form>
     <div th:include="common/top_header :: duplicate"></div>
 </body>
-<script language="javascript">
-    function GetDateNow() {
-        var vNow = new Date();
-        var sNow = "";
-        sNow += String(vNow.getFullYear());
-        sNow += String(vNow.getMonth() + 1);
-        sNow += String(vNow.getDate());
-        sNow += String(vNow.getHours());
-        sNow += String(vNow.getMinutes());
-        sNow += String(vNow.getSeconds());
-        sNow += String(vNow.getMilliseconds());
-        document.getElementById("WIDorder_number").value =  sNow;
-        document.getElementById("order_expressNumber").value =  sNow;
-        document.getElementById("WIDsubject").value = "测试";
-    }
-    GetDateNow();
-</script>
-<script type="text/javascript" th:src="@{/js/indent.js}"></script>
 </html>

@@ -3,6 +3,63 @@ html,body{
 	height: 100%;
 	overflow: hidden;
 }
+.header1{
+	padding: 0 20px;
+}
+.a1{
+	color: #fff;
+	opacity: 0.7;
+	background-color: red;
+	border: 0;
+	width: 68px;
+	height: 25px;
+	border-radius: 8px;
+}
+.a1:hover{
+	color: #fff;
+	text-decoration: none;
+	cursor: pointer;
+	opacity: 1;
+}
+.search{
+	display: inline-block;
+	width: 54px;
+	height: 24px;
+	background-color: red;
+	border-radius: 10px;
+	text-align: center;
+	padding-top: 2px;
+	vertical-align: middle;
+	opacity: 0.7;
+}
+.search:hover{
+	opacity: 1;
+}
+.h1-sty{
+	margin-bottom: 30px;
+}
+.ipt{
+	outline: none;
+}
+.mytable{
+	padding: 0 20px;
+	margin-top: 10px;
+}
+.a2{
+	background-color: red;
+	color: #fff;
+	border-radius: 5px;
+	width: 54px;
+	height: 34px;
+	display: inline-block;
+	text-align: center;
+	padding-top: 7px;
+	opacity: 0.7;
+}
+.a2:hover{
+	color: #fff;
+	text-decoration: none;
+}
 .aa{
     width: 96%;
     height: 100%;
@@ -52,7 +109,7 @@ html,body{
 	margin-left: -150px;
 	background-color:RGB(231,231,231);
 }
-input{
+.ipt2{
 	width: 150px;
 	height: 30px;
 	margin: 20px auto;

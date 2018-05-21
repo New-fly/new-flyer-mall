@@ -11,9 +11,6 @@ public class PageUtil<T> {
 
     private String searchKeywords;//模糊搜索关键字
 
-    public PageUtil() {
-
-    }
     public PageUtil(String searchKeywords) {
         this.searchKeywords=searchKeywords;
     }
@@ -26,16 +23,30 @@ public class PageUtil<T> {
      */
     public Specification<T> getPage(String...strings){
         return  new Specification<T>() {
+            /*
+            * root就是我们要查询的类型
+            * query添加查询条件
+            * criteriaBuilder构建Predicate
+            * */
             @Override
             public Predicate toPredicate(Root<T> root,
                                          CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 if(searchKeywords==null){ //不模糊查询直接返回
                     return null;
                 }
+                if(searchKeywords.equals("")){ //不模糊查询直接返回
+                    return null;
+                }
                 List<Predicate> predicates = new ArrayList<Predicate>();
                 for (String s:strings){
+                    Predicate _name = null;
                     Path<String> $name = root.get(s);
-                    Predicate _name = criteriaBuilder.like($name, "%" + searchKeywords + "%");
+                    if(s.equals("order_number") || s.equals("user_name")){
+                        System.out.println("精确查询");
+                        _name = criteriaBuilder.equal($name,searchKeywords);
+                    }else{
+                        _name = criteriaBuilder.like($name, "%" + searchKeywords + "%");
+                    }
                     predicates.add(_name);
                 }
                 return criteriaBuilder.or(predicates

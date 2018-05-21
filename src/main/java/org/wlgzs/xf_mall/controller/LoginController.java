@@ -11,7 +11,6 @@ import org.wlgzs.xf_mall.util.AuthUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -58,9 +57,13 @@ public class LoginController extends BaseController {
     public String register(Model model, HttpServletRequest request) {
         User user = new User();
         user = logUserService.registered(user,request);
-        userService.save(user);
-        return "sign-up3";
-
+        if(user.getUser_role() != null){
+            userService.save(user);
+            return "sign-up3";
+        }else{
+            model.addAttribute("mag","请确定您的邮箱是正确的");
+            return "redirect:/toRegistered";
+        }
     }
 
     /**
@@ -90,7 +93,7 @@ public class LoginController extends BaseController {
     //github登陆
     @GetMapping(value = "/callback")
     public String claaback(HttpServletRequest request,Model model, String code) {
-        System.out.println("进入123456");
+//        System.out.println("进入123456");
         String me = "";
         JSONObject res = null;
         try {
@@ -221,6 +224,7 @@ public class LoginController extends BaseController {
         String sessioncode = "";
         if (logUserService.contrastCode(request, user_mail, sessionMail, usercode, sessioncode)) { //对比两个code是否正确
             model.addAttribute("user_mail", user_mail);
+            model.addAttribute("mag", "验证通过");
             System.out.println(user_mail);
             System.out.println("验证码正确");
             return "sign-up2";

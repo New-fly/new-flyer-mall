@@ -14,7 +14,7 @@
 <div class="header">
     <form th:action="@{/AdminActivityController/adminFindActivityProduct}" method="post">
         <h1 class="h1-sty">活动列表</h1>
-        <input type="text" name="activity_name" placeholder="关键字" th:value="*{activity_name}" class="ipt">
+        <input type="text" name="product_keywords" placeholder="商品名称" th:value="*{product_keywords}" class="ipt">
         <input type="submit" value="搜索" class="a1">
     </form>
 </div>
@@ -28,28 +28,26 @@
             <th>活动名称</th>
             <th>活动折扣</th>
             <th>商品价格</th>
-            <th>商品......</th>
-            <th></th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
-            <tr th:each="activitie : ${activities}">
-                <td th:text="${activitie.productId}"></td>
-                <td th:text="${activitie.product_keywords}"></td>
-                <td><img th:src="${activitie.product_picture}"  style="width: 50px;"></td>
-                <td th:text="${activitie.activity_name}">Doe</td>
-                <td th:text="${activitie.activity_discount}"></td>
-                <td th:text="${activitie.product_mallPrice}"></td>
-                <td th:text="${activitie.activityId}"></td>
-                <td>
-                    <button class="btn">
-                        <a class="a2" th:href="@{/AdminActivityController/adminDeleteActivity(activityId=${activitie.activityId})}">删除</a>
-                    </button>
-                    <button type="button" class="btn btn-primary modifi" style="background-color:#007BFF">
-                        <a th:href="@{/AdminActivityController/toAdminEditActivity(activityId=${activitie.activityId})}" style="color: white">修改</a>
-                    </button>
-                </td>
-            </tr>
+        <tr th:each="activitie : ${activities}">
+            <td th:text="${activitie.productId}"></td>
+            <td th:text="${activitie.product_keywords}"></td>
+            <td><img th:src="${activitie.product_picture}" style="width: 50px;"></td>
+            <td th:text="${activitie.activity_name}">Doe</td>
+            <td th:text="${activitie.activity_discount}"></td>
+            <td th:text="${activitie.product_mallPrice}"></td>
+            <td>
+                <a class="a2"
+                   th:href="@{/AdminActivityController/adminDeleteActivity(activityId=${activitie.activityId})}">删除</a>
+                <button type="button" class="btn btn-primary modifi" style="background-color:#007BFF">
+                    <a th:href="@{/AdminActivityController/toAdminEditActivity(activityId=${activitie.activityId})}"
+                       style="color: white">修改</a>
+                </button>
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>
@@ -59,7 +57,8 @@
         <li><a th:href="@{/AdminActivityController/activityProducts(page=1)}">首页</a></li>
         <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
             <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
-            <a th:if="${i >Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);" th:text="${i}">#</a>
+            <a th:if="${i >Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);"
+               th:text="${i}">#</a>
             <!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
             <a th:if="${i >Number-3} and ${i < Number+3} and ${i != Number}"
                th:href="@{/OrderController/allProductOrdersLists(page=${i})}" th:text="${i}"

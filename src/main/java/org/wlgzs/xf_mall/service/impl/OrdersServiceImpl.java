@@ -4,6 +4,7 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.wlgzs.xf_mall.dao.OrdersRepository;
 import org.wlgzs.xf_mall.dao.ProductRepository;
 import org.wlgzs.xf_mall.dao.UserIntegralRepository;
@@ -23,6 +25,7 @@ import org.wlgzs.xf_mall.service.OrdersService;
 import org.wlgzs.xf_mall.util.AlipayConfig;
 import org.wlgzs.xf_mall.util.IdsUtil;
 import org.wlgzs.xf_mall.util.PageUtil;
+import org.wlgzs.xf_mall.util.RandonNumberUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,9 +36,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Auther: 李晓珊
+ * @Auther: 阿杰
  * @Date: 2018/4/20 20:52
- * @Description:
+ * @Description: 订单
  */
 @Service
 public class OrdersServiceImpl implements OrdersService {
@@ -72,18 +75,27 @@ public class OrdersServiceImpl implements OrdersService {
 
     //后台修改订单
     @Override
-    public void edit(long orderId,HttpServletRequest request) {
+    public String edit(long orderId,HttpServletRequest request) {
         Orders orders = ordersRepository.findById(orderId);
-        orders.setAddress_name(request.getParameter("address_name"));
-        orders.setAddress_phone(request.getParameter("address_phone"));
-        orders.setAddress_shipping(request.getParameter("address_shipping"));
-        ordersRepository.save(orders);
+        if(orders != null){
+            orders.setAddress_name(request.getParameter("address_name"));
+            orders.setAddress_phone(request.getParameter("address_phone"));
+            orders.setAddress_shipping(request.getParameter("address_shipping"));
+            ordersRepository.save(orders);
+            return "成功";
+        }
+            return "未知错误";
     }
 
     //后台删除订单
     @Override
-    public void delete(long id) {
-        ordersRepository.deleteById(id);
+    public String delete(long id) {
+        Orders orders = ordersRepository.findById(id);
+        if(orders != null){
+            ordersRepository.deleteById(id);
+            return "成功";
+        }
+            return "未知错误";
     }
 
     //按照用户名查询订单
@@ -106,11 +118,11 @@ public class OrdersServiceImpl implements OrdersService {
         aliPayRequest.setNotifyUrl(AlipayConfig.notify_url);
 
         //商户订单号，商户网站订单系统中唯一订单号，必填
-        String order_number = new String(request.getParameter("WIDorder_number"));
+        String order_number = new String(RandonNumberUtils.getOrderIdByUUId());
         //付款金额，必填
         String total_amount = new String(request.getParameter("WIDtotal_amount"));
         //订单名称，必填
-        String subject = new String(request.getParameter("WIDsubject"));
+        String subject = new String("支付宝沙箱支付");
         aliPayRequest.setBizContent("{\"out_trade_no\":\""+ order_number +"\","
                 + "\"total_amount\":\""+ total_amount +"\","
                 + "\"subject\":\""+ subject +"\","
@@ -131,13 +143,17 @@ public class OrdersServiceImpl implements OrdersService {
         long[] shoppingCounts = idsUtilTwo.IdsUtils(shoppingCount);
         for (int i = 0; i < Ids.length; i++) {
             Product product = productRepository.findById(Ids[i]);
+            //商品表
+            product.setProduct_inventory(product.getProduct_inventory()-1);
+            productRepository.save(product);
+            //订单表
             Orders order = new Orders();
             order.setAddress_name(request.getParameter("address_name")); //收货人
             order.setAddress_phone(request.getParameter("address_phone")); //收货人电话
             order.setAddress_shipping(request.getParameter("address_shipping")); //收货地址
-            order.setOrder_expressNumber(request.getParameter("order_expressNumber"));  //快递单号
+            order.setOrder_expressNumber(RandonNumberUtils.getOrderIdByUUId());  //快递单号
             order.setOrder_freight(0);  //运费
-            order.setOrder_number(request.getParameter("WIDorder_number"));  //订单编号
+            order.setOrder_number(RandonNumberUtils.getOrderIdByUUId());  //订单编号
             Date data = new Date();
             SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
             order.setOrder_purchaseTime(data); //下单时间
@@ -150,7 +166,12 @@ public class OrdersServiceImpl implements OrdersService {
             order.setProduct_isRedeemable(product.getProduct_isRedeemable());  //该商品是否积分兑换
             order.setProduct_keywords(product.getProduct_keywords()); //商品关键字
             order.setProduct_mallPrice(product.getProduct_mallPrice());//商城价
-            order.setProduct_picture(product.getProduct_picture()); //商城图片
+            String img = null;
+            if (product.getProduct_picture().contains(",")){
+                img = product.getProduct_picture();
+                img = img.substring(0,img.indexOf(","));
+            }
+            order.setProduct_picture(img); //商城图片
             order.setProduct_specification(product.getProduct_specification());  //商品规格信息
             order.setUserId(userId);//用户id
             order.setProduct_needPoints(product.getProduct_needPoints()); //购买此商品需要多少积分
@@ -158,15 +179,12 @@ public class OrdersServiceImpl implements OrdersService {
             ordersRepository.save(order);
             user.setUserIntegral(user.getUserIntegral()+product.getProduct_getPoints());
             userRepository.save(user);
-            //商品表
-            product.setProduct_inventory(product.getProduct_inventory()-1);
-            productRepository.save(product);
             //积分表
             UserIntegral userIntegral = new UserIntegral();
             userIntegral.setOrder_purchaseTime(data);
             userIntegral.setUserId(userId);
             userIntegral.setProduct_keyword(product.getProduct_keywords());
-            userIntegral.setProduct_picture(product.getProduct_picture());
+            userIntegral.setProduct_picture(img);
             userIntegral.setUserIntegral_vary(product.getProduct_getPoints());
             userIntegralRepository.save(userIntegral);
         }
@@ -203,14 +221,17 @@ public class OrdersServiceImpl implements OrdersService {
     public void estimatePaySave(HttpServletRequest request, long productId, long userId) {
         User user = userRepository.findById(userId);
         Product product = productRepository.findById(productId);
+        //商品表
+        product.setProduct_inventory(product.getProduct_inventory()-1);
+        productRepository.save(product);
+        //订单表
         Orders order = new Orders();
-        System.out.println(request.getParameter("address_name"));
         order.setAddress_name(request.getParameter("address_name")); //收货人
         order.setAddress_phone(request.getParameter("address_phone")); //收货人电话
         order.setAddress_shipping(request.getParameter("address_shipping")); //收货地址
-        order.setOrder_expressNumber(request.getParameter("order_expressNumber"));  //快递单号
+        order.setOrder_expressNumber(RandonNumberUtils.getOrderIdByUUId());  //快递单号
         order.setOrder_freight(0);  //运费
-        order.setOrder_number(request.getParameter("WIDorder_number"));  //订单编号
+        order.setOrder_number(RandonNumberUtils.getOrderIdByUUId());  //订单编号
         Date data = new Date();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
         order.setOrder_purchaseTime(data); //下单时间
@@ -220,7 +241,12 @@ public class OrdersServiceImpl implements OrdersService {
         order.setProduct_isRedeemable(1);  //该商品是否积分兑换
         order.setProduct_keywords(product.getProduct_keywords()); //商品关键字
         order.setProduct_mallPrice(product.getProduct_mallPrice());//商城价
-        order.setProduct_picture(product.getProduct_picture()); //商城图片
+        String img = null;
+        if (product.getProduct_picture().contains(",")){
+            img = product.getProduct_picture();
+            img = img.substring(0,img.indexOf(","));
+        }
+        order.setProduct_picture(img); //商城图片
         order.setProduct_specification(product.getProduct_specification());  //商品规格信息
         order.setUserId(userId);//用户id
         order.setProduct_needPoints(product.getProduct_needPoints()); //购买此商品需要多少积分
@@ -229,15 +255,12 @@ public class OrdersServiceImpl implements OrdersService {
         ordersRepository.save(order);
         user.setUserIntegral(user.getUserIntegral()-product.getProduct_needPoints());
         userRepository.save(user);
-        //商品表
-        product.setProduct_inventory(product.getProduct_inventory()-1);
-        productRepository.save(product);
         //积分表
         UserIntegral userIntegral = new UserIntegral();
         userIntegral.setOrder_purchaseTime(data);
         userIntegral.setUserId(userId);
         userIntegral.setProduct_keyword(product.getProduct_keywords());
-        userIntegral.setProduct_picture(product.getProduct_picture());
+        userIntegral.setProduct_picture(img);
         userIntegral.setUserIntegral_vary(-product.getProduct_needPoints());
         userIntegralRepository.save(userIntegral);
     }
@@ -274,4 +297,28 @@ public class OrdersServiceImpl implements OrdersService {
             out.println("验签失败");
         }
     }*/
+
+    //后台订单查询
+    @Override
+    public Page<Orders> adminSearchOrder(String order_word, int page, int limit) {
+        Sort sort = new Sort(Sort.Direction.DESC,"orderId");
+        Pageable pageable = new PageRequest(page,limit,sort);
+        Specification<Orders> specification = new PageUtil<Orders>(order_word).getPage("product_specification","order_number","user_name","product_keywords");
+        Page pages = ordersRepository.findAll(specification,pageable);
+        System.out.println(pages);
+        return pages;
+    }
+
+    //前台查询
+    @Override
+    public List<Orders> searchOrder(String order_word, long userId) {
+        List<Orders> orders = ordersRepository.searchOrder(userId,order_word);
+        return orders;
+    }
+
+    @Override
+    public long searchProductCount(long productId) {
+        return ordersRepository.count(productId);
+    }
+
 }
