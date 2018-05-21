@@ -15,9 +15,11 @@ import java.util.List;
 public interface ActivityService {
     List<Activity> getActivity();
 
-    List<String> getActivityName();
-
     void addActivity(MultipartFile myFileName, HttpSession session, HttpServletRequest request);
 
     Activity findActivity(long activitySumId);
+
+    void editActivity(long activitySumId,MultipartFile myFileName, HttpSession session, HttpServletRequest request);
+
+    void deleteActivity(long activityId);
 }

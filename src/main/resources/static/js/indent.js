@@ -1,5 +1,5 @@
 window.onload=function(){
-	var num=0;
+    var num=0;
 	document.getElementById("all").onclick=function(){
 		if(num%2==0){
 			document.getElementsByClassName("address")[0].style.height="auto";
@@ -45,5 +45,16 @@ window.onload=function(){
 		money=count[i].value*1+money;
 	}
 	document.getElementsByClassName("total_amount")[0].value=money;
-
-}
+	var allpid=" ";
+	var length=document.getElementsByClassName("pid");
+	for(let K=0;K<length.length;K++){
+	    allpid=allpid+length[K].value+",";
+	}
+	document.getElementsByClassName("productId")[0].value=allpid;
+    var allcount=" ";
+    var length2=document.getElementsByClassName("count1");
+    for(let j=0;j<length2.length;j++){
+        allcount=allcount+length2[j].value+",";
+    }
+    document.getElementsByClassName("shoppingCount")[0].value=allcount;
+};

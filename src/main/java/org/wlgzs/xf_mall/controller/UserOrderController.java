@@ -8,6 +8,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Orders;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -49,9 +51,15 @@ public class UserOrderController extends BaseController {
      * @description 收货
      */
     @RequestMapping("/userAccepted")
-    public ModelAndView userAccepted(long orderId){
-            ordersService.userAccepted(orderId);
-            return new ModelAndView();
+    public ModelAndView userAccepted(long orderId, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        long userId = 0;
+        if(session.getAttribute("user")!=null){
+            userId = (long) session.getAttribute("userId");
+        }
+        ordersService.userAccepted(orderId);
+        String url="redirect:/UserOrderController/userOrderList?userId="+userId;
+        return new ModelAndView(url);
     }
     
     /**     

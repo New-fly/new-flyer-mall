@@ -195,7 +195,7 @@
 .classify-right-long{
 	width:5000px;
 	height: 400px;
-	transition: 1s;
+	transition: 1.3s;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -641,8 +641,13 @@
 }
 .page>div{
     width: 31px;
-    height: 12px;
+    height: 8px;
     float: left;
     background-color: white;
-    margin: 4px 7px;
+    margin: 6px 7px;
+    opacity: 0.7;
+    border-radius: 2px;
+}
+.productId,.shoppingCount{
+	display: none;
 }

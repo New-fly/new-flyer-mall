@@ -59,7 +59,8 @@ public class ProductActivityServiceImp implements ProductActivityService {
         ProductActivity productActivity = new ProductActivity();
         Activity activity = activityRepository.findByActivityName(request.getParameter("activity_name"));
         productActivity.setActivity_name(activity.getActivity_name());
-        productActivity.setActivity_discount(activity.getActivity_discount());
+
+        productActivity.setActivity_discount((int) activity.getActivity_discount());
         productActivity.setProductId(productId);
         String img = null;
         if (product.getProduct_picture().contains(",")){
@@ -86,7 +87,7 @@ public class ProductActivityServiceImp implements ProductActivityService {
 
         Activity activity = activityRepository.findByActivityName(request.getParameter("activity_name"));
         productActivity.setActivity_name(activity.getActivity_name());
-        productActivity.setActivity_discount(activity.getActivity_discount());
+        productActivity.setActivity_discount((int) activity.getActivity_discount());
         productActivity.setProductId(productActivity.getProductId());
         productActivity.setProduct_picture(productActivity.getProduct_picture());
         productActivity.setProduct_counterPrice(productActivity.getProduct_counterPrice());
