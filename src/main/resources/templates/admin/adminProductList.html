@@ -29,15 +29,8 @@
         <th>活动名称</th>
         <th>类别</th>
         <th>图片</th>
-        <!--<th>是否可兑换</th>-->
-        <!--<th>是否上架</th>-->
-        <!--<th>是否热门</th>-->
         <th>关键字</th>
         <th>商城价</th>
-        <!--<th>需要积分</th>-->
-        <!--<th>得到积分</th>-->
-        <!--<th>服务类型</th>-->
-        <!--<th>商品规格</th>-->
         <th>操作</th>
     </tr>
     </thead>
@@ -47,15 +40,8 @@
         <td th:text="${product.product_activity}"></td>
         <td th:text="${product.product_category}"></td>
         <td><img th:src="${product.product_picture}" style="width: 45px;height: 45px;"></td>
-        <!--<td th:text="${product.product_isRedeemable}"></td>-->
-        <!--<td th:text="${product.product_isShelf}"></td>-->
-        <!--<td th:text="${product.product_isTop}"></td>-->
         <td th:text="${product.product_keywords}" style="width: 200px"></td>
         <td th:text="${product.product_mallPrice}"></td>
-        <!--<td th:text="${product.product_needPoints}"></td>-->
-        <!--<td th:text="${product.product_getPoints}"></td>-->
-        <!--<td th:text="${product.product_serviceType}"></td>-->
-        <!--<td th:text="${product.product_specification}"></td>-->
         <td>
             <a th:href="@{/AdminActivityController/toAdminAddActivity(productId=${product.productId})}" class="aa2" style="width: 85px;">添加为活动</a>
             <a class="aa2" href="javascript:void(0);" th:onclick="'javascript:deleteProduct('+${product.productId}+');'">删除</a>

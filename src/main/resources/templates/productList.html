@@ -13,30 +13,12 @@
     <script th:src="@{/js/productList.js}"></script>
 </head>
 <body>
-<div class="top">
-    <div class="top-left">
-        <ul>
-            <li><a th:href="@{/HomeController/homeProduct}"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
-            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;登录</a></li>
-            <li><a href="#"><span class="red">立即注册</span></a></li>
-        </ul>
-    </div>
-    <div class="top-right">
-        <ul>
-            <li><a href="#"><i class="fa fa-paw" style="color: #336699"></i>&nbsp;&nbsp;购物车</a></li>
-            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a></li>
-            <li><a href="#">我的淘宝</a></li>
-            <li><a href="#">111111</a></li>
-            <li><a href="#"><i class="fa fa-paw"></i>&nbsp;&nbsp;管理系统</a></li>
-        </ul>
-    </div>
-</div>
+<div th:include="common/top_header :: copy"></div>
 <div class="top-search">
     <div class="con-wrap">
         <a>
             <img th:href="@{/HomeController/homeProduct}" th:src="@{/images/logo.png}" class="xflogo">
         </a>
-
         <div class="search-box">
             <form th:action="@{/ProductListController/searchProductList}" method="post">
                 <span class=""><input type="text" name="product_category" th:value="*{product_category}" class="ipt1" placeholder="请输入要搜索的内容"></span>
@@ -194,44 +176,51 @@
             <i class="iconfont">&#xe614;</i>
             <span class="b-to-t">返回顶部</span>
         </div>
-        <div class="headersell">掌柜热卖（死数据）</div>
+        <!--//推荐商品-->
+        <div class="headersell">掌柜热卖</div>
         <div class="hotsell">
-            <figure>
-                <img th:src="@{/images/bingxiang2.webp}" style="width: 232px;height: 232px;">
-                <span style="color: red; font-size: 20px">¥6666</span>&nbsp;&nbsp;<s>¥5555</s>
-                <a href="#" class="jieshao">新飞除菌新飞除菌新飞除菌新飞除菌</a>
+            <figure th:each="recommendedProducts:${recommendedProducts}">
+                <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}">
+                    <img th:src="${recommendedProducts.product_picture}" style="width: 232px;height: 232px;">
+                </a>
+                <span style="color: red; font-size: 20px" th:text="${recommendedProducts.product_mallPrice}">¥6666</span>&nbsp;&nbsp;<s th:text="${recommendedProducts.product_counterPrice}">¥5555</s>
+                <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}" class="jieshao" th:text="${recommendedProducts.product_keywords}">
+                    新飞除菌新飞除菌新飞除菌新飞除菌
+                </a>
                 <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
                 <div class="xinfi">
-                    <a href="#" style="display: block;"> <img th:src="@{/images/xflogo.ico}" class="lettle"></a>
+                    <a href="#" style="display: block;">
+                        <img th:src="@{/images/xflogo.ico}" class="lettle">
+                    </a>
                 </div>
             </figure>
-            <figure>
-                <img th:src="@{/images/bingxiang2.webp}" style="width: 232px;height: 232px;">
-                <span style="color: red; font-size: 20px">¥6666</span>&nbsp;&nbsp;<s>¥5555</s>
-                <a href="#" class="jieshao">新飞除菌新飞除菌新飞除菌新飞除菌</a>
-                <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
-                <div class="xinfi">
-                    <a href="#" style="display: block;"> <img th:src="@{/images/xflogo.ico}" class="lettle"></a>
-                </div>
-            </figure>
-            <figure>
-                <img th:src="@{/images/bingxiang2.webp}" style="width: 232px;height: 232px;">
-                <span style="color: red; font-size: 20px">¥6666</span>&nbsp;&nbsp;<s>¥5555</s>
-                <a href="#" class="jieshao">新飞除菌新飞除菌新飞除菌新飞除菌</a>
-                <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
-                <div class="xinfi">
-                    <a href="#" style="display: block;"> <img th:src="@{/images/xflogo.ico}" class="lettle"></a>
-                </div>
-            </figure>
-            <figure>
-                <img th:src="@{/images/bingxiang2.webp}" style="width: 232px;height: 232px;">
-                <span style="color: red; font-size: 20px">¥6666</span>&nbsp;&nbsp;<s>¥5555</s>
-                <a href="#" class="jieshao">新飞除菌新飞除菌新飞除菌新飞除菌</a>
-                <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
-                <div class="xinfi">
-                    <a href="#" style="display: block;"> <img th:src="@{/images/xflogo.ico}" class="lettle"></a>
-                </div>
-            </figure>
+            <!--<figure>-->
+                <!--<img th:src="@{/images/bingxiang2.webp}" style="width: 232px;height: 232px;">-->
+                <!--<span style="color: red; font-size: 20px">¥6666</span>&nbsp;&nbsp;<s>¥5555</s>-->
+                <!--<a href="#" class="jieshao">新飞除菌新飞除菌新飞除菌新飞除菌</a>-->
+                <!--<a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>-->
+                <!--<div class="xinfi">-->
+                    <!--<a href="#" style="display: block;"> <img th:src="@{/images/xflogo.ico}" class="lettle"></a>-->
+                <!--</div>-->
+            <!--</figure>-->
+            <!--<figure>-->
+                <!--<img th:src="@{/images/bingxiang2.webp}" style="width: 232px;height: 232px;">-->
+                <!--<span style="color: red; font-size: 20px">¥6666</span>&nbsp;&nbsp;<s>¥5555</s>-->
+                <!--<a href="#" class="jieshao">新飞除菌新飞除菌新飞除菌新飞除菌</a>-->
+                <!--<a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>-->
+                <!--<div class="xinfi">-->
+                    <!--<a href="#" style="display: block;"> <img th:src="@{/images/xflogo.ico}" class="lettle"></a>-->
+                <!--</div>-->
+            <!--</figure>-->
+            <!--<figure>-->
+                <!--<img th:src="@{/images/bingxiang2.webp}" style="width: 232px;height: 232px;">-->
+                <!--<span style="color: red; font-size: 20px">¥6666</span>&nbsp;&nbsp;<s>¥5555</s>-->
+                <!--<a href="#" class="jieshao">新飞除菌新飞除菌新飞除菌新飞除菌</a>-->
+                <!--<a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>-->
+                <!--<div class="xinfi">-->
+                    <!--<a href="#" style="display: block;"> <img th:src="@{/images/xflogo.ico}" class="lettle"></a>-->
+                <!--</div>-->
+            <!--</figure>-->
         </div>
         <div class="search2">
             <form th:action="@{/ProductListController/searchProductList}" method="post">

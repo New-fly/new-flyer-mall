@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -30,6 +31,16 @@ public class ActivityServiceImp  implements ActivityService {
     @Override
     public List<Activity> getActivity() {
         return activityRepository.findAll();
+    }
+    //遍历所有活动名称
+    @Override
+    public List<String> getActivityName() {
+        List<Activity> activities = activityRepository.findAll();
+        List<String> activityList = new ArrayList<String>();
+        for (int i = 0; i < activities.size(); i++) {
+            activityList.add(activities.get(i).getActivity_name());
+        }
+        return activityList;
     }
 
     //添加活动

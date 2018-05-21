@@ -313,4 +313,9 @@ public class OrdersServiceImpl implements OrdersService {
         return orders;
     }
 
+    @Override
+    public long searchProductCount(long productId) {
+        return ordersRepository.count(productId);
+    }
+
 }

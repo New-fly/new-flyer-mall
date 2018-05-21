@@ -46,4 +46,7 @@ public interface OrdersRepository extends JpaRepository<Orders, Long>,JpaSpecifi
 
     @Query("SELECT o FROM Orders o WHERE o.userId=?1 and (o.order_number like %:order_word% or o.product_keywords like %:order_word%)")
     List<Orders> searchOrder(long userId,String order_word);
+
+    @Query(value = "select count(*) from orders where product_id=?",nativeQuery = true)
+    long count(@Param("productId") long productId);
 }

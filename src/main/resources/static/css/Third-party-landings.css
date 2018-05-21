@@ -4,25 +4,47 @@
     font-family: "微软雅黑";
 }
 body{
-    background-color: lightgreen;
+    background-color: #fff;
 }
 .container{
     width: 1200px;
     height: auto;
     margin: 0 auto;
 }
+.header{
+    width: 1200px;
+    margin: 40px auto 20px auto;
+    height: 88px;
+    padding: 10px;
+}
+img.xflogo{
+    width: 220px;
+    height: 72px;
+    float: left;
+}
+.register{
+    display: inline;
+    margin-left: 123px;
+    height: 88px;
+    line-height: 88px;
+    padding: 30px 100px;
+    text-align: center;
+    font-size: 45px;
+    font-family: "楷体";
+    font-weight: 700;
+    letter-spacing: 35px;
+    color: #9696A3;
+}
 .content{
     width: 1200px;
     margin: 100px auto;
     padding: 20px;
     overflow: hidden;
-
-   
 }
 .left,.right{
     float: left;
     width: 500px;
-    background-color: #fff;
+    background-color:#DADADA;
     margin: 20px;
     padding: 25px;
     border-radius: 10px;

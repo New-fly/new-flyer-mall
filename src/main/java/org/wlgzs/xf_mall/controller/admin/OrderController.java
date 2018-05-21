@@ -34,17 +34,8 @@ public class OrderController {
         Page pages =  ordersService.getOrdersList(order_number,page,limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
-        List<Orders> orders = pages.getContent();
-        String img;
-        for(int i = 0; i < orders.size(); i++) {
-            if (orders.get(i).getProduct_picture().contains(",")){
-                img = orders.get(i).getProduct_picture();
-                img = img.substring(0,img.indexOf(","));
-                System.out.println("后台列表");
-                orders.get(i).setProduct_picture(img);
-            }
-        }
         model.addAttribute("orders", pages.getContent());
+        System.out.println(pages.getContent());
         return "admin/adminOrdersList";
     }
     //后台订单列表  搜索商品
@@ -88,8 +79,8 @@ public class OrderController {
     }
     //后台删除订单
     @RequestMapping("/deleteOrder")
-    public ModelAndView delete(Model model,Long id){
-        String mag = ordersService.delete(id);
+    public ModelAndView delete(Model model,long orderId){
+        String mag = ordersService.delete(orderId);
         model.addAttribute("mag",mag);
         return new ModelAndView("redirect:/OrderController/allProductOrdersLists");
     }
@@ -101,7 +92,7 @@ public class OrderController {
         return new ModelAndView("userOrdersList");
     }
 
-    //订单详情   前后台
+    //订单详情
     @RequestMapping("/orderDetails")
     public ModelAndView orderInfo(Model model, Long id) {
         Orders order=ordersService.findOrdersById(id);

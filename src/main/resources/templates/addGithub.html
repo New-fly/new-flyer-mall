@@ -4,15 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <title>第三方登录</title>
-    <link rel="stylesheet" th:href="@{bootstrap/dist/css/bootstrap.min.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{css/Third-party-landings.css}"type="text/css">
-    <link rel="shortcut icon"  th:href="@{images/xflogo.ico}" type="image/x-icon"/>
-    <link rel="stylesheet" th:href="@{font/css/font-awesome.min.css}">
-    <script th:src="@{js/jquery.js}"></script>
-    <script th:src="@{js/distpicker.js}"></script>
+    <link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/Third-party-landings.css}"type="text/css">
+    <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/distpicker.js}"></script>
 </head>
 <body>
     <div class="container">
+        <div class="header">
+            <img th:src="@{/images/logo.png}" class="xflogo">
+            <p class="register">第三方登录</p>
+        </div>
+
         <div class="content">
             <div class="left" style="height: 295px">
                 <h1>添加新账号</h1>
@@ -40,6 +45,6 @@
             </div>
         </div>
     </div>
-    <script th:src="@{js/Third-party-landings.js}"></script>
+    <script th:src="@{/js/Third-party-landings.js}"></script>
 </body>
 </html>

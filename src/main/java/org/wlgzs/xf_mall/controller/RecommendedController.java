@@ -25,7 +25,7 @@ public class RecommendedController extends BaseController {
         if(session!=null){
             long userId = (long) session.getAttribute("userId");
             List<Product> recommendedProducts = productService.recommendedByUserId(userId);
-            model.addAttribute("recommendedProducts", recommendedProducts);
+            model.addAttribute("products", recommendedProducts);
         }
         return new ModelAndView("productList");
     }
