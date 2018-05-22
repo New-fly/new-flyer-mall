@@ -20,7 +20,7 @@
 <body>
 <div class="windoww">
     <div class="popup-windows">
-        <h2 style="text-align: center">修改数据</h2>
+        <h2 style="text-align: center">修改商品信息</h2>
         <form th:action="@{/AdminProductController/adminEditProduct(productId=${product.productId})}" method="post" th:object="${product}"  enctype="multipart/form-data" onsubmit="modifyContent()">
             <table class="table table-hover table-bordered">
                 <tr>
@@ -70,8 +70,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>关键字</th>
-                    <td><input type="text" name="product_keywords" id="kind"  class="form-control" th:value="*{product_keywords}" /></td>
+                    <th>商城名称</th>
+                    <td><input type="text" name="product_keywords" class="form-control"th:value="*{product_keywords}" id="kind" /></td>
                 </tr>
                 <tr>
                     <th>商城价</th>
