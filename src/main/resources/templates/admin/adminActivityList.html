@@ -77,7 +77,7 @@
         </li>
         <li th:if="${Number != activities}"><a
                 th:href="@{/AdminActivityController/activityProducts(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
-        <li><a th:href="@{/AdminActivityController/activityProducts(page=${Number})}">尾页</a></li><!--//跳转至第Number页-->
+        <li><a th:href="@{/AdminActivityController/activityProducts(page=${TotalPages})}">尾页</a></li><!--//跳转至第Number页-->
     </ul>
 </div>
 </body>

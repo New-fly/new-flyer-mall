@@ -277,4 +277,12 @@ public interface ProductService {
      * @description 主页商品
      */
     List<Product> homeProductList(List<ProductCategory> productOneCategories);
+
+    /**
+     * @author 阿杰
+     * @param []
+     * @return void
+     * @description 主页最新商品
+     */
+    List<Product> getProductList();
 }

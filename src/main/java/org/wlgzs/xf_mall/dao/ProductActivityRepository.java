@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.wlgzs.xf_mall.entity.ProductActivity;
 
+import java.util.List;
+
 /**
  * @Auther: 阿杰
  * @Date: 2018/5/2 00:24
@@ -15,6 +17,6 @@ public interface ProductActivityRepository extends JpaRepository<ProductActivity
 
     ProductActivity findById(long activityId);
 
-    @Query(value = "SELECT * FROM product_activity WHERE product_id = ? ",nativeQuery = true)
-    ProductActivity findByProductId(@Param("product_id") long productId);
+    @Query(value = "SELECT * FROM product_activity WHERE activity_name = ? ",nativeQuery = true)
+    List<ProductActivity> findByActivityName(@Param("activity_name") String activity_name);
 }
