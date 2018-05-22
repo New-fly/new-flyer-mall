@@ -15,7 +15,7 @@
 <body>
 <div class="header">
     <form th:action="@{/AdminProductController/adminFindProduct}" method="post">
-        <h1 class="h1-sty">物品管理</h1>
+        <h1 class="h1-sty">商品管理</h1>
         <input type="text" name="product_keywords" placeholder="关键字" th:value="*{product_keywords}" class="ipt">
         <input type="submit" value="搜索" class="a1">
         <a class="adda" th:href="@{/AdminProductController/toAdminAddProduct}">添加</a>
@@ -29,7 +29,7 @@
         <th>活动名称</th>
         <th>类别</th>
         <th>图片</th>
-        <th>关键字</th>
+        <th>商城名称</th>
         <th>商城价</th>
         <th>操作</th>
     </tr>
@@ -87,15 +87,11 @@
 <!--遮屏弹窗  修改内容-->
 <div class="windoww">
 <div class="popup-windows">
-    <h2 style="text-align: center">新增数据</h2>
+    <h2 style="text-align: center">新增商品</h2>
     <form th:action="@{/AdminProductController/adminAddProduct}" method="post">
         <table class="table table-hover table-bordered">
-            <!--<tr>-->
-            <!--<th>ID</th>-->
-            <!--<td><input type="text" name="productId" class="form-control" id="Id" placeholder=""/></td>-->
-            <!--</tr>-->
             <tr>
-                <th>商品关键字</th>
+                <th>商品名称</th>
                 <td><input type="text" name="product_keywords" class="form-control" id="keywords" /></td>
             </tr>
             <tr>
@@ -132,9 +128,8 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <!--<input type="reset" value="重置" class="btn btn-primary" id="reset" />-->
+
                     <input type="button" value="添加"  class="btn btn-success" id="add" onclick="dd()"/>
-                    <!--<input type="button" value="修改"  class="btn btn-info" id="change" onclick="update()"/>-->
                     <a th:href="@{/AdminProductController/adminProductList}"><input type="button" value="取消"  class="btn btn-info" id="cancel" style="background-color: orangered"/></a>
                 </td>
             </tr>

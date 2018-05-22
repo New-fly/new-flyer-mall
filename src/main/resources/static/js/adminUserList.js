@@ -33,14 +33,19 @@ function block1() {
 //添加的值不能为空
 function dd(){
     if(ousername.value==''){
+        alert("请输入用户名");
         return false;
     }if(userrole.value=='' ){
+        alert("请输入角色");
         return false;
     }if(userphone.value==''){
+        alert("请输入电话");
         return false;
     }if(pwd.value==''){
+        alert("请输入密码");
         return false;
     }if(email.value=='') {
+        alert("请输入邮箱");
         return false;
     }else{
         document.getElementById('add').setAttribute('type','submit');
