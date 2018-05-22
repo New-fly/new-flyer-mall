@@ -154,10 +154,10 @@
             <span class="money" th:text="${product.product_mallPrice}+'元'"></span>
             <span class="old-money"><s th:text="${product.product_counterPrice}+'元'"></s></span>
             <!--<a th:href="@{/ProductListController/toProduct(productId=${product.productId})}">-->
-                <div style="height: 48px;overflow: hidden">
-                    <span class="block-2-text" th:text="${product.product_keywords}"></span>
-                </div>
-           <!-- </a>-->
+            <div style="height: 48px;overflow: hidden">
+                <span class="block-2-text" th:text="${product.product_keywords}"></span>
+            </div>
+            <!-- </a>-->
             <div class="block-2-div-foot" th:text="'购买获得'+${product.product_getPoints}+'积分'">
                 <span class="right" th:text="'库存'+${product.product_inventory}+'件'"></span>
             </div>
@@ -173,12 +173,12 @@
         <div class="block-1">
             <img th:src="${productOneCategory.category_img}" width="100%" height="75%"/>
             <div class="little-books">
-                <div><a th:href="@{/ProductListController/searchProductList(product_category='电视')}">电视</a></div>
-                <div><a th:href="@{/ProductListController/searchProductList(product_category='空调')}">空调</a></div>
-                <div><a th:href="@{/ProductListController/searchProductList(product_category='冰箱')}">冰箱</a></div>
-                <div><a th:href="@{/ProductListController/searchProductList(product_category='电脑')}">电脑</a></div>
-                <div><a th:href="@{/ProductListController/searchProductList(product_category='桌子')}">桌子</a></div>
-                <div><a th:href="@{/ProductListController/searchProductList(product_category='热水壶')}">热水壶</a></div>
+                <div th:each="TwoCategories : ${productTwoCategories}"
+                     th:if="${TwoCategories.parent_name == productOneCategory.category_name && TwoCategories.category_show!=2}">
+                    <a th:href="@{/ProductListController/searchProductList(product_category=${TwoCategories.category_name})}"
+                       th:text="${TwoCategories.category_name}">
+                    </a>
+                </div>
             </div>
         </div>
         <div class="block-2" th:each="product : ${products}"

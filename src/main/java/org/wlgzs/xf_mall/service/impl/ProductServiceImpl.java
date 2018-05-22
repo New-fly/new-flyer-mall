@@ -688,7 +688,6 @@ public class ProductServiceImpl implements ProductService {
                 products = productRepository.findProductByTwoCategory(product_categories);
                 String img;
                 for(int i = 0; i < products.size(); i++) {
-                    System.out.println("推荐商品");
                     if (products.get(i).getProduct_picture().contains(",")){
                         img = products.get(i).getProduct_picture();
                         img = img.substring(0,img.indexOf(","));
@@ -697,7 +696,6 @@ public class ProductServiceImpl implements ProductService {
                 }
             }
         }
-        System.out.println(products);
         return products;
     }
     //主页商品数据

@@ -67,9 +67,13 @@ public class ProductListController extends BaseController {
         HttpSession session = request.getSession();
         if(session.getAttribute("userId")!=null){
             long userId = (long) session.getAttribute("userId");
+            //添加足迹
             Collection collection = productService.findByCollectionUserIdAndProductId(userId,productId);
             model.addAttribute("collection",collection);
             footprintService.save(request,userId,productId);
+            //推荐商品
+            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+            model.addAttribute("recommendedProducts", recommendedProducts);
         }
         Product product = productService.findProductById(productId);
         long count = ordersService.searchProductCount(productId);
