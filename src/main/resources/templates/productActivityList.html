@@ -42,11 +42,11 @@
                 </ul>
             </div>
             <div class="picture">
-                <div class="item" th:each="activity:${activity}">
-                    <img th:src="${activity.activity_picture}"  class="imgsty">
+                <div class="item" th:each="productActivities:${productActivities}">
+                    <img th:src="${productActivities.product_picture}"  class="imgsty">
                     <div class="keywords">
-                        <a href="" th:text="${activity.}">新飞（Frestec）BCD-501WHCC8C 501升 风冷无</a>
-                        <p class="price">1499元<del>1899元</del></p>
+                        <a href="" th:text="${productActivities.product_keywords}">新飞（Frestec）BCD-501WHCC8C 501升 风冷无</a>
+                        <p class="price" th:text="${productActivities.product_mallPrice}">1499元<del th:text="${productActivities.product_counterPrice}">1899元</del></p>
                         <a href="" class="btn">提醒我</a>
                         <p class="person">已有11人设置提醒</p>
                     </div>
@@ -57,14 +57,14 @@
             <div class="headershow">
                 掌柜热卖
             </div>
-            <div style="margin-top: 15px;">
+            <div style="margin-top: 15px;" th:each="recommendedProducts:${recommendedProducts}">
                 <div class="showpicture">
-                    <a href="">
-                        <img src="images/05.jpg" alt="" style="width:240px;height:240px">
+                    <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">
+                        <img th:src="${recommendedProducts.product_picture}" alt="" style="width:240px;height:240px">
                     </a>
                     <div class="wzjs">
-                        <span>1119元</span><s>444元</s><br>
-                        <a href="" style="margin-top: 10px">防护围绕风格UR圣诞节开发环境而我</a><br>
+                        <span th:text="${recommendedProducts.product_mallPrice}">1119元</span><s th:text="${recommendedProducts.product_counterPrice}">444元</s><br>
+                        <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}"  style="margin-top: 10px;" th:text="${recommendedProducts.product_keywords}">防护围绕风格UR圣诞节开发环境而我</a><br>
                     </div>
                 </div>
                 <div class="showpicture"></div>
@@ -95,7 +95,7 @@
     </div>
 
 </footer>
-<script src="js/activityProducts.js"></script>
+<script th:src="@{/js/activityProducts.js}"></script>
 
 </body>
 </html>
