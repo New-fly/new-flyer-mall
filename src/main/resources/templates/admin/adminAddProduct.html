@@ -70,41 +70,41 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>关键字</th>
+                    <th>商城名称</th>
                     <td><input type="text" name="product_keywords" class="form-control" id="kind" /></td>
                 </tr>
                 <tr>
                     <th>商城价</th>
-                    <td><input type="text" name="product_mallPrice"  class="form-control" id="activity"></td>
+                    <td><input type="text" name="product_mallPrice"  class="form-control" id="product_mallPrice"></td>
                 </tr>
                 <tr>
                     <th>专柜价</th>
-                    <td><input type="text" name="product_counterPrice" class="form-control" id="price2" /></td>
+                    <td><input type="text" name="product_counterPrice" class="form-control" id="product_counterPrice" /></td>
                 </tr>
                 <tr>
                     <th>需要积分</th>
-                    <td><input type="text" name="product_needPoints"  class="form-control" id="activity"></td>
+                    <td><input type="text" name="product_needPoints"  class="form-control" id="product_needPoints"></td>
                 </tr>
                 <tr>
                     <th>得到积分</th>
-                    <td><input type="text" name="product_getPoints"  class="form-control" id="activity"></td>
+                    <td><input type="text" name="product_getPoints"  class="form-control" id="product_getPoints"></td>
                 </tr>
                 <tr>
                     <th>服务类型</th>
-                    <td><input type="text" name="product_serviceType"  class="form-control" id="activity"></td>
+                    <td><input type="text" name="product_serviceType"  class="form-control" id="product_serviceType"></td>
                 </tr>
                 <tr>
                     <th>商品规格</th>
-                    <td><input type="text" name="product_specification"  class="form-control" id="activity"></td>
+                    <td><input type="text" name="product_specification"  class="form-control" id="product_specification"></td>
                 </tr>
                 <tr>
                     <th style="padding-top: 64px;">上传图片</th>
                     <td>
-                        <input type="file" name="file" id="input1"/>
-                        <input type="file" name="file" th:class="input"/>
-                        <input type="file" name="file" th:class="input"/>
-                        <input type="file" name="file" th:class="input"/>
-                        <input type="file" name="file" th:class="input"/>
+                        <input type="file" name="file" id="file" accept="image/*"/>
+                        <input type="file" name="file" th:class="input"accept="image/*" id="file2"/>
+                        <input type="file" name="file" th:class="input" accept="image/*" id="file3"/>
+                        <input type="file" name="file" th:class="input" accept="image/*" id="file4"/>
+                        <input type="file" name="file" th:class="input" accept="image/*" id="file5"/>
                     </td>
                 </tr>
             </table>
@@ -135,7 +135,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="submit" value="提交" class="btn btn-info" id="submit"/>
+                    <input type="button" value="提交" class="btn btn-info" id="sub"/>
                     &nbsp; &nbsp; &nbsp;
                     <a th:href="@{/AdminProductController/adminProductList}">
                         <input type="button" value="取消"  class="btn btn-info" id="cancel" style="background-color: orangered"/>
@@ -146,21 +146,73 @@
     </div>
 </div>
 <script type="text/javascript">
-    var ipt=document.getElementsByClassName('input');
-//     var ipt1=document.getElementById('input1');
-    // console.log(ipt1.value);
-    var submit=document.getElementById('submit');
-    // console.log(ipt.value);
-    for(var i=0;i<ipt.length;i++){
-        submit.onclick=function () {
-           if(ipt[i].value==''||ipt[i].value==null){
-                alert('请选择图片');
-                return false;
-            }else{
-                return true;
-            }
-        }
-    }
+   var keywords=document.getElementById('keywords');
+   var condition=document.getElementById('condition');
+   var kind=document.getElementById('kind');
+   var product_mallPrice=document.getElementById('product_mallPrice');
+   var product_counterPrice=document.getElementById('product_counterPrice');
+   var product_needPoints=document.getElementById('product_needPoints');
+   var product_getPoints=document.getElementById('product_getPoints');
+   var product_serviceType=document.getElementById('product_serviceType');
+   var product_specification=document.getElementById('product_specification');
+   var file=document.getElementById('file');
+   var file2=document.getElementById('file2');
+   var file3=document.getElementById('file3');
+   var file4=document.getElementById('file4');
+   var file5=document.getElementById('file5');
+   var sub=document.getElementById('sub');
+   sub.onclick=function () {
+       if (keywords.value == null || keywords.value == "") {
+           alert("请输入完整信息");
+       }
+       if (condition.value == null || condition.value == "") {
+           // alert("请输入活动名称");
+       }
+       if (kind.value == null || kind.value == "") {
+           // alert("请输入关键字");
+       }
+       if (product_mallPrice.value == null || product_mallPrice.value == "") {
+           // alert("请输入商城价");
+       }
+       if (product_counterPrice.value == null || product_counterPrice.value == "") {
+           // alert("请输入专柜价");
+       }
+       if (product_needPoints.value == null || product_needPoints.value == "") {
+           //alert("请输入积分");
+       }
+       if (product_getPoints.value == null || product_getPoints.value == "") {
+           //alert("请输入积分");
+       }
+       if (product_serviceType.value == null || product_serviceType.value == "") {
+           // alert("请输入服务类型");
+       }
+       if (product_specification.value == null || product_specification.value == "") {
+           // alert("请输入商品规格");
+       }
+       if (file.value == null || file.value == "") {
+           //alert("请上传图片");
+       }
+       if (file2.value == null || file2.value == "") {
+           //alert("请上传图片");
+       }
+       if (file3.value == null || file3.value == "") {
+           // alert("请上传图片");
+       }
+       if (file4.value == null || file4.value == "") {
+           // alert("请上传图片");
+       }
+       if (file5.value == null || file5.value == "") {
+           // alert("请上传图片");
+       } else {
+           sub.setAttribute('type', 'submit');
+           return true;
+
+       }
+   };
+
+
+
+
 </script>
 </body>
 </html>

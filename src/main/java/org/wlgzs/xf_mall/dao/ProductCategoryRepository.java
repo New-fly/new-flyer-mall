@@ -28,6 +28,9 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
     @Query(value = "SELECT o FROM ProductCategory o WHERE o.parent_name = ?1")
     List<ProductCategory> findByCategoryParentName(String parent_name);
 
+    @Query("SELECT p FROM ProductCategory p WHERE p.parent_name = ?1 and p.category_show != '2'")
+    List<ProductCategory> findByCategoryParentNameAndTwo(String category_name);
+
     @Query(value = "SELECT o FROM ProductCategory o WHERE o.category_name like %?1%")
     List<ProductCategory> findByCategoryName(String category_name);
 
@@ -47,4 +50,5 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
 
     @Query("SELECT p FROM ProductCategory p WHERE p.parent_name in :parent_names and p.category_show = '2'")
     List<ProductCategory> findCategoryByParentNameTwo(@Param(value = "parent_names") String [] parent_names);
+
 }

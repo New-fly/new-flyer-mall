@@ -34,20 +34,18 @@ public class ProductActivityController extends BaseController {
      * @description 跳转至活动页面
      */
     @RequestMapping("/activityProducts")
-    public ModelAndView activityProductList(Model model, HttpServletRequest request, long activitySumId, @RequestParam(value = "page",defaultValue = "0") int page,
-                                            @RequestParam(value = "limit",defaultValue = "10") int limit){
-        Activity activity = activityService.findActivity(activitySumId);
+    public ModelAndView activityProductList(Model model, HttpServletRequest request){
+        String activity_name = "520狂欢";
+        List<ProductActivity> productActivities = productActivityService.activityProductList(activity_name);
+        model.addAttribute("productActivities",productActivities);
+        Activity activity = activityService.findByActivityName(activity_name);
+        String time = String.valueOf(activity.getActivity_time());
+        time = time.substring(0,time.length()-5);
+        model.addAttribute("time",time);
         model.addAttribute("activity",activity);
-        String activity_name = activity.getActivity_name();
-        if(page != 0) page--;
-        Page activityPages =  productActivityService.activityProductList(activity_name,page,limit);
-        model.addAttribute("ActivityTotalPages", activityPages.getTotalPages());//查询的页数
-        model.addAttribute("ActivityNumber", activityPages.getNumber()+1);//查询的当前第几页
-        List<ProductActivity> activities = activityPages.getContent();
-        model.addAttribute("activities", activities);//查询的当前页的集合
         //推荐商品
         HttpSession session = request.getSession();
-        if(session!=null){
+        if(session.getAttribute("user")!=null){
             long userId = (long) session.getAttribute("userId");
             List<Product> recommendedProducts = productService.recommendedByUserId(userId);
             model.addAttribute("recommendedProducts", recommendedProducts);

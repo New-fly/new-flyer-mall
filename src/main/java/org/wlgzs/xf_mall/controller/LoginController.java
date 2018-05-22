@@ -77,11 +77,12 @@ public class LoginController extends BaseController {
         User user = logUserService.login(request, user_name, user_password);
         System.out.println(user);
         if (user != null) {
-            if (user.getUser_role().equals("管理员")) {
-                //model.addAttribute("user", user);
+            if(user.getUser_role().equals("管理员")) {
                 return "adminIndex";
-            } else {
-                //model.addAttribute("user", user);
+            }
+            if(user.getUser_role().equals("超级管理员")) {
+                return "adminIndex";
+            } else{
                 return "redirect:/HomeController/homeProduct";
             }
         } else {

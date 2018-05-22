@@ -41,12 +41,13 @@ public class LogUserServiceImpl implements LogUserService {
             if(user != null){
                 if(user.getUser_role().equals("普通用户")){
                     session.setMaxInactiveInterval(60 * 20);
-                    session.setAttribute("name", user.getUser_name());//之后用过滤器实现
+                    session.setAttribute("name", user.getUser_name());
                     session.setAttribute("userId", user.getUserId());
                     session.setAttribute("user",user);
-                }else{
+                }
+                if(user.getUser_role().equals("管理员") || user.getUser_role().equals("超级管理员")){
                     session.setMaxInactiveInterval(60 * 20);
-                    session.setAttribute("adminName", user.getUser_name());//之后用过滤器实现
+                    session.setAttribute("adminName", user.getUser_name());
                     session.setAttribute("adminUser",user);
                 }
             }

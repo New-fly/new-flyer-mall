@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Activity;
 import org.wlgzs.xf_mall.entity.Product;
+import org.wlgzs.xf_mall.entity.ProductActivity;
 import org.wlgzs.xf_mall.entity.ProductCategory;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,24 +39,21 @@ public class HomeController extends BaseController {
         //活动商品  轮播图
         List<Activity> activities = activityService.getActivity();
         model.addAttribute("activities",activities);
+        //抢购商品
+        String activity_name = "520狂欢";
+        List<ProductActivity> productActivities = productActivityService.activityProductList(activity_name);
+        model.addAttribute("productActivities",productActivities);
+        Activity activity = activityService.findByActivityName(activity_name);
+        String time = String.valueOf(activity.getActivity_time());
+        time = time.substring(0,time.length()-5);
+        model.addAttribute("time",time);
+        model.addAttribute("activity",activity.getActivity_time());
         //商品展示
-        List<Product> productsOne = productService.productByOneCategory(productOneCategories.get(0).getCategory_name());
-        model.addAttribute("productsOne",productsOne);//主页部分第一分类商品
-        List<Product> productsTwo = productService.productByOneCategory(productOneCategories.get(1).getCategory_name());
-        model.addAttribute("productsTwo",productsTwo);//主页部分第二分类商品
-        List<Product> productsThree = productService.productByOneCategory(productOneCategories.get(2).getCategory_name());
-        model.addAttribute("productsThree",productsThree);//主页部分第三分类商品
-        List<Product> productsFour = productService.productByOneCategory(productOneCategories.get(3).getCategory_name());
-        model.addAttribute("productsFour",productsFour);//主页部分第四分类商品
-        List<Product> productsFive = productService.productByOneCategory(productOneCategories.get(4).getCategory_name());
-        model.addAttribute("productsFive",productsFive);//主页部分第五分类商品
-        //推荐商品
-        HttpSession session = request.getSession();
-        if(session.getAttribute("user")!=null){
-            long userId = (long) session.getAttribute("userId");
-            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
-            model.addAttribute("recommendedProducts", recommendedProducts);
-        }
+        List<Product> products = productService.homeProductList(productOneCategories);
+        model.addAttribute("products",products);
+        //新品商品
+        List<Product> productList = productService.getProductList();
+        model.addAttribute("productList",productList);
         return new ModelAndView("Index");
     }
 }

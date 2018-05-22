@@ -270,4 +270,19 @@ public interface ProductService {
      * @description 商品推荐
      */
     List<Product> recommendedByUserId(long userId);
+    /**
+     * @author 阿杰
+     * @param [productOneCategories]
+     * @return java.util.List<org.wlgzs.xf_mall.entity.Product>
+     * @description 主页商品
+     */
+    List<Product> homeProductList(List<ProductCategory> productOneCategories);
+
+    /**
+     * @author 阿杰
+     * @param []
+     * @return void
+     * @description 主页最新商品
+     */
+    List<Product> getProductList();
 }

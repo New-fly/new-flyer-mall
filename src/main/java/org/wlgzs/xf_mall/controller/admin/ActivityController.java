@@ -109,7 +109,7 @@ public class ActivityController extends BaseController {
      */
     @RequestMapping("/activityProducts")
     public ModelAndView activityProductList(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
-                                            @RequestParam(value = "limit", defaultValue = "10") int limit) {
+                                            @RequestParam(value = "limit", defaultValue = "8") int limit) {
         String activity_name = "";
         if (page != 0) page--;
         Page activityPages = productActivityService.activityProductList(activity_name, page, limit);

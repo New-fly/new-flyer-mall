@@ -19,4 +19,6 @@ public interface SearchShieldRepository extends JpaRepository<SearchShield, Long
     @Query(value = "SELECT * FROM search_shield WHERE search_shield_sensitive like %:search_shield_sensitive%", nativeQuery = true)
     List<SearchShield> findBySearchShieldSensitive(@Param("search_shield_sensitive") String search_shield_sensitive);
 
+    @Query("FROM SearchShield s WHERE s.searchShield_Sensitive=?1")
+    SearchShield querySensitive(String searchShield_Sensitive);
 }
