@@ -80,6 +80,7 @@ public class ProductController {
             }
         }
         model.addAttribute("products", products);//查询的当前页的集合
+        System.out.println("列表"+products);
         model.addAttribute("product_keywords", product_keywords);
         return new ModelAndView("admin/adminProductList");
     }

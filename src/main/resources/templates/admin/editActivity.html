@@ -25,7 +25,7 @@
             <table class="table table-hover table-bordered">
                 <tr>
                     <th>活动名称</th>
-                    <td><input type="text" name="activity_name" th:value="*{activity_name}" class="form-control" id="userphoto" /></td>
+                    <td><input type="text" name="activity_name" th:value="*{activity_name}" class="form-control" id="activity_name" /></td>
                 </tr>
                 <tr>
                     <th>活动折扣</th>
@@ -40,7 +40,7 @@
                 <tr>
                     <th>活动图片</th>
                     <td>
-                        <input type="file" name="file" id="input1"/>
+                        <input type="file" name="file" id="file"/>
                     </td>
                 </tr>
                 <tr>
@@ -66,5 +66,24 @@
     </div>
 </div>
 <script type="text/javascript" th:src="@{/test/demo.js}"></script>
+<script type="text/javascript">
+
+    var file=document.getElementById('file');
+    var test04=document.getElementById('test04');
+    var add=document.getElementById('add');
+    add.onclick=function () {
+
+        if(file.value==null||file.value==""){
+            alert("请上传文件");
+            return false;
+        }
+        if(test04.value==null||test04.value==""){
+            alert("请选择时间");
+            return false;
+        }else{
+            return true;
+        }
+    }
+</script>
 </body>
 </html>
