@@ -277,7 +277,7 @@ public class ProductServiceImpl implements ProductService {
     //通过二级分类查找商品
     @Override
     public List<Product> productByOneCategory(String category_name) {
-        List<ProductCategory> productCategories = productCategoryRepository.findByCategoryParentName(category_name);
+        List<ProductCategory> productCategories = productCategoryRepository.findByCategoryParentNameAndTwo(category_name);
         ProductCategory[] toBeStored = productCategories.toArray(new ProductCategory[productCategories.size()]);
         String[] str = new String[toBeStored.length];
         for (int i = 0; i < toBeStored.length; i++) {
@@ -698,6 +698,54 @@ public class ProductServiceImpl implements ProductService {
         }
         System.out.println(products);
         return products;
+    }
+    //主页商品数据
+    @Override
+    public List<Product> homeProductList(List<ProductCategory> productOneCategories) {
+        List<Product> products = new ArrayList<Product>();
+        List<Product> productsOne = productOneCategory(productOneCategories.get(0).getCategory_name());//主页部分第一分类商品
+        for (int i = 0; i < productsOne.size(); i++) {
+            productsOne.get(i).setProduct_category(productOneCategories.get(0).getCategory_name());
+        }
+        products.addAll(productsOne);
+        List<Product> productsTwo = productOneCategory(productOneCategories.get(1).getCategory_name());//主页部分第二分类商品
+        for (int i = 0; i < productsTwo.size(); i++) {
+            productsTwo.get(i).setProduct_category(productOneCategories.get(1).getCategory_name());
+        }
+        products.addAll(productsTwo);
+        List<Product> productsThree = productOneCategory(productOneCategories.get(2).getCategory_name());//主页部分第三分类商品
+        for (int i = 0; i < productsThree.size(); i++) {
+            productsThree.get(i).setProduct_category(productOneCategories.get(2).getCategory_name());
+        }
+        products.addAll(productsThree);
+        List<Product> productsFour = productOneCategory(productOneCategories.get(3).getCategory_name());;//主页部分第四分类商品
+        for (int i = 0; i < productsFour.size(); i++) {
+            productsFour.get(i).setProduct_category(productOneCategories.get(3).getCategory_name());
+        }
+        products.addAll(productsFour);
+        List<Product> productsFive = productOneCategory(productOneCategories.get(4).getCategory_name());//主页部分第五分类商品
+        for (int i = 0; i < productsFive.size(); i++) {
+            productsFive.get(i).setProduct_category(productOneCategories.get(4).getCategory_name());
+        }
+        products.addAll(productsFive);
+        String img;
+        for(int i = 0; i < products.size(); i++) {
+            if (products.get(i).getProduct_picture().contains(",")){
+                img = products.get(i).getProduct_picture();
+                img = img.substring(0,img.indexOf(","));
+                products.get(i).setProduct_picture(img);
+            }
+        }
+        return products;
+    }
+    private List<Product> productOneCategory(String category_name) {
+        List<ProductCategory> productCategories = productCategoryRepository.findByCategoryParentNameAndTwo(category_name);
+        ProductCategory[] toBeStored = productCategories.toArray(new ProductCategory[productCategories.size()]);
+        String[] str = new String[toBeStored.length];
+        for (int i = 0; i < toBeStored.length; i++) {
+            str[i] = toBeStored[i].getCategory_name();
+        }
+        return productRepository.findProductByTwoCategory(str);//查询的当前页商品的集合
     }
 
 }

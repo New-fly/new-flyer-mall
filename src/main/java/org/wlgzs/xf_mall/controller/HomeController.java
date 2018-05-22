@@ -39,16 +39,8 @@ public class HomeController extends BaseController {
         List<Activity> activities = activityService.getActivity();
         model.addAttribute("activities",activities);
         //商品展示
-        List<Product> productsOne = productService.productByOneCategory(productOneCategories.get(0).getCategory_name());
-        model.addAttribute("productsOne",productsOne);//主页部分第一分类商品
-        List<Product> productsTwo = productService.productByOneCategory(productOneCategories.get(1).getCategory_name());
-        model.addAttribute("productsTwo",productsTwo);//主页部分第二分类商品
-        List<Product> productsThree = productService.productByOneCategory(productOneCategories.get(2).getCategory_name());
-        model.addAttribute("productsThree",productsThree);//主页部分第三分类商品
-        List<Product> productsFour = productService.productByOneCategory(productOneCategories.get(3).getCategory_name());
-        model.addAttribute("productsFour",productsFour);//主页部分第四分类商品
-        List<Product> productsFive = productService.productByOneCategory(productOneCategories.get(4).getCategory_name());
-        model.addAttribute("productsFive",productsFive);//主页部分第五分类商品
+        List<Product> products = productService.homeProductList(productOneCategories);
+        model.addAttribute("products",products);
         //推荐商品
         HttpSession session = request.getSession();
         if(session.getAttribute("user")!=null){
