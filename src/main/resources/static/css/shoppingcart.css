@@ -169,10 +169,9 @@ input{
     text-align:center;
 }
 .recommended{
-	overflow: hidden;
 	width: 1000px;
 	margin: 0 auto;
-	height: 362px;
+	height: auto;
 }
 .h1sty{
 	color: red;
