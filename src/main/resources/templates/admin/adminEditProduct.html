@@ -25,20 +25,20 @@
             <table class="table table-hover table-bordered">
                 <tr>
                     <th>库存</th>
-                    <td><input type="text" name="product_inventory" class="form-control" th:value="*{product_inventory}"id="keywords" /></td>
+                    <td><input type="text" name="product_inventory" id="keywords"  class="form-control" th:value="*{product_inventory}"/></td>
                 </tr>
                 <tr>
                     <th>活动名称</th>
-                    <td><input type="text" name="product_activity" class="form-control"th:value="*{product_activity}" id="condition" /></td>
+                    <td><input type="text" name="product_activity" id="condition" class="form-control"th:value="*{product_activity}"/></td>
                 </tr>
                 <tr>
                     <th>类别</th>
                     <td><input type="text" name="product_category" class="form-control"th:value="*{product_category}" id="price1" /></td>
                 </tr>
-                <tr>
-                    <th>图片</th>
-                    <td><input type="text" name="product_picture" class="form-control"th:value="*{product_counterPrice}" id="price2" /></td>
-                </tr>
+                <!--<tr>-->
+                    <!--<th>图片</th>-->
+                    <!--<td><input type="text" name="product_picture" class="form-control"th:value="*{product_counterPrice}" id="price2" /></td>-->
+                <!--</tr>-->
                 <tr>
                     <th>是否可兑换</th>
                     <td>
@@ -71,38 +71,42 @@
                 </tr>
                 <tr>
                     <th>关键字</th>
-                    <td><input type="text" name="product_keywords" class="form-control"th:value="*{product_keywords}" id="kind" /></td>
+                    <td><input type="text" name="product_keywords" id="kind"  class="form-control" th:value="*{product_keywords}" /></td>
                 </tr>
                 <tr>
                     <th>商城价</th>
-                    <td><input type="text" name="product_mallPrice"  class="form-control"th:value="*{product_mallPrice}" id="activity"></td>
+                    <td><input type="text" name="product_mallPrice" id="product_mallPrice" class="form-control" th:value="*{product_mallPrice}"></td>
+                </tr>
+                <tr>
+                    <th>专柜价</th>
+                    <td><input type="text" name="product_counterPrice" class="form-control" id="product_counterPrice" th:value="*{product_counterPrice}"/></td>
                 </tr>
                 <tr>
                     <th>需要积分</th>
-                    <td><input type="text" name="product_needPoints"  class="form-control"th:value="*{product_needPoints}" id="activity"></td>
+                    <td><input type="text" name="product_needPoints"  class="form-control"  th:value="*{product_needPoints}" id="product_needPoints"></td>
                 </tr>
                 <tr>
                     <th>得到积分</th>
-                    <td><input type="text" name="product_getPoints"  class="form-control"th:value="*{product_getPoints}" id="activity"></td>
+                    <td><input type="text" name="product_getPoints"  class="form-control" th:value="*{product_getPoints}" id="product_getPoints"></td>
                 </tr>
                 <tr>
                     <th>服务类型</th>
-                    <td><input type="text" name="product_serviceType"  class="form-control"th:value="*{product_serviceType}" id="activity"></td>
+                    <td><input type="text" name="product_serviceType"  class="form-control" th:value="*{product_serviceType}" id="product_serviceType"></td>
                 </tr>
                 <tr>
                     <th>商品规格</th>
-                    <td><input type="text" name="product_specification"  class="form-control"th:value="*{product_specification}" id="activity"></td>
+                    <td><input type="text" name="product_specification"  class="form-control" th:value="*{product_specification}" id="product_specification"></td>
                 </tr>
                 <tr>
                     <th style="padding-top: 64px;">上传图片</th>
                     <td>
                         <!--<input type="submit" value="修改"  class="btn btn-info" id="change"/>-->
                         <!--<a th:href="@{/AdminProductController/adminProductList}"><input type="button" value="取消"  class="btn btn-info" id="cancel" style="background-color: orangered"/></a>-->
-                        <input type="file" name="file" accept="image/*"/>
-                        <input type="file" name="file" accept="image/*"/>
-                        <input type="file" name="file" accept="image/*"/>
-                        <input type="file" name="file"accept="image/*"/>
-                        <input type="file" name="file"accept="image/*"/>
+                        <input type="file" name="file" accept="image/*" id="file"/>
+                        <input type="file" name="file" accept="image/*" id="file2"/>
+                        <input type="file" name="file" accept="image/*" id="file3"/>
+                        <input type="file" name="file"accept="image/*" id="file4"/>
+                        <input type="file" name="file"accept="image/*" id="file5"/>
                     </td>
                 </tr>
             </table>
@@ -133,7 +137,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="submit" value="修改" class="btn btn-info" />
+                    <input type="button" value="修改" class="btn btn-info" id="modify"/>
                     &nbsp; &nbsp; &nbsp;
                     <a th:href="@{/AdminProductController/adminProductList}">
                         <input type="button" value="取消"  class="btn btn-info" id="cancel" style="background-color: orangered"/>
@@ -144,7 +148,83 @@
 
     </div>
 </div>
+<script type="text/javascript">
+    var keywords=document.getElementById('keywords');
+    var condition=document.getElementById('condition');
+    var kind=document.getElementById('kind');
+    var product_mallPrice=document.getElementById('product_mallPrice');
+    var product_counterPrice=document.getElementById('product_counterPrice');
+    var product_needPoints=document.getElementById('product_needPoints');
+    var product_getPoints=document.getElementById('product_getPoints');
+    var product_serviceType=document.getElementById('product_serviceType');
+    var product_specification=document.getElementById('product_specification');
+    var file=document.getElementById('file');
+    var file2=document.getElementById('file2');
+    var file3=document.getElementById('file3');
+    var file4=document.getElementById('file4');
+    var file5=document.getElementById('file5');
+    var modify=document.getElementById('modify');
+    modify.onclick=function () {
+        // if(keywords.value==null||keywords.value==""){
+        //     alert("请输入完整信息");
+        // }
+        // if(condition.value==null||condition.value==""){
+        //     // alert("请输入活动名称");
+        // }
+        // if(kind.value==null||kind.value==""){
+        //     // alert("请输入关键字");
+        // }
+        // if(product_mallPrice.value==null||product_mallPrice.value==""){
+        //     // alert("请输入商城价");
+        // }
+        // if(product_counterPrice.value==null||product_counterPrice.value==""){
+        //     // alert("请输入专柜价");
+        // }
+        // if(product_needPoints.value==null||product_needPoints.value==""){
+        //     //alert("请输入积分");
+        // }
+        // if(product_getPoints.value==null||product_getPoints.value==""){
+        //     //alert("请输入积分");
+        // }
+        // if(product_serviceType.value==null||product_serviceType.value==""){
+        //     // alert("请输入服务类型");
+        // }
+        // if(product_specification.value==null||product_specification.value==""){
+        //     // alert("请输入商品规格");
+        // }
+        if(file.value==null||file.value==""){
+            //alert("请上传图片");
+        }
+        if(file2.value==null||file2.value==""){
+            //alert("请上传图片");
+        }
+        if(file3.value==null||file3.value==""){
+            // alert("请上传图片");
+        }
+        if(file4.value==null||file4.value==""){
+            // alert("请上传图片");
+        }
+        if(file5.value==null||file5.value==""){
+            // alert("请上传图片");
+        }else{
+            modify.setAttribute('type','submit');
+            return true;
 
+        }
+        // if(keywords.value!=""&&condition.value!=""&&kind.value!=""&&product_mallPrice.value!=""&&product_counterPrice.value!=""&&product_needPoints.value!=""&&product_getPoints.value!=""&&product_serviceType.value!=""&&product_specification.value!=""&&file.value!=""&&file2.value!=""&&file3.value!=""&&file4.value!=""&&file5.value!=""){
+        //     return true;
+        //     submit.setAttribute('type','submit');
+        //
+        // }else{
+        //     return false;
+        //     alert("请输入完整信息");
+        // }
+    }
+
+
+
+
+</script>
 
 </body>
 </html>
