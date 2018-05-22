@@ -19,5 +19,6 @@ public interface SearchShieldService {
 
     void delete(long searchShield);
 
+    boolean querySensitive(String searchShield_Sensitive);
 //    List<SearchShield> findBySearchShieldSensitive(String search_shield_sensitive);
 }

@@ -293,7 +293,7 @@ public class ProductServiceImpl implements ProductService {
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
         //商品分类，活动，服务类型三种方式
-        Specification<Product> specification = new PageUtil<Product>(product_category).getPage("product_category","product_serviceType","product_activity");
+        Specification<Product> specification = new PageUtil<Product>(product_category).getPage("product_category","product_serviceType","product_activity","product_keywords");
         Page pages = productRepository.findAll(specification, pageable);
         System.out.println(pages);
         return pages;

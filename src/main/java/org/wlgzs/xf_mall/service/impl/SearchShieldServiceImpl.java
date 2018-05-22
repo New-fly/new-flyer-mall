@@ -63,4 +63,13 @@ public class SearchShieldServiceImpl implements SearchShieldService {
 //        return searchShieldRepository.findBySearchShieldSensitive(search_shield_sensitive);
 //    }
 
+
+    @Override
+    public boolean querySensitive(String searchShield_Sensitive) {
+        SearchShield searchShield = searchShieldRepository.querySensitive(searchShield_Sensitive);
+        if(searchShield != null){
+            return false;
+        }
+        return true;
+    }
 }
