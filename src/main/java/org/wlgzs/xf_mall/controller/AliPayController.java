@@ -61,7 +61,7 @@ public class AliPayController extends BaseController {
      */
     @RequestMapping("oneToPay")
     public ModelAndView oneToPay(Model model, @RequestParam(value = "productId",defaultValue = "494") long productId,
-                                 @RequestParam(value = "shoppingCart_count",defaultValue = "3") int shoppingCart_count,
+                                 @RequestParam(value = "shoppingCart_count",defaultValue = "1") int shoppingCart_count,
                                  String user_name,HttpServletRequest request){
         List<Product> shoppingCarts = productService.findProductListById(productId);
         model.addAttribute("shoppingCarts",shoppingCarts);
@@ -118,7 +118,7 @@ public class AliPayController extends BaseController {
         }
         List<ShippingAddress> shippingAddressList = shippingAddressService.getShippingAddressList(user_name);
         model.addAttribute("shippingAddressList", shippingAddressList);
-        return new ModelAndView("indent");
+        return new ModelAndView("change");
     }
     /**
      * @author 阿杰
