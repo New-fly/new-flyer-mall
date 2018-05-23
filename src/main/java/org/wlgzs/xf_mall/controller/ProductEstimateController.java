@@ -29,8 +29,8 @@ public class ProductEstimateController extends BaseController {
 
     //通过订单id跳转到评论界面
     @RequestMapping("/toAddEstimate")
-    public ModelAndView toAdd(Model model, Long id) {
-        Orders order = ordersService.findOrdersById(id);
+    public ModelAndView toAdd(Model model, Long orderId) {
+        Orders order = ordersService.findOrdersById(orderId);
         model.addAttribute("order", order);
         return new ModelAndView("addEstimate");
     }
@@ -43,7 +43,8 @@ public class ProductEstimateController extends BaseController {
     @RequestMapping("/AddEstimate")
     public ModelAndView AddEstimate(HttpServletRequest request, @RequestParam("file") MultipartFile[] myFileNames, HttpSession session, long orderId){
         productEstimateService.save(request,myFileNames,session,orderId);
-        return new ModelAndView("redirect:/OrderController/findUserOrder");
+        long userId = (long) session.getAttribute("userId");
+        return new ModelAndView("redirect:/UserOrderController/userOrderList?userId="+userId);
     }
     /**
      * @author 阿杰

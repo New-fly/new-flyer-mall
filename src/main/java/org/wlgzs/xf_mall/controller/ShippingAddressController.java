@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.ShippingAddress;
+import org.wlgzs.xf_mall.entity.User;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;

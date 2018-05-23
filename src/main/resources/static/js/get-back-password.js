@@ -25,4 +25,29 @@ $(document).ready(function(){
             $(".error")[1].innerHTML="验证码不能为空！";
             }
     })
+//点击验证码按钮，获取邮箱号
+    // if(test()==true) {
+    //点击验证码按钮，获取邮箱号
+    $("#btn").click(function () {
+        var user_mail = $("#user_mail").val();
+        console.log(user_mail);
+        var postData = {
+            "user_mail": user_mail
+        }
+        // postData = JSON.stringify(postData);
+        $.ajax({
+            async: false,
+            cache: false,
+            type: 'POST',
+            url: '/UserManagementController/sendRetrievePassword',
+            data: postData,
+            error: function () {
+                alert("123")
+            },
+            success: function (data) {
+                alert("成功")
+            }
+        });
+    });
+    // }
 })

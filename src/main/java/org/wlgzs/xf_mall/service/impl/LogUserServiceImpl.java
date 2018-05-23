@@ -226,6 +226,10 @@ public class LogUserServiceImpl implements LogUserService {
         usercode = request.getParameter("user_code"); //获取用户输入的验证码
         sessioncode = (String) session.getAttribute("authCode"); //获取保存在session里面的验证码
         sessionMail = (String) session.getAttribute("user_mail");//获取保存在session里面的邮箱
+        System.out.println(usercode);
+        System.out.println(sessioncode);
+        System.out.println(sessionMail);
+        System.out.println(user_mail);
         if (usercode != null && usercode.equals(sessioncode)&&user_mail != null && user_mail.equals(sessionMail)) { //对比两个code是否正确
            return true;
         } else {

@@ -69,7 +69,10 @@ public class ProductEstimateServiceImpl implements ProductEstimateService {
         int estimate_grade = Integer.parseInt(request.getParameter("estimate_grade"));
         productEstimate.setEstimate_grade(estimate_grade);
         productEstimate.setEstimate_img(estimate_img);
-        int estimate_is_nameless = Integer.parseInt(request.getParameter("estimate_is_nameless"));
+        int estimate_is_nameless = 0;
+        if(request.getParameter("estimate_is_nameless")!=null){
+            estimate_is_nameless = Integer.parseInt(request.getParameter("estimate_is_nameless"));
+        }
         productEstimate.setEstimate_isNameless(estimate_is_nameless);
         Date date = new Date();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
@@ -84,7 +87,7 @@ public class ProductEstimateServiceImpl implements ProductEstimateService {
         productEstimate.setProduct_picture(orders.getProduct_picture());
         productEstimate.setProduct_specification(orders.getProduct_specification());
         productEstimateRepository.save(productEstimate);
-        orders.setOrder_status("未评价");
+        orders.setOrder_status("交易成功");
         ordersRepository.save(orders);
     }
 

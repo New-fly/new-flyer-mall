@@ -29,7 +29,9 @@
                 <dd><a th:href="@{/FootprintController/userFootprint(userId=${session.user.userId})}" target="_self">我的足迹</a></dd>
                 <dd><a th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}" target="_self">我的收藏</a></dd>
                 <dd><a th:href="@{/IntegralController/integralList(userId=${session.user.userId})}" target="_self">我的积分</a></dd>
+                <dd><a th:href="@{/EstimateController/userEstimate(userId=${session.user.userId})}" target="_self">我的评价</a></dd>
                 <dd><a th:href="@{/ProductListController/integralProduct}" target="_self">积分兑换</a></dd>
+
             </dl>
         </div>
     </div>
@@ -77,7 +79,7 @@
                                    th:onclick="'javascript:userAccepted('+${order.orderId}+');'"
                                    th:if="${order.order_status.equals('待收货')}"
                                    th:text="${order.order_status}">待发货</a>
-                                <a href="#" th:if="${order.order_status.equals('待评价')}" th:text="${order.order_status}">待评价</a>
+                                <a th:href="@{/EstimateController/toAddEstimate(orderId=${order.orderId})}" th:if="${order.order_status.equals('待评价')}" th:text="${order.order_status}">待评价</a>
                                 <a th:if="${order.order_status.equals('交易成功')}"
                                    th:text="${order.order_status}">交易成功</a>
                             </div>
@@ -119,7 +121,7 @@
                                    th:onclick="'javascript:userAccepted('+${order.orderId}+');'"
                                    th:if="${order.order_status.equals('待收货')}"
                                    th:text="${order.order_status}">待发货</a>
-                                <a href="#" th:if="${order.order_status.equals('待评价')}" th:text="${order.order_status}">待评价</a>
+                                <a th:href="@{/EstimateController/toAddEstimate(orderId=${order.orderId})}" th:if="${order.order_status.equals('待评价')}" th:text="${order.order_status}">待评价</a>
                                 <a th:if="${order.order_status.equals('交易成功')}"
                                    th:text="${order.order_status}">交易成功</a>
                             </div>
@@ -161,7 +163,7 @@
                                    th:onclick="'javascript:userAccepted('+${order.orderId}+');'"
                                    th:if="${order.order_status.equals('待收货')}"
                                    th:text="${order.order_status}">待发货</a>
-                                <a href="#" th:if="${order.order_status.equals('待评价')}" th:text="${order.order_status}">待评价</a>
+                                <a th:href="@{/EstimateController/toAddEstimate(orderId=${order.orderId})}" th:if="${order.order_status.equals('待评价')}" th:text="${order.order_status}">待评价</a>
                                 <a th:if="${order.order_status.equals('交易成功')}"
                                    th:text="${order.order_status}">交易成功</a>
                             </div>

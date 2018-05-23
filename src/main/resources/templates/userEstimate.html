@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>我的新飞</title>
+    <link rel="shortcut icon" th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <link th:href="@{/css/userEstimate.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div th:include="common/top_header :: copy"></div>
+<div class="nav1">
+    <div class="navheader">
+        <img th:src="@{/images/logo-foot.png}"/>
+    </div>
+</div>
+<div class="container1">
+    <div class="aside">
+        <div>
+            <dl>
+                <dt>全部功能</dt>
+                <dd><a th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}" target="_self">购物车</a>
+                </dd>
+                <dd><a th:href="@{/UserOrderController/userOrderList(userId=${session.user.userId})}" target="_self">我的淘宝</a>
+                </dd>
+                <dd><a th:href="@{/FootprintController/userFootprint(userId=${session.user.userId})}" target="_self">我的足迹</a>
+                </dd>
+                <dd><a th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}"
+                       target="_self">我的收藏</a></dd>
+                <dd><a th:href="@{/IntegralController/integralList(userId=${session.user.userId})}"
+                       target="_self">我的积分</a></dd>
+                <dd><a th:href="@{/EstimateController/userEstimate(userId=${session.user.userId})}"
+                       target="_self">我的评价</a></dd>
+                <dd><a th:href="@{/ProductListController/integralProduct}" target="_self">积分兑换</a></dd>
+            </dl>
+        </div>
+    </div>
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>评价内容</th>
+                <th>评价人</th>
+                <th>商品信息</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="productEstimat : ${productEstimates}">
+                <td>
+		         		<span th:text="${productEstimat.estimate_content}">
+		         		[来自天猫] 此用户没有填写评价。[来自天
+		         		猫] 此用户没有填写评价。[来自天猫]
+		         		 此用户没有填写评价。[来自天猫] 此用户没有填
+		         		 写评价。[来自天猫] 此用户没有填写评价。[来
+		         		 自天猫] 此用户没有填写评价。[来自天猫]
+		         		</span>
+                    <span class="date"></span>
+                </td>
+                <td>商家： 兴业鹰旗舰店</td>
+                <td th:text="${productEstimat.product_keywords}">夏装短袖T恤修身纯棉圆领印花T恤青年学生全棉半袖个...98.0元</td>
+                <td>
+                    <input type="submit" value="匿名评价"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div th:include="common/top_header :: duplicate"></div>
+</body>
+</html>
