@@ -84,7 +84,7 @@ public class ProductEstimateServiceImpl implements ProductEstimateService {
         productEstimate.setProduct_picture(orders.getProduct_picture());
         productEstimate.setProduct_specification(orders.getProduct_specification());
         productEstimateRepository.save(productEstimate);
-        orders.setOrder_status("未评价");
+        orders.setOrder_status("交易成功");
         ordersRepository.save(orders);
     }
 
@@ -106,5 +106,11 @@ public class ProductEstimateServiceImpl implements ProductEstimateService {
         ProductEstimate productEstimate = productEstimateRepository.findById(estimateId);
         productEstimate.setEstimate_isNameless(1);
         productEstimateRepository.save(productEstimate);
+    }
+
+    //查询商品评价数
+    @Override
+    public long findEstimateCount(long productId) {
+        return productEstimateRepository.findCount(productId);
     }
 }

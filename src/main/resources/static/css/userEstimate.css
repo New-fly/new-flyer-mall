@@ -98,73 +98,10 @@ dd>a{
 dd>a:hover{
     color: red;
 }
-.content{
-    width: 1065px;
-    height:auto;
-    float: left;
-}
-.annotation{
-	width: 1065px;
-	height: 35px;
-	margin: 8px auto;
-}
-.annotation>div{
-	width: 100px;
-	height: 35px;
-	line-height: 35px;
-	font-size: 15px;
-	float: left;
-	text-align: center;
-	margin-left: 74px;
-}
-.single{
-	width: 1065px;
-	height: 125px;
-	padding: 20px;
-	padding-top: 30px;
-	background-color: #FCFCFC;
-	border: solid 1px gray;
-	margin: 0 auto;
-	margin-top: 10px;
-}
-.single-introduce{
-	width: 216px;
-	height: 70px;
-	float: left;
-	color: gray;
-	overflow: hidden;
-	font-size: 12px;
-}
-.norms{
-	width: 110px;
-	height: 48px;
-	float: left;
-	color: gray;
-	font-size: 12px;
-	text-align: center;
-}
-.single-text,.single-text-a{
-	width: 90px;
-	height: 48px;
-	float: left;
-	line-height: 16px;
-	text-align:center;
-	font-size: 13px;
-	margin-left: 78px;
-}
-.single-text>a,.single-text-a>a{
-	color: gray;
-	font-size: 12px;
-	text-decoration: none;
-}
-.single-text-a>a:hover{
-	color: #CC0510;
-}
 .gray_all{
 	width: 1000px;
 	height: 225px;
 	margin: 0 auto;
-	margin-left: 330px;
 }
 .gray_all>div{
 	width: 200px;
@@ -239,4 +176,24 @@ dd>a:hover{
 .btn-default{
 	float: right;
 	margin: 15px 35px;
+}
+th,td{
+	text-align: center;
+	font-size: 13px;
+	padding:8px;
+}
+th{
+	height: 35px;
+	background-color: lightpink;
+}
+td{
+	width: 300px;
+	background-color:white;	
+}
+input{
+	width: 70px;
+	border: 0;
+	text-align: center;
+	outline: none;
+	background-color: white;
 }

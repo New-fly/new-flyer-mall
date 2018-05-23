@@ -1,0 +1,111 @@
+.product{
+	width: 900px;
+	height: 300px;
+	margin: 0 auto;
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+.product-left{
+	width: 40%;
+	height: 100%;
+	float: left;
+}
+.product-left>img{
+	width: 100%;
+	height: 100%;
+}
+.product-right{
+	width: 60%;
+	height: 100%;
+	float: left;
+}
+.details{
+	width: 94%;
+	height:auto;
+	padding:3%;
+	color: red;
+	font-weight: bold;
+}
+.money{
+	width: 96%;
+	height: auto;
+	padding-left:4%;
+	overflow: hidden;
+}
+.money>div{
+	float: left;
+}
+.left{
+	width: 20%;
+	height: auto;
+}
+.right{
+	width: 80%;
+	height: auto;
+}
+.title{
+	width: 900px;
+	height: 30px;
+	margin: 0 auto;
+}
+.title-text{
+	width: 120px;
+	height: 30px;
+	background-color: firebrick;
+	color: white;
+	float: left;
+	text-align: center;
+	line-height: 30px;
+	letter-spacing: 3px;
+}
+.judge{
+	width: 896px;
+	height: 400px;
+	margin: 0 auto;
+	border: solid 2px firebrick;
+	position: relative;
+}
+.text{
+	width: 500px;
+	height:160px;
+	margin-left: 50px;
+	margin-top: 20px;
+	font-size: 18px;
+}
+.input{
+	width:800px;
+	margin-left:50px;
+	height:auto;
+}
+.img{
+	width: 50px;
+	height: 50px;
+}
+#file_input{
+	width: 130px;
+}
+.submit{
+	width:800px;
+	height: 50px;
+	margin-top: 20px;
+	margin-left: 50px;
+	line-height: 50px;
+	position: relative;
+}
+.submit-{
+	width: 110px;
+    height: 30px;
+    display: inline-block;
+    background-color: red;
+    text-align: center;
+    margin-left: 200px;
+    line-height: 30px;
+    color: white;
+	border: 0;
+    letter-spacing: 8px;
+}
+.anniu{
+    width: 500px;
+    margin-top: 50px;
+    margin-left: 50px;
+}

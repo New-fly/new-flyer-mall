@@ -58,8 +58,12 @@ public class UserServiceImpl implements UserService {
     //后台修改用户
     @Override
     public String edit(User user) {
-        User user0 = userRepository.findById(user.getUserId());
-        if(user0 != null){
+        User userTwo = userRepository.findById(user.getUserId());
+        if(userTwo != null){
+            if(userTwo.getUser_role().equals("超级管理员")){
+                user.setUser_role("超级管理员");
+            }
+            user.setUser_avatar("/headPortrait/morende.jpg ");
             userRepository.saveAndFlush(user);
             return "成功";
         }

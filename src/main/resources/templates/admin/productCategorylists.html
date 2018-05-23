@@ -86,7 +86,7 @@
             </li>
             <li th:if="${Number != TotalPages}">
 				<a th:href="@{/AdminProductController/productCategoryList(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
-            <li><a th:href="@{/AdminProductController/productCategoryList(page=${Number})}">尾页</a></li><!--//跳转至第Number页-->
+            <li><a th:href="@{/AdminProductController/productCategoryList(page=${TotalPages})}">尾页</a></li><!--//跳转至第Number页-->
         </ul>
 
     </div>

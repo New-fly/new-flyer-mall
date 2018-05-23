@@ -8,6 +8,8 @@
     <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
     <title>商品介绍</title>
     <script th:src="@{/js/jquery.js}"></script>
+    <link th:href="@{/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/bootstrap/dist/js/bootstrap.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/productDetails.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/copy.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/productDetails.css}">
@@ -50,12 +52,12 @@
             <span class="gray">价格：</span>
             <span class="gray" th:utext="'￥：'+ *{product_counterPrice}"></span><br/>
             <span class="promote">促销价:</span>
-            <span th:text="'￥：'+ *{product_mallPrice}" style="color: red">
+            <span th:text="'￥：'+ *{product_mallPrice}" style="color: red"></span>
         </div>
         <div class="freight"><span class="gray">运费</span> 四川成都至 新乡 快递: 0.00</div>
         <div class="information">
-            <div>月销量45</div>
-            <div>累计评价20</div>
+            <div th:text="${'月销量'+count}">月销量45</div>
+            <div th:text="${'累计评价'+estimateCount}">累计评价20</div>
             <div style="border: 0;" th:text="'送积分'+*{product_inventory}"></div>
         </div>
         <div class="gray" style="border: 0;width: 80px;display: inline-block">颜色分类：</div>
@@ -68,7 +70,8 @@
             <div class="number">
                 <span class="gray">数量：</span>
                 <div id="subtract">-</div>
-                <input id="number" name="shoppingCart_count" type="text" value="1" class="input-a shoppingCart_count"/>
+                <input id="number" name="shoppingCart_count" type="text" value="1"
+                       class="input-a shoppingCart_count" style="height: 20px;"/>
                 <div id="add">+</div>
             </div>
             <div class="button">
@@ -105,7 +108,66 @@
         </div>
     </div>
 </div>
-<div class="details" th:utext="*{product_details}"></div>
+<!--导航条，显示三种分类-->
+<div class="cent" style="width: 1100px;margin: 0 auto;">
+    <!--<div class="content">-->
+        <div class="nav">
+            <ul id="myTab" class="nav nav-tabs">
+                <li class="active"><a href="#home" data-toggle="tab">商品详情</a></li>
+                <li><a href="#ios" data-toggle="tab">评价</a></li>
+                <li><a href="#help" data-toggle="tab">享受服务</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade in active" id="home">
+                    <div class="details" th:utext="*{product_details}"></div>
+                </div>
+                <div class="tab-pane fade in active" id="ios">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center">评价内容</th>
+                                <th style="text-align: center">颜色分类</th>
+                                <th style="text-align: center">评价人</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="width: 500px;">
+                                    <span>
+                                    [来自天猫] 此用户没有填写评价。[来自天猫] 此用户没有填写评价。[来自天猫]此用户没有填写评价.
+                                    </span>
+                                    <br />
+                                    <span class="date">
+                                        <img th:src="@{/images/05.jpg}" style="width:50px">
+                                    </span>
+                                </td>
+                                <td style="text-align: center;vertical-align:middle">颜色分类</td>
+                                <td style="text-align: center;vertical-align:middle">张三</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade in active" id="help">
+                    111
+                </div>
+            </div>
+        </div>
+    <!--</div>-->
+</div>
+<!--推荐商品-->
+<div class="recommended" th:if="${session.user != null}">
+    <h1 class="h1sty">猜你喜欢</h1>
+    <div class="recommendedProduct" th:each="recommendedProducts:${recommendedProducts}">
+        <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">
+            <img th:src="${recommendedProducts.product_picture}" style="height: 170px;width: 170px;"/>
+        </a>
+        <a href="#" class="asty" th:text="${recommendedProducts.product_mallPrice}">199元</a><s th:text="${recommendedProducts.product_counterPrice}">599元</s><br>
+        <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">
+            <span class="spansty" th:text="${recommendedProducts.product_keywords}">新飞新飞新飞新飞新飞新飞新飞新飞新飞新飞新飞新飞</span>
+        </a>
+    </div>
+
+</div>
 <div th:include="common/top_header :: duplicate"></div>
 <div class="secess">添加成功</div>
 </body>

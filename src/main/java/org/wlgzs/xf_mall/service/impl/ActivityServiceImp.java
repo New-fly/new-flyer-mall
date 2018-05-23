@@ -59,7 +59,8 @@ public class ActivityServiceImp implements ActivityService {
         int amount = Integer.parseInt(request.getParameter("activity_discount"));
         activity.setActivity_discount(amount);
         String time = request.getParameter("activity_time");
-        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        time = time.substring(0,time.length()-3);
+        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date = null;
         try {
             date = dateFormat.parse(time);
@@ -102,7 +103,8 @@ public class ActivityServiceImp implements ActivityService {
         int amount = Integer.parseInt(request.getParameter("activity_discount"));
         activity.setActivity_discount(amount);
         String time = request.getParameter("activity_time");
-        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        time = time.substring(0,time.length()-3);
+        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date = null;
         try {
             date = dateFormat.parse(time);
@@ -118,5 +120,11 @@ public class ActivityServiceImp implements ActivityService {
     @Override
     public void deleteActivity(long activityId) {
         activityRepository.deleteById(activityId);
+    }
+
+    //活动页面
+    @Override
+    public Activity findByActivityName(String activity_name) {
+        return activityRepository.findByActivityName(activity_name);
     }
 }

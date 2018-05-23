@@ -102,6 +102,24 @@ public class AliPayController extends BaseController {
         ordersService.save(request,response,productId,userId,shoppingCount);
         return new ModelAndView("aliPay");
     }
+    @RequestMapping("toChange")
+    public ModelAndView toChange(Model model, @RequestParam(value = "productId",defaultValue = "494") long productId,
+                                 @RequestParam(value = "shoppingCart_count",defaultValue = "1") int shoppingCart_count,
+                                 String user_name,HttpServletRequest request){
+        List<Product> shoppingCarts = productService.findProductListById(productId);
+        model.addAttribute("shoppingCarts",shoppingCarts);
+        System.out.println("购买商品id："+productId);
+        System.out.println("单个购买数量："+shoppingCart_count);
+        System.out.println();
+        model.addAttribute("shoppingCount",shoppingCart_count);
+        if(user_name == null){
+            HttpSession session = request.getSession(true);
+            user_name = (String) session.getAttribute("name");
+        }
+        List<ShippingAddress> shippingAddressList = shippingAddressService.getShippingAddressList(user_name);
+        model.addAttribute("shippingAddressList", shippingAddressList);
+        return new ModelAndView("indent");
+    }
     /**
      * @author 阿杰
      * @param [productId, userId, request]

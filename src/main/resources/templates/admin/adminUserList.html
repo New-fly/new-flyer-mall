@@ -24,7 +24,6 @@
 <table class="table table-bordered able-box" id="mytable">
     <thead style="background-color: #F2F2F2;">
     <tr>
-        <th>ID</th>
         <th>用户名</th>
         <th>角色</th>
         <th>电话</th>
@@ -35,7 +34,6 @@
     </thead>
     <tbody>
     <tr th:each="user : ${users}">
-        <td th:text="${user.userId}"></td>
         <td th:text="${user.user_name}"></td>
         <td th:text="${user.user_role}"></td>
         <td th:text="${user.user_phone}"></td>
@@ -44,7 +42,7 @@
         <td class="ttdd" >
             <!--<button type="button" class="btn btn-primary" style="background-color: #fff;color: #000;">添加</button>-->
                 <!--<a class="aa2" th:href="@{/AdminUserController/adminDeleteUser(userId=${user.userId})}">删除</a>-->
-                <a class="aa2" href="javascript:void(0);" th:onclick="'javascript:deleteUser('+${user.userId}+');'">删除</a>
+                <a class="aa2" href="javascript:void(0);" th:if="${user.user_role != '超级管理员'}" th:onclick="'javascript:deleteUser('+${user.userId}+');'">删除</a>
                 <button type="button" class="btn btn-primary modifi" style="background-color:#007BFF" >
                 <a th:href="@{/AdminUserController/toAdminEditUser(userId=${user.userId})}">修改</a></button>
         </td>
@@ -80,7 +78,7 @@
             </li>
             <li th:if="${Number != TotalPages}"><a
                     th:href="@{/OrderController/allProductOrdersLists(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
-            <li><a th:href="@{/OrderController/allProductOrdersLists(page=${Number})}">尾页</a></li><!--//跳转至第Number页-->
+            <li><a th:href="@{/OrderController/allProductOrdersLists(page=${TotalPages})}">尾页</a></li><!--//跳转至第Number页-->
         </ul>
 
     </div>
@@ -89,7 +87,7 @@
 <!--遮屏弹窗  修改内容-->
 <div class="windoww">
     <div class="popup-windows">
-        <h2 style="text-align: center">新增数据</h2>
+        <h2 style="text-align: center">添加用户</h2>
         <form th:action="@{/AdminUserController/adminAddUser}">
             <table class="table table-hover table-bordered">
                 <tr>
@@ -98,7 +96,13 @@
                 </tr>
                 <tr>
                     <th>角色</th>
-                    <td><input type="text" name="user_role" class="form-control" value="" id="userrole" /></td>
+                    <td>
+                        <select name="user_role">
+                            <option value="普通用户">普通用户</option>
+                            <option value="管理员">管理员</option>
+                            <option value="超级管理员">超级管理员</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <th>电话</th>
@@ -115,7 +119,7 @@
                 <tr>
                     <td colspan="2">
                         <input type="reset" value="重置" class="btn btn-primary" id="reset"/>
-                        <input type="button" value="添加"  class="btn btn-success" id="add"  onclick="dd()"/>
+                        <input type="submit" value="添加"  class="btn btn-success" id="add"  onclick="dd()"/>
                         <!--<input type="button" value="修改"  class="btn btn-info" id="change"/>-->
                         <a th:href="@{/AdminUserController/adminUserList}"><input type="button" value="取消"  class="btn btn-info"  style="background-color: orangered"/></a>
                     </td>

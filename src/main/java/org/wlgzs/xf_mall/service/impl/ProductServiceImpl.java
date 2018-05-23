@@ -153,7 +153,7 @@ public class ProductServiceImpl implements ProductService {
     //通过id查找商品
     @Override
     public Product findProductById(long productId) {
-        return  productRepository.findById(productId);
+        return productRepository.findById(productId);
     }
 
     //通过id查询商品  返回集合
@@ -400,6 +400,7 @@ public class ProductServiceImpl implements ProductService {
                 }
             }
             productCategory.setCategory_img(request.getContextPath() + "/category/" + realName);
+            productCategory.setCategory_show(Integer.parseInt(request.getParameter("category_show")));
             productCategory.setParent_name("0");
         }
         productCategoryRepository.save(productCategory);
@@ -687,7 +688,6 @@ public class ProductServiceImpl implements ProductService {
                 products = productRepository.findProductByTwoCategory(product_categories);
                 String img;
                 for(int i = 0; i < products.size(); i++) {
-                    System.out.println("推荐商品");
                     if (products.get(i).getProduct_picture().contains(",")){
                         img = products.get(i).getProduct_picture();
                         img = img.substring(0,img.indexOf(","));
@@ -696,7 +696,6 @@ public class ProductServiceImpl implements ProductService {
                 }
             }
         }
-        System.out.println(products);
         return products;
     }
     //主页商品数据
@@ -738,6 +737,14 @@ public class ProductServiceImpl implements ProductService {
         }
         return products;
     }
+
+    //主页最新商品
+    @Override
+    public List<Product> getProductList() {
+        Sort sort = new Sort(Sort.Direction.DESC, "productId");
+        return productRepository.getProductList(sort);
+    }
+
     private List<Product> productOneCategory(String category_name) {
         List<ProductCategory> productCategories = productCategoryRepository.findByCategoryParentNameAndTwo(category_name);
         ProductCategory[] toBeStored = productCategories.toArray(new ProductCategory[productCategories.size()]);

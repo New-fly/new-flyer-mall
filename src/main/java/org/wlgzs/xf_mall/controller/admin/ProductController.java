@@ -120,6 +120,28 @@ public class ProductController {
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
     }
     /**
+     * @author 阿杰
+     * @param [model, productId]
+     * @return org.springframework.web.servlet.ModelAndView
+     * @description 查看商品详情
+     */
+    @RequestMapping("/toProductDetail")
+    public ModelAndView toProductDetail(Model model, long productId){
+        Product product = productService.findProductById(productId);
+        if(product != null){
+            String [] images = new String[0];
+            if (product.getProduct_picture().contains(",")) {
+                images = product.getProduct_picture().split(",");
+            }
+            model.addAttribute("images",images);
+            model.addAttribute("product", product);
+            return new ModelAndView("admin/adminProductDetail");
+        }else{
+            model.addAttribute("mag","该商品不存在");
+            return new ModelAndView("redirect:/AdminProductController/adminProductList");
+        }
+    }
+    /**
      * @param [model, id]
      * @return java.lang.String
      * @author 阿杰

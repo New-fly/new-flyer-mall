@@ -64,8 +64,8 @@ public class OrdersServiceImpl implements OrdersService {
 
     //后台按照id查找订单
     @Override
-    public Orders findOrdersById(long id) {
-        return ordersRepository.findById(id);
+    public Orders findOrdersById(long orderId) {
+        return ordersRepository.findById(orderId);
     }
 
     //按照订单号查询订单
@@ -89,10 +89,10 @@ public class OrdersServiceImpl implements OrdersService {
 
     //后台删除订单
     @Override
-    public String delete(long id) {
-        Orders orders = ordersRepository.findById(id);
+    public String delete(long orderId) {
+        Orders orders = ordersRepository.findById(orderId);
         if(orders != null){
-            ordersRepository.deleteById(id);
+            ordersRepository.deleteById(orderId);
             return "成功";
         }
             return "未知错误";
@@ -212,7 +212,7 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public void userAccepted(long orderId) {
         Orders orders = ordersRepository.findById(orderId);
-        orders.setOrder_status("未评价");
+        orders.setOrder_status("待评价");
         ordersRepository.save(orders);
     }
 

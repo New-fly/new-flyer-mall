@@ -54,7 +54,7 @@
     background-color: #FF4400;
 }
 .navheader{
-    width: 1200px;
+    width: 1000px;
     margin: 0 auto;
     color: #fff;
     height: 54px;
@@ -66,11 +66,11 @@
     color: white;
 }
 .allcoection{
-    width: 1200px;
+    width: 1000px;
     margin: 0 auto;
 }
 .allcoectionheader{
-    width: 1200px;
+    width: 1000px;
     margin: 0 auto;
     color: red;
     height: 54px;
@@ -78,15 +78,16 @@
     font-size: 16px;
 }
 .baby{
-    width: 1180px;
-    margin: 10px;
-
+    width: 1000px;
+    margin: 0 auto;
+    height: 500px;
+    overflow: hidden;
 }
 .showall{
     width: 150px;
    background-color: #fff;
     display: inline-block;
-    margin: 10px;
+    margin: 23px;
 }
 .showpic{
     width: 148px;
@@ -102,7 +103,7 @@
     height: 20px;
 }
 .hotsell{
-    width: 1200px;
+    width: 1000px;
     margin: 0 auto;
 }
 .hotsellheader{
@@ -116,16 +117,16 @@
     background-color: #F2F2F2;
 }
 .today{
-    width: 1220px;
+    /*width: 1220px;*/
     height:auto;
+    width: 1000px;
     position: relative;
     margin: 0 auto;
     overflow: hidden;
 }
 .block-2{
     width: 204px;
-    /*height: 265px;*/
-    margin: 10px;
+    margin: 14px;
     padding: 5px;
     float: left;
     position: relative;
