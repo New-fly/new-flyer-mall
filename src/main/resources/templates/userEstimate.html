@@ -36,16 +36,14 @@
     <div class="aside">
         <div>
             <dl>
-                <dt>全部功能</dt>
-                <dd><a href="#" target="_self">购物车</a></dd>
-                <dd><a href="#" target="_self">购买的宝贝</a></dd>
-                <dd><a href="#" target="_self">足迹</a></dd>
-                <dd><a href="#" target="_self">我的收藏</a></dd>
-                <dd><a href="#" target="_self">我的积分</a></dd>
-                <dd><a href="#" target="_self">我的优惠信息</a></dd>
-                <dd><a href="#" target="_self">我的发票</a></dd>
-                <dd><a href="#" target="_self">会员中心</a></dd>
-                <dd><a href="#" target="_self">退款维护</a></dd>
+				<dt>全部功能</dt>
+				<dd><a th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}" target="_self">购物车</a></dd>
+				<dd><a th:href="@{/UserOrderController/userOrderList(userId=${session.user.userId})}" target="_self">我的淘宝</a></dd>
+				<dd><a th:href="@{/FootprintController/userFootprint(userId=${session.user.userId})}" target="_self">我的足迹</a></dd>
+				<dd><a th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}" target="_self">我的收藏</a></dd>
+				<dd><a th:href="@{/IntegralController/integralList(userId=${session.user.userId})}" target="_self">我的积分</a></dd>
+				<dd><a th:href="@{/EstimateController/userEstimate(userId=${session.user.userId})}" target="_self">我的评价</a></dd>
+				<dd><a th:href="@{/ProductListController/integralProduct}" target="_self">积分兑换</a></dd>
             </dl>
         </div>
     </div>
@@ -60,9 +58,9 @@
 		      </tr>
 		   </thead>
 		   <tbody>
-		      	<tr>
+		      	<tr th:each="productEstimat : ${productEstimates}">
 		         	<td>
-		         		<span>
+		         		<span th:text="${productEstimat.estimate_content}">
 		         		[来自天猫] 此用户没有填写评价。[来自天
 		         		猫] 此用户没有填写评价。[来自天猫]
 		         		 此用户没有填写评价。[来自天猫] 此用户没有填
@@ -72,58 +70,7 @@
 		         		<span class="date"></span>
 		         	</td>
 		         	<td>商家： 兴业鹰旗舰店</td>
-		         	<td>夏装短袖T恤修身纯棉圆领印花T恤青年学生全棉半袖个...98.0元</td>
-		         	<td>
-		         		<input type="submit" value="匿名评价"/>
-		         	</td>
-		      	</tr>
-		      	<tr>
-		         	<td>
-		         		<span>
-		         		[来自天猫] 此用户没有填写评价。[来自天
-		         		猫] 此用户没有填写评价。[来自天猫]
-		         		 此用户没有填写评价。[来自天猫] 此用户没有填
-		         		 写评价。[来自天猫] 此用户没有填写评价。[来
-		         		 自天猫] 此用户没有填写评价。[来自天猫]
-		         		</span>
-		         		<span class="date"></span>
-		         	</td>
-		         	<td>商家： 兴业鹰旗舰店</td>
-		         	<td>夏装短袖T恤修身纯棉圆领印花T恤青年学生全棉半袖个...98.0元</td>
-		         	<td>
-		         		<input type="submit" value="匿名评价"/>
-		         	</td>
-		      	</tr>
-		      	<tr>
-		         	<td>
-		         		<span>
-		         		[来自天猫] 此用户没有填写评价。[来自天
-		         		猫] 此用户没有填写评价。[来自天猫]
-		         		 此用户没有填写评价。[来自天猫] 此用户没有填
-		         		 写评价。[来自天猫] 此用户没有填写评价。[来
-		         		 自天猫] 此用户没有填写评价。[来自天猫]
-		         		</span>
-		         		<span class="date"></span>
-		         	</td>
-		         	<td>商家： 兴业鹰旗舰店</td>
-		         	<td>夏装短袖T恤修身纯棉圆领印花T恤青年学生全棉半袖个...98.0元</td>
-		         	<td>
-		         		<input type="submit" value="匿名评价"/>
-		         	</td>
-		      	</tr>
-		      	<tr>
-		         	<td>
-		         		<span>
-		         		[来自天猫] 此用户没有填写评价。[来自天
-		         		猫] 此用户没有填写评价。[来自天猫]
-		         		 此用户没有填写评价。[来自天猫] 此用户没有填
-		         		 写评价。[来自天猫] 此用户没有填写评价。[来
-		         		 自天猫] 此用户没有填写评价。[来自天猫]
-		         		</span>
-		         		<span class="date"></span>
-		         	</td>
-		         	<td>商家： 兴业鹰旗舰店</td>
-		         	<td>夏装短袖T恤修身纯棉圆领印花T恤青年学生全棉半袖个...98.0元</td>
+		         	<td th:text="${productEstimat.product_keywords}">夏装短袖T恤修身纯棉圆领印花T恤青年学生全棉半袖个...98.0元</td>
 		         	<td>
 		         		<input type="submit" value="匿名评价"/>
 		         	</td>
