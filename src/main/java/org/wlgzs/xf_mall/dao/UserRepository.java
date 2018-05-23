@@ -38,7 +38,7 @@ public interface UserRepository extends JpaRepository<User, Long>,JpaSpecificati
     @Transactional
     void changePassword(String user_rePassword,long userId);
 
-    @Query("UPDATE User u SET u.user_password=user_password WHERE u.user_mail=user_mail")
+    @Query("UPDATE User u SET u.user_password=?1 WHERE u.user_mail=?2")
     @Modifying
     @Transactional
     void changePassword(String user_password,String user_mail);
