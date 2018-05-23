@@ -67,9 +67,13 @@ public class ProductListController extends BaseController {
         HttpSession session = request.getSession();
         if(session.getAttribute("userId")!=null){
             long userId = (long) session.getAttribute("userId");
+            //添加足迹
             Collection collection = productService.findByCollectionUserIdAndProductId(userId,productId);
             model.addAttribute("collection",collection);
             footprintService.save(request,userId,productId);
+            //推荐商品
+            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+            model.addAttribute("recommendedProducts", recommendedProducts);
         }
         Product product = productService.findProductById(productId);
         long count = ordersService.searchProductCount(productId);
@@ -268,33 +272,39 @@ public class ProductListController extends BaseController {
     @RequestMapping("/searchProductList")
     public ModelAndView searchProductList(Model model, HttpServletRequest request, String product_category, @RequestParam(value = "page",defaultValue = "0") int page,
                                           @RequestParam(value = "limit",defaultValue = "12") int limit){
-        if(page != 0) page--;
-        Page<Product> pages = productService.findProductByTwoCategory(product_category, page, limit);
-        model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
-        model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
-        List<Product> products = pages.getContent();
-        String img;
-        for(int i = 0; i < products.size(); i++) {
-            if (products.get(i).getProduct_picture().contains(",")){
-                img = products.get(i).getProduct_picture();
-                img = img.substring(0,img.indexOf(","));
-                System.out.println("前台模糊搜索商品");
-                products.get(i).setProduct_picture(img);
+        //查询关键字是否为敏感词汇
+        if(searchShieldService.querySensitive(product_category)){
+            if(page != 0) page--;
+            Page<Product> pages = productService.findProductByTwoCategory(product_category, page, limit);
+            model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
+            model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
+            List<Product> products = pages.getContent();
+            String img;
+            for(int i = 0; i < products.size(); i++) {
+                if (products.get(i).getProduct_picture().contains(",")){
+                    img = products.get(i).getProduct_picture();
+                    img = img.substring(0,img.indexOf(","));
+                    System.out.println("前台模糊搜索商品");
+                    products.get(i).setProduct_picture(img);
+                }
             }
-        }
-        model.addAttribute("products", products);//查询的当前页的集合
-        model.addAttribute("product_category",product_category);
-        //遍历一级二级分类
-        List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();
-        model.addAttribute("productOneCategories", productOneCategories);
-        List<ProductCategory> productTwoCategories = productService.findProductTwoCategoryList();
-        model.addAttribute("productTwoCategories", productTwoCategories);
-        //推荐商品
-        HttpSession session = request.getSession();
-        if(session.getAttribute("user")!=null){
-            long userId = (long) session.getAttribute("userId");
-            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
-            model.addAttribute("recommendedProducts", recommendedProducts);
+            model.addAttribute("products", products);//查询的当前页的集合
+            System.out.println("列表"+products);
+            model.addAttribute("product_category",product_category);
+            //遍历一级二级分类
+            List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();
+            model.addAttribute("productOneCategories", productOneCategories);
+            List<ProductCategory> productTwoCategories = productService.findProductTwoCategoryList();
+            model.addAttribute("productTwoCategories", productTwoCategories);
+            //推荐商品
+            HttpSession session = request.getSession();
+            if(session.getAttribute("user")!=null){
+                long userId = (long) session.getAttribute("userId");
+                List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+                model.addAttribute("recommendedProducts", recommendedProducts);
+            }
+        }else{
+            model.addAttribute("mag","抱歉您搜索的商品不存在");
         }
         return new ModelAndView("productList");
     }

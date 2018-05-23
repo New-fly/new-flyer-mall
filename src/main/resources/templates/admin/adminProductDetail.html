@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>查看商品信息</title>
+    <link th:href="@{/css/adminEditProduct.css}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.css}">
+    <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/release/wangEditor-fullscreen-plugin.css}">
+</head>
+<body>
+<div class="windoww">
+    <div class="popup-windows">
+        <h2 style="text-align: center">查看商品信息</h2>
+        <form th:action="@{/AdminProductController/adminEditProduct(productId=${product.productId})}" method="post" th:object="${product}"  enctype="multipart/form-data" onsubmit="modifyContent()">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th>库存</th>
+                    <td><input type="text" readonly name="product_inventory" class="form-control" th:value="*{product_inventory}"id="keywords" /></td>
+                </tr>
+                <tr>
+                    <th>活动名称</th>
+                    <td><input type="text" readonly name="product_activity" class="form-control"th:value="*{product_activity}" id="condition" /></td>
+                </tr>
+                <tr>
+                    <th>类别</th>
+                    <td><input type="text" readonly name="product_category" class="form-control"th:value="*{product_category}" id="price1" /></td>
+                </tr>
+                <tr>
+                    <th>图片</th>
+                    <td><input type="text" readonly name="product_picture" class="form-control"th:value="*{product_counterPrice}" id="price2" /></td>
+                </tr>
+                <tr>
+                    <th>是否可兑换</th>
+                    <td>
+                        <select name="product_isRedeemable" th:field="*{product_isRedeemable}">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>是否上架</th>
+                    <td>
+                        <select name="product_isShelf"  th:field="*{product_isShelf}">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>是否热门</th>
+                    <td>
+                        <select name="product_isTop"  th:field="*{product_isTop}">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>商城名称</th>
+                    <td><input type="text" readonly name="product_keywords" class="form-control"th:value="*{product_keywords}" id="kind" /></td>
+                </tr>
+                <tr>
+                    <th>商城价</th>
+                    <td><input type="text" readonly name="product_mallPrice"  class="form-control"th:value="*{product_mallPrice}" id="activity"></td>
+                </tr>
+                <tr>
+                    <th>需要积分</th>
+                    <td><input type="text" readonly name="product_needPoints"  class="form-control"th:value="*{product_needPoints}" id="activity"></td>
+                </tr>
+                <tr>
+                    <th>得到积分</th>
+                    <td><input type="text" readonly name="product_getPoints"  class="form-control"th:value="*{product_getPoints}" id="activity"></td>
+                </tr>
+                <tr>
+                    <th>服务类型</th>
+                    <td><input type="text" readonly name="product_serviceType"  class="form-control"th:value="*{product_serviceType}" id="activity"></td>
+                </tr>
+                <tr>
+                    <th>商品规格</th>
+                    <td><input type="text" readonly name="product_specification"  class="form-control"th:value="*{product_specification}" id="activity"></td>
+                </tr>
+                <tr>
+                    <th style="padding-top: 64px;">上传图片</th>
+                    <td>
+                        <img th:width="80px" th:height="80px" th:each="img : ${images}" th:src="${img}">
+                    </td>
+                </tr>
+            </table>
+            <div class="form-group" th:utext="*{product_details}">
+
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <a th:href="@{/AdminProductController/adminProductList}">
+                        <input type="button" value="返回"  class="btn btn-info" id="cancel" style="background-color: orangered;margin-left: -124px;"/>
+                    </a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+</body>
+</html>

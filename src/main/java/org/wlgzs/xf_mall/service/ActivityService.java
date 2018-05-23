@@ -22,4 +22,6 @@ public interface ActivityService {
     void editActivity(long activitySumId,MultipartFile myFileName, HttpSession session, HttpServletRequest request);
 
     void deleteActivity(long activityId);
+
+    Activity findByActivityName(String activity_name);
 }

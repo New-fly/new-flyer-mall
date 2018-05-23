@@ -1,5 +1,6 @@
 package org.wlgzs.xf_mall.dao;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -36,4 +37,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>,JpaSpeci
     @Query("SELECT o FROM Product o WHERE o.productId in :productIds")
     List<Product> findProductByProductId(@Param(value = "productIds") long [] productIds);
 
+    @Query("SELECT o FROM Product o ")
+    List<Product> getProductList(Sort sort);
 }

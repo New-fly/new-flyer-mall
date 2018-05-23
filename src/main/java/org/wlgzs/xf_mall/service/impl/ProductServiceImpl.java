@@ -293,7 +293,7 @@ public class ProductServiceImpl implements ProductService {
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
         //商品分类，活动，服务类型三种方式
-        Specification<Product> specification = new PageUtil<Product>(product_category).getPage("product_category","product_serviceType","product_activity");
+        Specification<Product> specification = new PageUtil<Product>(product_category).getPage("product_category","product_serviceType","product_activity","product_keywords");
         Page pages = productRepository.findAll(specification, pageable);
         System.out.println(pages);
         return pages;
@@ -400,6 +400,7 @@ public class ProductServiceImpl implements ProductService {
                 }
             }
             productCategory.setCategory_img(request.getContextPath() + "/category/" + realName);
+            productCategory.setCategory_show(Integer.parseInt(request.getParameter("category_show")));
             productCategory.setParent_name("0");
         }
         productCategoryRepository.save(productCategory);
@@ -687,7 +688,6 @@ public class ProductServiceImpl implements ProductService {
                 products = productRepository.findProductByTwoCategory(product_categories);
                 String img;
                 for(int i = 0; i < products.size(); i++) {
-                    System.out.println("推荐商品");
                     if (products.get(i).getProduct_picture().contains(",")){
                         img = products.get(i).getProduct_picture();
                         img = img.substring(0,img.indexOf(","));
@@ -696,7 +696,6 @@ public class ProductServiceImpl implements ProductService {
                 }
             }
         }
-        System.out.println(products);
         return products;
     }
     //主页商品数据
@@ -738,6 +737,14 @@ public class ProductServiceImpl implements ProductService {
         }
         return products;
     }
+
+    //主页最新商品
+    @Override
+    public List<Product> getProductList() {
+        Sort sort = new Sort(Sort.Direction.DESC, "productId");
+        return productRepository.getProductList(sort);
+    }
+
     private List<Product> productOneCategory(String category_name) {
         List<ProductCategory> productCategories = productCategoryRepository.findByCategoryParentNameAndTwo(category_name);
         ProductCategory[] toBeStored = productCategories.toArray(new ProductCategory[productCategories.size()]);

@@ -37,8 +37,8 @@ public class ProductActivityServiceImp implements ProductActivityService {
 
     //前台活动商品展示（不分页）
     @Override
-    public List<ProductActivity> activityProductList() {
-        return productActivityRepository.findAll();
+    public List<ProductActivity> activityProductList(String activity_name) {
+        return productActivityRepository.findByActivityName(activity_name);
     }
 
     //活动页面分页

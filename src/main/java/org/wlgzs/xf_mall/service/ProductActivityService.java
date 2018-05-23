@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface ProductActivityService {
 
-    List<ProductActivity> activityProductList();
+    List<ProductActivity> activityProductList(String activity_name);
 
     Page<ProductActivity> activityProductList(String product_keywords, int page, int limit);
 

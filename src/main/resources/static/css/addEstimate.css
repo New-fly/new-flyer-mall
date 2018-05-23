@@ -1,0 +1,16 @@
+.information{
+    width: 800px;
+    height: auto;
+    margin: 0 auto;
+    position: relative;
+}
+.information-left{
+    width: 50%;
+    height: auto;
+    float: left;
+}
+.information-right{
+    width: 50%;
+    height: auto;
+    float: left;
+}

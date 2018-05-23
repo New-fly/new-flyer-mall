@@ -152,9 +152,9 @@
         </div>
         <!--//推荐商品-->
         <div th:if="${session.user != null}">
-            <div class="headersell">热门推荐</div>
+            <div class="headersell">猜你喜欢</div>
             <div class="hotsell">
-                <figure th:each="recommendedProducts:${recommendedProducts}">
+                <figure th:each="recommendedProducts : ${recommendedProducts}">
                     <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}">
                         <img th:src="${recommendedProducts.product_picture}" style="width: 232px;height: 232px;">
                     </a>

@@ -16,19 +16,19 @@
 	<!--遮屏弹窗  修改内容-->
 <div class="windoww">
     <div class="popup-windows">
-        <h2 style="text-align: center">新增数据</h2>
+        <h2 style="text-align: center">修改订单</h2>
         <form th:object="${order}" th:action="@{/OrderController/changeProductOrder(orderId=*{orderId})}" method="post">
             <table class="table table-hover table-bordered">
                 <tr>
-                    <th>address_name</th>
+                    <th>收货人</th>
                     <td><input type="text" name="address_name" th:value="*{address_name}" class="form-control" id="Name" /></td>
                 </tr>
                 <tr>
-                    <th>address_phone</th>
+                    <th>收货电话</th>
                     <td><input type="text" name="address_phone" th:value="*{address_phone}" class="form-control" id="Mumber" /></td>
                 </tr>
                 <tr>
-                    <th>address_shipping</th>
+                    <th>收货地址</th>
                     <td><input type="text" name="address_shipping" th:value="*{address_shipping}" class="form-control" id="Picture" /></td>
                 </tr>
                 <tr>

@@ -44,6 +44,7 @@
         <td th:text="${product.product_mallPrice}"></td>
         <td>
             <a th:href="@{/AdminActivityController/toAdminAddActivity(productId=${product.productId})}" class="aa2" style="width: 85px;">添加为活动</a>
+            <a class="aa3 aa" th:href="@{/AdminProductController/toProductDetail(productId=${product.productId})}">查看</a>
             <a class="aa2" href="javascript:void(0);" th:onclick="'javascript:deleteProduct('+${product.productId}+');'">删除</a>
             <a class="aa3 aa" th:href="@{/AdminProductController/toAdminEditProduct(productId=${product.productId})}">修改</a>
         </td>
@@ -80,7 +81,7 @@
         </li>
         <li th:if="${Number != TotalPages}">
             <a th:href="@{/AdminProductController/adminProductList(page=${Number+1})}"  style="width: 70px">下一页</a></li><!--//请求页数+1-->
-        <li><a th:href="@{/AdminProductController/adminProductList(page=${Number})}">尾页</a></li><!--//跳转至第Number页-->
+        <li><a th:href="@{/AdminProductController/adminProductList(page=${TotalPages})}">尾页</a></li><!--//跳转至第Number页-->
     </ul>
 
 </div>
