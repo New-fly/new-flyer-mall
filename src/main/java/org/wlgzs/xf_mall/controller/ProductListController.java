@@ -304,6 +304,7 @@ public class ProductListController extends BaseController {
         }
         return new ModelAndView("productList");
     }
+
     //积分商品展示
     @RequestMapping("/integralProduct")
     public ModelAndView findByProduct_isRedeemable(Model model) {
