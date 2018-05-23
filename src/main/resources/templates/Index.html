@@ -19,6 +19,7 @@
 <body>
 <!--<div th:include="common/top_header :: copy"></div>-->
 <!--<div th:include="common/top_header :: duplicate"></div>-->
+<input type="text" th:value="${activity}" class="activity_time" style="display: none" />
 <div th:include="common/top_header :: copy"></div>
 <div class="title">
     <img th:href="@{/HomeController/homeProduct}" th:src="@{/images/logo.png}" height="100%" style="float: left;"/>
@@ -83,13 +84,13 @@
         </div>
     </div>
     <div class="classify-right">
-        <div class="classify-right-long">
-            <img class="lunbo" th:src="@{/images/01.jpg}" alt="">
-            <img class="lunbo" th:src="@{/images/03.jpg}" alt="">
-            <img class="lunbo" th:src="@{/images/01.jpg}" alt="">
-            <img class="lunbo" th:src="@{/images/03.jpg}" alt="">
-            <img class="lunbo" th:src="@{/images/01.jpg}" alt="">
-        </div>
+        <a th:href="@{/ActivityController/activityProducts}">
+            <div class="classify-right-long" >
+                <img class="lunbo"th:each="active : ${activities}" th:src="${active.activity_picture}" alt="">
+                <img class="lunbo"th:each="active : ${activities}" th:src="${active.activity_picture}" alt="">
+                <img class="lunbo"th:each="active : ${activities[0]}" th:src="${active.activity_picture}" alt="">
+            </div>
+        </a>
         <div class="last">
             <div class="last_1">
                 <span class="last1"><i class="fa fa-chevron-left fa-3x"></i></span>
@@ -118,9 +119,10 @@
             <span class="count-down-text-little">距离本次抢购剩余：</span><br/>
             <!--<p class="count-down-p"><span id="time">a</span></p>-->
             <div id="aa">
-                <div class="time1" id="time1">0</div>
-                <div class="time2" id="time2">0</div>
-                <div class="time3" id="time3">0</div>
+                <div class="time4" id="time4"></div>
+                <div class="time1" id="time1"></div>
+                <div class="time2" id="time2"></div>
+                <div class="time3" id="time3"></div>
             </div>
         </div>
     </div>

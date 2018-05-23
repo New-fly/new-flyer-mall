@@ -29,7 +29,7 @@ window.onload = function(){
             document.getElementsByClassName("classify-right-long")[0].style.transition="2s";
             document.getElementsByClassName("classify-right-long")[0].style.left=place+"px";
         };
-    },5000);
+    },6000);
     document.getElementsByClassName("last_1")[0].onclick=function(){
         place=place-1000;
         if(place<-4000){
@@ -54,13 +54,14 @@ window.onload = function(){
     function tow(n) {
         return n >= 0 && n < 10 ? '0' + n : '' + n;
     }
+
     function getDate(){
         var oDate = new Date();
         var oldTime = oDate.getTime();
-        var newDate = new Date("2018/5/28 00:00:00");
+        var newDate= new Date(document.getElementsByClassName("activity_time")[0].value);
         var newTime = newDate.getTime();
         var second = Math.floor((newTime - oldTime)/1000);
-        // var day = Math.floor(second/86400);
+        var day = Math.floor(second/86400);
         second = second % 86400;
         var hour = Math.floor(second/3600);
         second %= 3600;
@@ -69,6 +70,7 @@ window.onload = function(){
         document.getElementById("time1").innerHTML=tow(hour);
         document.getElementById("time2").innerHTML=tow(minute);
         document.getElementById("time3").innerHTML=tow(second);
+        document.getElementById("time4").innerHTML=tow(day);
     }
     getDate();
     setInterval(getDate, 1000);

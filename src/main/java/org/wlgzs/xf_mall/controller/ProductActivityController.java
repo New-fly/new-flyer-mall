@@ -42,6 +42,7 @@ public class ProductActivityController extends BaseController {
         String time = String.valueOf(activity.getActivity_time());
         time = time.substring(0,time.length()-5);
         model.addAttribute("time",time);
+        model.addAttribute("activityTime",activity.getActivity_time());
         model.addAttribute("activity",activity);
         //推荐商品
         HttpSession session = request.getSession();
