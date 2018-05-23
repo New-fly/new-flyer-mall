@@ -145,6 +145,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePassword(String user_password, String user_mail) {
+        System.out.println("123456==="+user_mail);
         userRepository.changePassword(user_password,user_mail);
     }
 

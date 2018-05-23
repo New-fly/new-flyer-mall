@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>账号管理-修改收货地址</title>
+    <link th:href="@{/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/am-address.css}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+</head>
+<body>
+<div th:include="common/top_header :: copy"></div>
+<div class="nav">
+    <div class="navheader">账号管理</div>
+</div>
+<div class="containers">
+    <div class="aside">
+        <a href="#"><img th:src="${session.user.user_avatar}" class="headphoto"></a>
+        <div>
+            <dl>
+                <dt>账号管理</dt>
+                <dd><a th:href="@{/UserManagementController/toSafety(userId=${session.user.userId})}" target="_self">安全设置</a>
+                </dd>
+                <dd><a th:href="@{/UserManagementController/information(userId=${session.user.userId})}" target="_self">个人资料</a>
+                </dd>
+                <dd><a th:href="@{/UserAddressController/shippingAddress(user_name=${session.user.user_name})}"
+                       target="_self">收货地址</a></dd>
+            </dl>
+        </div>
+    </div>
+    <div class="content">
+        <p class="navp">收货地址</p>
+        <div class="item1">
+            <label>所在地区</label>
+            <div data-toggle="distpicker" data-autoselect="3">
+                <select id="prov"></select>
+                <select id="city"></select>
+                <select id="dist"></select>
+            </div>
+        </div>
+        <form th:action="@{/UserAddressController/addShippingAddress}" method="post">
+            <input name="addressId" type="hidden" th:value="${shippingAddress.addressId}">
+            <div class="item1">
+                <label style="vertical-align: top;">详细地址</label><textarea class="form-control texar"
+                                                                          rows="3" id="text"></textarea>
+                <input type="hidden" name="address_shipping" id="text2" value="">
+            </div>
+             <input type="hidden" style="display: none" th:value="${session.user.user_name}" name="user_name">
+            <div class="item1">
+                <label>收货人姓名</label><input type="text" name="address_name"
+                                           placeholder="请输入收货人姓名" th:value="${shippingAddress.address_name}" class="ipt1">
+            </div>
+            <div class="item1">
+                <label>手机号码&nbsp;&nbsp;&nbsp;</label><input type="text" th:name="address_phone" th:value="${shippingAddress.address_phone}" placeholder="请输入你的手机号"
+                                                            class="ipt1">
+            </div>
+            <div class="item1">
+                <input type="checkbox" value="0" name="address_is_default"
+                       onclick="this.value=(this.value==0)?1:0"><span>设置为默认收货地址</span>
+                <div class="item1">
+                    <button id="btn1" class="btn">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script th:src="@{/js/am-address.js}"></script>
+</body>
+</html>

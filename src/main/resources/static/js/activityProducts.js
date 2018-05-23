@@ -4,7 +4,8 @@ function tow(n) {
 function getDate(){
     var oDate = new Date();
     var oldTime = oDate.getTime();
-    var newDate = new Date("2018/5/18 0:00:00");
+    // var newDate = new Date("2018/5/25 00:00:00");
+    var newDate= new Date(document.getElementsByClassName("activity_time")[0].value);
     var newTime = newDate.getTime();
     var second = Math.floor((newTime - oldTime)/1000);
     var day = Math.floor(second/86400);

@@ -43,7 +43,8 @@ public class ProductEstimateController extends BaseController {
     @RequestMapping("/AddEstimate")
     public ModelAndView AddEstimate(HttpServletRequest request, @RequestParam("file") MultipartFile[] myFileNames, HttpSession session, long orderId){
         productEstimateService.save(request,myFileNames,session,orderId);
-        return new ModelAndView("redirect:/OrderController/findUserOrder");
+        long userId = (long) session.getAttribute("userId");
+        return new ModelAndView("redirect:/UserOrderController/userOrderList?userId="+userId);
     }
     /**
      * @author 阿杰

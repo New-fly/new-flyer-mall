@@ -2,9 +2,7 @@ package org.wlgzs.xf_mall.controller;
 
 
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
@@ -230,9 +228,18 @@ public class UserManagementController extends BaseController {
      * @date 2018/5/3 8:43
      * @Description:找回密码发送邮箱
      */
-    @RequestMapping("sendRetrievePassword")
-    public void sendRetrievePassword(HttpServletRequest request, String user_mail) {
-        logUserService.sendEmail2(request, user_mail);//发送
+    @ResponseBody
+    @RequestMapping(value = "sendRetrievePassword", method = RequestMethod.POST)
+    public String sendRetrievePassword(HttpServletRequest request) {
+        String user_mail = request.getParameter("user_mail");
+        //判断邮箱是否存在
+        if(!logUserService.selectEmail(user_mail)){
+            System.out.println("进入");
+            System.out.println(user_mail);
+            logUserService.sendEmail2(request, user_mail);//发送
+            return "成功";
+        }
+        return "该邮箱还未注册";
     }
 
 
@@ -247,7 +254,7 @@ public class UserManagementController extends BaseController {
     public ModelAndView passwordContrastCode(Model model, HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        String user_mail = "";
+        String user_mail = request.getParameter("user_mail");
         String sessionMail = "";
         String usercode = "";
         String sessioncode = "";
@@ -272,6 +279,8 @@ public class UserManagementController extends BaseController {
     @RequestMapping("retrievePassword")
     public ModelAndView retrievePassword(Model model, HttpServletRequest request, String user_mail) {
         String user_password = request.getParameter("user_password");
+        System.out.println(user_mail);
+        System.out.println(user_password);
         userService.changePassword(user_password, user_mail);
         model.addAttribute("mgs", "修改成功");
         return new ModelAndView("login");

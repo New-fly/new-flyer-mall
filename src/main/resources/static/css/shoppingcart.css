@@ -183,7 +183,7 @@ input{
 .recommendedProduct{
 	width: 170px;
 	height: auto;
-	display: inline-block;
+	float: left;
 	/*background-color: #FCFCFC;*/
 	margin: 10px;
 	border: 1px solid grey;
@@ -201,4 +201,6 @@ s{
 .spansty{
 	color: gray;
 	font-size: 14px;
+	display: block;
+	height: 60px;
 }

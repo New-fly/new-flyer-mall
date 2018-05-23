@@ -10,6 +10,7 @@
     <script th:src="@{/js/jquery.js}"></script>
 </head>
 <body>
+<input type="text" th:value="${activityTime}" class="activity_time" style="display: none" />
 <div th:include="common/top_header::header"></div>
 <div class="bacg">
     <div class="countdown">
@@ -70,7 +71,7 @@
                             <span th:text="${recommendedProducts.product_mallPrice}">1119元</span><s
                                 th:text="${recommendedProducts.product_counterPrice}">444元</s><br>
                             <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}"
-                               style="margin-top: 10px;height: 33px;" th:text="${recommendedProducts.product_keywords}">防护围绕风格UR圣诞节开发环境而我</a><br>
+                               style="margin-top: 10px; height:33px;" th:text="${recommendedProducts.product_keywords}">防护围绕风格UR圣诞节开发环境而我</a><br>
                         </div>
                     </div>
                     <!--<div class="showpicture"></div>-->

@@ -131,18 +131,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr th:each="productEstimat : ${productEstimates}">
                                 <td style="width: 500px;">
-                                    <span>
+                                    <span th:text="${productEstimat.estimate_content}">
                                     [来自天猫] 此用户没有填写评价。[来自天猫] 此用户没有填写评价。[来自天猫]此用户没有填写评价.
                                     </span>
                                     <br />
                                     <span class="date">
-                                        <img th:src="@{/images/05.jpg}" style="width:50px">
+                                        <img th:src="${productEstimat.estimate_img}" style="width:50px">
                                     </span>
                                 </td>
-                                <td style="text-align: center;vertical-align:middle">颜色分类</td>
-                                <td style="text-align: center;vertical-align:middle">张三</td>
+                                <td style="text-align: center;vertical-align:middle" th:text="${productEstimat.product_specification}">颜色分类</td>
+                                <td style="text-align: center;vertical-align:middle" th:if="${productEstimat.estimate_isNameless == 0}" th:text="${productEstimat.user_name}">张三</td>
                             </tr>
                         </tbody>
                     </table>

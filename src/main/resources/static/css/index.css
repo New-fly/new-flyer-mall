@@ -463,13 +463,13 @@
 	letter-spacing: 0;
 	margin: 0;
 }
-.time1,.time2,.time3{
+.time1,.time2,.time3,.time4{
     width: 30px;
     height: 30px;
     background-color: ghostwhite;
     float: left;
     display: inline;
-    margin: 5px 15px;
+    margin: 5px 7px;
     text-align: center;
     line-height: 30px;
     font-size: 20px;
