@@ -153,9 +153,7 @@ public class ProductServiceImpl implements ProductService {
     //通过id查找商品
     @Override
     public Product findProductById(long productId) {
-        Product product = productRepository.findById(productId);
-        System.out.println(product.getProduct_picture());
-        return  productRepository.findById(productId);
+        return productRepository.findById(productId);
     }
 
     //通过id查询商品  返回集合
