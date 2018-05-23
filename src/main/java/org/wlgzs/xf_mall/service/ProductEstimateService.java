@@ -21,4 +21,6 @@ public interface ProductEstimateService {
     List<ProductEstimate> findEstimateByproductId(long productId);
 
     void changeEstimate(long estimateId);
+
+    long findEstimateCount(long productId);
 }

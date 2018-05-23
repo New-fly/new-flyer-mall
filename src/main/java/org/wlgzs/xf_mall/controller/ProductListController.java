@@ -64,6 +64,17 @@ public class ProductListController extends BaseController {
      */
     @RequestMapping("/toProduct")
     public ModelAndView toProduct(Model model, long productId,HttpServletRequest request) {
+        Product product = productService.findProductById(productId);
+        long count = ordersService.searchProductCount(productId);
+        model.addAttribute("count",count);
+        long estimateCount = productEstimateService.findEstimateCount(productId);
+        model.addAttribute("estimateCount",estimateCount);
+        String [] images = new String[0];
+        if (product.getProduct_picture().contains(",")) {
+            images = product.getProduct_picture().split(",");
+        }
+        model.addAttribute("images",images);
+        model.addAttribute("product", product);
         HttpSession session = request.getSession();
         if(session.getAttribute("userId")!=null){
             long userId = (long) session.getAttribute("userId");
@@ -75,15 +86,6 @@ public class ProductListController extends BaseController {
             List<Product> recommendedProducts = productService.recommendedByUserId(userId);
             model.addAttribute("recommendedProducts", recommendedProducts);
         }
-        Product product = productService.findProductById(productId);
-        long count = ordersService.searchProductCount(productId);
-        model.addAttribute("count",count);
-        String [] images = new String[0];
-        if (product.getProduct_picture().contains(",")) {
-            images = product.getProduct_picture().split(",");
-        }
-        model.addAttribute("images",images);
-        model.addAttribute("product", product);
         return new ModelAndView("productDetails");
     }
     /**
@@ -289,7 +291,6 @@ public class ProductListController extends BaseController {
                 }
             }
             model.addAttribute("products", products);//查询的当前页的集合
-            System.out.println("列表"+products);
             model.addAttribute("product_category",product_category);
             //遍历一级二级分类
             List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();

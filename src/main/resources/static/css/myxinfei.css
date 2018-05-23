@@ -115,7 +115,7 @@ dd>a:hover{
 	font-size: 15px;
 	float: left;
 	text-align: center;
-	margin-left: 25px;
+	margin-left: 74px;
 }
 .single{
 	width: 1065px;
@@ -128,8 +128,8 @@ dd>a:hover{
 	margin-top: 10px;
 }
 .single-introduce{
-	width: 150px;
-	height: 48px;
+	width: 216px;
+	height: 70px;
 	float: left;
 	color: gray;
 	overflow: hidden;
@@ -150,6 +150,7 @@ dd>a:hover{
 	line-height: 16px;
 	text-align:center;
 	font-size: 13px;
+	margin-left: 78px;
 }
 .single-text>a,.single-text-a>a{
 	color: gray;

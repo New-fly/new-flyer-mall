@@ -107,4 +107,10 @@ public class ProductEstimateServiceImpl implements ProductEstimateService {
         productEstimate.setEstimate_isNameless(1);
         productEstimateRepository.save(productEstimate);
     }
+
+    //查询商品评价数
+    @Override
+    public long findEstimateCount(long productId) {
+        return productEstimateRepository.findCount(productId);
+    }
 }
