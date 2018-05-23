@@ -230,11 +230,16 @@ public class UserManagementController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "sendRetrievePassword", method = RequestMethod.POST)
-    public void sendRetrievePassword(HttpServletRequest request) {
+    public String sendRetrievePassword(HttpServletRequest request) {
         String user_mail = request.getParameter("user_mail");
-        System.out.println("进入");
-        System.out.println(user_mail);
-        logUserService.sendEmail2(request, user_mail);//发送
+        //判断邮箱是否存在
+        if(!logUserService.selectEmail(user_mail)){
+            System.out.println("进入");
+            System.out.println(user_mail);
+            logUserService.sendEmail2(request, user_mail);//发送
+            return "成功";
+        }
+        return "该邮箱还未注册";
     }
 
 
