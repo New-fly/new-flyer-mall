@@ -84,7 +84,7 @@ public class ProductEstimateServiceImpl implements ProductEstimateService {
         productEstimate.setProduct_picture(orders.getProduct_picture());
         productEstimate.setProduct_specification(orders.getProduct_specification());
         productEstimateRepository.save(productEstimate);
-        orders.setOrder_status("未评价");
+        orders.setOrder_status("交易成功");
         ordersRepository.save(orders);
     }
 

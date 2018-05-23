@@ -21,9 +21,9 @@ public interface OrdersService {
 
     List<Orders> findOrdersByOrderNumber(String order_number);
 
-    Orders findOrdersById(long id);
+    Orders findOrdersById(long orderId);
 
-    String delete(long id);
+    String delete(long orderId);
 
     List<Orders> findOrdersByUserName(String user_name);
 

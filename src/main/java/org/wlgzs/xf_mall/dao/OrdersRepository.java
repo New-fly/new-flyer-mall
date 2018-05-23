@@ -17,7 +17,7 @@ import java.util.List;
 public interface OrdersRepository extends JpaRepository<Orders, Long>,JpaSpecificationExecutor<Orders> {
 
     //通过id获得订单信息
-    Orders findById(long id);
+    Orders findById(long orderId);
 
  /*  @Query(value = "SELECT * FROM orders WHERE product_keywords like %:product_keywords%", nativeQuery = true)
     List<Orders> findByProductKeywords(@Param("product_keywords") String product_keywords);
