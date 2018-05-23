@@ -57,7 +57,7 @@ window.onload = function(){
     function getDate(){
         var oDate = new Date();
         var oldTime = oDate.getTime();
-        var newDate = new Date("2018/5/28 0:00:00");
+        var newDate = new Date("2018/5/28 00:00:00");
         var newTime = newDate.getTime();
         var second = Math.floor((newTime - oldTime)/1000);
         // var day = Math.floor(second/86400);
