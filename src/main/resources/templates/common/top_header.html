@@ -56,7 +56,7 @@
 	                        <i class="fa fa-paw"></i>&nbsp;&nbsp;我的积分</a>
 	                </li>
 					<li th:if="${session.user != null }">
-						<a th:href="@{/IntegralController/integralList(userId=${session.user.userId})}">
+						<a th:href="@{/ProductListController/integralProduct}">
 							<i class="fa fa-paw"></i>&nbsp;&nbsp;积分兑换</a>
 					</li>
 					<li th:if="${session.user == null }">

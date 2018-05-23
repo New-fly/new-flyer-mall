@@ -5,3 +5,10 @@ function deleteProduct(orderId) {
         location.href = "/AdminProductController/adminDeleteProduct?orderId="+orderId;
     }
 }
+function userAccepted(orderId) {
+    var isDel = confirm("您确认要收货吗？");
+    if(isDel){
+        //要收货
+        location.href = "/UserOrderController/userAccepted?orderId="+orderId;
+    }
+}
