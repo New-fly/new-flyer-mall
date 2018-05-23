@@ -135,6 +135,7 @@ public class ProductListController extends BaseController {
         //推荐商品
         List<Product> recommendedProducts = productService.recommendedByUserId(userId);
         model.addAttribute("recommendedProducts", recommendedProducts);
+        System.out.println(recommendedProducts);
         return new ModelAndView("shoppingCart");
     }
     /**

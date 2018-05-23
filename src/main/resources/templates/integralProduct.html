@@ -22,9 +22,9 @@
 </div>
 <div class="all-list">
     <div class="list" th:each="product : ${products}">
-        <form th:action="@{/aliPay/toChange(productId=${product.productId})}">
+        <form th:action="@{/aliPay/toChange(productId=${product.productId})}" method="post">
             <img th:src="${product.product_picture}" style="width: 100%;"/>
-            <div class="list-fen" th:text="${product.product_needPoints}">35453积分</div>
+            <div class="list-fen" th:text="${product.product_needPoints}+'积分'">35453积分</div>
             <input class="list-button" type="submit" value="立即兑换"/>
         </form>
     </div>

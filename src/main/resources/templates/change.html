@@ -24,7 +24,7 @@
     <div class="title">
         <img th:href="@{/HomeController/homeProduct}" th:src="@{/images/logo.png}" height="100%" style="float: left;"/>
     </div>
-    <form th:action="@{/aliPay/aliPaySum}">
+    <form th:action="@{/aliPay/estimatePay(productId=${shoppingCarts[0].productId})}" method="post">
         <div class="text">选择收货地址</div>
         <div class="address">
             <div class="shoppingaddress" th:each="shippingAddress : ${shippingAddressList}">
@@ -52,14 +52,11 @@
                     <img th:href="@{/ProductListController/toProduct(productId=${shoppingCart.productId},userId=${session.userId})}"
                             th:src="${shoppingCart.product_picture}" height="100%" style="float: left;"/>
                 </div>
-                <div class="single-text-a" th:if="${shoppingCount == 0}">
-                    <input type="text" class="ipt count" readonly name="total_amount" th:value="${shoppingCart.product_mallPrice} * ${shoppingCart.shoppingCart_count}" style="background-color: #FCFCFC">
-                </div>
-                <div class="single-text-a" th:if="${shoppingCount != 0}">
-                    <input type="text" class="ipt count" readonly name="total_amount" th:value="${shoppingCart.product_mallPrice} * ${shoppingCount}" style="background-color: #FCFCFC">
+                <div class="single-text-a">
+                    <input type="text" class="ipt count" readonly name="product_needPoints" th:value="${shoppingCart.product_needPoints}" style="background-color: #FCFCFC">
                 </div>
                 <div class="single-text">
-                    <input type="text" value="无优惠" readonly name="product_keywords" class="ipt" th:value="${shoppingCart.product_keywords}" style="background-color: #FCFCFC">
+                    <input type="text" readonly name="product_keywords" class="ipt" th:value="${shoppingCart.product_keywords}" style="background-color: #FCFCFC">
                 </div>
                 <div class="single-text">
                     <input type="text" class="ipt" readonly name="shoppingCart_count" th:value="${shoppingCount}" style="background-color: #FCFCFC">
@@ -70,13 +67,13 @@
                 </div>
                 <div class="single-text">
                     <input type="text" class="ipt" readonly name="product_needPoints"
-                           th:value="${shoppingCart.product_needPoints}" style="background-color: #FCFCFC">
+                           th:value="${shoppingCart.product_mallPrice}" style="background-color: #FCFCFC">
                 </div>
             </div>
         </div>
         <div class="pay">
             <div class="pay-block">
-                <span class="font"><b>实付款：</b></span><span style="color: red;font-size: 25px">￥</span>
+                <span class="font"><b>实付积分：</b></span><span style="color: red;font-size: 25px">￥</span>
                 <input class="money total_amount" type="text" readonly name="WIDtotal_amount" style="width: 100px;border: 0"><br/>
                 <span class="font">
                     <b>寄送至：</b>

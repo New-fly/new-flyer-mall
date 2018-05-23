@@ -59,6 +59,8 @@ public class ProductActivityServiceImp implements ProductActivityService {
         ProductActivity productActivity = new ProductActivity();
         Activity activity = activityRepository.findByActivityName(request.getParameter("activity_name"));
         productActivity.setActivity_name(activity.getActivity_name());
+        product.setProduct_activity(activity.getActivity_name());
+        productRepository.save(product);
 
         productActivity.setActivity_discount((int) activity.getActivity_discount());
         productActivity.setProductId(productId);
@@ -99,6 +101,10 @@ public class ProductActivityServiceImp implements ProductActivityService {
     //删除活动商品
     @Override
     public void deleteActivity(long activityId) {
+        ProductActivity productActivity = productActivityRepository.findById(activityId);
+        Product product = productRepository.findById(productActivity.getProductId());
+        product.setProduct_activity("无");
+        productRepository.save(product);
         productActivityRepository.deleteById(activityId);
     }
 }
