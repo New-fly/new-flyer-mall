@@ -78,6 +78,8 @@ public class ProductListController extends BaseController {
         Product product = productService.findProductById(productId);
         long count = ordersService.searchProductCount(productId);
         model.addAttribute("count",count);
+        long estimateCount = productEstimateService.findEstimateCount(productId);
+        model.addAttribute("estimateCount",estimateCount);
         String [] images = new String[0];
         if (product.getProduct_picture().contains(",")) {
             images = product.getProduct_picture().split(",");
@@ -289,7 +291,6 @@ public class ProductListController extends BaseController {
                 }
             }
             model.addAttribute("products", products);//查询的当前页的集合
-            System.out.println("列表"+products);
             model.addAttribute("product_category",product_category);
             //遍历一级二级分类
             List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();

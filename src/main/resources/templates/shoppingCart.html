@@ -96,7 +96,7 @@
             </div>
         </div>
         <!--推荐商品-->
-        <div class="recommended">
+        <div class="recommended" th:if="${session.user != null}">
             <h1 class="h1sty">猜你喜欢</h1>
                 <div class="recommendedProduct" th:each="recommendedProducts:${recommendedProducts}">
                     <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">

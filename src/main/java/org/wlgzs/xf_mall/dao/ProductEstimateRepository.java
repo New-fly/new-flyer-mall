@@ -21,4 +21,7 @@ public interface ProductEstimateRepository extends JpaRepository<ProductEstimate
 
     @Query(value = "SELECT * FROM product_estimate WHERE product_id = ?",nativeQuery = true)
     List<ProductEstimate> findByProductId(long productId);
+
+    @Query(value = "select count(*) from product_estimate where product_id=?",nativeQuery = true)
+    long findCount(@Param("productId") long productId);
 }
