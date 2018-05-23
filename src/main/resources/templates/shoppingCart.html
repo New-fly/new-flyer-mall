@@ -56,8 +56,8 @@
                 <div class="single-introduce">
                     <a th:href="@{/ProductListController/toProduct(productId=${product.productId},userId=${session.userId})}">
                         <img th:src="${product.product_picture}" height="100%"/></a>
-                    <input class="yanse" type="text" readonly style="color: red;background-color: #FCFCFC;border: 0;vertical-align:top"
-                           th:src="${product.product_keywords}">
+                    <input class="yanse" type="text" readonly style="color: red;background-color: #FCFCFC;border: 0;vertical-align:top;position: absolute;"
+                           th:value="${product.product_keywords}">
                 </div>
                 <div class="norms">规格：
                     <input class="yanse" th:value="${product.product_specification}" readonly

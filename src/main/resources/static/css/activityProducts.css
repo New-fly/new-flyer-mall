@@ -261,7 +261,7 @@ a:hover{
 .showpicture{
     width: 240px;
     /*height: 200px;*/
-    display: inline-block;
+    float: left;
     background-color: white;
     margin: 10px 28px;
 }

@@ -120,5 +120,13 @@ $('#one').click(function () {
         $('.frame').attr("src","/AdminUserController/adminUserList");
     })
 
+
+
+    // $(".list-2 >.list-1 ").find(".list-1").click(function(){
+    //         $(".list-2").find(".list-1").removeClass("active");
+    //         $(this).parent(".list-1").addClass("active");
+    //     });
+
+
 })
 

@@ -8,10 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
-import org.wlgzs.xf_mall.entity.Collection;
-import org.wlgzs.xf_mall.entity.Product;
-import org.wlgzs.xf_mall.entity.ProductCategory;
-import org.wlgzs.xf_mall.entity.ShoppingCart;
+import org.wlgzs.xf_mall.entity.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -75,6 +72,8 @@ public class ProductListController extends BaseController {
         }
         model.addAttribute("images",images);
         model.addAttribute("product", product);
+        List<ProductEstimate> productEstimates = productEstimateService.findEstimateByproductId(productId);
+        model.addAttribute("productEstimates", productEstimates);
         HttpSession session = request.getSession();
         if(session.getAttribute("userId")!=null){
             long userId = (long) session.getAttribute("userId");

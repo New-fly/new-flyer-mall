@@ -21,12 +21,12 @@
 					<li th:if="${session.user != null }">
 						<a th:href="@{/UserOrderController/userOrderList(userId=${session.user.userId})}">
 							<i class="fa fa-paw" style="color: #336699"></i>
-							&nbsp;&nbsp;我的淘宝</a>
+							&nbsp;&nbsp;我的新飞</a>
 					</li>
 					<li th:if="${session.user == null }">
 						<a th:href="@{/login}">
 							<i class="fa fa-paw" style="color: #336699"></i>
-							&nbsp;&nbsp;我的淘宝</a>
+							&nbsp;&nbsp;我的新飞</a>
 					</li>
 
 					<li th:if="${session.user != null }">
