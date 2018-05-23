@@ -212,7 +212,7 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public void userAccepted(long orderId) {
         Orders orders = ordersRepository.findById(orderId);
-        orders.setOrder_status("未评价");
+        orders.setOrder_status("待评价");
         ordersRepository.save(orders);
     }
 

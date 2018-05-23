@@ -64,17 +64,6 @@ public class ProductListController extends BaseController {
      */
     @RequestMapping("/toProduct")
     public ModelAndView toProduct(Model model, long productId,HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        if(session.getAttribute("userId")!=null){
-            long userId = (long) session.getAttribute("userId");
-            //添加足迹
-            Collection collection = productService.findByCollectionUserIdAndProductId(userId,productId);
-            model.addAttribute("collection",collection);
-            footprintService.save(request,userId,productId);
-            //推荐商品
-            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
-            model.addAttribute("recommendedProducts", recommendedProducts);
-        }
         Product product = productService.findProductById(productId);
         long count = ordersService.searchProductCount(productId);
         model.addAttribute("count",count);
@@ -86,6 +75,17 @@ public class ProductListController extends BaseController {
         }
         model.addAttribute("images",images);
         model.addAttribute("product", product);
+        HttpSession session = request.getSession();
+        if(session.getAttribute("userId")!=null){
+            long userId = (long) session.getAttribute("userId");
+            //添加足迹
+            Collection collection = productService.findByCollectionUserIdAndProductId(userId,productId);
+            model.addAttribute("collection",collection);
+            footprintService.save(request,userId,productId);
+            //推荐商品
+            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+            model.addAttribute("recommendedProducts", recommendedProducts);
+        }
         return new ModelAndView("productDetails");
     }
     /**
