@@ -64,6 +64,18 @@ public class ProductListController extends BaseController {
      */
     @RequestMapping("/toProduct")
     public ModelAndView toProduct(Model model, long productId,HttpServletRequest request) {
+        System.out.println(productId);
+        Product product = productService.findProductById(productId);
+        System.out.println(product);
+        long count = ordersService.searchProductCount(productId);
+        model.addAttribute("count",count);
+        System.out.println(product.getProduct_picture());
+        String [] images = new String[0];
+        if (product.getProduct_picture().contains(",")) {
+            images = product.getProduct_picture().split(",");
+        }
+        model.addAttribute("images",images);
+        model.addAttribute("product", product);
         HttpSession session = request.getSession();
         if(session.getAttribute("userId")!=null){
             long userId = (long) session.getAttribute("userId");
@@ -75,15 +87,6 @@ public class ProductListController extends BaseController {
             List<Product> recommendedProducts = productService.recommendedByUserId(userId);
             model.addAttribute("recommendedProducts", recommendedProducts);
         }
-        Product product = productService.findProductById(productId);
-        long count = ordersService.searchProductCount(productId);
-        model.addAttribute("count",count);
-        String [] images = new String[0];
-        if (product.getProduct_picture().contains(",")) {
-            images = product.getProduct_picture().split(",");
-        }
-        model.addAttribute("images",images);
-        model.addAttribute("product", product);
         return new ModelAndView("productDetails");
     }
     /**
