@@ -611,7 +611,7 @@ public class ProductServiceImpl implements ProductService {
             //查询用户的订单
             List<Orders> orders = ordersRepository.userOrderList(userId);
             List<String> productOneCategoriesTwo = new ArrayList<String>();
-            if(orders!=null){
+            if(orders!=null && orders.size() != 0){
                 Date data = new Date();
                 SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
                 //将近半年的订单放在一个集合中
