@@ -92,7 +92,7 @@
     <div class="show-product">
         <div class="product" th:each="product:${products}">
             <div class="img-box">
-                <a th:href="@{/ProductListController/toProduct(productId=${product.productId})}">
+                <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${product.productId})}">
                     <img th:src="${product.product_picture}" alt="" style="width: 256px;height: 250px;">
                 </a>
             </div>
@@ -155,7 +155,7 @@
             <div class="headersell">猜你喜欢</div>
             <div class="hotsell">
                 <figure th:each="recommendedProducts : ${recommendedProducts}">
-                    <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}">
+                    <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}">
                         <img th:src="${recommendedProducts.product_picture}" style="width: 232px;height: 232px;">
                     </a>
                     <span style="color: red; font-size: 20px"

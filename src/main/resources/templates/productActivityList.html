@@ -57,7 +57,7 @@
                 <!--<div class="item"></div>-->
                 <!--<div class="item"></div>-->
             </div>
-            <div th:if="${session.user != null}">
+            <div th:if="${session.user != null && recommendedProducts.size() !=0}">
                 <div class="headershow">
                     掌柜热卖
                 </div>

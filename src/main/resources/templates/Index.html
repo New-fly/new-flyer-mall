@@ -132,7 +132,7 @@
         <div class="all-rob-long" id="all-rob-long">
             <a th:href="@{/ActivityController/activityProducts}">
                 <div th:each="productActivity : ${productActivities}">
-                    <a th:href="@{/ActivityController/activityProducts}">
+                    <a  target="_blank" th:href="@{/ActivityController/activityProducts}">
                         <img th:src="${productActivity.product_picture}" width="100%"/>
                     </a>
                     <p th:text="${productActivity.product_keywords}">速度非常，开心贷款，查看训练现场V领可持续</p>
@@ -149,7 +149,7 @@
 <div class="recommend">新品首发</div>
 <div class="today">
     <div class="block-2" id="similar" th:each="product : ${productList}">
-        <a th:href="@{/ProductListController/toProduct(productId=${product.productId})}">
+        <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${product.productId})}">
             <img th:src="${product.product_picture}" width="198px" height="180px"/>
         </a>
         <div class="block-2-div">
@@ -185,7 +185,7 @@
         </div>
         <div class="block-2" th:each="product : ${products}"
              th:if="${product.product_category == productOneCategory.category_name}">
-            <a th:href="@{/ProductListController/toProduct(productId=${product.productId})}">
+            <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${product.productId})}">
                 <img th:src="${product.product_picture}" style="width:100%;height:170px"/>
             </a>
             <div class="block-2-div">

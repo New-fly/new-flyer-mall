@@ -113,6 +113,7 @@ public class AliPayController extends BaseController {
     public ModelAndView toChange(Model model, @RequestParam(value = "productId",defaultValue = "494") long productId,
                                  @RequestParam(value = "shoppingCart_count",defaultValue = "1") int shoppingCart_count,
                                  String user_name,HttpServletRequest request){
+        System.out.println(productId);
         List<Product> shoppingCarts = productService.findProductListById(productId);
         model.addAttribute("shoppingCarts",shoppingCarts);
         model.addAttribute("shoppingCount",shoppingCart_count);

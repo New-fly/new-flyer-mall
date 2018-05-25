@@ -312,19 +312,23 @@ public class ProductListController extends BaseController {
 
     //积分商品展示
     @RequestMapping("/integralProduct")
-    public ModelAndView findByProduct_isRedeemable(Model model) {
-        List<Product> products = productService.findByProduct_isRedeemable();
+    public ModelAndView findByProduct_isRedeemable(Model model, @RequestParam(value = "page",defaultValue = "0") int page,
+                                                   @RequestParam(value = "limit",defaultValue = "10") int limit) {
+        if(page != 0) page--;
+        int product_isRedeemable = 1;
+        Page pages =  productService.findByProduct_isRedeemable(product_isRedeemable,page,limit);
+        model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
+        model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
+        List<Product> products = pages.getContent();
         String img;
         for(int i = 0; i < products.size(); i++) {
             if (products.get(i).getProduct_picture().contains(",")){
                 img = products.get(i).getProduct_picture();
                 img = img.substring(0,img.indexOf(","));
-                System.out.println("前台积分商品");
                 products.get(i).setProduct_picture(img);
             }
         }
-        model.addAttribute("products", products);
+        model.addAttribute("products", products);//查询的当前页的集合
         return new ModelAndView("integralProduct");
     }
-
 }
