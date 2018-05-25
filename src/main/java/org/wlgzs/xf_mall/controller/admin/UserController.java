@@ -144,4 +144,16 @@ public class UserController {
         model.addAttribute("mag",mag);
         return "redirect:/AdminUserController/adminUserList";
     }
+    /**     
+     * @author 胡亚星
+     * @date 2018/5/24 11:06  
+     * @param   
+     * @return   
+     *@Description:后台批量删除用户
+     */
+    @RequestMapping("/adminDeleteUsers")
+    public String adminDeleteUsers(@RequestParam(value = "userId",defaultValue = "439,449") String userId){
+        userService.adminDeleteUsers(userId);
+        return "redirect:/AdminUserController/adminUserList";
+    }
 }

@@ -184,6 +184,7 @@ public class ProductController {
         model.addAttribute("mag",mag);
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
     }
+
     /**
      * @param [model]
      * @return java.lang.String

@@ -14,6 +14,7 @@ import org.wlgzs.xf_mall.entity.Activity;
 import org.wlgzs.xf_mall.entity.Product;
 import org.wlgzs.xf_mall.entity.ProductActivity;
 import org.wlgzs.xf_mall.service.ProductActivityService;
+import org.wlgzs.xf_mall.util.IdsUtil;
 import org.wlgzs.xf_mall.util.PageUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -72,6 +73,32 @@ public class ProductActivityServiceImp implements ProductActivityService {
         productActivity.setProduct_mallPrice(product.getProduct_mallPrice());
         productActivity.setProduct_keywords(product.getProduct_keywords());
         productActivityRepository.save(productActivity);
+    }
+
+    @Override
+    public void adminAddActivitys(String productId, HttpServletRequest request) {
+        IdsUtil idsUtil = new IdsUtil();
+        long[] productIds = idsUtil.IdsUtils(productId);
+        List<Product> products = productRepository.findProductByProductId(productIds);
+        Activity activity = activityRepository.findByActivityName(request.getParameter("activity_name"));
+        for(int i = 0;i < products.size();i++){
+            ProductActivity productActivity = new ProductActivity();
+            productActivity.setActivity_name(activity.getActivity_name());
+
+            productActivity.setActivity_discount((int) activity.getActivity_discount());
+            productActivity.setProductId(productIds[i]);
+            String img = null;
+            if (products.get(i).getProduct_picture().contains(",")){
+                img = products.get(i).getProduct_picture();
+                img = img.substring(0,img.indexOf(","));
+            }
+            productActivity.setProduct_picture(img);
+            productActivity.setProduct_counterPrice(products.get(i).getProduct_counterPrice());
+            productActivity.setProduct_mallPrice(products.get(i).getProduct_mallPrice());
+            productActivity.setProduct_keywords(products.get(i).getProduct_keywords());
+            productActivityRepository.save(productActivity);
+        }
+
     }
 
     //通过id查找活动商品
