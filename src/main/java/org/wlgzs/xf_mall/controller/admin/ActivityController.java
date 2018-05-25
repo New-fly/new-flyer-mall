@@ -146,6 +146,18 @@ public class ActivityController extends BaseController {
     }
 
     /**
+     * @author 胡亚星
+     * @date 2018/5/24 11:34
+     * @param
+     * @return
+     *@Description:将商品批量添加到活动
+     */
+    @RequestMapping("/adminAddActivitys")
+    public ModelAndView adminAddActivitys(@RequestParam(value = "productId",defaultValue = "439,449") String productIds,HttpServletRequest request){
+        productActivityService.adminAddActivitys(productIds,request);
+        return new ModelAndView("redirect:/AdminProductController/adminProductList");
+    }
+    /**
      * @param [model, activityId, productId]
      * @return org.springframework.web.servlet.ModelAndView
      * @author 阿杰

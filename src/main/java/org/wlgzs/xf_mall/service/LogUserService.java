@@ -1,5 +1,6 @@
 package org.wlgzs.xf_mall.service;
 
+import org.springframework.ui.Model;
 import org.wlgzs.xf_mall.entity.User;
 
 import javax.servlet.ServletRequest;
@@ -46,4 +47,7 @@ public interface LogUserService {
 
     //id实现登陆
     void loginId(HttpServletRequest request,long userId);
+
+    //github添加新账号
+    String githubRegistered(HttpServletRequest request, String user_mail, String user_password);
 }
