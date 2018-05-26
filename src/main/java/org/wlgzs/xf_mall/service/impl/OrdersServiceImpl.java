@@ -318,9 +318,13 @@ public class OrdersServiceImpl implements OrdersService {
 
     //前台查询
     @Override
-    public List<Orders> searchOrder(String order_word, long userId) {
-        List<Orders> orders = ordersRepository.searchOrder(userId, order_word);
-        return orders;
+    public Page<Orders> searchOrder(String order_word,int page, int limit,long userId) {
+        String id=String.valueOf(userId);
+        Sort sort = new Sort(Sort.Direction.DESC, "orderId");
+        Pageable pageable = new PageRequest(page, limit, sort);
+        Specification<Orders> specification = new PageUtil<Orders>(order_word).getPages(id,"product_specification", "order_number", "user_name", "product_keywords");
+        Page pages = ordersRepository.findAll(specification, pageable);
+        return pages;
     }
 
     @Override
