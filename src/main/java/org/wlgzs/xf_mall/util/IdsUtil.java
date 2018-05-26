@@ -1,5 +1,7 @@
 package org.wlgzs.xf_mall.util;
 
+import java.io.*;
+
 /**
  * @Auther: 阿杰
  * @Date: 2018/5/5 15:05
@@ -21,5 +23,20 @@ public class IdsUtil {
             Ids[0] = Long.parseLong(ids);
         }
         return Ids;
+    }
+    public static void writerFile(String content,String filePath){
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
+            bw.write(content);
+            bw.close();
+            String json = "要写入的JSON字符串";
+            String file = "D:\\1.txt";
+            FileOutputStream writerStream = new FileOutputStream(file);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(writerStream, "UTF-8"));
+            writer.write(content);
+            writer.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }
