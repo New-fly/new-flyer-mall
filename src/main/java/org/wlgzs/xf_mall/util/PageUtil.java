@@ -45,7 +45,6 @@ public class PageUtil<T> {
                         System.out.println("精确查询");
                         _name = criteriaBuilder.equal($name,searchKeywords);
                     }else{
-                        System.out.println(searchKeywords);
                         _name = criteriaBuilder.like($name, "%" + searchKeywords + "%");
                     }
                     predicates.add(_name);

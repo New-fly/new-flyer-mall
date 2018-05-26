@@ -39,4 +39,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>,JpaSpeci
 
     @Query("SELECT o FROM Product o ")
     List<Product> getProductList(Sort sort);
+
+    @Query("SELECT o FROM Product o WHERE o.product_keywords like %:product_keywords%")
+    List<Product> findProductByProductKeywords(@Param(value = "product_keywords") String product_keywords);
+
 }

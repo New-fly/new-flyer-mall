@@ -9,6 +9,7 @@ import org.wlgzs.xf_mall.entity.ShoppingCart;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -288,4 +289,6 @@ public interface ProductService {
      * @description 主页最新商品
      */
     List<Product> getProductList();
+
+    Page<Product> searchProduct(HttpServletRequest request, String product_category, int page, int limit) throws IOException;
 }
