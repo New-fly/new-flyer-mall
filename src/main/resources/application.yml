@@ -15,3 +15,13 @@ spring:
         username: huystar@126.com
   server:
       port: 8081
+
+  thymeleaf:
+    cache: false
+  freemarker:
+    cache: false
+  groovy:
+    template:
+      cache: false
+  velocity:
+      cache: false
