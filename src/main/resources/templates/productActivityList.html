@@ -41,20 +41,23 @@
             </div>
             <div class="picture">
                 <div class="item" th:each="productActivity:${productActivities}">
-                    <img th:src="${productActivity.product_picture}" class="imgsty">
-                    <div class="keywords">
-                        <a href="" th:text="${productActivity.product_keywords}">新飞（Frestec）BCD-501WHCC8C 501升 风冷无</a>
-                        <p class="price" th:text="${productActivity.product_mallPrice}">1499元
-                            <del th:text="${productActivity.product_counterPrice}">1899元</del>
-                        </p>
-                        <a href="" class="btn">立即购买</a>
-                        <p class="person">已有11人购买</p>
-                    </div>
+                    <form th:action="@{/aliPay/oneToPay(productId = ${productActivity.productId})}" method="post">
+                        <img th:src="${productActivity.product_picture}" class="imgsty">
+                        <div class="keywords">
+                            <a href="" th:text="${productActivity.product_keywords}">新飞（Frestec）BCD-501WHCC8C 501升
+                                风冷无</a>
+                            <p class="price" th:text="${productActivity.product_mallPrice}">1499元
+                                <del th:text="${productActivity.product_counterPrice}">1899元</del>
+                            </p>
+                            <input type="submit" class="btn" value="立即购买" readonly>
+                            <p class="person">已有11人购买</p>
+                        </div>
+                    </form>
                 </div>
                 <!--<div class="item"></div>-->
                 <!--<div class="item"></div>-->
             </div>
-            <div th:if="${session.user != null}">
+            <div th:if="${session.user != null && recommendedProducts.size() !=0}">
                 <div class="headershow">
                     掌柜热卖
                 </div>

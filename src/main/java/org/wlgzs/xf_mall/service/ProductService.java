@@ -259,10 +259,13 @@ public interface ProductService {
     /**
      * @author 阿杰
      * @param []
+     * @param product_isRedeemable
+     * @param page
+     * @param limit
      * @return java.util.List<org.wlgzs.xf_mall.entity.Product>
      * @description 积分商品展示
      */
-    List<Product> findByProduct_isRedeemable();
+    Page<Product> findByProduct_isRedeemable(int product_isRedeemable, int page, int limit);
     /**
      * @author 阿杰
      * @param [userId]

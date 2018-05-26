@@ -56,8 +56,8 @@
                     <div class="list">
                         <div class="single" th:each="order : ${orders}">
                             <div class="single-introduce">
-                                <img th:src="${order.product_picture}" height="100%" style="float: left;width: 120px;"/>
-                                <a th:href="@{/ProductListController/toProduct(productId=${order.productId})}" th:text="${order.product_keywords}"></a>
+                                <img th:src="${order.product_picture}" height="100%" style="float: left;width: 85px;"/>
+                                <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${order.productId})}" th:text="${order.product_keywords}"></a>
                             </div>
                             <div class="norms">
                                 <a th:text="${order.product_PaidPrice}">￥5133元</a><br/><s

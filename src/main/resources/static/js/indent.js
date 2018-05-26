@@ -57,4 +57,8 @@ window.onload=function(){
         allcount=allcount+length2[j].value+",";
     }
     document.getElementsByClassName("shoppingCount")[0].value=allcount;
+    var top=document.getElementById("top").value;
+    var rebate=document.getElementById("rebate").value;
+    var bottom=top*rebate*0.1;
+    document.getElementById("bottom").value=bottom;
 };

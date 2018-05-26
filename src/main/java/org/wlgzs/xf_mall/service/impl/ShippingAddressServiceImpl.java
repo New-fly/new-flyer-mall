@@ -56,11 +56,27 @@ public class ShippingAddressServiceImpl implements ShippingAddressService {
     }
 
     @Override
-    public boolean findState() {
-        ShippingAddress shippingAddress = shippingAddressRepository.findState();
+    public boolean findState(String user_name) {
+        System.out.println("userName==="+user_name);
+        ShippingAddress shippingAddress = shippingAddressRepository.findState(user_name);
         if(shippingAddress != null){
+            System.out.println("true");
+            System.out.println(shippingAddress);
+            System.out.println(user_name);
             return true;
         }
+        System.out.println("false");
         return false;
+    }
+
+    @Override
+    public void setDefault(long addressId, String user_name) {
+        //查询该地址是否为默认
+        int a = shippingAddressRepository.State(addressId);
+        if(a == 0){//不为默认
+            //修改1为0，修改0为1
+            shippingAddressRepository.modifyState(0,1);
+            shippingAddressRepository.modifyDefault(addressId);
+        }
     }
 }

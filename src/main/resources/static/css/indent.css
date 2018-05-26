@@ -138,7 +138,7 @@ body{
 	margin-top: 15px;
 }
 .pay-block{
-	width: 250px;
+	width: 270px;
 	height: 106px;
 	float: right;
 	padding: 10px;
@@ -276,7 +276,7 @@ body{
 	background-color: #fff;
 }
 .addressshipping{
-	width: 180px;
+	width:210px;
     border: 0;
 }
 .addressname{
@@ -288,8 +288,8 @@ body{
     border: 0;
 }
 .productId{
-	opacity: 0;
+	display: none;
 }
 .shoppingCount{
-    opacity: 0;
+    display: none;
 }

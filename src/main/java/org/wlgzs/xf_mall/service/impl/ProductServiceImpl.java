@@ -16,6 +16,10 @@ import org.wlgzs.xf_mall.service.ProductService;
 import org.wlgzs.xf_mall.util.IdsUtil;
 import org.wlgzs.xf_mall.util.PageUtil;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -571,8 +575,19 @@ public class ProductServiceImpl implements ProductService {
 
     //积分商品展示
     @Override
-    public List<Product> findByProduct_isRedeemable() {
-        return productRepository.findByProduct_isRedeemable();
+    public Page<Product> findByProduct_isRedeemable(int product_isRedeemable, int page, int limit) {
+        Sort sort = new Sort(Sort.Direction.ASC, "productId");
+        Pageable pageable = new PageRequest(page, limit, sort);
+        Specification<Product> specification = new Specification<Product>() {
+            @Override
+            public Predicate toPredicate(Root<Product> root,
+                                         CriteriaQuery<?> criteriaQuery,
+                                         CriteriaBuilder criteriaBuilder) {
+                Predicate predicate = criteriaBuilder.equal(root.get("product_isRedeemable"),product_isRedeemable);
+                return criteriaBuilder.and(predicate);
+            }
+        };
+        return productRepository.findAll(specification, pageable);
     }
 
     //商品推荐
@@ -581,7 +596,7 @@ public class ProductServiceImpl implements ProductService {
         //通过用户id查询最新足迹商品
         List<Footprint> footprints = footprintRepository.recommendedByUserId(userId);
         List<Product> products = new ArrayList<Product>();
-        if(footprints!=null){
+        if(footprints!=null && footprints.size() != 0){
             long[] productIds = new long[footprints.size()];
             for (int i = 0; i < footprints.size(); i++) {
                 productIds[i] = footprints.get(i).getProductId();

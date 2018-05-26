@@ -5,10 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.wlgzs.xf_mall.dao.AuthorizationRepository;
 import org.wlgzs.xf_mall.dao.LogUserRepository;
+import org.wlgzs.xf_mall.dao.UserRepository;
+import org.wlgzs.xf_mall.entity.Authorization;
 import org.wlgzs.xf_mall.entity.User;
 
 import org.wlgzs.xf_mall.service.LogUserService;
+import org.wlgzs.xf_mall.service.UserService;
 import org.wlgzs.xf_mall.util.RandonNumberUtils;
 
 import javax.servlet.http.Cookie;
@@ -29,6 +34,12 @@ public class LogUserServiceImpl implements LogUserService {
 
     @Autowired
     private LogUserRepository logUserRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private AuthorizationRepository authorizationRepository;
 
    @Autowired
     private JavaMailSender mailSender;
@@ -234,6 +245,35 @@ public class LogUserServiceImpl implements LogUserService {
            return true;
         } else {
             return false;
+        }
+    }
+
+    @Override
+    public String githubRegistered(HttpServletRequest request, String user_mail, String user_password) {
+        if(logUserRepository.selectEmail(user_mail) == null){
+            //存入用户表
+            User user = new User();
+            user.setUser_mail(user_mail);
+            user.setUser_password(user_password);
+            RandonNumberUtils randonNumberUtils = new RandonNumberUtils();
+            String name = randonNumberUtils.getNumber(8);
+            String user_name = "XF_" + name;
+            String user_avatar = request.getContextPath() + "/headPortrait/morende.jpg";
+            user.setUser_name(user_name);
+            user.setUser_avatar(user_avatar);
+            user.setUser_role("普通用户");
+            userRepository.save(user);
+            //获取用户id
+            long userId = logUserRepository.selectEmail(user_mail).getUserId();
+            //存入登陆授权表
+            long githubId = Long.parseLong(request.getParameter("githubId"));
+            Authorization authorization = new Authorization();
+            authorization.setUserId(userId);
+            authorization.setGithubId(githubId);
+            authorizationRepository.save(authorization);
+            return "login";
+        }else{
+            return "addGithub";
         }
     }
 }

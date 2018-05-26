@@ -54,7 +54,7 @@
                 <input type="text" style="display: none" th:value="${product.userId}">
                 <input type="checkbox" name="aaa" style="float: left;"/>
                 <div class="single-introduce">
-                    <a th:href="@{/ProductListController/toProduct(productId=${product.productId},userId=${session.userId})}">
+                    <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${product.productId},userId=${session.userId})}">
                         <img th:src="${product.product_picture}" height="100%"/></a>
                     <input class="yanse" type="text" readonly style="color: red;background-color: #FCFCFC;border: 0;vertical-align:top;position: absolute;"
                            th:value="${product.product_keywords}">
@@ -96,10 +96,10 @@
             </div>
         </div>
         <!--推荐商品-->
-        <div class="recommended" th:if="${session.user != null}">
+        <div class="recommended" th:if="${session.user != null && recommendedProducts.size() !=0}">
             <h1 class="h1sty">猜你喜欢</h1>
                 <div class="recommendedProduct" th:each="recommendedProducts:${recommendedProducts}">
-                    <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">
+                    <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">
                         <img th:src="${recommendedProducts.product_picture}" style="height: 170px;width: 170px;"/>
                     </a>
                     <a href="#" class="asty" th:text="${recommendedProducts.product_mallPrice}">199元</a><s th:text="${recommendedProducts.product_counterPrice}">599元</s><br>
@@ -107,7 +107,6 @@
                         <span class="spansty" th:text="${recommendedProducts.product_keywords}">新飞新飞新飞新飞新飞新飞新飞新飞新飞新飞新飞新飞</span>
                     </a>
                 </div>
-
         </div>
     </div>
     <div th:include="common/top_header :: duplicate"></div>

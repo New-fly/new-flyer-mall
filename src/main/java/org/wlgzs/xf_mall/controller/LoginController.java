@@ -35,12 +35,6 @@ public class LoginController extends BaseController {
         }
     }
 
-    //去主页
-    @RequestMapping("toIndex")
-    public String toIndex() {
-        return "Index";
-    }
-
     //去注册
     @RequestMapping("/toRegistered")
     public String toRegister() {
@@ -77,10 +71,10 @@ public class LoginController extends BaseController {
         User user = logUserService.login(request, user_name, user_password);
         System.out.println(user);
         if (user != null) {
-            if(user.getUser_role().equals("管理员")) {
+            if("管理员".equals(user.getUser_role())) {
                 return "adminIndex";
             }
-            if(user.getUser_role().equals("超级管理员")) {
+            if("超级管理员".equals(user.getUser_role())) {
                 return "adminIndex";
             } else{
                 return "redirect:/HomeController/homeProduct";
@@ -127,26 +121,7 @@ public class LoginController extends BaseController {
     //github注册新用户
     @RequestMapping("githubRegistered")
     public String githubRegistered(HttpServletRequest request,Model model,String user_mail,String user_password){
-        if(!logUserService.selectEmail(user_mail)){
-            //存入用户表
-            User user = new User();
-            user.setUser_mail(user_mail);
-            user.setUser_password(user_password);
-            user = logUserService.registered(user,request);
-            userService.save(user);
-            //获取用户id
-            long userId = logUserService.getUserId(user_mail);
-            //存入登陆授权表
-            long githubId = Long.parseLong(request.getParameter("githubId"));
-            Authorization authorization = new Authorization();
-            authorization.setUserId(userId);
-            authorization.setGithubId(githubId);
-            authorizationService.save(authorization);
-            return "login";
-        }else{
-            model.addAttribute("mag", "该邮箱已存在");
-            return "addGithub";
-        }
+        return logUserService.githubRegistered(request,user_mail,user_password);
     }
 
 

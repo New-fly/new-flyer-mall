@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/indent.css}">
     <script type="text/javascript" th:src="@{/js/indent.js}"></script>
     <style>
-        .ipt{
+        .ipt {
             border: 0;
             outline: none;
             width: auto;
@@ -20,79 +20,95 @@
     </style>
 </head>
 <body>
-    <div th:include="common/top_header :: copy"></div>
-    <div class="title">
-        <img th:href="@{/HomeController/homeProduct}" th:src="@{/images/logo.png}" height="100%" style="float: left;"/>
+<div th:include="common/top_header :: copy"></div>
+<div class="title">
+    <img th:href="@{/HomeController/homeProduct}" th:src="@{/images/logo.png}" height="100%" style="float: left;"/>
+</div>
+<form th:action="@{/aliPay/aliPaySum}" method="post">
+    <div class="text">选择收货地址</div>
+    <div class="address">
+        <div class="shoppingaddress" th:each="shippingAddress : ${shippingAddressList}">
+            <input class="ipt address_name" th:value="${shippingAddress.address_name}" style="width: 50px"
+                   disabled="disabled">
+            <hr style="color: gray;"/>
+            <input class="ipt address_shipping" th:value="${shippingAddress.address_shipping}" style="width: 150px"
+                   disabled="disabled">
+            <input class="ipt address_phone" th:value="${shippingAddress.address_phone}" style="width: 150px"
+                   disabled="disabled">
+        </div>
     </div>
-    <form th:action="@{/aliPay/aliPaySum}">
-        <div class="text">选择收货地址</div>
-        <div class="address">
-            <div class="shoppingaddress" th:each="shippingAddress : ${shippingAddressList}">
-                <input class="ipt address_name" th:value="${shippingAddress.address_name}" style="width: 50px" disabled="disabled">
-                <hr style="color: gray;" />
-                <input class="ipt address_shipping" th:value="${shippingAddress.address_shipping}" style="width: 150px" disabled="disabled">
-                <input class="ipt address_phone" th:value="${shippingAddress.address_phone}" style="width: 150px" disabled="disabled">
+    <div class="manage">
+        <span id="all" style="float: left;">查看所有收货地址</span>
+        <a target="_blank" th:action="@{/UserAddressController/shippingAddress(user_name=${session.user.user_name})}"><span style="float: right;">管理收货地址</span></a>
+    </div>
+    <div class="text" style="margin-top: 30px;">确认订单信息</div>
+    <div class="annotation">
+        <div>商品</div>
+        <div>单价</div>
+        <div>数量</div>
+        <div>关键字</div>
+        <div>金额</div>
+    </div>
+    <div class="list" th:each="shoppingCart : ${shoppingCarts}">
+        <div class="single">
+            <div class="single-introduce">
+                <img th:href="@{/ProductListController/toProduct(productId=${shoppingCart.productId},userId=${session.userId})}"
+                     th:src="${shoppingCart.product_picture}" height="100%" style="float: left;"/>
+            </div>
+            <div class="single-text-a" th:if="${shoppingCount == 0}">
+                <input type="text" class="ipt count" readonly name="total_amount"
+                       th:value="${shoppingCart.product_mallPrice} * ${shoppingCart.shoppingCart_count}"
+                       style="background-color: #FCFCFC">
+            </div>
+            <div class="single-text-a" th:if="${shoppingCount != 0}">
+                <input type="text" class="ipt count" readonly name="total_amount"
+                       th:value="${shoppingCart.product_mallPrice} * ${shoppingCount}"
+                       style="background-color: #FCFCFC">
+            </div>
+            <div class="single-text">
+                <input type="text" value="无优惠" readonly name="product_keywords" class="ipt"
+                       th:value="${shoppingCart.product_keywords}" style="background-color: #FCFCFC">
+            </div>
+            <div class="single-text" th:if="${shoppingCount == 0}">
+                <input type="text" class="ipt" readonly name="shoppingCart_count"
+                       th:value="${shoppingCart.shoppingCart_count}" style="background-color: #FCFCFC">
+            </div>
+            <div class="single-text" th:if="${shoppingCount != 0}">
+                <input type="text" class="ipt" readonly name="shoppingCart_count" th:value="${shoppingCount}"
+                       style="background-color: #FCFCFC">
+            </div>
+            <div th:if="${shoppingCount == 0}">
+                <input type="text" readonly class="count1" style="display: none"
+                       th:value="${shoppingCart.shoppingCart_count}">
+                <input type="text" readonly class="pid" style="display: none" th:value="${shoppingCart.productId}">
+            </div>
+            <div th:if="${shoppingCount != 0}">
+                <input type="text" readonly class="count1" style="display: none" th:value="${shoppingCount}">
+                <input type="text" readonly class="pid" style="display: none" th:value="${shoppingCart.productId}">
+            </div>
+            <!--<input style="display: none" id="rebate" type="text" th:if="${shoppingCarts[0].product_activity != '无'}"
+                   th:value="${activity.activity_discount}">-->
+            <div class="single-text">
+                <input type="text" class="ipt" readonly name="product_mallPrice"
+                       th:value="${shoppingCart.product_mallPrice}" style="background-color: #FCFCFC">
             </div>
         </div>
-        <!--<div class="address">-->
-            <!--<div class="shoppingaddress">-->
-                <!--<input class="peple ipt" style="width: 50px" name="address_name" value="阿杰" readonly>-->
-                <!--<hr style="color: gray;"/>-->
-                <!--<input class="peple ipt" name="address_shipping" value="河南省" style="width: 150px" readonly>-->
-                <!--<input class="peple ipt" name="address_phone" value="17630329897" style="width: 150px" readonly>-->
-            <!--</div>-->
-        <!--</div>-->
-        <div class="manage">
-            <span id="all" style="float: left;">查看所有收货地址</span>
-            <span style="float: right;">管理收货地址</span>
-        </div>
-        <div class="text" style="margin-top: 30px;">确认订单信息</div>
-        <div class="annotation">
-            <div>商品</div>
-            <div>单价</div>
-            <div>数量</div>
-            <div>关键字</div>
-            <div>金额</div>
-        </div>
-        <div class="list" th:each="shoppingCart : ${shoppingCarts}">
-            <div class="single">
-                <div class="single-introduce">
-                    <img th:href="@{/ProductListController/toProduct(productId=${shoppingCart.productId},userId=${session.userId})}"
-                            th:src="${shoppingCart.product_picture}" height="100%" style="float: left;"/>
-                </div>
-                <div class="single-text-a" th:if="${shoppingCount == 0}">
-                    <input type="text" class="ipt count" readonly name="total_amount" th:value="${shoppingCart.product_mallPrice} * ${shoppingCart.shoppingCart_count}" style="background-color: #FCFCFC">
-                </div>
-                <div class="single-text-a" th:if="${shoppingCount != 0}">
-                    <input type="text" class="ipt count" readonly name="total_amount" th:value="${shoppingCart.product_mallPrice} * ${shoppingCount}" style="background-color: #FCFCFC">
-                </div>
-                <div class="single-text">
-                    <input type="text" value="无优惠" readonly name="product_keywords" class="ipt" th:value="${shoppingCart.product_keywords}" style="background-color: #FCFCFC">
-                </div>
-                <div class="single-text" th:if="${shoppingCount == 0}">
-                    <input type="text" class="ipt" readonly name="shoppingCart_count" th:value="${shoppingCart.shoppingCart_count}" style="background-color: #FCFCFC">
-                </div>
-                <div class="single-text" th:if="${shoppingCount != 0}">
-                    <input type="text" class="ipt" readonly name="shoppingCart_count" th:value="${shoppingCount}" style="background-color: #FCFCFC">
-                </div>
-                <div th:if="${shoppingCount == 0}">
-                    <input type="text" readonly class="count1" style="display: none" th:value="${shoppingCart.shoppingCart_count}">
-                    <input type="text" readonly class="pid" style="display: none" th:value="${shoppingCart.productId}">
-                </div>
-                <div th:if="${shoppingCount != 0}">
-                    <input type="text" readonly class="count1" style="display: none" th:value="${shoppingCount}">
-                    <input type="text" readonly class="pid" style="display: none" th:value="${shoppingCart.productId}">
-                </div>
-                <div class="single-text">
-                    <input type="text" class="ipt" readonly name="product_mallPrice"
-                           th:value="${shoppingCart.product_mallPrice}" style="background-color: #FCFCFC">
-                </div>
-            </div>
-        </div>
-        <div class="pay">
-            <div class="pay-block">
-                <span class="font"><b>实付款：</b></span><span style="color: red;font-size: 25px">￥</span>
-                <input class="money total_amount" type="text" readonly name="WIDtotal_amount" style="width: 100px;border: 0"><br/>
+    </div>
+    <div class="pay">
+        <div class="pay-block">
+                <span style="float: left">
+                    <span class="font"><b>总金额：</b></span><span style="color: red;font-size: 25px;">￥</span>
+                    <input class="money total_amount" name="WIDtotal_amount" id="top" type="text" readonly
+                           style="width: 80px;border: 0"><br/>
+                </span>
+            <!--<span>
+                <span th:if="${shoppingCarts[0].product_activity != '无'}">
+                    <span class="font"><b>实付款：</b></span><span style="color: red;font-size: 25px">￥</span>
+                    <input class="money total_amount" id="bottom" type="text" readonly
+                           style="width: 40px;border: 0"><br/>
+                </span>
+            </span>-->
+            <div>
                 <span class="font">
                     <b>寄送至：</b>
                     <input type="text" name="address_shipping" readonly class="addressshipping">
@@ -105,15 +121,16 @@
                 </span>
             </div>
         </div>
-        <input type="text" value=" " class="productId" name="productId" />
-        <input type="text" value=" " class="shoppingCount" name="shoppingCount"/>
-        <!--readonly-->
-        <div class="pay2">
-            <div class="pay2-block">
-                <input value="提交订单" style="border: 0;background-color: red" type="submit">
-            </div>
+    </div>
+    <input type="text" value=" " class="productId" name="productId"/>
+    <input type="text" value=" " class="shoppingCount" name="shoppingCount"/>
+    <!--readonly-->
+    <div class="pay2">
+        <div class="pay2-block">
+            <input value="提交订单" style="border: 0;background-color: red" type="submit">
         </div>
-    </form>
-    <div th:include="common/top_header :: duplicate"></div>
+    </div>
+</form>
+<div th:include="common/top_header :: duplicate"></div>
 </body>
 </html>

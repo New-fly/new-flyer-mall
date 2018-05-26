@@ -53,7 +53,7 @@ public class Orders {
     @Column(length = 20)
     private String order_expressNumber;//订单快递号
     @Column(nullable = false)
-    private String order_status = "未发货";//订单状态
+    private String order_status = "待收货";//订单状态
     @Column(nullable = false,length = 30)
     private String address_name;//收货人
     @Column(length = 50)

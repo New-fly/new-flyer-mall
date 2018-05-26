@@ -14,6 +14,7 @@ import org.wlgzs.xf_mall.dao.ShippingAddressRepository;
 import org.wlgzs.xf_mall.entity.User ;
 import org.wlgzs.xf_mall.dao.UserRepository;
 import org.wlgzs.xf_mall.service.UserService;
+import org.wlgzs.xf_mall.util.IdsUtil;
 import org.wlgzs.xf_mall.util.PageUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -222,6 +223,13 @@ public class UserServiceImpl implements UserService {
         user.setUser_avatar(user_avatar);
         userRepository.ModifyAvatar(user_avatar,id);
         return user;
+    }
+
+    @Override
+    public void adminDeleteUsers(String userId) {
+        IdsUtil idsUtil = new IdsUtil();
+        long[] Ids = idsUtil.IdsUtils(userId);
+        userRepository.deleteByIds(Ids);
     }
 }
 
