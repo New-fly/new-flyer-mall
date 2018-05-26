@@ -46,8 +46,8 @@
             <!--<span th:text="*{product_keywords}"></span>-->
             <span th:utext="*{product_keywords}" style="color: red;font-size: 16px;"></span>
         </div>
-        <input class="productId" type="submit" th:value="*{productId}" style="display: none" />
-        <input class="userId" type="submit" th:value="${session.userId}" style="display: none" />
+        <input class="productId" type="submit" th:value="*{productId}" style="display: none"/>
+        <input class="userId" type="submit" th:value="${session.userId}" style="display: none"/>
         <div class="money">
             <span class="gray">价格：</span>
             <span class="gray" th:utext="'￥：'+ *{product_counterPrice}"></span><br/>

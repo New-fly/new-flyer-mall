@@ -84,7 +84,9 @@ body,html{
 .list-4:hover,.list-2:hover,.list-3:hover,.list-1:hover{
 	cursor: pointer;
 }
-.active {background:cornflowerblue}
+.active {
+    background-color:cornflowerblue;
+}
 #jiantou1,#jiantou2,#jiantou3{
 	width: 0px;
 	height: 0px;

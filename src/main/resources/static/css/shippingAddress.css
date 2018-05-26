@@ -1,0 +1,294 @@
+body,html{
+	margin: 0;
+	padding: 0;
+	background-color: aliceblue;
+}
+.title{
+	width: 1000px;
+	height: 110px;
+	margin: 0 auto;
+	line-height: 110px;
+	color: red;
+	font-weight: bold;
+}
+.title>span{
+	float: right;
+	color: gray;
+	font-size: 14px;
+}
+.title>img{
+	width: 25px;
+	height: 25px;
+	position: relative;
+	top: 5px;
+}
+.nav{
+	width: 1000px;
+	height: 40px;
+	margin: 0 auto;
+	overflow: hidden;
+	position: relative;
+}
+.nav_alone{
+	width: 150px;
+	height: 40px;
+	float: left;
+	text-align: center;
+	font-size: 13px;
+	color: darkslategray;
+	font-weight: bold;
+	letter-spacing: 2px;
+}
+.nav_alone>a{
+	color: darkslategray;
+	text-decoration: none;
+}
+.chunk{
+	width: 1000px;
+	height: 450px;
+	margin: 0 auto;
+	border-radius: 20px;
+	background-color: white;
+	position: relative;
+}
+.chunk::after {
+    content: " ";
+    position: absolute;
+    bottom: 100%;
+    left: 205px;
+    margin-left: 5px;
+    border-width: 15px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+}
+.user_message{
+	width: 250px;
+	height: 120px;
+	position: absolute;
+	top: -60px;
+	right: 30px;
+	overflow: hidden;
+}
+.user_img{
+	width: 80px;
+	height: 80px;
+	border-radius: 80px;
+	padding: 5px;
+	margin: 0px 20px 40px 20px;
+	float: right;
+	background-color: white;
+	border: solid 1px gainsboro;
+}
+.user_img>img,.user_img2>img{
+	width: 78px;
+	height: 78px;
+	border-radius: 78px;
+	border: solid 1px gainsboro;
+}
+.user_name{
+	width:120px;
+	height: 40px;
+	position: absolute;
+	bottom: 63px;
+	right: 120px;
+	text-align: right;
+}
+.name{
+	font-size: 14px;
+	font-weight: bold;
+}
+.number{
+	font-size: 12px;
+}
+.all_address{
+	width: 910px;
+	height: 350px;
+	position: absolute;
+	top: 50px;
+	left: 50px;
+	overflow: hidden;
+}
+.address_allone{
+	width: 230px;
+	height: 125px;
+	float: left;
+	margin: 10px 20px;
+	padding: 15px;
+	border: solid 1px gainsboro;
+	position: relative;
+	/*border-radius: 10px;*/
+}
+.consignee{
+	font-size: 16px;
+	font-weight: bold;
+	color: gray;
+}
+.mobile{
+	font-size: 13px;
+	margin-top: 20px;
+	color: gray;
+}
+.residence{
+	font-size: 13px;
+	margin-top: 5px;
+	color: gray;
+}
+.operate{
+	width: 80px;
+	height: 25px;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+.operate_change,.operrate_deleat{
+	font-size: 14px;
+	color: dodgerblue;
+	text-decoration: none;
+}
+.add_address{
+	width: 260px;
+	height: 155px;
+	float: left;
+	margin: 10px 20px;
+	border: solid 1px gainsboro;
+	position: relative;
+	cursor: pointer;
+	/*border-radius: 10px;*/
+}
+.add{
+	width: 30px;
+	height: 30px;
+	border-radius: 30px;
+	background-color: gray;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -35px;
+	margin-left: -15px;
+	text-align: center;
+	line-height: 25px;
+	font-size: 25px;
+	font-weight: bold;
+	color: white;
+	opacity: 0.5;
+	transition: 0.3s;
+}
+.add_text{
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	position: absolute;
+	top: 50%;
+	text-align: center;
+	color: gray;
+	font-size: 13px;
+	font-weight: bold;
+	opacity: 0.8;
+}
+.add_address:hover .add,.add_address:hover .add_text{
+	opacity: 1;
+}
+.black{
+	width: 0;
+	height: 0;
+	background-color: gray;
+	background: rgba(0,0,0,0.4);
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 7;
+	overflow: hidden;
+	transition: 0.2s;
+}
+.revise{
+	width: 600px;
+	height: 400px;
+	background-color: #F5F5F5;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-top: -200px;
+	margin-left: -300px;
+	transition: 1.5s;
+}
+.revise_top{
+	width: 90%;
+	height: 60px;
+	padding: 0 5%;
+	background-color: white;
+	line-height: 60px;
+}
+.close{
+	width: 30px;
+	height: 30px;
+	border-radius: 30px;
+	font-size: 25px;
+	text-align: center;
+	line-height: 27px;
+	margin: 15px 0;
+	font-weight: bold;
+	float: right;
+	color: gray;
+	transition: 0.3s;
+}
+.close:hover{
+	background-color: #E3DC89;
+	cursor: pointer;
+}
+.revise_body{
+	width: 100%;
+	height: 260px;
+}
+.revise_foot{
+	width: 90%;
+	height: 80px;
+	padding: 0 5%;
+	background-color: white;
+}
+.definite{
+	width: 160px;
+	height: 40px;
+	background-color: red;
+	float: left;
+	margin: 20px 0 20px 90px;
+	text-align: center;
+	line-height: 40px;
+	color: white;
+	letter-spacing: 10px;
+	cursor: pointer;
+	opacity: 0.8;
+	transition: 0.3s;
+}
+.definite:hover{
+	opacity: 1;
+}
+.cancel{
+	width: 160px;
+	height: 40px;
+	background-color: gray;
+	float: right;
+	margin: 20px 90px 20px 0;
+	text-align: center;
+	line-height: 40px;
+	color: white;
+	letter-spacing: 10px;
+	cursor: pointer;
+	transition: 0.3s;
+	opacity: 0.8;
+}
+.cancel:hover{
+	opacity: 1;
+}
+.revise_name,.revise_phone{
+	width: 255px;
+	height: 40px;
+	font-size: 16px;
+	margin: 15px 20px 15px 20px;
+	border: solid 1px gray;
+}
+.revise_address{
+	width: 560px;
+	height: 150px;
+	font-size: 20px;
+	margin:15px 15px;
+}

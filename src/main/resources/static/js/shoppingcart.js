@@ -27,7 +27,7 @@ window.onload = function() {
                         alert("请求失败")
                     }
                 });
-			}
+			};
 			//实现购物车内数量的减少
 			document.getElementsByClassName("subtract")[i].onclick = function() {
 				var num = document.getElementsByClassName("number")[i].value;

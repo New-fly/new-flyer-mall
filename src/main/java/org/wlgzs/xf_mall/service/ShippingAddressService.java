@@ -25,5 +25,7 @@ public interface ShippingAddressService {
     //修改用户名
     void modifyName(String user_name1,String user_name2);
     //查询数据是否有默认的
-    boolean findState();
+    boolean findState(String user_name);
+    //将收货地址设为默认
+    void setDefault(long addressId,String user_name);
 }
