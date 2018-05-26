@@ -88,7 +88,6 @@ public class LoginController extends BaseController {
     //github登陆
     @GetMapping(value = "/callback")
     public String claaback(HttpServletRequest request,Model model, String code) {
-//        System.out.println("进入123456");
         String me = "";
         JSONObject res = null;
         try {

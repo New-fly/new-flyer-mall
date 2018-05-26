@@ -1,5 +1,6 @@
 package org.wlgzs.xf_mall.controller;
 
+import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,19 +73,12 @@ public class UserOrderController extends BaseController {
     @RequestMapping("searchOrder")
     public ModelAndView searchOrder(Model model, String order_word, @RequestParam(value = "page",defaultValue = "0")int page,
                                     @RequestParam(value = "limit",defaultValue = "6")int limit,long userId){
-//        if(page != 0) page--;
-//        Page<Orders> pages = ordersService.searchOrder(order_word,page,limit);
-//        model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
-//        model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
-//        List<Orders> orders = pages.getContent();
-//        model.addAttribute("orders",orders);
-//        return new ModelAndView("userOrder");
-        List<Orders> orders = ordersService.searchOrder(order_word, userId);
-        if(orders != null){
-            model.addAttribute("orders",orders);
-        }else{
-            model.addAttribute("mag","查询的订单不存在");
-        }
+        if(page != 0) page--;
+        Page<Orders> pages = ordersService.searchOrder(order_word,page,limit,userId);
+        model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
+        model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
+        List<Orders> orders = pages.getContent();
+        model.addAttribute("orders",orders);
         return new ModelAndView("userOrder");
     }
 

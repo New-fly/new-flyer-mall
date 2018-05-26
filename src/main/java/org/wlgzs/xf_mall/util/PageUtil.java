@@ -56,12 +56,12 @@ public class PageUtil<T> {
         };
     }
 
-    /**
+    /*
      * @author 阿杰
      * @param [attribute, userId, strings]
      * @return org.springframework.data.jpa.domain.Specification<T>
      * @description
-     *//*
+     */
     public Specification<T> getPages(String userId, String...strings){
         return  new Specification<T>() {
             @Override
@@ -69,7 +69,7 @@ public class PageUtil<T> {
                                          CriteriaQuery<?> query,
                                          CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new ArrayList<Predicate>();
-                Path<Integer> pathId = root.get(userId);
+                Path<Long> pathId = root.get(userId);
                 if(searchKeywords!=null&&searchKeywords!="") { //没有查询条件
                     for (String s : strings) {
                         Path<String> $name = root.get(s);
@@ -84,5 +84,5 @@ public class PageUtil<T> {
                 return criteriaBuilder.and(predicate,criteriaBuilder.equal(pathId,userId));
             }
         };
-    }*/
+    }
 }
