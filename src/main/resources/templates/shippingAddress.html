@@ -2,100 +2,76 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>账号管理-收货地址</title>
-    <link th:href="@{/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
-    <link th:href="@{/css/am-address.css}" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
-    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
-    <script th:src="@{/js/jquery.js}"></script>
-    <script th:src="@{/js/distpicker.js}"></script>
-
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>收货地址</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/shippingAddress.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/copy.css}" />
+    <script type="text/javascript" th:src="@{/js/shippingAddress.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
 </head>
 <body>
-<div th:include="common/top_header :: copy"></div>
-<div class="nav">
-    <div class="navheader">账号管理</div>
-</div>
-<div class="containers">
-    <div class="aside">
-        <a href="#"><img th:src="${session.user.user_avatar}" class="headphoto"></a>
-        <div>
-            <dl>
-                <dt>账号管理</dt>
-                <dd><a th:href="@{/UserManagementController/toSafety(userId=${session.user.userId})}" target="_self">安全设置</a>
-                </dd>
-                <dd><a th:href="@{/UserManagementController/information(userId=${session.user.userId})}" target="_self">个人资料</a>
-                </dd>
-                <dd><a th:href="@{/UserAddressController/shippingAddress(user_name=${session.user.user_name})}"
-                       target="_self">收货地址</a></dd>
-            </dl>
-        </div>
-    </div>
-    <div class="content">
-        <p class="navp">收货地址</p>
-        <div class="item1">
-            <label>所在地区</label>
-            <div data-toggle="distpicker" data-autoselect="3">
-                <select id="prov"></select>
-                <select id="city"></select>
-                <select id="dist"></select>
-            </div>
-
-
-        </div>
-        <form th:action="@{/UserAddressController/addShippingAddress}" method="post">
-        <div class="item1">
-            <label style="vertical-align: top;">详细地址</label><textarea class="form-control texar"
-                                                                      rows="3" id="text"></textarea>
-            <input type="hidden" name="address_shipping" id="text2" value="">
-        </div>
-           <!-- <input type="hidden" th:value="${session.user.user_name}" name="user_name">-->
-        <div class="item1">
-            <label>收货人姓名</label><input type="text" name="address_name"
-                                       placeholder="请输入收货人姓名" class="ipt1">
-        </div>
-        <div class="item1">
-            <label>手机号码&nbsp;&nbsp;&nbsp;</label><input type="text" th:name="address_phone" placeholder="请输入你的手机号"
-                                                        class="ipt1">
-        </div>
-        <div class="item1">
-            <input type="checkbox" value="0" name="address_is_default"
-                   onclick="this.value=(this.value==0)?1:0"><span>设置为默认收货地址</span>
-            <div class="item1">
-                <button id="btn1" class="btn">保存</button>
-            </div>
-        </div>
-        </form>
-
-        <div class="item1">
-            <p><a>已保存一条收货地址</a></p>
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>收货人</th>
-                    <th>所在地区</th>
-                    <th>详细地址</th>
-                    <th>手机</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="address : ${shippingAddresslists}">
-                    <td th:text="${address.address_name}"></td>
-                    <td th:text="${address.address_shipping}"></td>
-                    <td th:text="${address.address_shipping}"></td>
-                    <td th:text="${address.address_phone}"></td>
-                    <td><a th:href="@{/UserAddressController/toChangeShippingAddress(addressId=${address.addressId})}">修改</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                        <a th:href="@{/UserAddressController/deleteShippingAddress(addressId=${address.addressId})}">删除</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-</div>
-<script th:src="@{/js/am-address.js}"></script>
+    <div th:include="common/top_header :: copy"></div>
+	<div class="title">
+		<img th:src="@{/images/xin.png}" alt="" />
+		新飞账号
+		<span>退出</span>
+	</div>
+	<div class="nav">
+		<div class="nav_alone"><a th:href="@{/UserManagementController/information(userId=${session.user.userId})}">我的账号</a></div>
+		<div class="nav_alone">收货地址</div>
+	</div>
+	<div class="chunk">
+		<div class="user_message">
+			<div class="user_img">
+				<img th:src="@{/images/01.jpg}" alt="" />
+			</div>
+			<div class="user_name">
+				<span class="name">胡帅博</span>
+				<br />
+				<span class="number">20171554220</span>
+			</div>
+		</div>
+		<div class="all_address">
+			<div class="address_allone" th:each="address : ${shippingAddresslists}">
+                <div class="is" style="display: none" th:text="${address.address_is_default}"></div>
+                <div class="id" style="display:none" th:text="${address.addressId}"></div>
+                <div class="username" style="display: none" th:text="${session.user.user_name}"></div>
+				<div class="consignee" th:text="${address.address_name}"></div>
+				<div class="mobile" th:text="${address.address_phone}">18239290281(1)</div>
+				<div class="residence" th:text="${address.address_shipping}">河南省新乡市红旗区洪门镇河南科技学院(1)</div>
+				<div class="operate">
+					<a href="#" class="operate_change">修改</a>
+					&nbsp;
+					<a href="#" class="operrate_deleat">删除</a>
+				</div>
+			</div>
+			<div class="add_address">
+				<div class="add">+</div>
+				<div class="add_text">添加新地址</div>
+			</div>
+		</div>
+	</div>
+	<div class="black">
+		<div class="revise">
+			<div class="revise_top">
+				修改收货地址
+				<div class="close">×</div>
+			</div>
+			<div class="revise_body">
+                <input type="text" class="revise_username" style="display:none">
+                <input type="text" class="revise_is" style="display:none">
+                <input type="text" class="revise_id" style="display:none">
+				<input type="text" placeholder="请输入收货人姓名"  class="revise_name" />
+				<input type="text" placeholder="请输入收货人手机号"  class="revise_phone"/>
+				<textarea placeholder="请输入收货详细地址"  class="revise_address"></textarea>
+			</div>
+			<div class="revise_foot">
+				<div class="definite">修改</div>
+				<div class="cancel">取消</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
