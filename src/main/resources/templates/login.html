@@ -18,7 +18,7 @@
         </div>
         <div style="clear:both"></div>
     </div>
-    <div class="content">
+    <div class="content" th:style="'background:url(' + @{(${activity.activity_picture}=='' ? 'images/背景6.jpg' : ${activity.activity_picture})} + ');'+'background-size: 100% 100%;'+'background-repeat: no-repeat'">
         <div class="register-box-warp">
             <div class="register-box">
                 <h5 class="h5-sty1">密码登录</h5>

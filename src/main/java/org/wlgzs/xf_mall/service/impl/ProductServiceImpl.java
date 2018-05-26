@@ -596,7 +596,7 @@ public class ProductServiceImpl implements ProductService {
         //通过用户id查询最新足迹商品
         List<Footprint> footprints = footprintRepository.recommendedByUserId(userId);
         List<Product> products = new ArrayList<Product>();
-        if(footprints!=null){
+        if(footprints!=null && footprints.size() != 0){
             long[] productIds = new long[footprints.size()];
             for (int i = 0; i < footprints.size(); i++) {
                 productIds[i] = footprints.get(i).getProductId();
