@@ -46,7 +46,7 @@ public interface OrdersService {
 
 
     //前台按用户查询,多条件,分页
-    List<Orders> searchOrder(String order_word,long userId);
+    Page<Orders> searchOrder(String order_word,int page, int limit,long userId);
 
     long searchProductCount(long productId);
 

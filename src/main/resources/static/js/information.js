@@ -49,7 +49,7 @@ window.onload=function(){
             "user_name":user_name,
         },
         dataType:"text",
-        success:function(){
+        success:function(data){
             alert("成功");
         },
         error:function () {

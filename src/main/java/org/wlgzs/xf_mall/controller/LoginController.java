@@ -4,8 +4,11 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
+import org.wlgzs.xf_mall.entity.Activity;
 import org.wlgzs.xf_mall.entity.Authorization;
+import org.wlgzs.xf_mall.entity.ProductActivity;
 import org.wlgzs.xf_mall.entity.User;
 import org.wlgzs.xf_mall.util.AuthUtils;
 
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * @author:胡亚星
@@ -43,8 +47,13 @@ public class LoginController extends BaseController {
 
     //去登陆
     @RequestMapping("/toLogin")
-    public String toLogin() {
-        return "login";
+    public ModelAndView toLogin(Model model) {
+        String activity_name = "登录页面";
+        List<ProductActivity> productActivities = productActivityService.activityProductList(activity_name);
+        model.addAttribute("productActivities",productActivities);
+        Activity activity = activityService.findByActivityName(activity_name);
+        model.addAttribute("activity",activity);
+        return new ModelAndView("login");
     }
 
     @RequestMapping("/registered")
@@ -88,7 +97,6 @@ public class LoginController extends BaseController {
     //github登陆
     @GetMapping(value = "/callback")
     public String claaback(HttpServletRequest request,Model model, String code) {
-//        System.out.println("进入123456");
         String me = "";
         JSONObject res = null;
         try {
