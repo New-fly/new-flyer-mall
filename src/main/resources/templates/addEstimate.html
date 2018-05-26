@@ -12,15 +12,15 @@
 </head>
 <body>
 <div th:include="common/top_header :: copy"></div>
-<div class="product" th:each="order : ${order}">
+<div class="product" th:each="order : ${order}" th:object="${order}">
     <div class="product-left">
-        <img th:src="*{order.product_picture}"/>
+        <img th:src="*{product_picture}"/>
     </div>
     <div class="product-right">
-        <div class="details" th:text="*{order.product_keywords}"></div>
+        <div class="details" th:text="*{product_keywords}"></div>
         <div class="money">
             <div class="left">价格</div>
-            <div class="right" th:text="*{order.product_mallPrice}"></div>
+            <div class="right" th:text="*{product_mallPrice}"></div>
             <div class="left">配送</div>
             <div class="right">快递: 0.00元</div>
             <div class="left">评价</div>
@@ -44,6 +44,7 @@
         <textarea name="estimate_content" class="text" maxlength="200"></textarea>
         <div class="input">
             <input type="file" id="file_input" name="file">
+           <!-- <img src="" style="width: 54px;height: 53px;margin-top: -16px;" class="img"/>-->
             <img src="" class="imgs"/>
         </div>
         <div class="submit">

@@ -27,7 +27,7 @@ public interface OrdersService {
 
     List<Orders> findOrdersByUserName(String user_name);
 
-    void save(HttpServletRequest request, HttpServletResponse response, String productId, long userId,String shoppingCount) throws AlipayApiException, IOException;
+    void save(HttpServletRequest request, HttpServletResponse response, String productId,String shoppingCount) throws AlipayApiException, IOException;
 
     List<Orders> userOrderList(long userId);
 
@@ -37,7 +37,7 @@ public interface OrdersService {
 
     void userAccepted(long orderId);
 
-    void estimatePaySave(HttpServletRequest request, long productId, long userId);
+    void estimatePaySave(HttpServletRequest request, long productId);
 
     //void aliReturn(HttpServletResponse response, HttpServletRequest request) throws IOException, AlipayApiException;
 

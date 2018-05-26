@@ -155,7 +155,7 @@
     <!--</div>-->
 </div>
 <!--推荐商品-->
-<div class="recommended" th:if="${session.user != null}">
+<div class="recommended" th:if="${session.user != null && recommendedProducts.size() !=0}">
     <h1 class="h1sty">猜你喜欢</h1>
     <div class="recommendedProduct" th:each="recommendedProducts:${recommendedProducts}">
         <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">
@@ -166,7 +166,6 @@
             <span class="spansty" th:text="${recommendedProducts.product_keywords}">新飞新飞新飞新飞新飞新飞新飞新飞新飞新飞新飞新飞</span>
         </a>
     </div>
-
 </div>
 <div th:include="common/top_header :: duplicate"></div>
 <div class="secess">添加成功</div>

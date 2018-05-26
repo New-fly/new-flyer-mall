@@ -47,4 +47,7 @@ public interface UserService {
 
     //修改用户头像
     User ModifyAvatar(HttpSession session,HttpServletRequest request,MultipartFile myFileName) throws IOException;
+
+    //后台批量删除用户
+    void adminDeleteUsers(String userId);
 }

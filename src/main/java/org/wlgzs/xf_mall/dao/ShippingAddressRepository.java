@@ -34,7 +34,16 @@ public interface ShippingAddressRepository extends JpaRepository<ShippingAddress
     void modifyName(String user_name1,String user_name2);
 
     //查询数据是否有默认的
-    @Query("SELECT s FROM ShippingAddress s WHERE s.address_is_default=1")
-    ShippingAddress findState();
+    @Query("SELECT s FROM ShippingAddress s WHERE s.user_name=?1 and s.address_is_default=1")
+    ShippingAddress findState(String user_name);
 
+    //查询默认状态
+    @Query("SELECT s.address_is_default FROM ShippingAddress s WHERE s.addressId=?1")
+    int State(long addressId);
+
+    //修改默认状态
+    @Query("UPDATE ShippingAddress a SET a.address_is_default=1 WHERE a.addressId=?1")
+    @Modifying
+    @Transactional
+    void modifyDefault(long addressId);
 }

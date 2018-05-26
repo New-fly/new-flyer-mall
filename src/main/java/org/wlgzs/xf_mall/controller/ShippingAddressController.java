@@ -47,21 +47,22 @@ public class ShippingAddressController extends BaseController {
      */
     @RequestMapping("addShippingAddress")
     public String addShippingAddress(ShippingAddress shippingAddress,HttpServletRequest request, String user_name) {
+        if(user_name == null){
+            HttpSession session = request.getSession(true);
+            user_name = (String) session.getAttribute("name");
+        }
         //是否默认
         int address_is_default = shippingAddress.getAddress_is_default();
         System.out.println("address_is_default===="+address_is_default);
-        //查询数据是否有默认的
-        if(shippingAddressService.findState()){//有
+        System.out.println("user_name"+user_name);
+        //查询该用户数据是否有默认的
+        if(shippingAddressService.findState(user_name)){//有
             //1变为0
             if(address_is_default == 1)shippingAddressService.modifyState(0,1);
-            if(user_name == null){
-                HttpSession session = request.getSession(true);
-                user_name = (String) session.getAttribute("name");
-            }
-            shippingAddress.setUser_name(user_name);
         }else{
             if(address_is_default == 0)shippingAddress.setAddress_is_default(1);
         }
+        shippingAddress.setUser_name(user_name);
         shippingAddressService.addShippingAddress(shippingAddress);
         return "redirect:shippingAddress";
     }
@@ -113,6 +114,19 @@ public class ShippingAddressController extends BaseController {
     @RequestMapping("deleteShippingAddress")
     public String deleteShippingAddress(long addressId){
         shippingAddressService.deleceAddress(addressId);
+        return "redirect:shippingAddress";
+    }
+
+    /**
+     * @author 胡亚星
+     * @date 2018/5/26 9:03
+     * @param
+     * @return
+     *@Description:将收货地址设为默认
+     */
+    @RequestMapping("setDefault")
+    public String setDefault(long addressId,String user_name){
+        shippingAddressService.setDefault(addressId,user_name);
         return "redirect:shippingAddress";
     }
 }

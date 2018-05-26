@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
-import org.wlgzs.xf_mall.entity.Product;
-import org.wlgzs.xf_mall.entity.ShippingAddress;
-import org.wlgzs.xf_mall.entity.ShoppingCart;
+import org.wlgzs.xf_mall.entity.*;
 import org.wlgzs.xf_mall.service.OrdersService;
 import org.wlgzs.xf_mall.service.ProductService;
 import org.wlgzs.xf_mall.service.ShippingAddressService;
@@ -61,7 +59,7 @@ public class AliPayController extends BaseController {
      */
     @RequestMapping("oneToPay")
     public ModelAndView oneToPay(Model model, @RequestParam(value = "productId",defaultValue = "494") long productId,
-                                 @RequestParam(value = "shoppingCart_count",defaultValue = "3") int shoppingCart_count,
+                                 @RequestParam(value = "shoppingCart_count",defaultValue = "1") int shoppingCart_count,
                                  String user_name,HttpServletRequest request){
         List<Product> shoppingCarts = productService.findProductListById(productId);
         model.addAttribute("shoppingCarts",shoppingCarts);
@@ -71,6 +69,10 @@ public class AliPayController extends BaseController {
         if(user_name == null){
             HttpSession session = request.getSession(true);
             user_name = (String) session.getAttribute("name");
+        }
+        if(shoppingCarts.get(0).getProduct_activity() != "无"){
+            Activity activity = activityService.findByActivityName(shoppingCarts.get(0).getProduct_activity());
+            model.addAttribute("activity",activity);
         }
         List<ShippingAddress> shippingAddressList = shippingAddressService.getShippingAddressList(user_name);
         model.addAttribute("shippingAddressList", shippingAddressList);
@@ -94,23 +96,26 @@ public class AliPayController extends BaseController {
      */
     @RequestMapping("aliPaySum")
     public ModelAndView aliPay(@RequestParam(value = "productId",defaultValue = "494,495") String productId,
-                               @RequestParam(value = "userId",defaultValue = "46") long userId,
                                @RequestParam(value = "shoppingCount",defaultValue = "3,4") String shoppingCount,
                                HttpServletResponse response, HttpServletRequest request) throws IOException, AlipayApiException {
         System.out.println("付款商品id："+productId);
         System.out.println("购买商品数量："+shoppingCount);
-        ordersService.save(request,response,productId,userId,shoppingCount);
+        ordersService.save(request,response,productId,shoppingCount);
         return new ModelAndView("aliPay");
     }
+    /**
+     * @author 阿杰
+     * @param [model, productId, shoppingCart_count, user_name, request]
+     * @return org.springframework.web.servlet.ModelAndView
+     * @description 跳转至准备兑换页面
+     */
     @RequestMapping("toChange")
     public ModelAndView toChange(Model model, @RequestParam(value = "productId",defaultValue = "494") long productId,
                                  @RequestParam(value = "shoppingCart_count",defaultValue = "1") int shoppingCart_count,
                                  String user_name,HttpServletRequest request){
+        System.out.println(productId);
         List<Product> shoppingCarts = productService.findProductListById(productId);
         model.addAttribute("shoppingCarts",shoppingCarts);
-        System.out.println("购买商品id："+productId);
-        System.out.println("单个购买数量："+shoppingCart_count);
-        System.out.println();
         model.addAttribute("shoppingCount",shoppingCart_count);
         if(user_name == null){
             HttpSession session = request.getSession(true);
@@ -118,7 +123,7 @@ public class AliPayController extends BaseController {
         }
         List<ShippingAddress> shippingAddressList = shippingAddressService.getShippingAddressList(user_name);
         model.addAttribute("shippingAddressList", shippingAddressList);
-        return new ModelAndView("indent");
+        return new ModelAndView("change");
     }
     /**
      * @author 阿杰
@@ -128,10 +133,9 @@ public class AliPayController extends BaseController {
      */
     @RequestMapping("estimatePay")
     public ModelAndView estimatePay(@RequestParam(value = "productId",defaultValue = "233") long productId,
-                               @RequestParam(value = "userId",defaultValue = "46") long userId,
                                HttpServletRequest request) {
-        ordersService.estimatePaySave(request,productId,userId);
-        return new ModelAndView("redirect:/ProductListController/toProductList");
+        ordersService.estimatePaySave(request,productId);
+        return new ModelAndView("redirect:/ProductListController/integralProduct");
     }
     /**
      * @author 阿杰
@@ -140,9 +144,11 @@ public class AliPayController extends BaseController {
      * @description 结算后跳转
      */
     @RequestMapping("aliReturn")
-    public ModelAndView aliReturn() {
-        //ordersService.aliReturn(response,request);
-        return new ModelAndView("redirect:/ProductListController/toProductList");
+    public ModelAndView aliReturn(HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+        User user = (User) session.getAttribute("user");
+        long userId = user.getUserId();
+        return new ModelAndView("redirect:/UserOrderController/userOrderList?userId="+userId);
     }
     /**
      * @author 阿杰

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.wlgzs.xf_mall.entity.User ;
@@ -48,4 +49,9 @@ public interface UserRepository extends JpaRepository<User, Long>,JpaSpecificati
     @Transactional
     void changeEmail(String user_mail,long userId);
 
+    //批量删除用户
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM User u WHERE u.userId in :Ids")
+    void deleteByIds(@Param(value = "Ids") long [] Ids);
 }
