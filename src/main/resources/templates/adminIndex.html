@@ -1,92 +1,54 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+	  xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <!--<link rel="Shortcut Icon" href="@{/images/logo.icon}">-->
-    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
-    <title>后台管理系统</title>
-    <script th:src="@{/js/jquery.js}"></script>
-    <link th:href="@{/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
-    <script th:src="@{/bootstrap/dist/js/bootstrap.min.js}"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/adminIndex.css}">
-    <script type="text/javascript" th:src="@{/js/adminIndex.js}"></script>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>新飞商城后台管理系统</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/adminIndex.css}">
+	<script th:src="@{/js/jquery.js}"></script>
 </head>
 <body>
-<nav class="navbar navbar-default" role="navigation">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="#">新飞商城后台管理系统</a>
-    </div>
-    <!--<form class="navbar-form navbar-left" role="search">-->
-    <!--<div class="form-group">-->
-    <!--<input type="text" class="form-control" placeholder="Search">-->
-    <!--</div>-->
-    <!--<button type="submit" class="btn btn-default">搜索</button>-->
-    <!--</form>-->
-    <div>
-        <ul class="nav navbar-nav">
-            <li class="active border-1" id="one"><a href="#">商品管理</a></li>
-            <li class="border-2" id="two" th:if="${session.adminUser.user_role == '超级管理员'}"><a href="#">账户管理</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle border-2" data-toggle="dropdown">
-                    其他系统
-                    <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <li id="sensitive" th:if="${session.adminUser.user_role == '超级管理员'}"><a href="#">敏感词管理</a></li>
-                    <li id="Category" th:if="${session.adminUser.user_role == '超级管理员'}"><a href="#">商品分类管理</a></li>
-                    <li id="user" th:if="${session.adminUser.user_role == '超级管理员'}"><a href="#">账户管理</a></li>
-                    <li class="divider"></li>
-                    <li id="product"><a href="#">商品管理</a></li>
-                    <li class="divider"></li>
-                    <li id="order"><a href="#">订单管理</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-    <div class="exit">
-        <a th:href="${login}">退出</a>
-    </div>
-    <div class="user">
-        <div class="user-img"><img th:src="@{/images/03.jpg}" width="100%" height="100%"/></div>
-        <div class="user-nane">
-            <i class="fa fa-paw"></i>
-        </div>
-    </div>
-</nav>
-<div class="list">
-    <div class="list-3" id="list-3">
-        <i class="fa fa-paw"></i>商品及订单管理
-        <div id="jiantou2"></div>
-    </div>
-    <div class="list-6">
-        <div class="list-1" id="src4">商品管理</div>
-        <div class="list-1" id="src5">订单管理</div>
-    </div>
-    <div class="list-4" id="list-4">
-        <i class="fa fa-paw"></i>活动管理
-        <div id="jiantou3"></div>
-    </div>
-    <div class="list-7">
-        <div class="list-1" id="src6">活动商品管理</div>
-        <div class="list-1" id="src7">活动管理</div>
-    </div>
-    <input type="hidden" style="display: none" th:value="${session.adminUser.user_role}" id="data">
-    <div th:if="${session.adminUser.user_role == '超级管理员'}">
-        <div class="list-2" id="list-2">
-            <i class="fa fa-paw"></i>超级管理
-            <div id="jiantou1"></div>
-        </div>
-        <div class="list-5">
-            <div class="list-1" id="src3">用户管理</div>
-            <div class="list-1" id="src1">敏感词管理</div>
-            <div class="list-1" id="src2">商品分类管理</div>
-        </div>
-    </div>
-</div>
-<div id="frame-div">
-    <iframe class="frame" th:src="@{/AdminProductController/adminProductList}" frameborder="0" scrolling="yes"></iframe>
-</div>
+	<div class="roof">
+		<div class="title">欢迎进入后台</div>
+		<div class="nav-top">
+			新飞商城后台管理系统
+		</div>
+		<div class="user">
+			<div class="user_message">
+				<img th:src="@{/images/sign-in.gif}"/>
+				<span>胡帅博</span>
+			</div>
+			<div><a th:href="${login}" style="color: #fff;text-decoration: none;">退出</a></div>
+		</div>
+	</div>
+	<div class="left">
+		<div>
+			<span><i class="iconfont">&#xe67e;</i></span><div class="list_one" id="one">商品及订单管理</div>
+			<div id="jiantou1"></div>
+			<div class="list_two">
+				<div class="addColor" id="src1">商品管理</div>
+				<div class="addColor" id="src2">订单管理</div>
+			</div>
+		</div>
+		<div>
+			<span><i class="iconfont">&#xe6c6;</i></span><div class="list_one" id="two">活动管理</div>
+			<div id="jiantou2"></div>
+			<div class="list_two">
+				<div class="addColor" id="src3">活动商品管理</div>
+				<div class="addColor" id="src4">活动管理</div>
+			</div>
+		</div>
+		<div>
+			<span><i class="iconfont">&#xe631;</i></span><div class="list_one" id="src5">敏感词汇管理</div>
+			<span><i class="iconfont">&#xe64c;</i></span><div class="list_one" id="src6">用户管理</div>
+			<span><i class="iconfont">&#xe78b;</i></span><div class="list_one" id="src7">商品分类管理</div>
+		</div>
+	</div>
+	<div id="frame-div">
+		<iframe class="frame" src="" frameborder="0" scrolling="yes"></iframe>
+	</div>
 </body>
+<script th:src="@{/js/adminIndex.js}"></script>
+</html>

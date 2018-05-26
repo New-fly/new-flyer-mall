@@ -9,17 +9,15 @@
 	<link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
 	<title>敏感词汇</title>
 	<script th:src="@{/js/jquery.js}"></script>
-	<link th:href="@{/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
-	<script th:src="@{/bootstrap/dist/js/bootstrap.min.js}"></script>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/productSensitive.css}">
 	<script type="text/javascript" th:src="@{/js/productSensitive.js}"></script>
 </head>
 <body>
+<div class="contentbox">
 <div class="header1">
 	<form th:action="@{/SearchShieldController/findProductSensitive}" method="post">
-		<h1 class="h1-sty">敏感词汇管理</h1>
-		<input type="text" name="search_keywords" placeholder="关键字" th:value="*{search_keywords}">
-		<input type="submit" value="搜索" class="a1">
+		<input type="text" name="search_keywords" placeholder="敏感词" th:value="*{search_keywords}" class="ipt">
+		<input type="submit" value="搜索" class="btn">
 	</form>
 </div>
 <div th:class="mytable">
@@ -80,6 +78,6 @@
 		</ul>
 
 	</div>
-
+</div>
 </body>
 </html>

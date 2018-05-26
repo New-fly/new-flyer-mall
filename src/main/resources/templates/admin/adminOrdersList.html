@@ -4,22 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <title>商品订单信息</title>
-    <link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.css}">
     <link th:href="@{/css/adminOrdersList.css}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
     <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
     <script th:src="@{/js/adminOrdersList.js}"></script>
 </head>
 <body>
+<div class="contentbox">
 <div class="header">
     <form th:action="@{/OrderController/userFindOrder}" method="post">
-        <h1 class="h1-sty">订单列表</h1>
         <input type="text" name="order_number" placeholder="请输入订单号" th:value="*{order_number}" class="ipt">
-        <input type="submit" value="搜索" class="a1">
+        <input type="submit" value="搜索" class="btn">
     </form>
 </div>
 <div class="mytable">
-    <table class="table table-bordered able-box" id="mytable">
+    <table>
         <thead style="background-color: #F2F2F2;">
         <tr>
             <th>收货人</th>
@@ -28,7 +27,7 @@
             <th>商品关键字</th>
             <th>成交时间</th>
             <th>收货地址</th>
-            <th>操作</th>
+            <th style="width:170px;" >操作</th>
         </tr>
         </thead>
         <tbody>
@@ -40,11 +39,9 @@
                 <td th:text="${order.order_dealTime}"></td>
                 <td th:text="${order.address_shipping}"></td>
                 <td>
-                    <a class="a2" href="javascript:void(0);" th:onclick="'javascript:deleteOrder('+${order.orderId}+');'">删除</a>
-                    <button type="button" class="btn btn-primary modifi" style="background-color:#007BFF">
-                        <a th:href="@{/OrderController/toChangeProductOrders(id=${order.orderId})}">修改</a>
-                    </button>
-                    <a class="a2" th:href="@{/OrderController/orderDetails(id=${order.orderId})}">查看</a>
+                    <a class="a-div adiv1" href="javascript:void(0);" th:onclick="'javascript:deleteOrder('+${order.orderId}+');'">删除</a>
+                    <a th:href="@{/OrderController/toChangeProductOrders(id=${order.orderId})}" class="a-div adiv1">修改</a>
+                    <a th:href="@{/OrderController/orderDetails(id=${order.orderId})}" class="a-div adiv2">查看</a>
                 </td>
             </tr>
         </tbody>
@@ -83,6 +80,6 @@
     </ul>
 
 </div>
-
+</div>
 </body>
 </html>
