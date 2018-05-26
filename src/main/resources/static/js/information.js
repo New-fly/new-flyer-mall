@@ -36,4 +36,25 @@ window.onload=function(){
 			document.getElementsByClassName("black")[i].style.left="50%";
 		}
 	}
-}
+	var modify0=document.getElementsByClassName("modify0")[0];
+	var modify1=document.getElementsByClassName("modify1")[0];
+	var modify2=document.getElementsByClassName("modify2")[0];
+	var userId=document.getElementById("userId");
+	var user_name=document.getElementsByClassName("new_name")[0].value;
+	modify0.onclick=function () {
+		$.ajax({
+        url:"/UserManagementController/changeInformation",
+        data:{
+            "userId":userId,
+            "user_name":user_name,
+        },
+        dataType:"text",
+        success:function(){
+            alert("成功");
+        },
+        error:function () {
+            alert("请求失败")
+        }
+    });
+	}
+};
