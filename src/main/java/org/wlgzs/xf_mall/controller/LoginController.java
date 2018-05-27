@@ -90,7 +90,7 @@ public class LoginController extends BaseController {
             }
         } else {
             model.addAttribute("msg", "账号或密码错误");
-            return "login";
+            return "redirect:/toLogin";
         }
     }
 

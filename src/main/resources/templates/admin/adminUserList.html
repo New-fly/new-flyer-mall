@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>用户信息</title>
-    <link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.css}">
     <link th:href="@{/css/adminUserList.css}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
     <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
@@ -12,12 +11,12 @@
     <script th:src="@{/js/jquery-1.11.3.min.js}"></script>
 </head>
 <body>
+<div class="contentbox">
 <div class="header">
     <form th:action="@{/AdminUserController/adminFindUser}" method="post">
-        <h1 class="h1-sty">账号管理</h1>
         <input type="text" name="user_name" placeholder="用户名" th:value="*{user_name}" class="ipt">
-        <input type="submit" value="搜索" class="a1">
-        <button type="button" class="btn btn-primary add" style="background-color: green;color: #fff;float: right;width: 60px;border-radius: 21px;" onclick="block1()">添加</button>
+        <input type="submit" value="搜索" class="btn">
+        <button type="button"  style="background-color: green;color: #fff;float: right;width: 60px;border-radius: 21px;" onclick="block1()" class="a-div adiv1">添加</button>
     </form>
 </div>
 <div class="mytable">
@@ -40,11 +39,8 @@
         <td th:text="${user.user_password}"></td>
         <td th:text="${user.user_mail}"></td>
         <td class="ttdd" >
-            <!--<button type="button" class="btn btn-primary" style="background-color: #fff;color: #000;">添加</button>-->
-                <!--<a class="aa2" th:href="@{/AdminUserController/adminDeleteUser(userId=${user.userId})}">删除</a>-->
-                <a class="aa2" href="javascript:void(0);" th:if="${user.user_role != '超级管理员'}" th:onclick="'javascript:deleteUser('+${user.userId}+');'">删除</a>
-                <button type="button" class="btn btn-primary modifi" style="background-color:#007BFF" >
-                <a th:href="@{/AdminUserController/toAdminEditUser(userId=${user.userId})}">修改</a></button>
+            <a class="a-div adiv1" href="javascript:void(0);" th:if="${user.user_role != '超级管理员'}" th:onclick="'javascript:deleteUser('+${user.userId}+');'">删除</a>
+            <a class="a-div adiv2" th:href="@{/AdminUserController/toAdminEditUser(userId=${user.userId})}">修改</a>
         </td>
     </tr>
     </tbody>
@@ -127,6 +123,7 @@
             </table>
         </form>
     </div>
+</div>
 </div>
 <script th:src="@{/js/adminUserList.js}"></script>
 

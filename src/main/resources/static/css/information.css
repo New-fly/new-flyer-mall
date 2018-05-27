@@ -279,3 +279,28 @@ body,html{
     outline: none;
     border: 0;
 }
+.prompt{
+	width: 150px;
+	height: 45px;
+	font-size: 18px;
+	text-align: center;
+	line-height: 45px;
+	font-family: "华文楷体";
+	border-radius: 10px;
+	color: white;
+	background-color: #0C1021;
+	opacity: 0.65;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -25px;
+	margin-left: -75px;
+	display: none;
+}
+font{
+	color: red;
+	display: block;
+	height: 20px;
+	line-height: 20px;
+}
+
