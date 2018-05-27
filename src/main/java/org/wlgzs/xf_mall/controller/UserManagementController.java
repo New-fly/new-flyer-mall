@@ -42,8 +42,9 @@ public class UserManagementController extends BaseController {
      * @Description: 修改用户名(个人信息展示页面)
      */
     @RequestMapping("changeInformation")
-    public ModelAndView ModifyName(Model model, HttpServletRequest request,Long userId) {
-        System.out.println(userId);
+    public ModelAndView ModifyName(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        long userId = (long) session.getAttribute("userId");
         User user = userService.findUserById(userId);
         userService.ModifyName(request,user);
         model.addAttribute("user", user);
@@ -116,11 +117,13 @@ public class UserManagementController extends BaseController {
      *@Description:实现修改邮箱
      */
     @RequestMapping("changeEmail")
-    public ModelAndView changeEmail(Model model,String user_mail,Long userId){
+    public ModelAndView changeEmail(Model model,String user_mail,HttpServletRequest request){
         //检查邮箱是否存在
-        if(logUserService.selectEmail(user_mail)){//可以继续
+        System.out.println(logUserService.selectEmail(user_mail));
+        if(!logUserService.selectEmail(user_mail)){//可以继续
+            HttpSession session = request.getSession();
+            long userId = (long) session.getAttribute("userId");
             model.addAttribute("mgs", "修改成功");
-            System.out.println("user_mail=============="+user_mail);
             userService.changeEmail(user_mail,userId);//修改
             User user = userService.findUserById(userId);
             model.addAttribute("user", user);
@@ -151,16 +154,18 @@ public class UserManagementController extends BaseController {
      * @Description: 修改密码,判断原先密码是否正确
      */
     @RequestMapping("checkPassword")
-    public ModelAndView checkPassword(Model model, HttpServletRequest request, Long userId) {
+    public ModelAndView checkPassword(Model model, HttpServletRequest request) {
         String user_password = request.getParameter("user_password");
         String user_rePassword = request.getParameter("user_rePassword");
+        HttpSession session = request.getSession();
+        long userId = (long) session.getAttribute("userId");
         System.out.println(user_password);
         System.out.println(user_rePassword);
         if (userService.checkPassWord(user_password, userId)) {//正确ze修改密码
             System.out.println("正确");
-            model.addAttribute("mgs", "修改成功");
+            //model.addAttribute("mgs", "修改成功");
             userService.changePassword(user_rePassword, userId);
-            return new ModelAndView("login");
+            return new ModelAndView("redirect:/toLogin");
         } else {//原密码错误
             model.addAttribute("userId",userId);
             model.addAttribute("mgs", "原密码错误");

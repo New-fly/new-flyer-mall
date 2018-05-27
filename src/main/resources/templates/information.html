@@ -7,9 +7,9 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 	<title>账号管理</title>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/information.css}" />
-	<script type="text/javascript" th:src="@{/js/information.js}"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/copy.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/copy.css}" />
 	<script type="text/javascript" th:src="@{/js/jquery-1.9.0.min.js}"></script>
+	<script th:src="@{/js/test.js}"></script>
 </head>
 <body>
     <div th:include="common/top_header :: copy"></div>
@@ -39,10 +39,9 @@
 		</div>
 		<div class="detailed_message" th:each="user : ${user}">
 			<div class="message_title">基本信息</div>
-			<input type="text" id="userId" style="display: none">
-			<div class="message_body">用户名 ：<span th:text="${user.user_name}">胡帅博</span><span class="change change_name">修改</span></div>
-            <div class="message_body">用户密码 : *********<span class="change change_password">修改</span></div>
-            <div class="message_body">邮箱 ：<span th:text="${user.user_mail}"></span><span class="change change_mail">修改</span></div>
+			<div class="message_body">用户名 ：<span th:text="${user.user_name}" class="span1">胡帅博</span><span class="change change_name">修改</span></div>
+            <div class="message_body">用户密码 :<span th:text="${user.user_password}" class="span2"></span><span class="change change_password">修改</span></div>
+            <div class="message_body">邮箱 ：<span th:text="${user.user_mail}" class="span3"></span><span class="change change_mail">修改</span></div>
 			<div class="message_title">高级设置</div>
 			<div class="message_body">用户积分 ：<span th:text="${user.userIntegral}">51335</span></div>
 			<div class="message_body">手机号 ：<span th:text="${user.user_phone}">18239290281</span></div>
@@ -70,9 +69,10 @@
 				<div class="close">×</div>
 			</div>
 			<div class="revise_body">
-				<input class="old_password" type="password" placeholder="原密码" />
-				<input class="new_password" type="password" placeholder="新密码" />
-				<input class="new_password2" type="password" placeholder="确认新密码" />
+				<input class="old_password" type="password" placeholder="原密码" id="prepassword"/>
+				<input class="new_password" type="password" placeholder="新密码"  id="repassword"/>
+				<input class="new_password2" type="password" placeholder="确认新密码" id="again"/>
+				<font id="error"></font>
 			</div>
 			<div class="revise_foot">
 				<div class="definite modify1">修改</div>
@@ -95,5 +95,8 @@
 			</div>
 		</div>
 	</div>
+	<div class="prompt">略略略</div>
+
+	<script type="text/javascript" th:src="@{/js/information.js}"></script>
 </body>
 </html>
