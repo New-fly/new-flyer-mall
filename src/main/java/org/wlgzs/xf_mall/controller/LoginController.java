@@ -90,7 +90,7 @@ public class LoginController extends BaseController {
             }
         } else {
             model.addAttribute("msg", "账号或密码错误");
-            return "login";
+            return "redirect:/toLogin";
         }
     }
 
@@ -156,7 +156,7 @@ public class LoginController extends BaseController {
     @RequestMapping("cancellation")
     public String cancellation(HttpServletRequest request) {
         logUserService.cancellation(request);
-        return "login";
+        return "redirect:/toLogin";
     }
 
     /**
