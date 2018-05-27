@@ -11,7 +11,7 @@ body,html{
 	color: red;
 	font-weight: bold;
 }
-.title>span{
+.span{
 	float: right;
 }
 .aaa{
@@ -286,14 +286,21 @@ body,html{
 	width: 255px;
 	height: 40px;
 	font-size: 16px;
-	margin: 15px 20px 15px 20px;
+	margin: 10px 20px 10px 20px;
 	border: solid 1px gray;
+}
+.tishi{
+    width: 94%;
+    height: 20px;
+    margin: 0 3%;
+    font-size: 10px;
+    color: red;
 }
 .revise_address{
 	width: 560px;
 	height: 150px;
 	font-size: 20px;
-	margin:15px 15px;
+	margin:10px 15px;
 	min-width: 300px;
 	min-height: 100px;
 	max-width: 585px;
