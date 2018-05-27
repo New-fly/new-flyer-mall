@@ -3,6 +3,35 @@ html,body{
 	height: 100%;
 	overflow: hidden;
 }
+.contentbox{
+	padding: 20px;
+	min-width: 800px;
+}
+.ipt{
+	width: 240px;
+	display: inline-block;
+	height: 30px;
+	outline: none;
+	padding-left: 10px;
+}
+.btn{
+	display: inline-block;
+	height: 35px;
+	line-height: 35px;
+	padding: 0 18px;
+	background-color: #009688;
+	color: #fff;
+	white-space: nowrap;
+	text-align: center;
+	font-size: 14px;
+	border: none;
+	border-radius: 2px;
+	cursor: pointer;
+	opacity: 0.7;
+}
+.btn:hover{
+	opacity: 1;
+}
 .header1{
 	padding: 0 20px;
 }

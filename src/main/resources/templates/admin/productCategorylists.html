@@ -9,34 +9,26 @@
 	<link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
 	<title>分类管理</title>
 	<script th:src="@{/js/jquery.js}"></script>
-	<link th:href="@{/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
-	<script th:src="@{/bootstrap/dist/js/bootstrap.min.js}"></script>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/productCategorylists.css}">
 </head>
 <body>
+<div class="contentbox">
 <div class="header">
 	<form th:action="@{/AdminProductController/findProductCategory}" method="post">
-		<h1 class="h1-sty">商品分类管理</h1>
-		<input type="text" name="category_name" placeholder="关键字" th:value="*{category_name}">
-		<input type="submit" value="搜索" class="a1">
-		<button type="button" class="btn btn-primary add" style="background-color: green;color: #fff;float: right;margin-left: 10px;">
-			<a th:href="@{/AdminProductController/toAddProductCategoryTwo}" th:class="a2">添加二级分类配件</a>
-		</button>&nbsp;&nbsp;&nbsp;
-		<button type="button" class="btn btn-primary add" style="background-color: green;color: #fff;float: right;">
-			<a th:href="@{/AdminProductController/toAddProductCategory}" th:class="a2">添加二级分类</a>
-		</button>
-		<button type="button" class="btn btn-primary add" style="background-color: green;color: #fff;float: right;margin-right: 10px">
-			<a th:href="@{/AdminProductController/toAddProductOneCategory}" th:class="a2">添加一级分类</a>
-		</button>
+		<input type="text" name="category_name" placeholder="商品名称" th:value="*{category_name}" class="ipt">
+		<input type="submit" value="搜索" class="btn">
+		<a th:href="@{/AdminProductController/toAddProductCategoryTwo}" class="a-div adiv1" style="width: 136px;">添加二级分类配件</a>
+		<a th:href="@{/AdminProductController/toAddProductCategory}" class="a-div adiv1" style="width: 136px;">添加二级分类</a>
+		<a th:href="@{/AdminProductController/toAddProductOneCategory}" class="a-div adiv1" style="width: 136px;">添加一级分类</a>
 	</form>
 </div>
+	<div class="contentbox">
 	<table class="table table-bordered able-box" id="mytable">
 	    <thead style="background-color: #F2F2F2;">
 	    <tr>
 	        <th>名称</th>
-	        <th>父类</th>
-	        <!--<th>id</th>-->
-	        <th>操作</th>
+			<th>父类</th>
+			<th>操作</th>
 	    </tr>
 	    </thead>
 	    <tbody>
@@ -46,12 +38,8 @@
                 <td th:if="${Categorie.parent_name.equals('0')}">一级分类</td>
 				<!--<td th:text="${Categorie.categoryId}"></td>-->
 				<td>
-					<!--<button type="button" class="btn btn-primary" style="background-color: #fff;color: #000;">添加</button>-->
-					<!--<a class="aa1" th:href="@{/AdminProductController/deleteProductCategory(categoryId=${Categorie.categoryId})}">删除</a>-->
-					<a class="aa1" href="javascript:void(0);" th:onclick="'javascript:deleteProduct('+${Categorie.categoryId}+');'">删除</a>
-					<button type="button" class="btn btn-primary modifi" style="background-color:#007BFF" >
-						<a th:href="@{/AdminProductController/toAdminEditProductCategory(categoryId=${Categorie.categoryId})}">修改</a>
-					</button>
+					<a class="a-div adiv1" href="javascript:void(0);" th:onclick="'javascript:deleteProduct('+${Categorie.categoryId}+');'">删除</a>
+					<a class="a-div adiv2" th:href="@{/AdminProductController/toAdminEditProductCategory(categoryId=${Categorie.categoryId})}">修改</a>
 				</td>
 			</tr>
 	    </tbody>
@@ -89,8 +77,9 @@
 				<a th:href="@{/AdminProductController/productCategoryList(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
             <li><a th:href="@{/AdminProductController/productCategoryList(page=${TotalPages})}">尾页</a></li><!--//跳转至第Number页-->
         </ul>
-
+	</div>
     </div>
+</div>
 <script type="text/javascript" th:src="@{/js/productCategorylists.js}"></script>
 
 </body>

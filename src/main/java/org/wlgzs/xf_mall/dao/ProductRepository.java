@@ -40,6 +40,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>,JpaSpeci
     @Query("SELECT o FROM Product o ")
     List<Product> getProductList(Sort sort);
 
+<<<<<<< HEAD
     @Query("SELECT o FROM Product o WHERE o.product_mallPrice BETWEEN ?1 AND ?2")
     List<Product> findByPrice(float minPrice,float maxPrice);
 
@@ -48,4 +49,9 @@ public interface ProductRepository extends JpaRepository<Product, Long>,JpaSpeci
 
     @Query("SELECT o FROM Product o WHERE o.product_mallPrice > ?1")
     List<Product> findByMaxPrice(float maxPrice);
+=======
+    @Query("SELECT o FROM Product o WHERE o.product_keywords like %:product_keywords%")
+    List<Product> findProductByProductKeywords(@Param(value = "product_keywords") String product_keywords);
+
+>>>>>>> 9ef55565f75c32a1d518047f2702265b58705908
 }

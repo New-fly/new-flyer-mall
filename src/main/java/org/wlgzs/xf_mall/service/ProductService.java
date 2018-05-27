@@ -9,6 +9,7 @@ import org.wlgzs.xf_mall.entity.ShoppingCart;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -291,4 +292,6 @@ public interface ProductService {
 
     //按价格查询
     Page<Product> findByPrice(String product_mallPrice,int page, int limit);
+
+    Page<Product> searchProduct(HttpServletRequest request, String product_category, int page, int limit) throws IOException;
 }

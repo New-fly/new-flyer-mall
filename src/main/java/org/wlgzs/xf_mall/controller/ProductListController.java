@@ -305,32 +305,9 @@ public class ProductListController extends BaseController {
                                           @RequestParam(value = "limit", defaultValue = "12") int limit) throws IOException {
         //查询关键字是否为敏感词汇
         if (searchShieldService.querySensitive(product_category)) {
-
-            String path = request.getSession().getServletContext().getRealPath("/");
-            File dir = new File(path+"txtFile/test");
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-            RandonNumberUtils randonNumberUtils = new RandonNumberUtils();
-            String number = randonNumberUtils.getNumber(4);
-            IdsUtil idsUtil = new IdsUtil();
-            idsUtil.writerFile(product_category,path+"txtFile/test/"+number+".txt");
-
-            Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(path+"txtFile/test");
-            Map<String, Float> idf = ReadFiles.idf(path+"txtFile/test");
-            System.out.println(path+"txtFile/test");
-            List<String> stringList = new ArrayList<String>();
-            for (String word : idf.keySet()) {
-                stringList.add(word);
-                System.out.println(word);
-                System.out.println("keyword :" + word + " idf: " + idf.get(word));
-            }
-            for (int i = 0; i < stringList.size(); i++) {
-                System.out.println(stringList.get(i));
-            }
-
             if (page != 0) page--;
-            Page<Product> pages = productService.findProductByTwoCategory(product_category, page, limit);
+            Page<Product> pages = productService.searchProduct(request, product_category,page,limit);
+            //Page<Product> pages = productService.findProductByTwoCategory(product_category, page, limit);
             model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
             model.addAttribute("Number", pages.getNumber() + 1);//查询的当前第几页
             List<Product> products = pages.getContent();
@@ -344,9 +321,6 @@ public class ProductListController extends BaseController {
             }
             model.addAttribute("products", products);//查询的当前页的集合
             model.addAttribute("product_category", product_category);
-
-
-
             //遍历一级二级分类
             List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();
             model.addAttribute("productOneCategories", productOneCategories);

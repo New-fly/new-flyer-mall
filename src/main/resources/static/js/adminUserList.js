@@ -20,12 +20,12 @@ function deleteUser(userId) {
     }
 }
 //添加
-//var addbtn1=document.getElementsByClassName("btn btn-primary add")[0];
-    var ousername = document.getElementById('username');
-    var userrole = document.getElementById('userrole');
-    var userphone = document.getElementById('userphone');
-    var pwd = document.getElementById('pwd');
-    var email = document.getElementById('email');
+// //var addbtn1=document.getElementsByClassName("btn btn-primary add")[0];
+//     var ousername = document.getElementById('username');
+//     var userrole = document.getElementById('userrole');
+//     var userphone = document.getElementById('userphone');
+//     var pwd = document.getElementById('pwd');
+//     var email = document.getElementById('email');
 function block1() {
     var modifi = document.getElementsByClassName("windoww")[0];
     modifi.style.display = "block";
