@@ -11,7 +11,7 @@
 						<a th:href="@{/cancellation}" style="cursor: pointer">退出</a>
 					</li>
 					<li th:if="${session.user == null }">
-						<a th:href="@{/login}"><i class="fa fa-paw"></i>&nbsp;&nbsp;<span>登录</span></a>
+						<a th:href="@{/toLogin}"><i class="fa fa-paw"></i>&nbsp;&nbsp;<span>登录</span></a>
 						<a th:href="@{/toRegistered}"><span class="red">立即注册</span></a>
 					</li>
 				</ul>
@@ -24,7 +24,7 @@
 							&nbsp;&nbsp;我的新飞</a>
 					</li>
 					<li th:if="${session.user == null }">
-						<a th:href="@{/login}">
+						<a th:href="@{/toLogin}">
 							<i class="fa fa-paw" style="color: #336699"></i>
 							&nbsp;&nbsp;我的新飞</a>
 					</li>
@@ -35,7 +35,7 @@
 	                    &nbsp;&nbsp;购物车</a>
 	                </li>
 					<li th:if="${session.user == null }">
-						<a th:href="@{/login}">
+						<a th:href="@{/toLogin}">
 							<i class="fa fa-paw" style="color: #336699"></i>
 							&nbsp;&nbsp;购物车</a>
 					</li>
@@ -44,7 +44,7 @@
 	                    <i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a>
 					</li>
 					<li th:if="${session.user == null }">
-						<a th:href="@{/login}">
+						<a th:href="@{/toLogin}">
 							<i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a>
 					</li>
 	                <li th:if="${session.user != null }">
@@ -52,7 +52,7 @@
 	                        <i class="fa fa-paw"></i>&nbsp;&nbsp;我的积分</a>
 	                </li>
 	                <li th:if="${session.user == null }">
-	                    <a th:href="@{/login}">
+	                    <a th:href="@{/toLogin}">
 	                        <i class="fa fa-paw"></i>&nbsp;&nbsp;我的积分</a>
 	                </li>
 					<li th:if="${session.user != null }">
@@ -60,7 +60,7 @@
 							<i class="fa fa-paw"></i>&nbsp;&nbsp;积分兑换</a>
 					</li>
 					<li th:if="${session.user == null }">
-						<a th:href="@{/login}">
+						<a th:href="@{/toLogin}">
 							<i class="fa fa-paw"></i>&nbsp;&nbsp;积分兑换</a>
 					</li>
 	                <li th:if="${session.user != null }">
@@ -68,7 +68,7 @@
 	                        <i class="fa fa-paw"></i>&nbsp;&nbsp;我的足迹</a>
 	                </li>
 	                <li th:if="${session.user == null }">
-	                    <a th:href="@{/login}">
+	                    <a th:href="@{/toLogin}">
 	                        <i class="fa fa-paw"></i>&nbsp;&nbsp;我的足迹</a>
 	                </li>
 	                <li th:if="${session.user != null }">
@@ -76,7 +76,7 @@
 	                        <i class="fa fa-paw"></i>&nbsp;&nbsp;账号管理</a>
 	                </li>
 	                <li th:if="${session.user == null }">
-	                    <a th:href="@{/login}">
+	                    <a th:href="@{/toLogin}">
 	                        <i class="fa fa-paw"></i>&nbsp;&nbsp;账号管理</a>
 	                </li>
 				</ul>

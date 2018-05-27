@@ -592,6 +592,7 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> recommendedByUserId(long userId) {
         //通过用户id查询最新足迹商品
         List<Footprint> footprints = footprintRepository.recommendedByUserId(userId);
+        System.out.println(footprints);
         List<Product> products = new ArrayList<Product>();
         if (footprints != null && footprints.size() != 0) {
             long[] productIds = new long[footprints.size()];
@@ -622,6 +623,7 @@ public class ProductServiceImpl implements ProductService {
 
             //查询用户的订单
             List<Orders> orders = ordersRepository.userOrderList(userId);
+            System.out.println(orders);
             List<String> productOneCategoriesTwo = new ArrayList<String>();
             if (orders != null && orders.size() != 0) {
                 Date data = new Date();
@@ -731,7 +733,7 @@ public class ProductServiceImpl implements ProductService {
         }
         products.addAll(productsThree);
         List<Product> productsFour = productOneCategory(productOneCategories.get(3).getCategory_name());
-        ;//主页部分第四分类商品
+        //主页部分第四分类商品
         for (int i = 0; i < productsFour.size(); i++) {
             productsFour.get(i).setProduct_category(productOneCategories.get(3).getCategory_name());
         }
@@ -795,14 +797,6 @@ public class ProductServiceImpl implements ProductService {
         }
         Page pages = new PageImpl(productList,pageable,productList.size());
         return pages;
-    }
-    private Page<Product> searchProduct(String product_keywords, int page, int limit) {
-        Sort sort1 = new Sort(Sort.Direction.DESC, "productId");
-        Pageable pageable1 = new PageRequest(page, limit, sort1);
-        Specification<Product> specification1 = new PageUtil<Product>(product_keywords).getPage("product_keywords");
-        Page pages1 = productRepository.findAll(specification1, pageable1);
-        System.out.println(pages1.getContent());
-        return pages1;
     }
 
     private List<Product> productOneCategory(String category_name) {
