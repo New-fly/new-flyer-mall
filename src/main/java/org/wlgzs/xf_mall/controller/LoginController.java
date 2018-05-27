@@ -156,7 +156,7 @@ public class LoginController extends BaseController {
     @RequestMapping("cancellation")
     public String cancellation(HttpServletRequest request) {
         logUserService.cancellation(request);
-        return "login";
+        return "redirect:/toLogin";
     }
 
     /**
