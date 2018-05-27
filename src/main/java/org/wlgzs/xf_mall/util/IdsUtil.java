@@ -26,13 +26,8 @@ public class IdsUtil {
     }
     public static void writerFile(String content,String filePath){
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
-            bw.write(content);
-            bw.close();
-            String json = "要写入的JSON字符串";
-            String file = "D:\\1.txt";
-            FileOutputStream writerStream = new FileOutputStream(file);
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(writerStream, "UTF-8"));
+            FileOutputStream writerStream = new FileOutputStream(filePath);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(writerStream, "GBK"));
             writer.write(content);
             writer.close();
         } catch (IOException e){

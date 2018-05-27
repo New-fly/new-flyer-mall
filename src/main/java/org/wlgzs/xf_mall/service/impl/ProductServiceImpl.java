@@ -2,10 +2,7 @@ package org.wlgzs.xf_mall.service.impl;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +12,7 @@ import org.wlgzs.xf_mall.entity.Collection;
 import org.wlgzs.xf_mall.service.ProductService;
 import org.wlgzs.xf_mall.util.IdsUtil;
 import org.wlgzs.xf_mall.util.PageUtil;
+import org.wlgzs.xf_mall.util.ReadFiles;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -54,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> getProductListPage(String product_keywords, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
-        Specification<Product> specification = new PageUtil<Product>(product_keywords).getPage("product_keywords","product_serviceType","product_category");
+        Specification<Product> specification = new PageUtil<Product>(product_keywords).getPage("product_keywords", "product_serviceType", "product_category");
         Page pages = productRepository.findAll(specification, pageable);
         return pages;
     }
@@ -135,20 +133,20 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public String delete(long productId, HttpServletRequest request) {
         Product product = productRepository.findById(productId);
-        if(product != null){
+        if (product != null) {
             String path = request.getSession().getServletContext().getRealPath("/");
             String image = product.getProduct_picture();
 
             String[] img = image.split(",");
             for (int i = 0; i < img.length; i++) {
-                File file = new File(path+""+img[i].substring(1,img[0].length()));
+                File file = new File(path + "" + img[i].substring(1, img[0].length()));
                 if (file.exists() && file.isFile()) {
                     file.delete();
                 }
             }
             productRepository.deleteById(productId);
             return "成功";
-        }else {
+        } else {
             return "失败";
         }
 
@@ -200,9 +198,9 @@ public class ProductServiceImpl implements ProductService {
     //修改商品
     @Override
     public String edit(long productId, String product_details, MultipartFile[] myFileNames, HttpSession session,
-                     HttpServletRequest request) {
+                       HttpServletRequest request) {
         Product product = productRepository.findById(productId);
-        if(product != null){
+        if (product != null) {
             String realName = "";
             String[] str = new String[myFileNames.length];
             for (int i = 0; i < myFileNames.length; i++) {
@@ -245,7 +243,7 @@ public class ProductServiceImpl implements ProductService {
             product.setProduct_picture(product_picture);
             productRepository.save(product);
             return "修改成功";
-        }else{
+        } else {
             return "修改失败";
         }
     }
@@ -293,13 +291,12 @@ public class ProductServiceImpl implements ProductService {
 
     //通过二级分类查找商品  分页
     @Override
-    public Page<Product> findProductByTwoCategory(String product_category,int page, int limit) {
+    public Page<Product> findProductByTwoCategory(String product_category, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
         //商品分类，活动，服务类型三种方式
-        Specification<Product> specification = new PageUtil<Product>(product_category).getPage("product_category","product_serviceType","product_activity","product_keywords");
+        Specification<Product> specification = new PageUtil<Product>(product_category).getPage("product_category", "product_serviceType", "product_activity", "product_keywords");
         Page pages = productRepository.findAll(specification, pageable);
-        System.out.println(pages);
         return pages;
     }
 
@@ -353,10 +350,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public String deleteCategory(long categoryId) {
         ProductCategory productCategory = productCategoryRepository.findById(categoryId);
-        if(productCategory != null){
-            if(productCategory.getParent_name().equals("0")){
+        if (productCategory != null) {
+            if (productCategory.getParent_name().equals("0")) {
                 List<ProductCategory> productCategories = productCategoryRepository.findByCategoryParentName(productCategory.getCategory_name());
-                if(productCategories.size()!=0){
+                if (productCategories.size() != 0) {
                     long[] Ids = new long[productCategories.size()];
                     for (int i = 0; i < Ids.length; i++) {
                         Ids[i] = productCategories.get(i).getCategoryId();
@@ -375,18 +372,18 @@ public class ProductServiceImpl implements ProductService {
     public void editCategory(long categoryId, MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
         ProductCategory productCategory = productCategoryRepository.findById(categoryId);
         productCategory.setCategory_name(request.getParameter("category_name"));
-        if(!productCategory.getParent_name().equals("0")){
+        if (!productCategory.getParent_name().equals("0")) {
             productCategory.setParent_name(request.getParameter("parent_name"));
-            if(productCategory.getCategory_show()==2){
+            if (productCategory.getCategory_show() == 2) {
                 productCategory.setCategory_show(2);
                 productCategory.setCategory_img("0");
             }
-            if(productCategory.getCategory_show()!=2) {
+            if (productCategory.getCategory_show() != 2) {
                 productCategory.setCategory_show(0);
                 productCategory.setCategory_img("0");
             }
         }
-        if(productCategory.getParent_name().equals("0")){
+        if (productCategory.getParent_name().equals("0")) {
             String realName = "";
             if (myFileName != null) {
                 System.out.println("修改分类图片");
@@ -418,7 +415,7 @@ public class ProductServiceImpl implements ProductService {
 
     //添加购物车
     @Override
-    public void save(long userId, long productId,int shoppingCart_count, HttpServletRequest request) {
+    public void save(long userId, long productId, int shoppingCart_count, HttpServletRequest request) {
         Product product = productRepository.findById(productId);
 
         ShoppingCart shoppingCart = new ShoppingCart();
@@ -431,9 +428,9 @@ public class ProductServiceImpl implements ProductService {
         if (findShoppingCart == null) {
             shoppingCart.setProductId(productId);
             String img = null;
-            if (product.getProduct_picture().contains(",")){
+            if (product.getProduct_picture().contains(",")) {
                 img = product.getProduct_picture();
-                img = img.substring(0,img.indexOf(","));
+                img = img.substring(0, img.indexOf(","));
             }
             shoppingCart.setProduct_picture(img);
             shoppingCart.setProduct_counterPrice(product.getProduct_counterPrice());
@@ -459,9 +456,9 @@ public class ProductServiceImpl implements ProductService {
         if (findCollection == null) {
             collection.setProductId(productId);
             String img = null;
-            if (product.getProduct_picture().contains(",")){
+            if (product.getProduct_picture().contains(",")) {
                 img = product.getProduct_picture();
-                img = img.substring(0,img.indexOf(","));
+                img = img.substring(0, img.indexOf(","));
             }
             collection.setProduct_picture(img);
             collection.setProduct_keywords(product.getProduct_keywords());
@@ -506,9 +503,9 @@ public class ProductServiceImpl implements ProductService {
         if (findCollection == null) {
             collection.setProductId(productId);
             String img = null;
-            if (product.getProduct_picture().contains(",")){
+            if (product.getProduct_picture().contains(",")) {
                 img = product.getProduct_picture();
-                img = img.substring(0,img.indexOf(","));
+                img = img.substring(0, img.indexOf(","));
             }
             collection.setProduct_picture(img);
             collection.setProduct_keywords(product.getProduct_keywords());
@@ -536,9 +533,9 @@ public class ProductServiceImpl implements ProductService {
     //修改购物车数量
     @Override
     public void changeShoppingCarCount(long shopping_cart_id, int shopping_cart_count) {
-            ShoppingCart shoppingCart = shoppingCartRepository.findById(shopping_cart_id);
-            shoppingCart.setShoppingCart_count(shopping_cart_count);
-            shoppingCartRepository.save(shoppingCart);
+        ShoppingCart shoppingCart = shoppingCartRepository.findById(shopping_cart_id);
+        shoppingCart.setShoppingCart_count(shopping_cart_count);
+        shoppingCartRepository.save(shoppingCart);
     }
 
     //用户的收藏
@@ -564,7 +561,7 @@ public class ProductServiceImpl implements ProductService {
     //搜索收藏商品
     @Override
     public List<Collection> findCollections(String product_keywords, long userId) {
-        return collectionRepository.findCollections(product_keywords,userId);
+        return collectionRepository.findCollections(product_keywords, userId);
     }
 
     //搜索提示
@@ -583,7 +580,7 @@ public class ProductServiceImpl implements ProductService {
             public Predicate toPredicate(Root<Product> root,
                                          CriteriaQuery<?> criteriaQuery,
                                          CriteriaBuilder criteriaBuilder) {
-                Predicate predicate = criteriaBuilder.equal(root.get("product_isRedeemable"),product_isRedeemable);
+                Predicate predicate = criteriaBuilder.equal(root.get("product_isRedeemable"), product_isRedeemable);
                 return criteriaBuilder.and(predicate);
             }
         };
@@ -595,8 +592,9 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> recommendedByUserId(long userId) {
         //通过用户id查询最新足迹商品
         List<Footprint> footprints = footprintRepository.recommendedByUserId(userId);
+        System.out.println(footprints);
         List<Product> products = new ArrayList<Product>();
-        if(footprints!=null && footprints.size() != 0){
+        if (footprints != null && footprints.size() != 0) {
             long[] productIds = new long[footprints.size()];
             for (int i = 0; i < footprints.size(); i++) {
                 productIds[i] = footprints.get(i).getProductId();
@@ -616,32 +614,33 @@ public class ProductServiceImpl implements ProductService {
             }
             //去重 利用set顺序不变
             Set set = new HashSet();
-            List<String> newOneCategoryList = new  ArrayList<String>();
-            for (String cd:oneCategoryList) {
-                if(set.add(cd)){
+            List<String> newOneCategoryList = new ArrayList<String>();
+            for (String cd : oneCategoryList) {
+                if (set.add(cd)) {
                     newOneCategoryList.add(cd);
                 }
             }
 
             //查询用户的订单
             List<Orders> orders = ordersRepository.userOrderList(userId);
+            System.out.println(orders);
             List<String> productOneCategoriesTwo = new ArrayList<String>();
-            if(orders!=null && orders.size() != 0){
+            if (orders != null && orders.size() != 0) {
                 Date data = new Date();
-                SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
                 //将近半年的订单放在一个集合中
                 List<Orders> ordersList = new ArrayList<Orders>();
                 for (int i = 0; i < orders.size(); i++) {
-                    double between = (double)(data.getTime() - orders.get(i).getOrder_purchaseTime().getTime())/(double)(1000*60*60*24);
-                    if(between < 180){
+                    double between = (double) (data.getTime() - orders.get(i).getOrder_purchaseTime().getTime()) / (double) (1000 * 60 * 60 * 24);
+                    if (between < 180) {
                         ordersList.add(orders.get(i));
                     }
                 }
                 //将近半年订单的商品id放在一个数组里
-                long [] orderProductId = new long[ordersList.size()];
+                long[] orderProductId = new long[ordersList.size()];
                 for (int i = 0; i < ordersList.size(); i++) {
-                    double between = (double)(data.getTime() - orders.get(i).getOrder_purchaseTime().getTime())/(double)(1000*60*60*24);
-                    if(between < 180){
+                    double between = (double) (data.getTime() - orders.get(i).getOrder_purchaseTime().getTime()) / (double) (1000 * 60 * 60 * 24);
+                    if (between < 180) {
                         orderProductId[i] = ordersList.get(i).getProductId();
                     }
                 }
@@ -661,33 +660,33 @@ public class ProductServiceImpl implements ProductService {
                 }
                 //去重 利用set顺序不变
                 Set orderSet = new HashSet();
-                List<String> orderNewOneCategoryList = new  ArrayList<String>();
-                for (String cd:orderOneCategoryList) {
-                    if(orderSet.add(cd)){
+                List<String> orderNewOneCategoryList = new ArrayList<String>();
+                for (String cd : orderOneCategoryList) {
+                    if (orderSet.add(cd)) {
                         orderNewOneCategoryList.add(cd);
                     }
                 }
                 //查询该一级分类下的配件
                 String[] parent_names = orderOneCategoryList.toArray(new String[orderOneCategoryList.size()]);
                 List<ProductCategory> productOneCategories = productCategoryRepository.findCategoryByParentNameTwo(parent_names);
-                if(productOneCategories!=null){
+                if (productOneCategories != null) {
                     for (int i = 0; i < productOneCategories.size(); i++) {
                         productOneCategoriesTwo.add(productOneCategories.get(i).getCategory_name());
                     }
                 }
                 //从所推荐的一级分类中 去除 半年内订单商品分类对应的一级分类
                 Iterator<String> it = newOneCategoryList.iterator();
-                while(it.hasNext()){
+                while (it.hasNext()) {
                     String x = it.next();
                     for (int j = 0; j < orderNewOneCategoryList.size(); j++) {
-                        if(x.equals(orderNewOneCategoryList.get(j))){
+                        if (x.equals(orderNewOneCategoryList.get(j))) {
                             it.remove();
                         }
                     }
                 }
             }
 
-            if(newOneCategoryList.size()!=0){
+            if (newOneCategoryList.size() != 0) {
                 String[] parent_names = newOneCategoryList.toArray(new String[newOneCategoryList.size()]);
                 //通过一级分类查询二级分类
                 List<ProductCategory> productOneCategories = productCategoryRepository.findCategoryByParentName(parent_names);
@@ -695,17 +694,17 @@ public class ProductServiceImpl implements ProductService {
                 for (int i = 0; i < productOneCategories.size(); i++) {
                     categories.add(productOneCategories.get(i).getCategory_name());
                 }
-                if(productOneCategoriesTwo.size()!=0){
+                if (productOneCategoriesTwo.size() != 0) {
                     categories.addAll(productOneCategoriesTwo);
                 }
                 String[] product_categories = categories.toArray(new String[categories.size()]);
                 //通过二级分类查询商品
                 products = productRepository.findProductByTwoCategory(product_categories);
                 String img;
-                for(int i = 0; i < products.size(); i++) {
-                    if (products.get(i).getProduct_picture().contains(",")){
+                for (int i = 0; i < products.size(); i++) {
+                    if (products.get(i).getProduct_picture().contains(",")) {
                         img = products.get(i).getProduct_picture();
-                        img = img.substring(0,img.indexOf(","));
+                        img = img.substring(0, img.indexOf(","));
                         products.get(i).setProduct_picture(img);
                     }
                 }
@@ -713,6 +712,7 @@ public class ProductServiceImpl implements ProductService {
         }
         return products;
     }
+
     //主页商品数据
     @Override
     public List<Product> homeProductList(List<ProductCategory> productOneCategories) {
@@ -732,7 +732,8 @@ public class ProductServiceImpl implements ProductService {
             productsThree.get(i).setProduct_category(productOneCategories.get(2).getCategory_name());
         }
         products.addAll(productsThree);
-        List<Product> productsFour = productOneCategory(productOneCategories.get(3).getCategory_name());;//主页部分第四分类商品
+        List<Product> productsFour = productOneCategory(productOneCategories.get(3).getCategory_name());
+        //主页部分第四分类商品
         for (int i = 0; i < productsFour.size(); i++) {
             productsFour.get(i).setProduct_category(productOneCategories.get(3).getCategory_name());
         }
@@ -743,10 +744,10 @@ public class ProductServiceImpl implements ProductService {
         }
         products.addAll(productsFive);
         String img;
-        for(int i = 0; i < products.size(); i++) {
-            if (products.get(i).getProduct_picture().contains(",")){
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getProduct_picture().contains(",")) {
                 img = products.get(i).getProduct_picture();
-                img = img.substring(0,img.indexOf(","));
+                img = img.substring(0, img.indexOf(","));
                 products.get(i).setProduct_picture(img);
             }
         }
@@ -758,6 +759,44 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getProductList() {
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         return productRepository.getProductList(sort);
+    }
+
+    //搜索商品
+    @Override
+    public Page<Product> searchProduct(HttpServletRequest request, String product_category, int page, int limit) throws IOException {
+        String path = request.getSession().getServletContext().getRealPath("/");
+        String pathTwo = path + "txtFile/" + product_category;
+        File dir = new File(pathTwo);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        IdsUtil idsUtil = new IdsUtil();
+        idsUtil.writerFile(product_category, pathTwo + "/" + product_category + ".txt");
+
+        Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(pathTwo);
+        Map<String, Float> idf = ReadFiles.idf(pathTwo);
+        List<String> stringList = new ArrayList<String>();
+        for (String word : idf.keySet()) {
+            stringList.add(word);
+        }
+        File file = new File(pathTwo + "/" + product_category + ".txt");
+        if (file.exists() && file.isFile()) {
+            file.delete();
+        }
+        File fileTwo = new File(pathTwo);
+        if (fileTwo.exists() && fileTwo.isDirectory()) {
+            fileTwo.delete();
+        }
+        String[] product_categories = stringList.toArray(new String[stringList.size()]);
+        //通过二级分类查询商品
+        Sort sort = new Sort(Sort.Direction.DESC, "productId");
+        Pageable pageable = new PageRequest(page, limit, sort);
+        List<Product> productList = new ArrayList<>();
+        for (int i = 0; i < product_categories.length; i++) {
+            productList.addAll(productRepository.findProductByProductKeywords(product_categories[i]));
+        }
+        Page pages = new PageImpl(productList,pageable,productList.size());
+        return pages;
     }
 
     private List<Product> productOneCategory(String category_name) {
