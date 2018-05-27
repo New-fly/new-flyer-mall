@@ -39,8 +39,20 @@ public class ProductListController extends BaseController {
      * @description 跳转至商品列表页面
      */
     @RequestMapping("/toProductList")
-    public ModelAndView toProductList(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+    public ModelAndView toProductList(Model model,HttpServletRequest request ,@RequestParam(value = "page", defaultValue = "0") int page,
                                       @RequestParam(value = "limit", defaultValue = "12") int limit) {
+        //遍历一级二级分类
+        List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();
+        model.addAttribute("productOneCategories", productOneCategories);
+        List<ProductCategory> productTwoCategories = productService.findProductTwoCategoryList();
+        model.addAttribute("productTwoCategories", productTwoCategories);
+        //推荐商品
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") != null) {
+            long userId = (long) session.getAttribute("userId");
+            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+            model.addAttribute("recommendedProducts", recommendedProducts);
+        }
         String product_keywords = "";
         if (page != 0) page--;
         Page pages = productService.getProductListPage(product_keywords, page, limit);
@@ -347,5 +359,38 @@ public class ProductListController extends BaseController {
         }
         model.addAttribute("products", products);//查询的当前页的集合
         return new ModelAndView("integralProduct");
+    }
+
+    //按价格区间划分商品
+    @RequestMapping("/findByPrice")
+    public ModelAndView findByPrice(Model model,HttpServletRequest request ,String product_mallPrice ,@RequestParam(value = "page", defaultValue = "0") int page,
+                                    @RequestParam(value = "limit", defaultValue = "12") int limit){
+        //遍历一级二级分类
+        List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();
+        model.addAttribute("productOneCategories", productOneCategories);
+        List<ProductCategory> productTwoCategories = productService.findProductTwoCategoryList();
+        model.addAttribute("productTwoCategories", productTwoCategories);
+        //推荐商品
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") != null) {
+            long userId = (long) session.getAttribute("userId");
+            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+            model.addAttribute("recommendedProducts", recommendedProducts);
+        }
+        if (page != 0) page--;
+        Page<Product> pages = productService.findByPrice(product_mallPrice,page,limit);
+        model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
+        model.addAttribute("Number", pages.getNumber() + 1);//查询的当前第几页
+        List<Product> products = pages.getContent();
+        String img;
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getProduct_picture().contains(",")) {
+                img = products.get(i).getProduct_picture();
+                img = img.substring(0, img.indexOf(","));
+                products.get(i).setProduct_picture(img);
+            }
+        }
+        model.addAttribute("products", products);//查询的当前页的集合
+        return new ModelAndView("productList");
     }
 }

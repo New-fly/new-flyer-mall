@@ -13,8 +13,12 @@ body,html{
 }
 .title>span{
 	float: right;
-	color: gray;
-	font-size: 14px;
+}
+.aaa{
+    color: gray;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
 }
 .title>img{
 	width: 25px;
@@ -26,7 +30,6 @@ body,html{
 	width: 1000px;
 	height: 40px;
 	margin: 0 auto;
-	overflow: hidden;
 	position: relative;
 }
 .nav_alone{
@@ -291,4 +294,26 @@ body,html{
 	height: 150px;
 	font-size: 20px;
 	margin:15px 15px;
+	min-width: 300px;
+	min-height: 100px;
+	max-width: 585px;
+	max-height: 180px;
+}
+.prompt{
+    width: 150px;
+    height: 45px;
+    font-size: 18px;
+    text-align: center;
+    line-height: 45px;
+    font-family: "华文楷体";
+    border-radius: 10px;
+    color: white;
+    background-color: #0C1021;
+    opacity: 0.65;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -25px;
+    margin-left: -75px;
+    display: none;
 }
