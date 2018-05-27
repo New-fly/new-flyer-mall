@@ -288,4 +288,7 @@ public interface ProductService {
      * @description 主页最新商品
      */
     List<Product> getProductList();
+
+    //按价格查询
+    Page<Product> findByPrice(String product_mallPrice,int page, int limit);
 }

@@ -35,6 +35,7 @@ public class LoginFilter implements Filter {
         patterns.add(Pattern.compile("ProductListController/searchWord"));
         patterns.add(Pattern.compile("ProductListController/searchProductList"));
         patterns.add(Pattern.compile("ProductListController/searchProductList/"));
+        patterns.add(Pattern.compile("ProductListController/findByPrice"));
         patterns.add(Pattern.compile("ProductListController/integralProduct"));
         patterns.add(Pattern.compile("UserManagementController/sendRetrievePassword"));
         patterns.add(Pattern.compile("UserManagementController/passwordContrastCode"));
