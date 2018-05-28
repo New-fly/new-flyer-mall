@@ -64,7 +64,6 @@ window.onload = function() {
 		document.getElementById("all").onclick=function(){  
         var all=document.getElementById("all");//获取到点击全选的那个复选框 
         var one=document.getElementsByName('aaa');//获取到复选框的名称
-
         if(all.checked==true){//因为获得的是数组，所以要循环 为每一个checked赋值
             count = 0;
             for(var i=0;i<olist.length;i++){  
@@ -137,8 +136,6 @@ window.onload = function() {
                 allid=allid+document.getElementsByClassName("aa")[i].value+",";
             }
         }
-        console.log(allid);
-        allid = allid.substring(0, allid.lastIndexOf(','));
         document.getElementsByClassName("produc")[0].value=allid;
     }
 };
