@@ -84,6 +84,12 @@ public class OrderController {
         model.addAttribute("mag",mag);
         return new ModelAndView("redirect:/OrderController/allProductOrdersLists");
     }
+    //后台批量删除订单
+    @RequestMapping("/deleteOrders")
+    public ModelAndView deleteOrders(Model model,String orderId){
+        ordersService.deleteOrders(orderId);
+        return new ModelAndView("redirect:/OrderController/allProductOrdersLists");
+    }
     //根据用户名查询订单
     @RequestMapping("/findUserOrder")
     public ModelAndView UserOrders(Model model,String user_name){

@@ -152,7 +152,7 @@ public class UserController {
      *@Description:后台批量删除用户
      */
     @RequestMapping("/adminDeleteUsers")
-    public String adminDeleteUsers(@RequestParam(value = "userId",defaultValue = "439,449") String userId){
+    public String adminDeleteUsers(@RequestParam(value = "userId") String userId){
         userService.adminDeleteUsers(userId);
         return "redirect:/AdminUserController/adminUserList";
     }

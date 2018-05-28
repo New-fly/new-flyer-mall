@@ -137,6 +137,13 @@
             <systemPath>${project.basedir}/libs/je-analysis-1.5.3.jar</systemPath>
         </dependency>
 
+        <!--分页的插件-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
     </dependencies>
 
     <build>

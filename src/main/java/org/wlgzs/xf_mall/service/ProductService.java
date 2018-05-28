@@ -294,4 +294,7 @@ public interface ProductService {
     Page<Product> findByPrice(String product_mallPrice,int page, int limit);
 
     Page<Product> searchProduct(HttpServletRequest request, String product_category, int page, int limit) throws IOException;
+
+    //批量删除商品
+    void adminDeleteProducts(String productId);
 }
