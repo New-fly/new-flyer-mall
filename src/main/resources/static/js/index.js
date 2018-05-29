@@ -122,7 +122,7 @@ window.onload = function(){
                 alert("请求失败！！")
             }
         })
-    }
+    };
     function color(){
         var allfootnav=document.getElementsByClassName("footnav")
         for(let i=0;i<allfootnav.length;i++){
