@@ -22,17 +22,20 @@
 	</div>
 	<div class="deleat">
 		<div class="deleatcenter">
-            <input type="text" class="inputids">
+            <input type="text" class="inputids" style="display: none">
 			<span class="multiple_delete">批量删除</span>
             <div class="yes">删除</div>
 		</div>
 	</div>
 	<div class="list">
 		<div class="single" th:each="foot : ${footprints}">
-            <input type="checkbox" class="select">
+            <label class="demo--label select">
+                <input class="demo--radio select1" type="checkbox">
+                <span class="demo--checkbox demo--radioInput"></span>
+            </label>
 			<img th:src="${foot.product_picture}"/>
 			<div style="padding: 0 5px;">
-				<div class="id" th:text="${foot.productId}" style="display: none"></div>
+				<div class="foot" th:text="${foot.footprintId}" style="display: none"></div>
 				<span class="mallPrice" th:text="${foot.product_mallPrice}"></span><br />
 				<span class="counterPrice" th:text="${foot.footprint_time}"></span>
 			</div>
