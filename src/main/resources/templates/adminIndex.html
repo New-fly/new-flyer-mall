@@ -18,10 +18,10 @@
 		</div>
 		<div class="user">
 			<div class="user_message">
-				<img th:src="@{/images/sign-in.gif}"/>
-				<span>胡帅博</span>
+				<img th:src="${session.adminUser.user_avatar}"/>
+				<span th:text="${session.adminUser.user_name}"></span>
 			</div>
-			<div><a th:href="${login}" style="color: #fff;text-decoration: none;">退出</a></div>
+			<div><a th:href="@{cancellation}" style="color: #fff;text-decoration: none;">退出</a></div>
 		</div>
 	</div>
 	<div class="left">

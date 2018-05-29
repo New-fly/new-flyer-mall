@@ -11,6 +11,7 @@ import org.wlgzs.xf_mall.service.FootprintService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -32,52 +33,59 @@ public class FootprintController extends BaseController {
     public void addFootprint(HttpServletRequest request, long userId, long productId){
         footprintService.save(request,userId,productId);
     }*/
+
     /**
-     * @author 阿杰
      * @param [footprintId]
      * @return java.lang.String
+     * @author 阿杰
      * @description 删除足迹
      */
     @RequestMapping("/deleteFootprint")
-    public String delete(long footprintId){
+    public String delete(long footprintId) {
         footprintService.delete(footprintId);
         return "成功";
     }
+
     /**
-     * @author 阿杰
      * @param [footprintId, userId]
      * @return org.springframework.web.servlet.ModelAndView
+     * @author 阿杰
      * @description 批量删除足迹
      */
     @RequestMapping("/deleteFootprints")
-    public ModelAndView deleteFootprints(@RequestParam(value = "footprintId",defaultValue = "466,467") String footprintId, long userId){
+    public ModelAndView deleteFootprints(@RequestParam(value = "footprintId", defaultValue = "466,467") String footprintId
+            ,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        long userId = (long) session.getAttribute("userId");
         footprintService.deleteFootprints(footprintId);
-        String url="redirect:/FootprintController/userFootprint?userId="+userId;
+        String url = "redirect:/FootprintController/userFootprint?userId=" + userId;
         return new ModelAndView(url);
     }
+
     /**
-     * @author 阿杰
      * @param [model, product_keywords, userId]
      * @return org.springframework.web.servlet.ModelAndView
+     * @author 阿杰
      * @description 搜索足迹商品
      */
     @RequestMapping("/findCollectionProducts")
-    public ModelAndView findFootprintProducts(Model model,String product_keywords,long userId){
-        List<Footprint> footprints = footprintService.findFootprints(product_keywords,userId);
-        model.addAttribute("footprints",footprints);
-        String url="redirect:/FootprintController/userFootprint?userId="+userId;
+    public ModelAndView findFootprintProducts(Model model, String product_keywords, long userId) {
+        List<Footprint> footprints = footprintService.findFootprints(product_keywords, userId);
+        model.addAttribute("footprints", footprints);
+        String url = "redirect:/FootprintController/userFootprint?userId=" + userId;
         return new ModelAndView(url);
     }
+
     /**
-     * @author 李晓珊
      * @param [model, userId]
      * @return org.springframework.web.servlet.ModelAndView
+     * @author 李晓珊
      * @description 遍历足迹
      */
     @RequestMapping("/userFootprint")
-    public ModelAndView findFootprintByUserId(Model model,long userId){
-       List<Footprint> footprints =  footprintService.findFootprintByUserId(userId);
-       model.addAttribute("footprints",footprints);
-       return new ModelAndView("footprint");
+    public ModelAndView findFootprintByUserId(Model model, long userId) {
+        List<Footprint> footprints = footprintService.findFootprintByUserId(userId);
+        model.addAttribute("footprints", footprints);
+        return new ModelAndView("footprint");
     }
 }

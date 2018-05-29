@@ -17,7 +17,7 @@
 	<div class="title">
 		<img th:src="@{/images/xin.png}" alt="" />
 		新飞账号
-        <span><a class="aaa" th:href="@{/cancellation}">退出</a></span>
+        <span class="span"><a class="aaa" th:href="@{/cancellation}">退出</a></span>
 	</div>
 	<div class="nav">
 		<div class="nav_alone"><a th:href="@{/UserManagementController/information(userId=${session.user.userId})}">我的账号</a></div>
@@ -63,8 +63,9 @@
                 <input type="text" class="revise_username" style="display:none">
                 <input type="text" class="revise_is" style="display:none">
                 <input type="text" class="revise_id" style="display:none">
-				<input type="text" placeholder="请输入收货人姓名"  class="revise_name" />
+				<input type="text" placeholder="请输入收货人姓名"  class="revise_name"/>
 				<input type="text" placeholder="请输入收货人手机号"  class="revise_phone"/>
+				<div class="tishi"></div>
 				<textarea placeholder="请输入收货详细地址"  class="revise_address"></textarea>
 			</div>
 			<div class="revise_foot">
