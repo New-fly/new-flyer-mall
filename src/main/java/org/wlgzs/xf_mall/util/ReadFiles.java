@@ -7,10 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import jeasy.analysis.MMAnalyzer;
 
 public class ReadFiles {
@@ -27,10 +25,16 @@ public class ReadFiles {
                 System.out.println("filepath: " + file.getAbsolutePath());
             } else if (file.isDirectory()) {
                 String[] filelist = file.list();
+                //System.out.println(filelist.length+"filelist.length");
                 for (int i = 0; i < filelist.length; i++) {
                     File readfile = new File(filepath + "\\" + filelist[i]);
+                    //System.out.println(readfile.getName()+"wwwwwwwwwwwwwwwwwwwww");
+                    //System.out.println(readfile+"依次读取文件");
                     if (!readfile.isDirectory()) {
                         //System.out.println("filepath: " + readfile.getAbsolutePath());
+                        for (int j = 0; j < fileList.size(); j++) {
+                            fileList.remove(i);
+                        }
                         fileList.add(readfile.getAbsolutePath());
                     } else if (readfile.isDirectory()) {
                         readDirs(filepath + "\\" + filelist[i]);
@@ -41,6 +45,10 @@ public class ReadFiles {
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
+        /*for (int i = 0; i <fileList.size() ; i++) {
+            System.out.println(i);
+            System.out.println(fileList.get(i)+"==========");
+        }*/
         return fileList;
     }
 
@@ -124,12 +132,28 @@ public class ReadFiles {
     }
 
     public static Map<String, HashMap<String, Integer>> NormalTFOfAll(String dir) throws IOException {
+        //System.out.println(dir);
         List<String> fileList = ReadFiles.readDirs(dir);
+        //System.out.println("程序停止");
         for (int i = 0; i < fileList.size(); i++) {
+            //System.out.println(fileList.size()+"size");
             HashMap<String, Integer> dict = new HashMap<String, Integer>();
+            /*for(int j =0;j<fileList.size();j++){
+                System.out.println("第"+i+"次");
+                System.out.println(fileList.get(i));
+            }*/
+            //System.out.println(allTheNormalTF+"================================");
+
+            for (Iterator<Map.Entry<String, HashMap<String, Integer>>> it = allTheNormalTF.entrySet().iterator(); it.hasNext();){
+                Map.Entry<String, HashMap<String, Integer>> item = it.next();
+                it.remove();
+            }
+            //System.out.println(allTheNormalTF+"================================");
+
             dict = ReadFiles.normalTF(ReadFiles.cutWord(fileList.get(i)));
             allTheNormalTF.put(fileList.get(i), dict);
         }
+        //System.out.println(allTheNormalTF+"================================");
         return allTheNormalTF;
     }
 
@@ -141,6 +165,7 @@ public class ReadFiles {
         float Dt = 1;
         float D = allTheNormalTF.size();//文档总数
         List<String> key = fileList;//存储各个文档名的List
+        //System.out.println(fileList.size());
         Map<String, HashMap<String, Integer>> tfInIdf = allTheNormalTF;//存储各个文档tf的Map
 
         for (int i = 0; i < D; i++) {
