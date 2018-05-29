@@ -80,9 +80,9 @@ body,html{
 	border: solid 1px gainsboro;
 }
 .user_img>img,.user_img2>img{
-	width: 78px;
-	height: 78px;
-	border-radius: 78px;
+	width: 68px;
+	height: 68px;
+	border-radius: 44px;
 	border: solid 1px gainsboro;
 }
 .user_name{
@@ -175,7 +175,7 @@ body,html{
 	transition: 1.5s;
 }
 .revise_top{
-	width: 90%;
+	width: 100%;
 	height: 60px;
 	padding: 0 5%;
 	background-color: white;
@@ -203,7 +203,7 @@ body,html{
 	height: 260px;
 }
 .revise_foot{
-	width: 90%;
+	width: 100%;
 	height: 80px;
 	padding: 0 5%;
 	background-color: white;
@@ -225,7 +225,7 @@ body,html{
 .definite:hover{
 	opacity: 1;
 }
-.cancel{
+.cancel,.shangchuan{
 	width: 160px;
 	height: 40px;
 	background-color: gray;
@@ -244,12 +244,12 @@ body,html{
 }
 .new_name,.new_mail{
 	width: 40%;
-    border-radius: 12px;
-    padding-left: 5px;
-    border: 0;
-    height: 13%;
-    margin: 18% 30%;
-    outline: none;
+	border-radius: 12px;
+	padding-left: 5px;
+	border: 0;
+	height: 13%;
+	margin-top: 18%;
+	margin-left: 30%;
 }
 .old_password{
 	width: 240px;
@@ -302,5 +302,44 @@ font{
 	display: block;
 	height: 20px;
 	line-height: 20px;
+	margin-left: 190px;
+	margin-top: 5px;
+	font-size: 12px;
+}
+h1{
+	display: block;
+	text-align: center;
+	font-size: 16px;
+}
+.ipt{
+	width: 160px;
+	height: 40px;
+	background-color: orangered;
+	outline: none;
+	margin-left: 220px;
+}
+.fileinput-button {
+	position: relative;
+	display: inline-block;
+	overflow: hidden;
+	margin-left: 233px;
+	margin-top: 50px;
+	background-color: #FD6600;
+	width: 144px;
+	letter-spacing: 5px;
 }
 
+.fileinput-button input{
+	position:absolute;
+	right: 0px;
+	top: 0px;
+	opacity: 0;
+	-ms-filter: 'alpha(opacity=0)';
+	font-size: 200px;
+}
+.aaa{
+	color: gray;
+	font-size: 14px;
+	cursor: pointer;
+	text-decoration: none;
+}
