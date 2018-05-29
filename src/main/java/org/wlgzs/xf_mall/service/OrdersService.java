@@ -50,4 +50,6 @@ public interface OrdersService {
 
     long searchProductCount(long productId);
 
+    //批量删除订单
+    void deleteOrders(String orderId);
 }

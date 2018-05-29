@@ -29,7 +29,7 @@ $(window).load(function(){
         });
     })
    // 2.修改密码的请求
-    var change_password=document.getElementsByClassName("span2")[0];
+   //  var change_password=document.getElementsByClassName("span2")[0];
     $(".modify1").click(function (){
         var prepassword=document.getElementById("prepassword").value;
         var repassword=document.getElementById("repassword").value;
@@ -48,7 +48,7 @@ $(window).load(function(){
                 document.getElementsByClassName("black")[1].style.left="50%";
                 document.getElementsByClassName("prompt")[0].innerHTML="修改成功";
                 document.getElementsByClassName("prompt")[0].style.display="block";
-                change_password.innerHTML=repassword;
+                // change_password.innerHTML=repassword;
                 setTimeout(function(){
                     document.getElementsByClassName("prompt")[0].style.display="none";
                 },1000)

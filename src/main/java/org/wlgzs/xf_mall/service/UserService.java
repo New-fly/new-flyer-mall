@@ -50,4 +50,7 @@ public interface UserService {
 
     //后台批量删除用户
     void adminDeleteUsers(String userId);
+
+    //修改手机号
+    User changePhone(HttpServletRequest request);
 }

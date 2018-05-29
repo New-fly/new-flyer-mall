@@ -62,13 +62,13 @@
         <div class="filter-group-list">
             <div class="list-left">价格区间(死数据)</div>
             <div class="list-right">
-                <a href="">1000元以下</a>
-                <a href="">1000-2000</a>
-                <a href="">2001-3000</a>
-                <a href="">3001-5000</a>
-                <a href="">5001-8000</a>
-                <a href="">8001-10000</a>
-                <a href="">10000以上</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='1000')}">1000元以下</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='1000,2000')}">1000-2000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='2001,3000')}">2001-3000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='3001,5000')}">3001-5000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='5001,8000')}">5001-8000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='8001,10000')}">8001-10000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='10000')}">10000以上</a>
             </div>
         </div>
     </div><div class="sort-row">

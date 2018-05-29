@@ -826,4 +826,38 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findProductByTwoCategory(str);//查询的当前页商品的集合
     }
 
+    @Override
+    public Page<Product> findByPrice(String product_mallPrice,int page, int limit) {
+        List<Product> products = null;
+        //拆分价格为数组
+        float[] price = new float[1];
+        if(product_mallPrice.contains(",")){
+            String[] str = product_mallPrice.split(",");
+            if (str.length != 0) {
+                price = new float[str.length];
+                for (int i = 0; i < price.length; i++) {
+                    price[i] = Integer.valueOf(str[i]);
+                }
+            }
+            products = productRepository.findByPrice(price[0],price[1]);
+        }else{
+            float Price = Integer.valueOf(product_mallPrice);
+            if(Price == 10000){
+                products = productRepository.findByMaxPrice(Price);
+            }else if(Price == 1000){
+                products = productRepository.findByMinPrice(Price);
+            }
+        }
+        Sort sort = new Sort(Sort.Direction.DESC, "productId");
+        Pageable pageable = new PageRequest(page, limit, sort);
+        Page pages = new PageImpl(products,pageable,products.size());
+        return pages;
+    }
+
+    @Override
+    public void adminDeleteProducts(String productId) {
+        IdsUtil idsUtil = new IdsUtil();
+        long[] ids = idsUtil.IdsUtils(productId);
+        productRepository.deleteByIds(ids);
+    }
 }

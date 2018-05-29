@@ -25,6 +25,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @Auther: 阿杰
@@ -230,6 +232,19 @@ public class UserServiceImpl implements UserService {
         IdsUtil idsUtil = new IdsUtil();
         long[] Ids = idsUtil.IdsUtils(userId);
         userRepository.deleteByIds(Ids);
+    }
+
+    @Override
+    public User changePhone(HttpServletRequest request) {
+        String id = request.getParameter("userId");
+        long userId = Long.parseLong(id);
+        String user_phone = request.getParameter("user_phone");
+        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
+        Matcher m = p.matcher(user_phone);
+        if(m.matches() && user_phone.equals("")){
+            userRepository.changePhone(user_phone,userId);
+        }
+        return userRepository.findById(userId);
     }
 }
 
