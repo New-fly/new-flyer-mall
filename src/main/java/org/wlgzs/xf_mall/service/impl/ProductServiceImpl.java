@@ -794,8 +794,6 @@ public class ProductServiceImpl implements ProductService {
         //通过二级分类查询商品
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
-        System.out.println(page+"-------"+limit);
-        System.out.println(pageable);
         /*List<Product> productList = new ArrayList<>();
         for (int i = 0; i < product_categories.length; i++) {
             productList.addAll(productRepository.findProductByProductKeywords(product_categories[i]));
@@ -804,15 +802,6 @@ public class ProductServiceImpl implements ProductService {
         Specification<Product> specification = pageUtilTwo.getPage(product_categories);
         Page<Product> pages = productRepository.findAll(specification,pageable);
         //Page<Product> pages = new PageImpl<>(productList,pageable,productList.size());
-        System.out.println("getContent:"+pages.getContent());
-        System.out.println("getTotalPages:"+pages.getTotalPages());
-        System.out.println("getNumber:"+pages.getNumber());
-        System.out.println("getTotalElements:"+pages.getTotalElements());
-        System.out.println("getNumberOfElements:"+pages.getNumberOfElements());
-        System.out.println("getPageable:"+pages.getPageable());
-        System.out.println("getSort:"+pages.getSort());
-        System.out.println("getSize:"+pages.getSize());
-        System.out.println("getClass:"+pages.getClass());
         return pages;
     }
 
