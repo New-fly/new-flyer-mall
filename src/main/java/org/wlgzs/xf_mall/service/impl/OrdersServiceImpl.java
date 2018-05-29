@@ -332,4 +332,10 @@ public class OrdersServiceImpl implements OrdersService {
         return ordersRepository.count(productId);
     }
 
+    @Override
+    public void deleteOrders(String orderId) {
+        IdsUtil idsUtil = new IdsUtil();
+        long[] ids = idsUtil.IdsUtils(orderId);
+        ordersRepository.deleteByIds(ids);
+    }
 }

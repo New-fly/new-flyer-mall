@@ -1,6 +1,7 @@
 package org.wlgzs.xf_mall.controller;
 
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,6 +11,8 @@ import org.wlgzs.xf_mall.entity.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 /**
  * @author:胡亚星
@@ -187,32 +190,20 @@ public class UserManagementController extends BaseController {
         logUserService.sendEmail1(request, user_mail);//发送
     }
 
-//    /**
-//     * @param
-//     * @return
-//     * @author 胡亚星
-//     * @date 2018/5/2 18:19
-//     * @Description:用户电话的修改
-//     */
-//    @RequestMapping("changePhone")
-//    public ModelAndView changePhone(Model model, HttpServletRequest request) {
-//        Map<String, String[]> properties = request.getParameterMap();
-//        String id = request.getParameter("userId");
-//        long userId = Long.parseLong(id);
-//        User user = userService.findUserById(userId);
-//        try {
-//            BeanUtils.populate(user, properties);
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        } catch (InvocationTargetException e) {
-//            e.printStackTrace();
-//        }
-//        String user_phone = request.getParameter("user_phone");
-//        user.setUser_phone(user_phone);
-//        userService.edit(user);
-//        model.addAttribute("user", user);
-//        return new ModelAndView("information");
-//    }
+    /**
+     * @param
+     * @return
+     * @author 胡亚星
+     * @date 2018/5/2 18:19
+     * @Description:用户电话的修改
+     */
+    @RequestMapping("changePhone")
+    public ModelAndView changePhone(Model model, HttpServletRequest request) {
+        //修改手机号
+        User user = userService.changePhone(request);
+        model.addAttribute("user", user);
+        return new ModelAndView("information");
+    }
 
     /**
      * @param

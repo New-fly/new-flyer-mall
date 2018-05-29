@@ -54,4 +54,10 @@ public interface UserRepository extends JpaRepository<User, Long>,JpaSpecificati
     @Modifying
     @Query("DELETE FROM User u WHERE u.userId in :Ids")
     void deleteByIds(@Param(value = "Ids") long [] Ids);
+
+    //修改手机号
+    @Query("UPDATE User u SET u.user_phone=?1 WHERE u.userId=?2")
+    @Modifying
+    @Transactional
+    void changePhone(String user_phone,long userId);
 }

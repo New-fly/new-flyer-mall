@@ -833,7 +833,14 @@ public class ProductServiceImpl implements ProductService {
         }
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
-        Page page1 = new PageImpl(products,pageable,products.size());
-        return page1;
+        Page pages = new PageImpl(products,pageable,products.size());
+        return pages;
+    }
+
+    @Override
+    public void adminDeleteProducts(String productId) {
+        IdsUtil idsUtil = new IdsUtil();
+        long[] ids = idsUtil.IdsUtils(productId);
+        productRepository.deleteByIds(ids);
     }
 }

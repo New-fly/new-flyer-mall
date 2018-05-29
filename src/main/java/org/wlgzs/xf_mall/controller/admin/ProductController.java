@@ -185,6 +185,19 @@ public class ProductController {
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
     }
 
+    /**     
+     * @author 胡亚星 
+     * @date 2018/5/27 17:05  
+     * @param   
+     * @return   
+     *@Description 批量删除商品
+     */  
+    @RequestMapping("/adminDeleteProducts")
+    public ModelAndView adminDeleteProducts(String productId){
+        productService.adminDeleteProducts(productId);
+        return new ModelAndView("redirect:/AdminProductController/adminProductList");
+    }
+
     /**
      * @param [model]
      * @return java.lang.String

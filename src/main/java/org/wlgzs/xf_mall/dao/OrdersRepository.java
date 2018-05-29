@@ -2,8 +2,10 @@ package org.wlgzs.xf_mall.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import org.wlgzs.xf_mall.entity.Orders;
 
 import java.util.List;
@@ -49,4 +51,10 @@ public interface OrdersRepository extends JpaRepository<Orders, Long>,JpaSpecifi
 
     @Query(value = "select count(*) from orders where product_id=?",nativeQuery = true)
     long count(@Param("productId") long productId);
+
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Orders o WHERE o.orderId in :Ids")
+    void deleteByIds(@Param(value = "Ids") long [] Ids);
+
 }
