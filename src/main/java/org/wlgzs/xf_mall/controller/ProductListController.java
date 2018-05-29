@@ -1,5 +1,6 @@
 package org.wlgzs.xf_mall.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.google.gson.Gson;
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
