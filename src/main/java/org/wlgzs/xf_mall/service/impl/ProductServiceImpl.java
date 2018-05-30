@@ -1,5 +1,6 @@
 package org.wlgzs.xf_mall.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -12,6 +13,7 @@ import org.wlgzs.xf_mall.entity.Collection;
 import org.wlgzs.xf_mall.service.ProductService;
 import org.wlgzs.xf_mall.util.IdsUtil;
 import org.wlgzs.xf_mall.util.PageUtil;
+import org.wlgzs.xf_mall.util.PageUtilTwo;
 import org.wlgzs.xf_mall.util.ReadFiles;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -53,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
         Specification<Product> specification = new PageUtil<Product>(product_keywords).getPage("product_keywords", "product_serviceType", "product_category");
-        Page pages = productRepository.findAll(specification, pageable);
+        Page<Product> pages = productRepository.findAll(specification, pageable);
         return pages;
     }
 
@@ -254,7 +256,7 @@ public class ProductServiceImpl implements ProductService {
         Sort sort = new Sort(Sort.Direction.DESC, "categoryId");
         Pageable pageable = new PageRequest(page, limit, sort);
         Specification<ProductCategory> specification = new PageUtil<ProductCategory>(category_name).getPage("category_name");
-        Page pages = productCategoryRepository.findAll(specification, pageable);
+        Page<ProductCategory> pages = productCategoryRepository.findAll(specification, pageable);
         return pages;
     }
 
@@ -294,9 +296,9 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> findProductByTwoCategory(String product_category, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
-        //商品分类，活动，服务类型三种方式
+        //商品分类，活动，关键字，服务类型三种方式
         Specification<Product> specification = new PageUtil<Product>(product_category).getPage("product_category", "product_serviceType", "product_activity", "product_keywords");
-        Page pages = productRepository.findAll(specification, pageable);
+        Page<Product> pages = productRepository.findAll(specification, pageable);
         return pages;
     }
 
@@ -613,7 +615,7 @@ public class ProductServiceImpl implements ProductService {
                 oneCategoryList.add(productCategoryList.get(i).getParent_name());
             }
             //去重 利用set顺序不变
-            Set set = new HashSet();
+            Set<String> set = new HashSet<>();
             List<String> newOneCategoryList = new ArrayList<String>();
             for (String cd : oneCategoryList) {
                 if (set.add(cd)) {
@@ -659,7 +661,7 @@ public class ProductServiceImpl implements ProductService {
                     orderOneCategoryList.add(orderProductCategoryList.get(i).getParent_name());
                 }
                 //去重 利用set顺序不变
-                Set orderSet = new HashSet();
+                Set<String> orderSet = new HashSet<String>();
                 List<String> orderNewOneCategoryList = new ArrayList<String>();
                 for (String cd : orderOneCategoryList) {
                     if (orderSet.add(cd)) {
@@ -773,11 +775,13 @@ public class ProductServiceImpl implements ProductService {
         IdsUtil idsUtil = new IdsUtil();
         idsUtil.writerFile(product_category, pathTwo + "/" + product_category + ".txt");
 
+        //System.out.println(pathTwo);
         Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(pathTwo);
         Map<String, Float> idf = ReadFiles.idf(pathTwo);
         List<String> stringList = new ArrayList<String>();
         for (String word : idf.keySet()) {
             stringList.add(word);
+            System.out.println(word);
         }
         File file = new File(pathTwo + "/" + product_category + ".txt");
         if (file.exists() && file.isFile()) {
@@ -791,11 +795,14 @@ public class ProductServiceImpl implements ProductService {
         //通过二级分类查询商品
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
-        List<Product> productList = new ArrayList<>();
+        /*List<Product> productList = new ArrayList<>();
         for (int i = 0; i < product_categories.length; i++) {
             productList.addAll(productRepository.findProductByProductKeywords(product_categories[i]));
-        }
-        Page pages = new PageImpl(productList,pageable,productList.size());
+        }*/
+        PageUtilTwo pageUtilTwo = new PageUtilTwo();
+        Specification<Product> specification = pageUtilTwo.getPage(product_categories);
+        Page<Product> pages = productRepository.findAll(specification,pageable);
+        //Page<Product> pages = new PageImpl<>(productList,pageable,productList.size());
         return pages;
     }
 

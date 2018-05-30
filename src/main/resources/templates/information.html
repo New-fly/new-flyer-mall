@@ -6,6 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 	<title>账号管理</title>
+	<link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.css}">
+	<link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap-theme.css}">
+	<script src="bootstrap/jquery-1.10.2.js"></script>
+	<script th:src="@{/bootstrap/dist/js/bootstrap.js}"></script>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/information.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/css/copy.css}" />
 	<script type="text/javascript" th:src="@{/js/jquery-1.9.0.min.js}"></script>
@@ -16,28 +20,28 @@
 	<div class="title">
 		<img th:src="@{/images/xin.png}" alt=""/>
 		新飞账号
-		<span>退出</span>
+		<span class="span"><a class="aaa" th:href="@{/cancellation}">退出</a></span>
 	</div>
 	<div class="nav">
 		<div class="nav_alone">我的账号</div>
 		<div class="nav_alone"><a th:href="@{/UserAddressController/shippingAddress}">收货地址</a></div>
 	</div>
-	<div class="chunk">
+	<div class="chunk" th:each="user : ${user}">
 		<div class="user_message">
 			<div class="user_img">
-				<img th:src="@{/images/01.jpg}" alt="" />
+				<img th:src="${user.user_avatar}" alt="" />
 			</div>
 			<div class="user_name">
-				<span class="name">胡帅博</span>
+				<span class="name" th:text="${user.user_name}">胡帅博</span>
 				<br />
 				<span class="number">20171554220</span>
 			</div>
 		</div>
 		<div class="user_img2">
-			<img th:src="@{/images/01.jpg}" alt="" />
+			<img th:src="${user.user_avatar}" alt="" />
 			<div class="chang_img">修改头像</div>
 		</div>
-		<div class="detailed_message" th:each="user : ${user}">
+		<div class="detailed_message">
 			<div class="message_title">基本信息</div>
 			<div class="message_body">用户名 ：<span th:text="${user.user_name}" class="span1">胡帅博</span><span class="change change_name">修改</span></div>
             <div class="message_body">用户密码 ：*******<span class="change change_password">修改</span></div>
@@ -54,7 +58,8 @@
 				<div class="close">×</div>
 			</div>
 			<div class="revise_body">
-				<input class="new_name" placeholder="我的用户名" />
+				<input class="new_name" placeholder="我的用户名" onkeyup="user_test()"/>
+				<font id="error2"></font>
 			</div>
 			<div class="revise_foot">
 				<div class="definite modify0">修改</div>
@@ -71,11 +76,11 @@
 			<div class="revise_body">
 				<input class="old_password" type="password" placeholder="原密码" id="prepassword"/>
 				<input class="new_password" type="password" placeholder="新密码"  id="repassword"/>
-				<input class="new_password2" type="password" placeholder="确认新密码" id="again" onmouseleave="judge()"/>
+				<input class="new_password2" type="password" placeholder="确认新密码" id="again" onkeyup="judge()"/>
 				<font id="error"></font>
 			</div>
 			<div class="revise_foot">
-				<div class="definite modify1">修改</div>
+				<div class="definite modify1" onclick="judge()">修改</div>
 				<div class="cancel">取消</div>
 			</div>
 		</div>
@@ -87,12 +92,37 @@
 				<div class="close">×</div>
 			</div>
 			<div class="revise_body">
-				<input class="new_mail" placeholder="我的邮箱" />
+				<input class="new_mail" placeholder="我的邮箱" onchange="test()"/>
+				<font id="error1"></font>
 			</div>
 			<div class="revise_foot">
-				<div class="definite modify2">修改</div>
+				<div class="definite modify2" onclick="test()">修改</div>
 				<div class="cancel">取消</div>
 			</div>
+		</div>
+	</div>
+	<div class="black black_img">
+		<div class="revise">
+			<div class="revise_top">
+				修改头像
+				<div class="close">×</div>
+			</div>
+			<form enctype="multipart/form-data" th:action="@{/UserManagementController/ModifyAvatar}" method="post">
+				<div class="revise_body">
+					<h1>请上传图片</h1>
+					<span class="btn btn-warning fileinput-button">
+						<span class="span1">选择图片</span>
+						<input type="text" style="display: none" name="userId" th:value="${session.user.userId}">
+						<input type="text" id="user_name" name="user_name" style="display: none" th:value="${session.user.user_name}">
+						<input type="file" id="file" name="file">
+					</span>
+				</div>
+				<div class="revise_foot">
+					<!--<div class="definite modify3">上传</div>-->
+					<div class="cancel">取消</div>
+					<input type="submit" th:value="上传"  class="shangchuan" style="background: red;border: oldlace;">
+				</div>
+			</form>
 		</div>
 	</div>
 	<div class="prompt">略略略</div>
