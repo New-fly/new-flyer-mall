@@ -74,7 +74,6 @@ window.onload=function(){
                 document.getElementsByClassName("prompt")[0].style.display = "block";
                 setTimeout(function () {
                     document.getElementsByClassName("prompt")[0].style.display = "none";
-                    location.reload();
                 }, 1000)
             },
             error: function () {

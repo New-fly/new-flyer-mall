@@ -275,8 +275,8 @@ a:hover{
     position: absolute;
     top: 0;
     right: 0;
-    background-color: pink;
-    color: red;
+    background-color: #FF4400;
+    color: white;
     font-weight: bold;
     text-align: center;
     line-height: 54px;
