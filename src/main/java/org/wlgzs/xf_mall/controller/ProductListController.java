@@ -438,7 +438,8 @@ public class ProductListController extends BaseController {
                 products.get(i).setProduct_picture(img);
             }
         }
+        model.addAttribute("product_mallPrice", product_mallPrice);
         model.addAttribute("products", products);//查询的当前页的集合
-        return new ModelAndView("productList");
+        return new ModelAndView("productPriceList");
     }
 }
