@@ -86,9 +86,11 @@
     <div class="classify-right">
         <a th:href="@{/ActivityController/activityProducts}">
             <div class="classify-right-long" >
-                <img class="lunbo"th:each="active : ${activities}" th:src="${active.activity_picture}" alt="">
-                <img class="lunbo"th:each="active : ${activities}" th:src="${active.activity_picture}" alt="">
-                <img class="lunbo"th:each="active : ${activities[0]}" th:src="${active.activity_picture}" alt="">
+                <img class="lunbo"th:each="active:${activities[0]}" th:src="${active.activity_picture}">
+                <img class="lunbo"th:each="active:${activities[1]}" th:src="${active.activity_picture}">
+                <img class="lunbo"th:each="active:${activities[0]}" th:src="${active.activity_picture}">
+                <img class="lunbo"th:each="active:${activities[1]}" th:src="${active.activity_picture}">
+                <img class="lunbo"th:each="active:${activities[0]}" th:src="${active.activity_picture}">
             </div>
         </a>
         <div class="last">

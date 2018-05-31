@@ -8,16 +8,21 @@
     z-index: 999;
     display: none;
 }
-
 .popup-windows{
+    /*position: absolute;*/
+    /*left: 40%;*/
+    /*top: 15%;*/
+    /*z-index: 999;*/
+    /*width: 400px;*/
+    /*!*height: 600px;*!*/
+    /*display: block;*/
+    /*background-color: #fff;*/
+    /*padding: 0px 20px 20px 20px;*/
+    /*border-radius: 10px;*/
+    width: 420px;
     position: absolute;
-    left: 40%;
-    top: 15%;
-    z-index: 999;
-    width: 400px;
-    /*height: 600px;*/
-    display: block;
-    background-color: #fff;
-    padding: 0px 20px 20px 20px;
-    border-radius: 10px;
+    left: 50%;
+    top: 50%;
+    margin-left: -210px;
+    margin-top: -144px;
 }
