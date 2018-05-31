@@ -9,6 +9,7 @@ import org.wlgzs.xf_mall.entity.Product;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -20,11 +21,11 @@ import java.util.List;
 @RequestMapping("RecommendedController")
 public class RecommendedController extends BaseController {
     @RequestMapping("/recommended")
-    public ModelAndView orderInfo(Model model, HttpServletRequest request) {
+    public ModelAndView orderInfo(Model model, HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession();
         if(session!=null){
             long userId = (long) session.getAttribute("userId");
-            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+            List<Product> recommendedProducts = productService.recommendedByUserId(userId, request);
             model.addAttribute("products", recommendedProducts);
         }
         return new ModelAndView("productList");

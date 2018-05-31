@@ -52,4 +52,6 @@ public interface OrdersService {
 
     //批量删除订单
     void deleteOrders(String orderId);
+
+    void refund(long orderId, HttpServletResponse response) throws IOException, AlipayApiException;
 }
