@@ -93,6 +93,7 @@ a{
     border-radius: 2px;
     display: inline-block;
     background-color: #FF5722;
+    cursor: pointer;
     opacity: 0.8;
 }
 .a-div:hover{
