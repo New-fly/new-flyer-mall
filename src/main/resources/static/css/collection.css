@@ -64,6 +64,11 @@
 .navheader>a{
     font-size: 20px;
     color: white;
+    vertical-align: top;
+    font-family: "楷体";
+}
+.navheader>a:hover{
+    color: #fff;
 }
 .allcoection{
     width: 1000px;

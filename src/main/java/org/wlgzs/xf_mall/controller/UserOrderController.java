@@ -24,10 +24,10 @@ public class UserOrderController extends BaseController {
 
     //订单详情
     @RequestMapping("/orderDetails")
-    public ModelAndView orderInfo(Model model, Long id) {
-        Orders order=ordersService.findOrdersById(id);
+    public ModelAndView orderInfo(Model model, long orderId) {
+        Orders order=ordersService.findOrdersById(orderId);
         model.addAttribute("order", order);
-        return new ModelAndView("admin/adminOrderInfo");
+        return new ModelAndView("OrderInfo");
     }
     /**
      * @author 阿杰

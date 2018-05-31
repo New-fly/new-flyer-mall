@@ -92,7 +92,10 @@
             </div>
         </div>
     </div>
-    <div class="show-product">
+    <div th:if="${products.size() == 0}" class="cure">
+        <h1 th:text="${mag}" class="hh11"></h1>
+    </div>
+    <div class="show-product" th:if="${products != null}">
         <div class="product" th:each="product:${products}">
             <div class="img-box">
                 <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${product.productId})}">
@@ -126,7 +129,7 @@
                        th:text="${i}">#</a><!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
                     <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
                        th:href="@{/ProductListController/searchProductList(page=${i})}" th:text="${i}"
-                       style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
+                       style="color: #999;background-color: red;border-color: #999;">#</a><!--//限制显示页数的条数  4到6个页数-->
                 </li>
                 <li><a th:href="@{/ProductListController/searchProductList(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
             </ul>
@@ -140,7 +143,7 @@
                        th:text="${i}">#</a><!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
                     <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
                        th:href="@{/ProductListController/searchProductList(page=${i})}" th:text="${i}"
-                       style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
+                       style="color: #999;background-color: #fff;border-color: #999;">#</a><!--//限制显示页数的条数  4到6个页数-->
                 </li>
                 <li th:if="${Number != TotalPages}"><a
                         th:href="@{/ProductListController/searchProductList(page=${Number+1})}">下一页</a></li><!--//请求页数+1-->
