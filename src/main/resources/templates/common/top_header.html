@@ -5,7 +5,7 @@
 		<div class="top" role="">
 			<div class="top-left">
 				<ul>
-					<li><a th:href="@{/HomeController/homeProduct}"><span><i class="fa fa-paw"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
+					<li><a th:href="@{/HomeController/homeProduct}"><span><i class="fa fa-home"></i>&nbsp;&nbsp;</span> H I ,欢迎来到新飞商城！</a></li>
 					<li th:if="${session.user != null }">
 						<span th:text="'欢迎您'+${session.user.user_name}"></span>&nbsp;&nbsp;&nbsp;
 						<a th:href="@{/cancellation}" style="cursor: pointer">退出</a>
@@ -20,47 +20,47 @@
 				<ul>
 					<li th:if="${session.user != null }">
 						<a th:href="@{/UserOrderController/userOrderList(userId=${session.user.userId})}">
-							<i class="fa fa-paw" style="color: #336699"></i>
+							<i class="fa fa-bars" style="color: #336699"></i>
 							&nbsp;&nbsp;我的新飞</a>
 					</li>
 					<li th:if="${session.user == null }">
 						<a th:href="@{/toLogin}">
-							<i class="fa fa-paw" style="color: #336699"></i>
+							<i class="fa fa-bars" style="color: #336699"></i>
 							&nbsp;&nbsp;我的新飞</a>
 					</li>
 					<li th:if="${session.user != null }">
 						<a th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}">
-	                    <i class="fa fa-paw" style="color: #336699"></i>
+	                    <i class="fa fa-cart-arrow-down" style="color: #336699"></i>
 	                    &nbsp;&nbsp;购物车</a>
 	                </li>
 					<li th:if="${session.user == null }">
 						<a th:href="@{/toLogin}">
-							<i class="fa fa-paw" style="color: #336699"></i>
+							<i class="fa fa-cart-arrow-down" style="color: #336699"></i>
 							&nbsp;&nbsp;购物车</a>
 					</li>
 					<li th:if="${session.user != null }">
 						<a th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}">
-	                    <i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a>
+	                    <i class="fa fa-star-o"></i>&nbsp;&nbsp;我的收藏</a>
 					</li>
 					<li th:if="${session.user == null }">
 						<a th:href="@{/toLogin}">
-							<i class="fa fa-paw"></i>&nbsp;&nbsp;我的收藏</a>
+							<i class="fa fa-star-o"></i>&nbsp;&nbsp;我的收藏</a>
 					</li>
 	                <li th:if="${session.user != null }">
 	                    <a th:href="@{/IntegralController/integralList(userId=${session.user.userId})}">
-	                        <i class="fa fa-paw"></i>&nbsp;&nbsp;我的积分</a>
+	                        <i class="fa fa-television"></i>&nbsp;&nbsp;我的积分</a>
 	                </li>
 	                <li th:if="${session.user == null }">
 	                    <a th:href="@{/toLogin}">
-	                        <i class="fa fa-paw"></i>&nbsp;&nbsp;我的积分</a>
+	                        <i class="fa fa-television"></i>&nbsp;&nbsp;我的积分</a>
 	                </li>
 					<li th:if="${session.user != null }">
 						<a th:href="@{/ProductListController/integralProduct}">
-							<i class="fa fa-paw"></i>&nbsp;&nbsp;积分兑换</a>
+							<i class="fa fa-retweet"></i>&nbsp;&nbsp;积分兑换</a>
 					</li>
 					<li th:if="${session.user == null }">
 						<a th:href="@{/toLogin}">
-							<i class="fa fa-paw"></i>&nbsp;&nbsp;积分兑换</a>
+							<i class="fa fa-retweet"></i>&nbsp;&nbsp;积分兑换</a>
 					</li>
 	                <li th:if="${session.user != null }">
 	                    <a th:href="@{/FootprintController/userFootprint(userId=${session.user.userId})}">
@@ -72,11 +72,11 @@
 	                </li>
 	                <li th:if="${session.user != null }">
 	                    <a th:href="@{/UserManagementController/information(userId=${session.user.userId})}">
-	                        <i class="fa fa-paw"></i>&nbsp;&nbsp;账号管理</a>
+	                        <i class="fa fa-tags"></i>&nbsp;&nbsp;账号管理</a>
 	                </li>
 	                <li th:if="${session.user == null }">
 	                    <a th:href="@{/toLogin}">
-	                        <i class="fa fa-paw"></i>&nbsp;&nbsp;账号管理</a>
+	                        <i class="fa fa-tags"></i>&nbsp;&nbsp;账号管理</a>
 	                </li>
 				</ul>
 			</div>

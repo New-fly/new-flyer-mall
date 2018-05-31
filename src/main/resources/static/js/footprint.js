@@ -37,7 +37,7 @@ window.onload=function(){
                 var allid = "";
                 for (let k = 0; k < one.length; k++) {
                     if (one[k].checked == true) {
-                        var foot = document.getElementsByClassName("foot")[k].innerHTML;
+                        var foot = document.getElementsByClassName("coid")[k].innerHTML;
                         allid = allid + foot + ",";
                     }
                 }

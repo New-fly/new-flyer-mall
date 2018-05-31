@@ -247,8 +247,10 @@ public class ProductListController extends BaseController {
      * @description 批量删除收藏
      */
     @RequestMapping("/deleteCollectionProducts")
-    public ModelAndView deleteCollectionProducts(@RequestParam(value = "collectionId", defaultValue = "439,449") String collectionId, long userId) {
+    public ModelAndView deleteCollectionProducts(@RequestParam(value = "collectionId", defaultValue = "439,449") String collectionId,HttpServletRequest request) {
         productService.deleteCollections(collectionId);
+        HttpSession session = request.getSession();
+        long userId = (long) session.getAttribute("userId");
         String url = "redirect:/ProductListController/collectionProduct?userId=" + userId;
         return new ModelAndView(url);
     }
@@ -447,7 +449,8 @@ public class ProductListController extends BaseController {
         if(products.size()==0){
             model.addAttribute("mag","抱歉您搜索的商品不存在");
         }
+        model.addAttribute("product_mallPrice", product_mallPrice);
         model.addAttribute("products", products);//查询的当前页的集合
-        return new ModelAndView("productList");
+        return new ModelAndView("productPriceList");
     }
 }

@@ -7,15 +7,20 @@
     <link rel="shortcut icon" th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
     <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
     <link th:href="@{/css/collection.css}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/cope.css}">
-    <script th:src="@{/js/jquery.js}"></script>
+    <link th:href="@{/css/copy.css}" rel="stylesheet" type="text/css">
+    <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/js/collection.js}"></script>
 </head>
 <body>
 <div th:include="common/top_header :: copy"></div>
+<div class="userid" style="display: none" th:text="${session.user.userId}"></div>
 <div class="nav">
     <div class="navheader">
         <img th:src="@{/images/logo-foot.png}" alt="" style="height: 50px;width: 190px;">
         <a href="">全部收藏</a>
+        <input type="text" class="inputids" style="display: none">
+        <span class="alldelete">批量删除</span>
+        <div class="yes">删除</div>
     </div>
 </div>
 <div class="all">
@@ -23,6 +28,12 @@
         <div class="hotsell">
             <div class="today">
                 <div class="block-2" th:each="collection : ${collections}">
+                    <label class="demo--label allinput">
+                        <input class="demo--radio ipt" type="checkbox">
+                        <span class="demo--checkbox demo--radioInput"></span>
+                    </label>
+                    <div class="coid" th:text="${collection.collectionId}" style="display: none"></div>
+                    <div class="delete"><i class="fa fa-trash fa-2x"></i></div>
                     <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${collection.productId},userId=${session.userId})}">
                         <img th:src="${collection.product_picture}" width="198px" height="180px"/>
                     </a>
@@ -49,13 +60,13 @@
                             </a>
                         </div>
                         <div class="describe">
-                            <div class="describe1">
+                        <div class="describe1">
                                 <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}"
                                    th:text="${recommendedProducts.product_keywords}">清凉一夏，热卖中</a>
-                            </div>
-                            <div><font style="color:red;" th:text="${recommendedProducts.product_mallPrice}">¥888</font>&nbsp;<s
-                                    style="color: #3C3F41;"
-                                    th:text="${recommendedProducts.product_counterPrice}">¥666</s></div>
+                        </div>
+                        <div><font style="color:red;" th:text="${recommendedProducts.product_mallPrice}">¥888</font>&nbsp;<s
+                                style="color: #3C3F41;"
+                                th:text="${recommendedProducts.product_counterPrice}">¥666</s></div>
                         </div>
                     </figure>
                 </div>
@@ -150,5 +161,6 @@
     </div>
 </div>
 </div>
+<div class="prompt">略略略</div>
 </body>
 </html>
