@@ -6,7 +6,6 @@ window.onload=function(){
             location.href = "/AdminProductController/adminDeleteProduct?productId="+productId;
         }
     }
-
 // //2.点击添加出现弹窗
     function tanchuang(){
         var modifi = document.getElementsByClassName("windoww")[0];
@@ -53,6 +52,45 @@ window.onload=function(){
             document.getElementsByClassName("hide2")[i].style.display="block";
         }
         this.style.display="none";
+    };
+    var one = document.getElementsByClassName('select');
+    for (let i = 0; i < one.length; i++) {
+        one[i].onchange = function () {
+            var allid = "";
+            for (let k = 0; k < one.length; k++) {
+                if (one[k].checked == true) {
+                    var foot = document.getElementsByClassName("productid")[k].innerHTML;
+                    allid = allid + foot + ",";
+                }
+            }
+            allid = allid.substring(0,allid.lastIndexOf(','));
+            document.getElementsByClassName("ids")[0].value = allid;
+        }
+    }
+    document.getElementsByClassName("delet")[0].onclick=function(){
+        var allid=document.getElementsByClassName("ids")[0].value;
+        $.ajax({
+            url: "/AdminProductController/adminDeleteProducts",
+            data: {
+                "productId":allid,
+            },
+            dataType: "text",
+            type:"POST",
+            success: function () {
+                $(":checked").parent().parent().parent().remove();
+                var hide=document.getElementsByClassName("hide");
+                for(let i = 0 ; i < hide.length ; i++){
+                    document.getElementsByClassName("hide")[i].style.display="none";
+                }
+                var hide2=document.getElementsByClassName("hide2");
+                for(let i = 0 ; i < hide2.length ; i++){
+                    document.getElementsByClassName("hide2")[i].style.display="none";
+                }
+                document.getElementsByClassName("arise")[0].style.display="inline-block"
+            },
+            error: function () {
+                alert("请求失败！！")
+            }
+        })
     }
 };
-

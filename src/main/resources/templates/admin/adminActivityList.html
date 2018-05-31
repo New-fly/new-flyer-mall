@@ -7,7 +7,7 @@
     <link th:href="@{/css/adminActivityList.css}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
     <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
-    <!--<script th:src="@{/js/adminActivityList.js}"></script>-->
+    <script th:src="@{/js/adminActivityList.js}"></script>
 </head>
 <body>
 <div class="contentbox">
@@ -15,13 +15,18 @@
     <form th:action="@{/AdminActivityController/adminFindActivityProduct}" method="post">
         <input type="text" name="product_keywords" placeholder="商品名称" th:value="*{product_keywords}" class="ipt">
         <input type="submit" value="搜索" class="btn">
+        <div class="a-div arise">批量操作</div>
+        <div class="a-div hide delet">删除</div>
+        <input class="ids" type="text" />
     </form>
 </div>
 <div class="mytable">
     <table>
         <thead style="background-color: #F2F2F2;">
         <tr>
-            <th>商品简介</th>
+            <th class="hide2"></th>
+            <th>活动ID</th>
+            <th class="keywords">商品简介</th>
             <th>相关图片</th>
             <th>活动名称</th>
             <th>活动折扣</th>
@@ -31,6 +36,13 @@
         </thead>
         <tbody>
         <tr th:each="activitie : ${activities}">
+            <td class="hide2" style="position: relative">
+                <label class="demo--label">
+                    <input class="demo--radio select" type="checkbox">
+                    <span class="demo--checkbox demo--radioInput"></span>
+                </label>
+            </td>
+            <td class="activityid" th:text="${activitie.activityId}"></td>
             <td th:text="${activitie.product_keywords}"></td>
             <td><img th:src="${activitie.product_picture}" style="width: 50px;"></td>
             <td th:text="${activitie.activity_name}">Doe</td>
@@ -39,7 +51,6 @@
             <td>
                 <a  th:href="@{/AdminActivityController/adminDeleteActivity(activityId=${activitie.activityId})}" class="a-div adiv1">删除</a>
                 <a th:href="@{/AdminActivityController/toAdminEditActivity(activityId=${activitie.activityId})}"  class="a-div adiv2">修改</a>
-
             </td>
         </tr>
         </tbody>

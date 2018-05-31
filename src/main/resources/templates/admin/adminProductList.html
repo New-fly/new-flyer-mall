@@ -19,8 +19,9 @@
         <input type="submit" value="搜索" class="btn">
         <a  th:href="@{/AdminProductController/toAdminAddProduct}" class="a-div">添加</a>
         <div class="a-div arise">批量操作</div>
-        <div class="a-div hide">删除</div>
+        <div class="a-div hide delet">删除</div>
         <div class="a-div hide">添加为活动</div>
+        <input class="ids" type="text" style="display: none" />
     </form>
 </div>
 <div class="mytable">
@@ -40,10 +41,11 @@
     <tr th:each="product : ${products}">
         <td class="hide2" style="position: relative">
             <label class="demo--label">
-                <input class="demo--radio" type="checkbox">
+                <input class="demo--radio select" type="checkbox">
                 <span class="demo--checkbox demo--radioInput"></span>
             </label>
         </td>
+        <td class="productid" style="display: none" th:text="${product.productId}"></td>
         <td th:text="${product.product_inventory}"></td>
         <td th:text="${product.product_category}"></td>
         <td><img th:src="${product.product_picture}" style="width: 45px;height: 45px;"></td>
@@ -146,6 +148,7 @@
 </div>
 </div>
 </div>
+<div class="secess"></div>
 <script th:src="@{/js/commodity.js}"></script>
 </body>
 </html>

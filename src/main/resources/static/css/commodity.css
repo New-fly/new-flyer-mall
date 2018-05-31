@@ -147,3 +147,21 @@ li>a{
 .demo--checkbox.demo--radioInput,.demo--radio:checked + .demo--checkbox.demo--radioInput:after{
     border-radius:0;
 }
+.secess{
+    width: 150px;
+    height: 45px;
+    font-size: 18px;
+    text-align: center;
+    line-height: 45px;
+    font-family: "华文楷体";
+    border-radius: 10px;
+    color: white;
+    background-color: #0C1021;
+    opacity: 0.65;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -25px;
+    margin-left: -75px;
+    display: none;
+}
