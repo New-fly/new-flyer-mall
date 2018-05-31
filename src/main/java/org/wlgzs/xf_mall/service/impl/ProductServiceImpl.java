@@ -16,10 +16,7 @@ import org.wlgzs.xf_mall.util.PageUtil;
 import org.wlgzs.xf_mall.util.PageUtilTwo;
 import org.wlgzs.xf_mall.util.ReadFiles;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -818,29 +815,39 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> findByPrice(String product_mallPrice,int page, int limit) {
-        List<Product> products = null;
         //拆分价格为数组
-        float[] price = new float[1];
-        if(product_mallPrice.contains(",")){
-            String[] str = product_mallPrice.split(",");
-            if (str.length != 0) {
-                price = new float[str.length];
-                for (int i = 0; i < price.length; i++) {
-                    price[i] = Integer.valueOf(str[i]);
-                }
-            }
-            products = productRepository.findByPrice(price[0],price[1]);
-        }else{
-            float Price = Integer.valueOf(product_mallPrice);
-            if(Price == 10000){
-                products = productRepository.findByMaxPrice(Price);
-            }else if(Price == 1000){
-                products = productRepository.findByMinPrice(Price);
-            }
-        }
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
-        Page pages = new PageImpl(products,pageable,products.size());
+        Specification<Product> specification = new Specification<Product>() {
+            @Override
+            public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                Predicate predicate = null;
+                Path path = root.get("product_mallPrice");
+                float[] price = new float[1];
+                if (product_mallPrice.contains(",")) {
+                    String[] str = product_mallPrice.split(",");
+                    if (str.length != 0) {
+                        price = new float[str.length];
+                        for (int i = 0; i < price.length; i++) {
+                            price[i] = Integer.valueOf(str[i]);
+                        }
+                    }
+                    predicate = criteriaBuilder.and(
+                            criteriaBuilder.ge(path,price[0]),
+                            criteriaBuilder.le(path,price[1])
+                    );
+                } else {
+                    float Price = Integer.valueOf(product_mallPrice);
+                    if (Price == 10000) {
+                        predicate = criteriaBuilder.gt(path, Price);
+                    } else if (Price == 1000) {
+                        predicate = criteriaBuilder.lt(path, Price);
+                    }
+                }
+                return predicate;
+            }
+        };
+        Page pages =  productRepository.findAll(specification,pageable);
         return pages;
     }
 
