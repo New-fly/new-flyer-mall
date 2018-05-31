@@ -16,6 +16,7 @@ import org.wlgzs.xf_mall.service.ProductActivityService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -34,7 +35,7 @@ public class ProductActivityController extends BaseController {
      * @description 跳转至活动页面
      */
     @RequestMapping("/activityProducts")
-    public ModelAndView activityProductList(Model model, HttpServletRequest request){
+    public ModelAndView activityProductList(Model model, HttpServletRequest request) throws IOException {
         String activity_name = "520狂欢";
         List<ProductActivity> productActivities = productActivityService.activityProductList(activity_name);
         model.addAttribute("productActivities",productActivities);
@@ -48,7 +49,7 @@ public class ProductActivityController extends BaseController {
         HttpSession session = request.getSession();
         if(session.getAttribute("user")!=null){
             long userId = (long) session.getAttribute("userId");
-            List<Product> recommendedProducts = productService.recommendedByUserId(userId);
+            List<Product> recommendedProducts = productService.recommendedByUserId(userId,request);
             model.addAttribute("recommendedProducts", recommendedProducts);
         }
         return new ModelAndView("productActivityList");

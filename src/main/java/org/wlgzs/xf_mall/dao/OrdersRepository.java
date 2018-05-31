@@ -40,10 +40,10 @@ public interface OrdersRepository extends JpaRepository<Orders, Long>,JpaSpecifi
     @Query(value = "SELECT * FROM orders WHERE user_id = ?",nativeQuery = true)
     List<Orders> userOrderList(@Param("userId") long userId);
 
-    @Query(value = "SELECT * FROM orders WHERE user_id = ? and order_status = '未收货'",nativeQuery = true)
+    @Query(value = "SELECT * FROM orders WHERE user_id = ? and order_status = '待收货'",nativeQuery = true)
     List<Orders> userUnacceptedOrder(long userId);
 
-    @Query(value = "SELECT * FROM orders WHERE user_id = ? and order_status = '未评价'",nativeQuery = true)
+    @Query(value = "SELECT * FROM orders WHERE user_id = ? and order_status = '待评价'",nativeQuery = true)
     List<Orders> unEstimateOrder(long userId);
 
     @Query("SELECT o FROM Orders o WHERE o.userId=?1 and (o.order_number like %:order_word% or o.product_keywords like %:order_word%)")

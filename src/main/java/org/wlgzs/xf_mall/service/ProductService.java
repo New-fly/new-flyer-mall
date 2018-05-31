@@ -273,7 +273,7 @@ public interface ProductService {
      * @return java.util.List<org.wlgzs.xf_mall.entity.Product>
      * @description 商品推荐
      */
-    List<Product> recommendedByUserId(long userId);
+    List<Product> recommendedByUserId(long userId,HttpServletRequest request) throws IOException;
     /**
      * @author 阿杰
      * @param [productOneCategories]

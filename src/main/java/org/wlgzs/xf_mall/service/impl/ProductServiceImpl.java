@@ -1,6 +1,5 @@
 package org.wlgzs.xf_mall.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -22,7 +21,6 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -588,45 +586,71 @@ public class ProductServiceImpl implements ProductService {
 
     //商品推荐
     @Override
-    public List<Product> recommendedByUserId(long userId) {
+    public List<Product> recommendedByUserId(long userId, HttpServletRequest request) throws IOException {
         //通过用户id查询最新足迹商品
         List<Footprint> footprints = footprintRepository.recommendedByUserId(userId);
         System.out.println(footprints);
         List<Product> products = new ArrayList<Product>();
         if (footprints != null && footprints.size() != 0) {
-            long[] productIds = new long[footprints.size()];
+
+            List<String> stringListOne = new ArrayList<String>();
             for (int i = 0; i < footprints.size(); i++) {
-                productIds[i] = footprints.get(i).getProductId();
-            }
-            //通过足迹商品id查询商品
-            List<Product> productsOne = productRepository.findProductByProductId(productIds);
-            List<String> productCategories = new ArrayList<String>();
-            for (int i = 0; i < productsOne.size(); i++) {
-                productCategories.add(productsOne.get(i).getProduct_category());
-            }
-            String[] category_names = productCategories.toArray(new String[productCategories.size()]);
-            //通过商品二级分类查询一级分类
-            List<ProductCategory> productCategoryList = productCategoryRepository.findOneCategoryByCategoryName(category_names);
-            List<String> oneCategoryList = new ArrayList<String>();
-            for (int i = 0; i < productCategoryList.size(); i++) {
-                oneCategoryList.add(productCategoryList.get(i).getParent_name());
+                String fileName = footprints.get(i).getProduct_keywords();
+                // 生成实际存储的真实文件名
+                String realName = UUID.randomUUID().toString();
+
+                String path = request.getSession().getServletContext().getRealPath("/");
+                String pathTwo = path + "txtFile/" + realName;
+                File dir = new File(pathTwo);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                IdsUtil idsUtil = new IdsUtil();
+                idsUtil.writerFile(footprints.get(i).getProduct_keywords(), pathTwo + "/" + realName + ".txt");
+
+                Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(pathTwo);
+                Map<String, Float> idf = ReadFiles.idf(pathTwo);
+                for (String word : idf.keySet()) {
+                    stringListOne.add(word);
+                }
+                File file = new File(pathTwo + "/" + realName + ".txt");
+                if (file.exists() && file.isFile()) {
+                    file.delete();
+                }
+                File fileTwo = new File(pathTwo);
+                if (fileTwo.exists() && fileTwo.isDirectory()) {
+                    fileTwo.delete();
+                }
             }
             //去重 利用set顺序不变
             Set<String> set = new HashSet<>();
-            List<String> newOneCategoryList = new ArrayList<String>();
-            for (String cd : oneCategoryList) {
+            List<String> stringList = new ArrayList<String>();
+            for (String cd : stringListOne) {
                 if (set.add(cd)) {
-                    newOneCategoryList.add(cd);
+                    stringList.add(cd);
                 }
             }
+            String[] product_category = stringList.toArray(new String[stringList.size()]);
+            for (int i = 0; i < product_category.length; i++) {
+                if (product_category[i].equals("新") || product_category[i].equals("飞") || product_category[i].equals("新飞") || product_category[i].equals("40/") || product_category[i].equals("43/50") || product_category[i].equals("双") || product_category[i].equals("家用") || product_category[i].equals("8/6") || product_category[i].equals("6.8kg/7.5") || product_category[i].equals("家用") || product_category[i].equals("丰包邮") || product_category[i].equals("飞8公斤")) {
+                    product_category[i] = product_category[product_category.length - 1];
+                    product_category = Arrays.copyOf(product_category, product_category.length - 1);
+                    i--;
+                }
+            }
+
+            //通过关键词查询商品
+            Sort sort = new Sort(Sort.Direction.DESC, "productId");
+            PageUtilTwo pageUtilTwo = new PageUtilTwo();
+            Specification<Product> specification = pageUtilTwo.getPage(product_category);
+            products = productRepository.findAll(specification, sort);
+            System.out.println(products.size());
 
             //查询用户的订单
             List<Orders> orders = ordersRepository.userOrderList(userId);
             System.out.println(orders);
-            List<String> productOneCategoriesTwo = new ArrayList<String>();
             if (orders != null && orders.size() != 0) {
                 Date data = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
                 //将近半年的订单放在一个集合中
                 List<Orders> ordersList = new ArrayList<Orders>();
                 for (int i = 0; i < orders.size(); i++) {
@@ -643,68 +667,22 @@ public class ProductServiceImpl implements ProductService {
                         orderProductId[i] = ordersList.get(i).getProductId();
                     }
                 }
-                //通过商品id查询商品
-                List<Product> orderProducts = productRepository.findProductByProductId(orderProductId);
-                //把商品的分类放在一个集合中
-                List<String> categoryOne = new ArrayList<String>();
-                for (int i = 0; i < orderProducts.size(); i++) {
-                    categoryOne.add(orderProducts.get(i).getProduct_category());
-                }
-                String[] orderCategory_names = categoryOne.toArray(new String[categoryOne.size()]);
-                //通过商品二级分类查询一级分类
-                List<ProductCategory> orderProductCategoryList = productCategoryRepository.findOneCategoryByCategoryName(orderCategory_names);
-                List<String> orderOneCategoryList = new ArrayList<String>();
-                for (int i = 0; i < orderProductCategoryList.size(); i++) {
-                    orderOneCategoryList.add(orderProductCategoryList.get(i).getParent_name());
-                }
-                //去重 利用set顺序不变
-                Set<String> orderSet = new HashSet<String>();
-                List<String> orderNewOneCategoryList = new ArrayList<String>();
-                for (String cd : orderOneCategoryList) {
-                    if (orderSet.add(cd)) {
-                        orderNewOneCategoryList.add(cd);
-                    }
-                }
-                //查询该一级分类下的配件
-                String[] parent_names = orderOneCategoryList.toArray(new String[orderOneCategoryList.size()]);
-                List<ProductCategory> productOneCategories = productCategoryRepository.findCategoryByParentNameTwo(parent_names);
-                if (productOneCategories != null) {
-                    for (int i = 0; i < productOneCategories.size(); i++) {
-                        productOneCategoriesTwo.add(productOneCategories.get(i).getCategory_name());
-                    }
-                }
-                //从所推荐的一级分类中 去除 半年内订单商品分类对应的一级分类
-                Iterator<String> it = newOneCategoryList.iterator();
-                while (it.hasNext()) {
-                    String x = it.next();
-                    for (int j = 0; j < orderNewOneCategoryList.size(); j++) {
-                        if (x.equals(orderNewOneCategoryList.get(j))) {
+                Iterator<Product> it = products.iterator(); // 迭代器,对集合ArrayList中的元素进行取出
+                for (long anOrderProductId : orderProductId) {
+                    while (it.hasNext()) { // 调用方法hasNext()判断集合中是否有元素
+                        Product x = it.next();
+                        if (x.getProductId() == anOrderProductId) {
+                            // 调用方法next()取出集合中的元素
                             it.remove();
                         }
                     }
                 }
-            }
-
-            if (newOneCategoryList.size() != 0) {
-                String[] parent_names = newOneCategoryList.toArray(new String[newOneCategoryList.size()]);
-                //通过一级分类查询二级分类
-                List<ProductCategory> productOneCategories = productCategoryRepository.findCategoryByParentName(parent_names);
-                List<String> categories = new ArrayList<String>();
-                for (int i = 0; i < productOneCategories.size(); i++) {
-                    categories.add(productOneCategories.get(i).getCategory_name());
-                }
-                if (productOneCategoriesTwo.size() != 0) {
-                    categories.addAll(productOneCategoriesTwo);
-                }
-                String[] product_categories = categories.toArray(new String[categories.size()]);
-                //通过二级分类查询商品
-                products = productRepository.findProductByTwoCategory(product_categories);
                 String img;
-                for (int i = 0; i < products.size(); i++) {
-                    if (products.get(i).getProduct_picture().contains(",")) {
-                        img = products.get(i).getProduct_picture();
+                for (Product product : products) {
+                    if (product.getProduct_picture().contains(",")) {
+                        img = product.getProduct_picture();
                         img = img.substring(0, img.indexOf(","));
-                        products.get(i).setProduct_picture(img);
+                        product.setProduct_picture(img);
                     }
                 }
             }
@@ -731,8 +709,7 @@ public class ProductServiceImpl implements ProductService {
             productsThree.get(i).setProduct_category(productOneCategories.get(2).getCategory_name());
         }
         products.addAll(productsThree);
-        List<Product> productsFour = productOneCategory(productOneCategories.get(3).getCategory_name());
-        //主页部分第四分类商品
+        List<Product> productsFour = productOneCategory(productOneCategories.get(3).getCategory_name());//主页部分第四分类商品
         for (int i = 0; i < productsFour.size(); i++) {
             productsFour.get(i).setProduct_category(productOneCategories.get(3).getCategory_name());
         }
@@ -789,7 +766,7 @@ public class ProductServiceImpl implements ProductService {
             fileTwo.delete();
         }
         String[] product_categories = stringList.toArray(new String[stringList.size()]);
-        //通过二级分类查询商品
+        //通过关键词查询商品
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
         /*List<Product> productList = new ArrayList<>();
@@ -798,7 +775,7 @@ public class ProductServiceImpl implements ProductService {
         }*/
         PageUtilTwo pageUtilTwo = new PageUtilTwo();
         Specification<Product> specification = pageUtilTwo.getPage(product_categories);
-        Page<Product> pages = productRepository.findAll(specification,pageable);
+        Page<Product> pages = productRepository.findAll(specification, pageable);
         //Page<Product> pages = new PageImpl<>(productList,pageable,productList.size());
         return pages;
     }
