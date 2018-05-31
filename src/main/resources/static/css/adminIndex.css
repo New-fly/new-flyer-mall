@@ -26,16 +26,16 @@ body,html{
 	cursor: pointer;
 }
 .nav-top{
-	width: 360px;
-	height: 100%;
-	float: left;
-	color: #fff;
-	text-align: center;
-	font-size: 26px;
-	letter-spacing: 5px;
-	margin-left: 400px;
-	padding-top: 10px;
-	font-family: "仿宋";
+    width: 360px;
+    height: 100%;
+    float: left;
+    color: #fff;
+    text-align: center;
+    font-size: 26px;
+    letter-spacing: 5px;
+    line-height: 60px;
+    margin-left: 400px;
+    font-family: "仿宋";
 }
 .nav-top>div{
 	width: 90px;
@@ -90,11 +90,12 @@ body,html{
 	vertical-align: middle;
 }
 .left{
+    position: absolute;
 	width: 200px;
-	height: 100%;
-	margin-top: 60px;
-	background-color: #393D49;
-	position: fixed;
+    left:0;
+    bottom:0;
+	top: 60px;
+    background-color: #393D49;
 }
 .list_one{
 	/*width: 200px;*/
@@ -177,11 +178,11 @@ body,html{
 	margin-left: 27px;
 }
 #frame-div{
-    width: 100%;
-    height: 100%;
     position: absolute;
-    left: 206px;
-    top: 66px;
+    left: 200px;
+    top: 60px;
+	right:0;
+	bottom: 0;
 }
 .frame{
     width: 100%;

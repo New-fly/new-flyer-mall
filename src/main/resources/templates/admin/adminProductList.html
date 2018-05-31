@@ -43,9 +43,9 @@
         <td th:text="${product.product_mallPrice}"></td>
         <td>
             <a th:href="@{/AdminActivityController/toAdminAddActivity(productId=${product.productId})}" class="a-div" style="width: 85px;background: #009688;">添加为活动</a>
-            <a  th:href="@{/AdminProductController/toProductDetail(productId=${product.productId})}" class="a-div adiv2">查看</a>
+            <a th:href="@{/AdminProductController/toProductDetail(productId=${product.productId})}" class="a-div adiv2">查看</a>
             <a href="javascript:void(0);" th:onclick="'javascript:deleteProduct('+${product.productId}+');'" class="a-div adiv1">删除</a>
-            <a  th:href="@{/AdminProductController/toAdminEditProduct(productId=${product.productId})}" class="a-div adiv1">修改</a>
+            <a th:href="@{/AdminProductController/toAdminEditProduct(productId=${product.productId})}" class="a-div adiv1">修改</a>
         </td>
     </tr>
     </tbody>
