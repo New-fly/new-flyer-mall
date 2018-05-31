@@ -121,10 +121,12 @@ window.onload = function() {
         number = parseInt(number);
         if(number==0){
             document.getElementById("jiesuan").style.backgroundColor="gray";
-            document.getElementById("jiesuan").style.border="solid 3px gray"
+            document.getElementById("jiesuan").style.border="solid 3px gray";
+            document.getElementsByClassName("delet")[0].style.backgroundColor="#AAAAAA";
         }else{
             document.getElementById("jiesuan").style.backgroundColor="red";
             document.getElementById("jiesuan").style.border="solid 3px red";
+            document.getElementsByClassName("delet")[0].style.backgroundColor="#FF0000";
         }
     }
     //列出所有提交的id
@@ -137,5 +139,28 @@ window.onload = function() {
             }
         }
         document.getElementsByClassName("produc")[0].value=allid;
+    }
+    document.getElementsByClassName("delet")[0].onclick=function(){
+	    var shopcartid=document.getElementsByClassName("produc")[0].value;
+	    var userid=document.getElementsByClassName("userId")[0].value;
+        $.ajax({
+            url:"/ProductListController/deleteShoppingProducts",
+            data:{
+                "shoppingCartId":shopcartid,
+                "userId":userid
+            },
+            dataType:"text",
+            success:function(){
+                $(":checked").parent().remove();
+                document.getElementsByClassName("prompt")[0].innerHTML = "删除成功";
+                document.getElementsByClassName("prompt")[0].style.display = "block";
+                setTimeout(function () {
+                    document.getElementsByClassName("prompt")[0].style.display = "none";
+                }, 1000)
+            },
+            error:function () {
+                alert("请求失败")
+            }
+        });
     }
 };

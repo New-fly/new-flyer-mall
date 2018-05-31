@@ -161,3 +161,11 @@ html,body{
 	margin: 0 auto;
 	width: 96%;
 }
+.close{
+	margin: 10px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: 0;
+	background-color: #E7E7E7;
+}
