@@ -248,8 +248,10 @@ public class ProductListController extends BaseController {
      * @description 批量删除收藏
      */
     @RequestMapping("/deleteCollectionProducts")
-    public ModelAndView deleteCollectionProducts(@RequestParam(value = "collectionId", defaultValue = "439,449") String collectionId, long userId) {
+    public ModelAndView deleteCollectionProducts(@RequestParam(value = "collectionId", defaultValue = "439,449") String collectionId,HttpServletRequest request) {
         productService.deleteCollections(collectionId);
+        HttpSession session = request.getSession();
+        long userId = (long) session.getAttribute("userId");
         String url = "redirect:/ProductListController/collectionProduct?userId=" + userId;
         return new ModelAndView(url);
     }

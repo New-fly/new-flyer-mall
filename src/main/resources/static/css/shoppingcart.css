@@ -156,7 +156,7 @@ body{
 	text-align: center;
 	line-height: 21px;
 	position: relative;
-	top: -1px;
+	top: 1px;
 	cursor:pointer;
 }
 .number{
@@ -203,4 +203,35 @@ s{
 	font-size: 14px;
 	display: block;
 	height: 60px;
+}
+.delet{
+    width: 45px;
+    height: 24px;
+    margin: 8px 0 0 10px;
+    line-height: 24px;
+    color: white;
+    font-size: 13px;
+    letter-spacing: 3px;
+    background-color: #AAAAAA;
+    float: right;
+    text-align: center;
+    cursor: pointer;
+}
+.prompt{
+	width: 150px;
+	height: 45px;
+	font-size: 18px;
+	text-align: center;
+	line-height: 45px;
+	font-family: "华文楷体";
+	border-radius: 10px;
+	color: white;
+	background-color: #0C1021;
+	opacity: 0.65;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -25px;
+	margin-left: -75px;
+	display: none;
 }
