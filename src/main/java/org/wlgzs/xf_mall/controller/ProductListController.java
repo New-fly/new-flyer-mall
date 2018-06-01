@@ -1,6 +1,5 @@
 package org.wlgzs.xf_mall.controller;
 
-import com.github.pagehelper.PageHelper;
 import com.google.gson.Gson;
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
@@ -325,6 +324,9 @@ public class ProductListController extends BaseController {
                     products.get(i).setProduct_picture(img);
                 }
             }
+            if(products.size()==0){
+                model.addAttribute("mag","抱歉您搜索的商品不存在");
+            }
             model.addAttribute("products", products);//查询的当前页的集合
             model.addAttribute("product_category", product_category);
             //遍历一级二级分类
@@ -369,6 +371,9 @@ public class ProductListController extends BaseController {
                     products.get(i).setProduct_picture(img);
                 }
             }
+            if(products.size()==0){
+                model.addAttribute("mag","抱歉您搜索的商品不存在");
+            }
             model.addAttribute("products", products);//查询的当前页的集合
             model.addAttribute("product_category", product_category);
             //遍历一级二级分类
@@ -384,6 +389,7 @@ public class ProductListController extends BaseController {
                 model.addAttribute("recommendedProducts", recommendedProducts);
             }
         } else {
+            System.out.println(4123);
             model.addAttribute("mag", "抱歉您搜索的商品不存在");
         }
         return new ModelAndView("searchCategoryProduct");
@@ -439,6 +445,9 @@ public class ProductListController extends BaseController {
                 img = img.substring(0, img.indexOf(","));
                 products.get(i).setProduct_picture(img);
             }
+        }
+        if(products.size()==0){
+            model.addAttribute("mag","抱歉您搜索的商品不存在");
         }
         model.addAttribute("product_mallPrice", product_mallPrice);
         model.addAttribute("products", products);//查询的当前页的集合

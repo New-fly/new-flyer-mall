@@ -28,7 +28,6 @@
 							<i class="fa fa-bars" style="color: #336699"></i>
 							&nbsp;&nbsp;我的新飞</a>
 					</li>
-
 					<li th:if="${session.user != null }">
 						<a th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}">
 	                    <i class="fa fa-cart-arrow-down" style="color: #336699"></i>
