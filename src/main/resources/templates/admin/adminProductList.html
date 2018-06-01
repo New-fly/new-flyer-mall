@@ -17,15 +17,19 @@
     <form th:action="@{/AdminProductController/adminFindProduct}" method="post">
         <input type="text" name="product_keywords" placeholder="商品名称" th:value="*{product_keywords}" class="ipt">
         <input type="submit" value="搜索" class="btn">
-        <a  th:href="@{/AdminProductController/toAdminAddProduct}" class="a-div adiv1">添加</a>
+        <a  th:href="@{/AdminProductController/toAdminAddProduct}" class="a-div">添加</a>
+        <div class="a-div arise">批量操作</div>
+        <div class="a-div hide delet">删除</div>
+        <div class="a-div hide">添加为活动</div>
+        <input class="ids" type="text" style="display: none" />
     </form>
 </div>
 <div class="mytable">
 <table class="table table-bordered able-box" id="mytable">
     <thead style="background-color: #F2F2F2;">
     <tr>
+        <th class="hide2"></th>
         <th>库存</th>
-        <th>活动名称</th>
         <th>类别</th>
         <th>图片</th>
         <th>商城名称</th>
@@ -35,17 +39,23 @@
     </thead>
     <tbody>
     <tr th:each="product : ${products}">
+        <td class="hide2" style="position: relative">
+            <label class="demo--label">
+                <input class="demo--radio select" type="checkbox">
+                <span class="demo--checkbox demo--radioInput"></span>
+            </label>
+        </td>
+        <td class="productid" style="display: none" th:text="${product.productId}"></td>
         <td th:text="${product.product_inventory}"></td>
-        <td th:text="${product.product_activity}"></td>
         <td th:text="${product.product_category}"></td>
         <td><img th:src="${product.product_picture}" style="width: 45px;height: 45px;"></td>
         <td th:text="${product.product_keywords}" style="width: 200px"></td>
         <td th:text="${product.product_mallPrice}"></td>
         <td>
-            <a th:href="@{/AdminActivityController/toAdminAddActivity(productId=${product.productId})}" class="a-div" style="width: 85px;background: #009688;">添加为活动</a>
-            <a th:href="@{/AdminProductController/toProductDetail(productId=${product.productId})}" class="a-div adiv2">查看</a>
-            <a href="javascript:void(0);" th:onclick="'javascript:deleteProduct('+${product.productId}+');'" class="a-div adiv1">删除</a>
-            <a th:href="@{/AdminProductController/toAdminEditProduct(productId=${product.productId})}" class="a-div adiv1">修改</a>
+            <a th:href="@{/AdminActivityController/toAdminAddActivity(productId=${product.productId})}" class="a-div" style="background: #009688;">添加为活动</a>
+            <a  th:href="@{/AdminProductController/toProductDetail(productId=${product.productId})}" class="a-div" style="background: #009688;">查看</a>
+            <a href="javascript:void(0);" th:onclick="'javascript:deleteProduct('+${product.productId}+');'" class="a-div">删除</a>
+            <a  th:href="@{/AdminProductController/toAdminEditProduct(productId=${product.productId})}" class="a-div">修改</a>
         </td>
     </tr>
     </tbody>
@@ -138,6 +148,7 @@
 </div>
 </div>
 </div>
+<div class="secess"></div>
 <script th:src="@{/js/commodity.js}"></script>
 </body>
 </html>

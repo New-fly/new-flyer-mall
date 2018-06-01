@@ -55,3 +55,48 @@ function deleteOrder(orderId) {
 //     //     modifi.style.display = "none";
 //     // };
 // };
+window.onload=function(){
+    var good = document.getElementsByClassName('good');
+    document.getElementsByClassName("arise")[0].onclick=function(){
+        this.style.display="none";
+        document.getElementsByClassName("hide2")[0].style.display="inline-block";
+        for(let i=0;i<good.length+1;i++){
+            document.getElementsByClassName("hide")[i].style.display="block";
+        }
+    };
+    for(let i=0;i<good.length;i++) {
+        good[i].onchange = function(){
+            var ids ="";
+            for (let k = 0; k < good.length; k++) {
+                if (good[k].checked == true) {
+                    var foot = document.getElementsByClassName("orderId")[k].innerHTML;
+                    ids = ids + foot + ",";
+                }
+            }
+            ids = ids.substring(0,ids.lastIndexOf(','));
+            document.getElementsByClassName("ids")[0].value = ids;
+        }
+    }
+    document.getElementsByClassName("delete")[0].onclick=function(){
+        var ids=document.getElementsByClassName("ids")[0].value;
+        $.ajax({
+            url: "/OrderController/deleteOrders",
+            data: {
+                "orderId":ids,
+            },
+            dataType: "text",
+            type:"POST",
+            success: function () {
+                $(":checked").parent().parent().parent().remove();
+                document.getElementsByClassName("arise")[0].style.display="inline-block";
+                document.getElementsByClassName("hide2")[0].style.display="none";
+                for(let i=0;i<good.length+1;i++){
+                    document.getElementsByClassName("hide")[i].style.display="none";
+                }
+            },
+            error: function () {
+                alert("请求失败！！")
+            }
+        })
+    }
+};

@@ -27,4 +27,7 @@ public interface ProductActivityService {
 
     //批量添加活动商品
     void adminAddActivitys(String productId,HttpServletRequest request);
+
+    //批量删除商品
+    void adminDeleteActivitys(String activityId);
 }

@@ -4,6 +4,7 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.request.AlipayTradeRefundRequest;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @Auther: 阿杰
@@ -199,13 +201,13 @@ public class OrdersServiceImpl implements OrdersService {
         return ordersRepository.userOrderList(userId);
     }
 
-    //未收货订单
+    //待收货订单
     @Override
     public List<Orders> userUnacceptedOrder(long userId) {
         return ordersRepository.userUnacceptedOrder(userId);
     }
 
-    //未评价订单
+    //待评价订单
     @Override
     public List<Orders> userUnEstimateOrder(long userId) {
         return ordersRepository.unEstimateOrder(userId);
@@ -337,5 +339,31 @@ public class OrdersServiceImpl implements OrdersService {
         IdsUtil idsUtil = new IdsUtil();
         long[] ids = idsUtil.IdsUtils(orderId);
         ordersRepository.deleteByIds(ids);
+    }
+
+    @Override
+    public void refund(long orderId, HttpServletResponse response) throws IOException, AlipayApiException {
+        Orders orders = ordersRepository.findById(orderId);
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        //获得初始化的AlipayClient
+        AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
+        //设置请求参数
+        AlipayTradeRefundRequest alipayRequest = new AlipayTradeRefundRequest();
+        //商户订单号，商户网站订单系统中唯一订单号
+        String out_trade_no = new String(orders.getOrder_number());
+        //需要退款的金额，该金额不能大于订单金额，必填
+        String refund_amount = new String(String.valueOf(orders.getProduct_PaidPrice()));
+        //标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传
+        String out_request_no = new String(UUID.randomUUID().toString());
+
+        alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\","
+                + "\"refund_amount\":\""+ refund_amount +"\","
+                + "\"out_request_no\":\""+ out_request_no +"\"}");
+
+        //请求
+        String result = alipayClient.execute(alipayRequest).getBody();
+        //输出
+        out.println(result);
     }
 }
