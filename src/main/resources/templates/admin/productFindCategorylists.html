@@ -62,7 +62,7 @@
                 <li><a th:href="@{/AdminProductController/findProductCategory(page=${TotalPages},category_name=${category_name})}">尾页</a></li><!--//跳转至第Number页-->
             </ul>
 
-            <ul class="pagination" th:if="${Number > 1} and ${Number > 1}"><!--//显示上一页-->
+            <ul class="pagination" th:if="${Number > 1} and ${TotalPages > 1}"><!--//显示上一页-->
                 <li><a th:href="@{/AdminProductController/findProductCategory(page=1,category_name=${category_name})}">首页</a></li><!--//跳转至第一页-->
                 <li><a th:href="@{/AdminProductController/findProductCategory(page=${Number-1},category_name=${category_name})}">上一页</a></li><!--//请求页数-1-->
                 <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">

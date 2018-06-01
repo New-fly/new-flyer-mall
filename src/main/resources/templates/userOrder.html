@@ -29,11 +29,11 @@
                 <div class="box-hd">
                     <h3 class="h33">个人中心</h3>
                     <ul>
-                        <li><a th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}">购物车</a></li>
-                        <li><a th:href="@{/UserOrderController/userOrderList(userId=${session.user.userId})}">我的新飞</a></li>
-                        <li><a th:href="@{/FootprintController/userFootprint(userId=${session.user.userId})}">我的足迹</a></li>
-                        <li><a th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}">我的收藏</a></li>
-                        <li><a th:href="@{/IntegralController/integralList(userId=${session.user.userId})}">我的积分</a></li>
+                        <li><a target="_blank" th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}">购物车</a></li>
+                        <li><a th:href="@{/UserOrderController/userOrderList(userId=${session.user.userId})}">我的订单</a></li>
+                        <li><a target="_blank" th:href="@{/FootprintController/userFootprint(userId=${session.user.userId})}">我的足迹</a></li>
+                        <li><a target="_blank" th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}">我的收藏</a></li>
+                        <li><a target="_blank" th:href="@{/IntegralController/integralList(userId=${session.user.userId})}">我的积分</a></li>
                         <!-- <li><a href="">我的评价</a></li> -->
                         <li><a th:href="@{/ProductListController/integralProduct}">积分兑换</a></li>
                     </ul>

@@ -60,7 +60,7 @@
             </li>
             <li><a th:href="@{/AdminActivityController/adminFindActivityProduct(page=${Number+1},product_keywords=${product_keywords})}">下一页</a></li><!--//请求页数+1-->
         </ul>
-        <ul class="pagination" th:if="${Number > 1} and ${Number > 1}"><!--//显示上一页-->
+        <ul class="pagination" th:if="${Number > 1} and ${TotalPages > 1}"><!--//显示上一页-->
             <li><a th:href="@{/AdminActivityController/adminFindActivityProduct(page=1,product_keywords=${product_keywords})}">首页</a></li><!--//跳转至第一页-->
             <li><a th:href="@{/AdminActivityController/adminFindActivityProduct(page=${Number-1},product_keywords=${product_keywords})}">上一页</a></li><!--//请求页数-1-->
             <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
@@ -71,7 +71,7 @@
                    th:href="@{/OrderController/allProductOrdersLists(page=${i},product_keywords=${product_keywords})}" th:text="${i}"
                    style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
             </li>
-            <li th:if="${Number != activities}"><a
+            <li th:if="${Number != TotalPages}"><a
                     th:href="@{/AdminActivityController/adminFindActivityProduct(page=${Number+1},product_keywords=${product_keywords})}">下一页</a></li><!--//请求页数+1-->
             <li><a th:href="@{/AdminActivityController/adminFindActivityProduct(page=${TotalPages},product_keywords=${product_keywords})}">尾页</a></li><!--//跳转至第Number页-->
         </ul>
