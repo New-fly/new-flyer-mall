@@ -133,4 +133,13 @@ public class ProductActivityServiceImp implements ProductActivityService {
         productRepository.save(product);
         productActivityRepository.deleteById(activityId);
     }
+
+    //批量删除活动商品
+
+    @Override
+    public void adminDeleteActivitys(String activityId) {
+        IdsUtil idsUtil = new IdsUtil();
+        long[] ids = idsUtil.IdsUtils(activityId);
+        productActivityRepository.deleteByIds(ids);
+    }
 }

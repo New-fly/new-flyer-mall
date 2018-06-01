@@ -198,6 +198,19 @@ public class ActivityController extends BaseController {
     }
 
     /**
+     * @author 胡亚星
+     * @date 2018/5/31 21:08
+     * @param
+     * @return
+     *@Description:批量删除商品
+     */
+    @RequestMapping("/adminDeleteActivitys")
+    public ModelAndView adminDeleteActivitys(String activityId){
+        productActivityService.adminDeleteActivitys(activityId);
+        return new ModelAndView("redirect:/AdminActivityController/activityProducts");
+    }
+
+    /**
      * @param [model, activity_name, page, limit]
      * @return org.springframework.web.servlet.ModelAndView
      * @author 阿杰
