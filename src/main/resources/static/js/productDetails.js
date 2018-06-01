@@ -24,7 +24,7 @@ window.onload=function(){
     };
     document.getElementsByClassName("right")[0].onclick=function(){
 		num=num-220;
-		if(num<(-1)*long+1000){num=(-1)*long+1000;document.getElementsByClassName("right")[0].style.cursor="not-allowed";}
+		if(num<(-1)*long+900){num=(-1)*long+900;document.getElementsByClassName("right")[0].style.cursor="not-allowed";}
 		document.getElementsByClassName("berelated-goods-long")[0].style.left = num + "px";
     };
     var productId=document.getElementsByClassName("productId")[0].value;

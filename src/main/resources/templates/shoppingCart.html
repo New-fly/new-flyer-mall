@@ -12,6 +12,16 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/copy.css}">
     <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
     <script type="text/javascript" th:src="@{/js/shoppingcart.js}"></script>
+    <script>
+        function pay() {
+            var shopcartid=document.getElementsByClassName("produc")[0].value;
+            if(shopcartid.length>0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    </script>
 </head>
 <body>
     <div th:include="common/top_header :: copy"></div>
@@ -22,7 +32,7 @@
             <div class="ipt-2">搜索</div>
         </div>
     </div>
-    <form th:action="@{/aliPay/toPay}">
+    <form th:action="@{/aliPay/toPay}" onsubmit="return pay()">
         <div>
             <input type="text" style="display: none" th:value="${session.userId}" name="userId" class="userId" />
             <input type="text" style="display: none" class="produc" name="shoppingCartId" />

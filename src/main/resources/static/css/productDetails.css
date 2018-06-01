@@ -185,30 +185,53 @@ body{
 .berelated-goods{
 	width:1100px;
 	height: 100%;
-	position: relative;
 	margin: 0 auto;
 	overflow: hidden;
+	position: relative;
 }
 .berelated-goods-long{
 	width: auto;
-	min-width: 1000px;
 	height: 100%;
 	position: absolute;
 	top: 0;
 	left: 0;
 	transition: 0.6s;
+    overflow: hidden;
+    clear:both;
+    white-space: nowrap;
 }
 .berelated-goods-long>div{
-    width: 200px;
-    height: 100px;
-    margin: 10px;
-    float: left;
-    font-size: 13px;
+    width: 210px;
+    height: 80px;
+    margin: 20px 10px 20px 0;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 11px;
+    position: relative;
 }
 .berelated-goods-long>div>img{
-	height: 100%;
-	width: auto;
-	float: left
+	height: 80px;
+	width: 80px;
+    margin-right: 10px;
+}
+.keywor{
+    width: 120px;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    white-space: pre-wrap;
+    overflow: hidden;
+    line-height: 20px;
+}
+.monony{
+    width: 120px;
+    height: 20px;
+    line-height: 20px;
+    color: red;
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
 .promote{
 	color: gray;
