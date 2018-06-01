@@ -190,20 +190,20 @@ body{
 	overflow: hidden;
 }
 .berelated-goods-long{
-	width: 3300px;
+	width: auto;
+	min-width: 1000px;
 	height: 100%;
 	position: absolute;
 	top: 0;
 	left: 0;
-	transition: 1s;
+	transition: 0.6s;
 }
 .berelated-goods-long>div{
-	width: 180px;
-	height: 80px;
-	margin: 20px;
-	float: left;
-	line-height: 40px;
-	font-size: 13px;
+    width: 200px;
+    height: 100px;
+    margin: 10px;
+    float: left;
+    font-size: 13px;
 }
 .berelated-goods-long>div>img{
 	height: 100%;
