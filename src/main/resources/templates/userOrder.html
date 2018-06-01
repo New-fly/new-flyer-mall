@@ -15,27 +15,33 @@
 <body>
 <div th:include="common/top_header::header"></div>
 <div class="nav1">
-    <div class="navheader">
-        <img th:src="@{/images/logo-foot.png}"/>
-    </div>
+    <div class="navheader"> <img th:src="@{/images/logo-foot.png}" ></div>
 </div>
-<div class="container1">
-    <div class="aside">
-        <div>
-            <dl>
-                <dt>全部功能</dt>
-                <dd><a th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}" target="_self">购物车</a></dd>
-                <dd><a th:href="@{/UserOrderController/userOrderList(userId=${session.user.userId})}" target="_self">我的淘宝</a></dd>
-                <dd><a th:href="@{/FootprintController/userFootprint(userId=${session.user.userId})}" target="_self">我的足迹</a></dd>
-                <dd><a th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}" target="_self">我的收藏</a></dd>
-                <dd><a th:href="@{/IntegralController/integralList(userId=${session.user.userId})}" target="_self">我的积分</a></dd>
-                <dd><a th:href="@{/EstimateController/userEstimate(userId=${session.user.userId})}" target="_self">我的评价</a></dd>
-                <dd><a th:href="@{/ProductListController/integralProduct}" target="_self">积分兑换</a></dd>
-
-            </dl>
+<div class="site-header">
+    <a th:href="@{/HomeController/homeProduct}">首页</a>
+    <span> ＞ </span>
+    <a th:href="@{/UserOrderController/userOrderList(userId=${session.user.userId})}">交易订单</a>
+</div>
+<div class="contain">
+    <div class="span4">
+        <div class="span4-box">
+            <div class="ul-box">
+                <div class="box-hd">
+                    <h3 class="h33">个人中心</h3>
+                    <ul>
+                        <li><a th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}">购物车</a></li>
+                        <li><a th:href="@{/UserOrderController/userOrderList(userId=${session.user.userId})}">我的新飞</a></li>
+                        <li><a th:href="@{/FootprintController/userFootprint(userId=${session.user.userId})}">我的足迹</a></li>
+                        <li><a th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}">我的收藏</a></li>
+                        <li><a th:href="@{/IntegralController/integralList(userId=${session.user.userId})}">我的积分</a></li>
+                        <!-- <li><a href="">我的评价</a></li> -->
+                        <li><a th:href="@{/ProductListController/integralProduct}">积分兑换</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="content">
+    <div class="span16">
         <div class="nav">
             <ul id="myTab" class="nav nav-tabs">
                 <li class="active"><a href="#home" data-toggle="tab">全部订单</a></li>
@@ -47,7 +53,7 @@
                 <div class="tab-pane fade in active" id="home">
                     <div class="annotation">
                         <div>宝贝</div>
-                        <div>单价</div>
+                        <!--<div>单价</div>-->
                         <div>数量</div>
                         <div>商品操作</div>
                         <div>实际付款</div>
@@ -55,26 +61,21 @@
                     </div>
                     <div class="list">
                         <div class="single" th:each="order : ${orders}">
-                            <div class="single-introduce">
-                                <img th:src="${order.product_picture}" height="100%" style="float: left;width: 85px;"/>
-                                <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${order.productId})}" th:text="${order.product_keywords}"></a>
+                            <div class="one">
+                                <img th:src="${order.product_picture}" alt="" style="height: 110px;width:110px;">
+                                <a class="aa1" target="_blank" th:href="@{/ProductListController/toProduct(productId=${order.productId})}" th:text="${order.product_keywords}" >的点点滴滴多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多</a>
                             </div>
-                            <div class="norms">
-                                <a th:text="${order.product_PaidPrice}">￥5133元</a><br/><s
-                                    th:text="${order.product_mallPrice}">￥5323元</s>
+                            <div class="two">
+                                <a th:text="${order.order_quantity}">1</a>
                             </div>
-                            <div class="single-text">
-                                <a th:text="${order.order_quantity}">数量</a>
+                            <div class="two">
+                                <a th:href="@{/UserOrderController/orderDetails(orderId=${order.orderId})}">订单详情</a>
+                                <a href="">退款</a>
                             </div>
-                            <div class="single-text-a" style="text-align: right;">
-                                <a href="#">投诉</a><br/>
-                                <a href="#">退货、退款</a><br/>
-                                <a href="#">申请售后</a>
+                            <div class="two">
+                                <a th:text="${order.product_PaidPrice}">111</a>
                             </div>
-                            <div class="single-text">
-                                <a th:text="${order.product_PaidPrice}" style="margin-left: 30px;">￥5133元</a>
-                            </div>
-                            <div class="single-text" style="text-align: right;margin-left: 72px;">
+                            <div class="two">
                                 <a href="javascript:void(0);"
                                    th:onclick="'javascript:userAccepted('+${order.orderId}+');'"
                                    th:if="${order.order_status.equals('待收货')}"
@@ -86,189 +87,87 @@
                         </div>
                     </div>
                 </div>
+
                 <!--2.待收货-->
-                <div class="tab-pane fade" id="ejb">
-                    <div class="annotation">
-                        <div>宝贝</div>
-                        <div>单价</div>
-                        <div>数量</div>
-                        <div>商品操作</div>
-                        <div>实际付款</div>
-                        <div>交易状态</div>
-                    </div>
-                    <div class="list">
-                        <div class="single" th:each="order : ${orders}">
-                            <div class="single-introduce">
-                                <img th:src="${order.product_picture}" height="100%" style="float: left;"/>
-                                <a th:href="@{/ProductListController/toProduct(productId=${order.productId})}" th:text="${order.product_keywords}"></a>法规的所发生的累计开发阶段水立方到佳木斯都是顾客收到广东省
-                            </div>
-                            <div class="norms">
-                                <a th:text="${order.product_PaidPrice}">￥5133元</a><br/><s
-                                    th:text="${order.product_mallPrice}">￥5323元</s>
-                            </div>
-                            <div class="single-text">
-                                <a th:text="${order.order_quantity}">数量</a>
-                            </div>
-                            <div class="single-text-a" style="text-align: right;">
-                                <a href="#">投诉</a><br/>
-                                <a href="#">退货、退款</a><br/>
-                            </div>
-                            <div class="single-text">
-                                <a th:text="${order.product_PaidPrice}" style="margin-left: 40px;">￥5133元</a>
-                            </div>
-                            <div class="single-text" style="text-align: right;margin-left: 72px;">
-                                <a href="javascript:void(0);"
-                                   th:onclick="'javascript:userAccepted('+${order.orderId}+');'"
-                                   th:if="${order.order_status.equals('待收货')}"
-                                   th:text="${order.order_status}">待发货</a>
-                                <a th:href="@{/EstimateController/toAddEstimate(orderId=${order.orderId})}" th:if="${order.order_status.equals('待评价')}" th:text="${order.order_status}">待评价</a>
-                                <a th:if="${order.order_status.equals('交易成功')}"
-                                   th:text="${order.order_status}">交易成功</a>
-                            </div>
+            <div class="tab-pane fade" id="ejb">
+                <div class="annotation">
+                    <div>宝贝</div>
+                    <!--<div>单价</div>-->
+                    <div>数量</div>
+                    <div>商品操作</div>
+                    <div>实际付款</div>
+                    <div>交易状态</div>
+                </div>
+                <div class="list">
+                    <div class="single" th:each="order : ${orders}">
+                        <div class="one">
+                            <img th:src="${order.product_picture}" alt="" style="height: 110px;width:110px;">
+                            <a class="aa1" th:href="@{/ProductListController/toProduct(productId=${order.productId})}" th:text="${order.product_keywords}">的点点滴滴多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多</a>
+                        </div>
+                        <div class="two">
+                            <a th:text="${order.order_quantity}">1</a>
+                        </div>
+                        <div class="two">
+                            <a href="">订单详情</a><a href="">退款</a>
+                        </div>
+                        <div class="two">
+                            <a th:text="${order.product_PaidPrice}">111</a>
+                        </div>
+                        <div class="two">
+                            <a href="javascript:void(0);"
+                               th:onclick="'javascript:userAccepted('+${order.orderId}+');'"
+                               th:if="${order.order_status.equals('待收货')}"
+                               th:text="${order.order_status}">待发货</a>
+                            <a th:href="@{/EstimateController/toAddEstimate(orderId=${order.orderId})}" th:if="${order.order_status.equals('待评价')}" th:text="${order.order_status}">待评价</a>
+                            <a th:if="${order.order_status.equals('交易成功')}"
+                               th:text="${order.order_status}">交易成功</a>
                         </div>
                     </div>
                 </div>
+            </div>
+
                 <!--3.待评价 -->
-                <div class="tab-pane fade" id="ejba">
-                    <div class="annotation">
-                        <div>宝贝</div>
-                        <div>单价</div>
-                        <div>数量</div>
-                        <div>商品操作</div>
-                        <div>实际付款</div>
-                        <div>交易状态</div>
+        <div class="tab-pane fade" id="ejba">
+            <div class="annotation">
+                <div>宝贝</div>
+                <!--<div>单价</div>-->
+                <div>数量</div>
+                <div>商品操作</div>
+                <div>实际付款</div>
+                <div>交易状态</div>
+            </div>
+            <div class="list">
+                <div class="single" th:each="order : ${orders}">
+                    <div class="one">
+                        <img th:src="${order.product_picture}" alt="" style="height: 110px;width:110px;">
+                        <a class="aa1" th:href="@{/ProductListController/toProduct(productId=${order.productId})}" th:text="${order.product_keywords}" >的点点滴滴多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多</a>
                     </div>
-                    <div class="list">
-                        <div class="single" th:each="order : ${orders}">
-                            <div class="single-introduce">
-                                <img th:src="${order.product_picture}" height="100%" style="float: left;"/>
-                                <a th:href="@{/ProductListController/toProduct(productId=${order.productId})}" th:text="${order.product_keywords}"></a>法规的所发生的累计开发阶段水立方到佳木斯都是顾客收到广东省
-                            </div>
-                            <div class="norms">
-                                <a th:text="${order.product_PaidPrice}">￥5133元</a><br/><s
-                                    th:text="${order.product_mallPrice}">￥5323元</s>
-                            </div>
-                            <div class="single-text">
-                                <a th:text="${order.order_quantity}">数量</a>
-                            </div>
-                            <div class="single-text-a" style="text-align: right;">
-                                <a href="#">投诉</a><br/>
-                                <a href="#">申请售后</a>
-                            </div>
-                            <div class="single-text">
-                                <a th:text="${order.product_PaidPrice}" style="margin-left: 40px;">￥5133元</a>
-                            </div>
-                            <div class="single-text" style="text-align: right;margin-left: 72px;">
-                                <a href="javascript:void(0);"
-                                   th:onclick="'javascript:userAccepted('+${order.orderId}+');'"
-                                   th:if="${order.order_status.equals('待收货')}"
-                                   th:text="${order.order_status}">待发货</a>
-                                <a th:href="@{/EstimateController/toAddEstimate(orderId=${order.orderId})}"
-                                   th:if="${order.order_status.equals('待评价')}"
-                                   th:text="${order.order_status}">待评价</a>
-                                <a th:if="${order.order_status.equals('交易成功')}"
-                                   th:text="${order.order_status}">交易成功</a>
-                            </div>
-                        </div>
+                    <div class="two">
+                        <a th:text="${order.order_quantity}">1</a>
+                    </div>
+                    <div class="two">
+                        <a href="">订单详情</a><a href="">退款</a>
+                    </div>
+                    <div class="two">
+                        <a th:text="${order.product_PaidPrice}">111</a>
+                    </div>
+                    <div class="two">
+                        <a href="javascript:void(0);"
+                           th:onclick="'javascript:userAccepted('+${order.orderId}+');'"
+                           th:if="${order.order_status.equals('待收货')}"
+                           th:text="${order.order_status}">待发货</a>
+                        <a th:href="@{/EstimateController/toAddEstimate(orderId=${order.orderId})}" th:if="${order.order_status.equals('待评价')}" th:text="${order.order_status}">待评价</a>
+                        <a th:if="${order.order_status.equals('交易成功')}"
+                           th:text="${order.order_status}">交易成功</a>
                     </div>
                 </div>
+            </div>
+        </div>
             </div>
         </div>
     </div>
 </div>
 </div>
-<div class="gray_all">
-    <div class="gray_text1">
-        <div class="color">购物指南</div>
-        免费注册<br/>
-        开通支付宝<br/>
-        支付宝充值
-    </div>
-    <div class="gray_text1">
-        <div class="color">新飞保障</div>
-        发票保障<br/>
-        售后规则<br/>
-        缺货赔付
-    </div>
-    <div class="gray_text1">
-        <div class="color">支付方式</div>
-        快捷支付<br/>
-        信用卡<br/>
-        余额宝<br/>
-        蚂蚁花呗<br/>
-        货到付款
-    </div>
-    <div class="gray_text1">
-        <div class="color">商家服务</div>
-        新飞规则<br/>
-        商家入驻<br/>
-        商家中心<br/>
-        物流服务<br/>
-        运营服务
-    </div>
-    <div style="padding-top: 50px;"><img th:src="@{/images/qr-code.png}"/></div>
-</div>
-<div class="foots">
-    <div class="foots_all">
-        <div class="logo" style="position: absolute;top: 25px;left: 25px;">
-            <a href="#"><img th:src="@{/images/logo-foot.png}" width="110px" height="50px"/></a>
-        </div>
-        <div class="foots_text1">
-            服务邮箱：xf800@xinfei.com
-            全国客服中心电话：400-609-8888<br/>
-            有任何购物问题请联系我们在线客服 | 工作时间：周一至周日 8:00－23:00
-            Copyright 2017-2020新飞电器 版权所有 豫ICP备 05017920号
-        </div>
-        <div class="foots_text2">友情链接</div>
-        <div class="foots_text3">
-            <a href="#">交通查询 </a> |
-            <a href="#">租租车 </a> |
-            <a href="#">美术教育 </a> |
-            <a href="#">中国交通网 </a> |
-            <a href="#">长途汽车票 </a> |
-            <a href="#">旅游网 </a> |
-            <a href="#">首都航空 </a> |
-            <a href="#">在线教育 </a> |
-            <a href="#">金运之旅 </a> |
-            <a href="#">豌豆荚 </a> |
-            <a href="#">安卓市场 </a> |
-            <a href="#">凤凰网旅游 </a> |
-            <a href="#">凯撒旅游 </a> |
-            <a href="#">神州租车 </a> |
-            <a href="#">国际租车 </a> |
-            <a href="#">携程攻略 </a> |
-            <a href="#">社区蜂鸟网 </a> |
-            <a href="#">天巡国际 </a> |
-            <a href="#">机票 </a> |
-            <a href="#">游谱旅行网 </a> |
-            <a href="#">中国签证 </a> |
-            <a href="#">资讯网 </a> |
-            <a href="#">梦之旅 </a> |
-            <a href="#">交通查询 </a> |
-            <a href="#">租租车 </a> |
-            <a href="#">美术教育 </a> |
-            <a href="#">中国交通网 </a> |
-            <a href="#">长途汽车票 </a> |
-            <a href="#">旅游网 </a> |
-            <a href="#">首都航空 </a> |
-            <a href="#">在线教育 </a> |
-            <a href="#">金运之旅 </a> |
-            <a href="#">豌豆荚 </a> |
-            <a href="#">安卓市场 </a> |
-            <a href="#">凤凰网旅游 </a> |
-            <a href="#">凯撒旅游 </a> |
-            <a href="#">神州租车 </a> |
-            <a href="#">国际租车 </a> |
-            <a href="#">携程攻略 </a> |
-            <a href="#">社区蜂鸟网 </a> |
-            <a href="#">天巡国际 </a> |
-            <a href="#">机票 </a> |
-            <a href="#">游谱旅行网 </a> |
-            <a href="#">中国签证 </a> |
-            <a href="#">资讯网 </a> |
-            <a href="#">梦之旅 </a> |
-        </div>
-    </div>
-</div>
+
 </body>
 </html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>订单详情</title>
+    <link th:href="@{/css/OrderInfo.css}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon"  th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+    <!--<script th:src="@{/js/adminOrderInfo.js}"></script>-->
+</head>
+<body>
+<div th:include="common/top_header :: copy"></div>
+<div class="nav">
+    <div class="navheader"> <img th:src="@{/images/logo-foot.png}" alt=""></div>
+</div>
+<div class="site-header"><a th:href="@{/HomeController/homeProduct}">首页</a><span> ＞ </span><a th:href="@{/UserOrderController/orderDetails?orderId=769}">订单详情</a></div>
+<div class="contain">
+    <div class="span4">
+        <div class="span4-box">
+            <div class="ul-box">
+                <div class="box-hd">
+                    <h3 class="h33">个人中心</h3>
+                    <ul>
+                        <!--<li><a th:href="@{/UserOrderController/orderDetails(orderId=${order.orderId})}">订单详情</a></li>-->
+                        <li><a th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}">购物车</a></li>
+                        <li><a th:href="@{/UserOrderController/userOrderList(userId=${session.user.userId})}">我的新飞</a></li>
+                        <li><a th:href="@{/FootprintController/userFootprint(userId=${session.user.userId})}">我的足迹</a></li>
+                        <li><a th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}">我的收藏</a></li>
+                        <li><a th:href="@{/IntegralController/integralList(userId=${session.user.userId})}">我的积分</a></li>
+                        <!-- <li><a href="">我的评价</a></li> -->
+                        <li><a th:href="@{/ProductListController/integralProduct}">积分兑换</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="span16" th:object="${order}">
+        <div class="main-box">
+            <div class="main-hd">
+                <div class="title"><h1>订单详情</h1></div>
+                <div class="more">
+                    <div class="subtitle" th:text="*{order_number}" >订单号1111111111111111</div>
+                    <!--<div class="action"><a href="" class="order-a order-a1">取消订单</a><a href="" class="order-a order-a2">立即支付</a></div>-->
+                </div>
+            </div>
+            <div class="main-bd">
+                <div class="title"><h3 class="wite" th:text="*{order_status}">等待付款</h3></div>
+                <!--<div class="later">47小时57分后订单将关闭</div>-->
+                <div class="more">
+                    <div class="order-progress">
+                        <ul>
+                            <li>下单</li>
+                            <li>发货</li>
+                            <li>交易成功</li>
+                            <li th:text="*{order_purchaseTime}" style="background: #fff;"></li>
+                            <li th:text="*{order_deliveryTime}" style="background: #fff;"></li>
+                            <li th:text="*{order_dealTime}" style="background: #fff;"></li>
+                        </ul>
+                    </div>
+                    <div class="product">
+                        <a href=""><img th:src="*{product_picture}" style="width: 80px;height: 80px;"></a>
+                        <span class="introduce"><a target="_blank" th:href="@{/ProductListController/toProduct(productId=${order.productId})}" th:text="*{product_keywords}">13.3小米笔记本AiR四核58GMX150深空灰</a></span>&nbsp;&nbsp;&nbsp;
+                        <span class="introduce" th:text="*{product_mallPrice}">5399元ⅹ1</span>
+                    </div>
+                </div>
+            </div>
+            <div class="main-bd">
+                <div class="title" style="display: inline-block;"><h3 class="wite">收货信息</h3></div>
+                <!--<div class="modify"><a href="" class="order-a order-a1">修改</a></div>-->
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</th>
+                        <td th:text="*{user_name}">王静晓</td>
+                    </tr>
+                    <tr>
+                        <th>联系电话:</th>
+                        <td th:text="*{address_phone}">159****8126</td>
+                    </tr>
+                    <tr>
+                        <th>收货地址:</th>
+                        <td th:text="*{address_shipping}">河南 新乡市 红旗区 洪门镇 华兰大道东段河南科技学院</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="xian"></div>
+            </div>
+            <div class="main-bd">
+                <div class="title" style="display: inline-block;"><h3 class="wite">支付方式及送货时间</h3></div>
+                <!--<div class="modify"><a href="" class="order-a order-a1">修改</a></div>-->
+                <table>
+                    <tbody>
+
+                    <tr>
+                        <th>支付方式：</th>
+                        <td>在线支付</td>
+                    </tr>
+                    <tr>
+                        <th>送货时间: </th>
+                        <td th:text="*{order_deliveryTime}">不限送货时间</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="xian"></div>
+            </div>
+            <div class="order-details">
+                <table class="details-table">
+                    <tbody>
+
+                    <tr>
+                        <th>商品总价：</th>
+                        <td><a href="" class="aaa" th:text="*{product_mallPrice}">5399元</a></td>
+                    </tr>
+                    <tr>
+                        <th>运&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费: </th>
+                        <td><a href="" class="aaa" th:text="*{order_freight}">0元</a></td>
+                    </tr>
+                    <tr>
+                        <th>应付金额: </th>
+                        <td><a href="" class="aaa" th:text="*{product_PaidPrice}">5399元</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

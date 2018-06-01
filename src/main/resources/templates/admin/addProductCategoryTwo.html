@@ -30,7 +30,7 @@
 	                </tr>
 					<tr>
 						<th>分类名称</th>
-						<td><input type="text" name="category_name" class="form-control" id="category_name" /></td>
+						<td><input type="text" name="category_name" class="form-control" id="category_name" required="required"/></td>
 					</tr>
 	       			<tr>
 	                    <td colspan="2">
@@ -46,16 +46,16 @@
 	    </div>
 	</div>
 </body>
-<script type="text/javascript">
-    var category_name=document.getElementById('category_name');
-    var add=document.getElementById('add');
-    add.onclick=function () {
-        if(category_name.value==null||category_name.value==""){
-            alert("请输入分类名称");
-            return false;
-        }else{
-            return true;
-        }
-    }
-</script>
+<!--<script type="text/javascript">-->
+    <!--var category_name=document.getElementById('category_name');-->
+    <!--var add=document.getElementById('add');-->
+    <!--add.onclick=function () {-->
+        <!--if(category_name.value==null||category_name.value==""){-->
+            <!--alert("请输入分类名称");-->
+            <!--return false;-->
+        <!--}else{-->
+            <!--return true;-->
+        <!--}-->
+    <!--}-->
+<!--</script>-->
 </html>

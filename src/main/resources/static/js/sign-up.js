@@ -114,7 +114,7 @@ function test3(){
     //     })
     // })
 
-})
+// })
 //判断输入框信息是否正确
 
 // $("#user_code").blur(function(){

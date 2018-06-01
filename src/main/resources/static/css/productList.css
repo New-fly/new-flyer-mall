@@ -438,3 +438,38 @@ figure{
 .foots_text3>a:hover{
     color: #B1B1B1;
 }
+.pagination>li {
+    display: inline-block;
+    margin: 2px;
+}
+.pagination>li>a, .pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #999;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: red;
+    border-color: red;
+}
+.cure{
+    width: 1200px;
+    margin: 0 auto;
+    height: 100px;
+    padding: 20px;
+}
+.hh11{
+    font-size: 20px;
+    color: red;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 5px;
+}
