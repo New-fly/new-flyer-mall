@@ -163,7 +163,6 @@ public class AliPayController extends BaseController {
     @RequestMapping("refund")
     public ModelAndView refund(long orderId, HttpServletResponse response) throws AlipayApiException, IOException {
         ordersService.refund(orderId,response);
-
         return new ModelAndView("aliPayRefund");
     }
 }

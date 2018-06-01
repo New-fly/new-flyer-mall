@@ -100,7 +100,6 @@ public class ProductActivityServiceImp implements ProductActivityService {
             productActivity.setProduct_keywords(products.get(i).getProduct_keywords());
             productActivityRepository.save(productActivity);
         }
-
     }
 
     //通过id查找活动商品

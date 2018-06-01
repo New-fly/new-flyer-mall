@@ -34,9 +34,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @Auther: 阿杰
@@ -62,6 +60,12 @@ public class OrdersServiceImpl implements OrdersService {
         Pageable pageable = new PageRequest(page, limit, sort);
         Specification<Orders> specification = new PageUtil<Orders>(order_number).getPage("order_number");
         Page pages = ordersRepository.findAll(specification, pageable);
+
+        Map<String, List> map1 = new HashMap<String, List>();
+        map1.put("jack", pages.getContent());
+        String ja = "jack";
+        map1.get(ja);
+
         return pages;
     }
 
@@ -121,7 +125,9 @@ public class OrdersServiceImpl implements OrdersService {
         aliPayRequest.setNotifyUrl(AlipayConfig.notify_url);
 
         //商户订单号，商户网站订单系统中唯一订单号，必填
-        String order_number = new String(RandonNumberUtils.getOrderIdByUUId());
+        String orderNumber = RandonNumberUtils.getOrderIdByUUId();
+        String order_number = new String(orderNumber);
+        System.out.println(order_number+"------------------");
         //付款金额，必填
         String total_amount = new String(request.getParameter("WIDtotal_amount"));
         //订单名称，必填
@@ -158,7 +164,7 @@ public class OrdersServiceImpl implements OrdersService {
             order.setAddress_shipping(request.getParameter("address_shipping")); //收货地址
             order.setOrder_expressNumber(RandonNumberUtils.getOrderIdByUUId());  //快递单号
             order.setOrder_freight(0);  //运费
-            order.setOrder_number(RandonNumberUtils.getOrderIdByUUId());  //订单编号
+            order.setOrder_number(orderNumber);  //订单编号
             Date data = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
             order.setOrder_purchaseTime(data); //下单时间
@@ -351,6 +357,7 @@ public class OrdersServiceImpl implements OrdersService {
         //设置请求参数
         AlipayTradeRefundRequest alipayRequest = new AlipayTradeRefundRequest();
         //商户订单号，商户网站订单系统中唯一订单号
+        System.out.println(orders.getOrder_number());
         String out_trade_no = new String(orders.getOrder_number());
         //需要退款的金额，该金额不能大于订单金额，必填
         String refund_amount = new String(String.valueOf(orders.getProduct_PaidPrice()));
