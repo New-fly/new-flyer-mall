@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="filter-group-list">
-            <div class="list-left">价格区间(死数据)</div>
+            <div class="list-left">价格区间</div>
             <div class="list-right">
                 <a th:href="@{/ProductListController/findByPrice(product_mallPrice='1000')}">1000元以下</a>
                 <a th:href="@{/ProductListController/findByPrice(product_mallPrice='1000,2000')}">1000-2000</a>
@@ -127,7 +127,7 @@
                 <li><a th:href="@{/ProductListController/findByPrice(page=${Number+1},product_mallPrice=${product_mallPrice})}">下一页</a></li><!--//请求页数+1-->
             </ul>
 
-            <ul class="pagination" th:if="${Number > 1} and ${Number > 1}"><!--//显示上一页-->
+            <ul class="pagination" th:if="${Number > 1} and ${TotalPages > 1}"><!--//显示上一页-->
                 <li><a th:href="@{/ProductListController/findByPrice(page=1,product_mallPrice=${product_mallPrice})}">首页</a></li><!--//跳转至第一页-->
                 <li><a th:href="@{/ProductListController/findByPrice(page=${Number-1},product_mallPrice=${product_mallPrice})}">上一页</a></li><!--//请求页数-1-->
                 <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">

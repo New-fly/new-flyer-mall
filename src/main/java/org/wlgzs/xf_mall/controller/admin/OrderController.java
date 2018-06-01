@@ -90,13 +90,6 @@ public class OrderController {
         ordersService.deleteOrders(orderId);
         return new ModelAndView("redirect:/OrderController/allProductOrdersLists");
     }
-    //根据用户名查询订单
-    @RequestMapping("/findUserOrder")
-    public ModelAndView UserOrders(Model model,String user_name){
-        List<Orders> orders = ordersService.findOrdersByUserName(user_name);
-        model.addAttribute("orders",orders);
-        return new ModelAndView("userOrdersList");
-    }
 
     //订单详情
     @RequestMapping("/orderDetails")
@@ -119,9 +112,10 @@ public class OrderController {
         Page<Orders> pages = ordersService.adminSearchOrder(order_word,page,limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
+        model.addAttribute("order_word",order_word);
         List<Orders> orders = pages.getContent();
         model.addAttribute("orders",orders);
-        return new ModelAndView("userOrdersList");
+        return new ModelAndView("admin/adminOrdersList");
     }
 
 

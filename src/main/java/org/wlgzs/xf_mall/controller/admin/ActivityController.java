@@ -112,6 +112,7 @@ public class ActivityController extends BaseController {
                                             @RequestParam(value = "limit", defaultValue = "8") int limit) {
         String activity_name = "";
         if (page != 0) page--;
+        System.out.println("进入");
         Page activityPages = productActivityService.activityProductList(activity_name, page, limit);
         model.addAttribute("TotalPages", activityPages.getTotalPages());//查询的页数
         model.addAttribute("Number", activityPages.getNumber() + 1);//查询的当前第几页
@@ -153,7 +154,7 @@ public class ActivityController extends BaseController {
      *@Description:将商品批量添加到活动
      */
     @RequestMapping("/adminAddActivitys")
-    public ModelAndView adminAddActivitys(@RequestParam(value = "productId",defaultValue = "439,449") String productIds,HttpServletRequest request){
+    public ModelAndView adminAddActivitys(@RequestParam(value = "productId",defaultValue = "494,495") String productIds,HttpServletRequest request){
         productActivityService.adminAddActivitys(productIds,request);
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
     }
@@ -218,14 +219,14 @@ public class ActivityController extends BaseController {
      */
     @RequestMapping("/adminFindActivityProduct")
     public ModelAndView adminFindActivityProduct(Model model, String product_keywords, @RequestParam(value = "page", defaultValue = "0") int page,
-                                                 @RequestParam(value = "limit", defaultValue = "10") int limit) {
+                                                 @RequestParam(value = "limit", defaultValue = "8") int limit) {
         if (page != 0) page--;
         Page activityPages = productActivityService.activityProductList(product_keywords, page, limit);
-        model.addAttribute("ActivityTotalPages", activityPages.getTotalPages());//查询的页数
-        model.addAttribute("ActivityNumber", activityPages.getNumber() + 1);//查询的当前第几页
+        model.addAttribute("TotalPages", activityPages.getTotalPages());//查询的页数
+        model.addAttribute("Number", activityPages.getNumber() + 1);//查询的当前第几页
         model.addAttribute("activities", activityPages.getContent());//查询的当前页的集合
         model.addAttribute("product_keywords", product_keywords);
-        return new ModelAndView("admin/adminActivityList");
+        return new ModelAndView("admin/adminFindActivityList");
     }
 
 }
