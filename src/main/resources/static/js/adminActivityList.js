@@ -27,7 +27,7 @@ window.onload=function(){
     document.getElementsByClassName("delet")[0].onclick=function(){
         var allid=document.getElementsByClassName("ids")[0].value;
         $.ajax({
-            url: "/aaaaaaaaaa/aaaaaaaaaaaaaa",
+            url: "/AdminActivityController/adminDeleteActivitys",
             data: {
                 "activityId":allid,
             },
