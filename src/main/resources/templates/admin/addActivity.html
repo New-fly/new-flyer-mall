@@ -25,7 +25,7 @@
             <table class="table table-hover table-bordered">
                 <tr>
                     <th>活动名称</th>
-                    <td><input type="text" name="activity_name" class="form-control" id="activity_name" /></td>
+                    <td><input type="text" name="activity_name" class="form-control" id="activity_name" required="required"/></td>
                 </tr>
                 <tr>
                     <th>活动折扣</th>
@@ -40,7 +40,7 @@
                 <tr>
                     <th>活动图片</th>
                     <td>
-                        <input type="file" name="file" id="file"/>
+                        <input type="file" name="file" id="file" required="required"/>
                     </td>
                 </tr>
                 <tr>
@@ -48,7 +48,7 @@
                     <td>
                         <label class="jelabel">年月日时分秒选择</label>
                         <div class="jeinpbox">
-                            <input type="text" name="activity_time" class="jeinput" id="test04" placeholder="YYYY-MM-DD hh:mm:ss">
+                            <input type="text" name="activity_time" class="jeinput" id="test04" placeholder="YYYY-MM-DD hh:mm:ss" required="required">
                         </div>
                     </td>
                 </tr>
@@ -66,27 +66,27 @@
     </div>
 </div>
 <script type="text/javascript" th:src="@{/test/demo.js}"></script>
-<script type="text/javascript">
-    var activity_name=document.getElementById('activity_name');
-    var file=document.getElementById('file');
-    var activity_time=document.getElementsByName('activity_time')[0];
-    var add=document.getElementById('add');
-    add.onclick=function () {
-        if(activity_name.value==null||activity_name.value==""){
-            alert("请输入活动名称");
-            return false;
-        }
-        if(file.value==null||file.value==""){
-            alert("请上传文件");
-            return false;
-        }
-        if(activity_time.value==null||activity_time.value==""){
-            alert("请选择时间");
-            return false;
-        }else{
-            return true;
-        }
-    }
-</script>
+<!--<script type="text/javascript">-->
+    <!--var activity_name=document.getElementById('activity_name');-->
+    <!--var file=document.getElementById('file');-->
+    <!--var activity_time=document.getElementsByName('activity_time')[0];-->
+    <!--var add=document.getElementById('add');-->
+    <!--add.onclick=function () {-->
+        <!--if(activity_name.value==null||activity_name.value==""){-->
+            <!--alert("请输入活动名称");-->
+            <!--return false;-->
+        <!--}-->
+        <!--if(file.value==null||file.value==""){-->
+            <!--alert("请上传文件");-->
+            <!--return false;-->
+        <!--}-->
+        <!--if(activity_time.value==null||activity_time.value==""){-->
+            <!--alert("请选择时间");-->
+            <!--return false;-->
+        <!--}else{-->
+            <!--return true;-->
+        <!--}-->
+    <!--}-->
+<!--</script>-->
 </body>
 </html>
