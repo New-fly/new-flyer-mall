@@ -15,8 +15,8 @@
 <div class="contentbox">
 <div class="header">
 	<form th:action="@{/AdminProductController/findProductCategory}" method="post">
-		<input type="text" name="category_name" placeholder="商品名称" th:value="*{category_name}" class="ipt">
-		<input type="submit" value="搜索" class="btn">
+		<input type="text" name="category_name" placeholder="商品类别" th:value="*{category_name}" class="ipt">
+		<input type="submit" value="搜索分类" class="btn">
 		<a th:href="@{/AdminProductController/toAddProductCategoryTwo}" class="a-div adiv1" style="width: 136px;">添加二级分类配件</a>
 		<a th:href="@{/AdminProductController/toAddProductCategory}" class="a-div adiv1" style="width: 136px;">添加二级分类</a>
 		<a th:href="@{/AdminProductController/toAddProductOneCategory}" class="a-div adiv1" style="width: 136px;">添加一级分类</a>

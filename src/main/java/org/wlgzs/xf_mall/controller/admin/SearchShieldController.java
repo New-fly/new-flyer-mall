@@ -74,7 +74,7 @@ public class SearchShieldController {
      * @return
      * @author 胡亚星
      * @date 2018/4/20 19:50
-     * @Description:后台搜索敏感词汇
+     * @Description: 后台搜索敏感词汇
      */
     @RequestMapping("/findProductSensitive")
     public String findSearchShield(Model model,String search_keywords, @RequestParam(value = "page", defaultValue = "0") int page,

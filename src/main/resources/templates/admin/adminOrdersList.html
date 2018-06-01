@@ -12,9 +12,9 @@
 <body>
 <div class="contentbox">
 <div class="header">
-    <form th:action="@{/OrderController/userFindOrder}" method="post">
-        <input type="text" name="order_number" placeholder="请输入订单号" th:value="*{order_number}" class="ipt">
-        <input type="submit" value="搜索" class="btn">
+    <form th:action="@{/OrderController/findOrders}" method="post">
+        <input type="text" name="order_word" placeholder="请输入订单号,收货人,商品" th:value="*{order_word}" class="ipt">
+        <input type="submit" value="搜索订单" class="btn">
     </form>
 </div>
 <div class="mytable">

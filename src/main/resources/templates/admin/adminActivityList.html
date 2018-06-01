@@ -13,8 +13,8 @@
 <div class="contentbox">
 <div class="header">
     <form th:action="@{/AdminActivityController/adminFindActivityProduct}" method="post">
-        <input type="text" name="product_keywords" placeholder="商品名称" th:value="*{product_keywords}" class="ipt">
-        <input type="submit" value="搜索" class="btn">
+        <input type="text" name="product_keywords" placeholder="商品名称，活动名称" th:value="*{product_keywords}" class="ipt">
+        <input type="submit" value="搜索活动商品" class="btn">
     </form>
 </div>
 <div class="mytable">

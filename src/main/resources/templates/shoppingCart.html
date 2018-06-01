@@ -18,8 +18,11 @@
     <div class="title">
         <img th:src="@{/images/logo.png}" th:href="@{/HomeController/homeProduct}" height="100%" style="float: left;"/>
         <div class="ipt">
-            <input class="ipt-1"/>
-            <div class="ipt-2">搜索</div>
+            <form th:action="@{/ProductListController/searchProductList}" method="post">
+                <span class=""><input type="text" name="product_category" th:value="*{product_category}" class="ipt-1"
+                                      placeholder="请输入要搜索的内容"></span>
+                <input type="submit" value="搜索" class="ipt-2">
+            </form>
         </div>
     </div>
     <form th:action="@{/aliPay/toPay}">
