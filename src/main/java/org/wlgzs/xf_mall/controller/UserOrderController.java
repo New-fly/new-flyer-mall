@@ -11,7 +11,10 @@ import org.wlgzs.xf_mall.entity.Orders;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author:胡亚星
@@ -38,6 +41,24 @@ public class UserOrderController extends BaseController {
     @RequestMapping("/userOrderList")
     public ModelAndView userOrderList(Model model,long userId){
         List<Orders> orders = ordersService.userOrderList(userId);
+
+        String [] orderTwo = new String[100];
+        for (int i = 0; i < orderTwo.length; i++) {
+            orderTwo[i] = "批量购买"+i;
+        }
+        Map<String, List> map = new HashMap<String, List>();
+        for (int i = 0; i < orders.size(); i++) {
+            for (Orders order : orders) {
+                if (orders.get(i).getOrder_number() == order.getOrder_number()) {
+                    List<Orders> ordersList = new ArrayList<>();
+                    ordersList.add(orders.get(i));
+                    ordersList.add(order);
+                    map.put(orderTwo[i], ordersList);
+                }
+            }
+        }
+        map.get(orderTwo[0]);
+
         model.addAttribute("orders",orders);
         List<Orders> unacceptedOrder = ordersService.userUnacceptedOrder(userId);
         model.addAttribute("unacceptedOrder",unacceptedOrder);

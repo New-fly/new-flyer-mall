@@ -589,7 +589,7 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> recommendedByUserId(long userId, HttpServletRequest request) throws IOException {
         //通过用户id查询最新足迹商品
         List<Footprint> footprints = footprintRepository.recommendedByUserId(userId);
-        System.out.println(footprints);
+        //System.out.println(footprints);
         List<Product> products = new ArrayList<Product>();
         if (footprints != null && footprints.size() != 0) {
 
@@ -644,11 +644,11 @@ public class ProductServiceImpl implements ProductService {
             PageUtilTwo pageUtilTwo = new PageUtilTwo();
             Specification<Product> specification = pageUtilTwo.getPage(product_category);
             products = productRepository.findAll(specification, sort);
-            System.out.println(products.size());
+            //System.out.println(products.size());
 
             //查询用户的订单
             List<Orders> orders = ordersRepository.userOrderList(userId);
-            System.out.println(orders);
+            //System.out.println(orders);
             if (orders != null && orders.size() != 0) {
                 Date data = new Date();
                 //将近半年的订单放在一个集合中

@@ -34,7 +34,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @Auther: 阿杰
@@ -60,12 +62,6 @@ public class OrdersServiceImpl implements OrdersService {
         Pageable pageable = new PageRequest(page, limit, sort);
         Specification<Orders> specification = new PageUtil<Orders>(order_number).getPage("order_number");
         Page pages = ordersRepository.findAll(specification, pageable);
-
-        Map<String, List> map1 = new HashMap<String, List>();
-        map1.put("jack", pages.getContent());
-        String ja = "jack";
-        map1.get(ja);
-
         return pages;
     }
 
