@@ -86,7 +86,7 @@
 .baby{
     width: 1000px;
     margin: 0 auto;
-    height: 500px;
+    height: auto;
     overflow: hidden;
 }
 .showall{
