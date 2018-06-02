@@ -41,39 +41,60 @@ body{
 		color: #336699;
 }
 .title{
-	width: 1000px;
+	width: 1100px;
 	height: 80px;
 	padding: 20px;
 	margin: 0 auto;
-}
-.title>img{
-	width: 300px;
 }
 .ipt{
 	width: 500px;
 	height: 57px;
 	padding: 23px;
 	padding-bottom: 0;
-	float: right;
+	float: left;
 	margin-left: 80px;
 }
 .ipt-1{
 	width: 400px;
 	height: 28px;
-    text-align: left!important;
 	padding: 0 0 0 10px;
 	border: solid 3px #CC0510;
+	text-align: left;
 }
 .ipt-2{
-	width: 84px;
+	width: 90px;
 	height: 34px;
-	float: right;
+	position: absolute;
+	right: 0;
+	top:0;
 	background-color: #CC0510;
-	line-height: 34px;
+	line-height: 32px;
 	cursor:pointer;
 	text-align: center;
+	border: 0;
 	letter-spacing: 10px;
 	color: white;
+}
+.ipt-3{
+	width: 500px;
+	height: 23px;
+	margin: 0;
+	padding-left: 0;
+}
+.ipt-3>li{
+	float: left;
+	margin: 0 12px;
+	margin-top: 5px;
+	list-style-type: none;
+	font-size: 13px;
+}
+.ipt-3>li>a{
+	color:#CC0510 ;
+	text-decoration: none;
+	letter-spacing: 2px;
+}
+.ipt-3>li>a:hover{
+	color:#336699;
 }
 .all{
 	width: 1000px;

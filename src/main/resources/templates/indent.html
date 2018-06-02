@@ -10,21 +10,24 @@
     <title>新飞官方网上商城</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/indent.css}">
     <script type="text/javascript" th:src="@{/js/indent.js}"></script>
-    <style>
-        .ipt {
-            border: 0;
-            outline: none;
-            width: auto;
-            background-color: #fff;
+    <script>
+        function pay() {
+            var name=document.getElementsByClassName("namelength")[0].value;
+            if(name.length>0){
+                return true;
+            }else {
+                alert("请选择收货地址");
+                return false;
+            }
         }
-    </style>
+    </script>
 </head>
 <body>
 <div th:include="common/top_header :: copy"></div>
 <div class="title">
     <img th:href="@{/HomeController/homeProduct}" th:src="@{/images/logo.png}" height="100%" style="float: left;"/>
 </div>
-<form th:action="@{/aliPay/aliPaySum}" method="post">
+<form th:action="@{/aliPay/aliPaySum}" method="post" onsubmit="return pay()">
     <div class="text">选择收货地址</div>
     <div class="address">
         <div class="shoppingaddress" th:each="shippingAddress : ${shippingAddressList}">
@@ -40,7 +43,7 @@
     <div class="manage">
         <span id="all" style="float: left;">查看所有收货地址</span>
         <a th:href="@{/UserAddressController/shippingAddress(user_name=${session.user.user_name})}">
-            <span style="float: right;color: black">管理收货地址</span>
+            <span style="float: right;color: black" class="changee">管理收货地址</span>
         </a>
     </div>
     <div class="text" style="margin-top: 30px;">确认订单信息</div>
@@ -97,7 +100,7 @@
         </div>
     </div>
     <div class="pay">
-        <div class="pay-block">
+        <div class="pay-block" th:each="shippingAddress : ${shippingAddressList}" th:if="${shippingAddress.address_is_default==1}">
                 <span style="float: left">
                     <span class="font"><b>总金额：</b></span><span style="color: red;font-size: 25px;">￥</span>
                     <input class="money total_amount" name="WIDtotal_amount" id="top" type="text" readonly
@@ -113,13 +116,13 @@
             <div>
                 <span class="font">
                     <b>寄送至：</b>
-                    <input type="text" name="address_shipping" readonly class="addressshipping">
+                    <input type="text" name="address_shipping" readonly class="addressshipping" th:value="${shippingAddress.address_shipping}">
                 </span>
                 <br/>
                 <span class="font">
                     <b>收货人:</b>
-                    <input type="text" name="address_name" class="addressname" readonly>
-                    <input type="text" name="address_phone" readonly class="addressphone">
+                    <input type="text" name="address_name" class="addressname namelength" readonly th:value="${shippingAddress.address_name}">
+                    <input type="text" name="address_phone" readonly class="addressphone" th:value="${shippingAddress.address_phone}">
                 </span>
             </div>
         </div>
