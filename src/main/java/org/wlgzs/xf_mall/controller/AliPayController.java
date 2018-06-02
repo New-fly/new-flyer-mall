@@ -50,7 +50,8 @@ public class AliPayController extends BaseController {
         model.addAttribute("shoppingCount",0);
         if(user_name == null){
             HttpSession session = request.getSession(true);
-            user_name = (String) session.getAttribute("name");
+            User user = (User) session.getAttribute("user");
+            user_name = user.getUser_name();
         }
         List<ShippingAddress> shippingAddressList = shippingAddressService.getShippingAddressList(user_name);
         model.addAttribute("shippingAddressList", shippingAddressList);
@@ -73,7 +74,8 @@ public class AliPayController extends BaseController {
         model.addAttribute("shoppingCount",shoppingCart_count);
         if(user_name == null){
             HttpSession session = request.getSession(true);
-            user_name = (String) session.getAttribute("name");
+            User user = (User) session.getAttribute("user");
+            user_name = user.getUser_name();
         }
         if(shoppingCarts.get(0).getProduct_activity() != "无"){
             Activity activity = activityService.findByActivityName(shoppingCarts.get(0).getProduct_activity());
@@ -123,7 +125,8 @@ public class AliPayController extends BaseController {
         model.addAttribute("shoppingCount",shoppingCart_count);
         if(user_name == null){
             HttpSession session = request.getSession(true);
-            user_name = (String) session.getAttribute("name");
+            User user = (User) session.getAttribute("user");
+            user_name = user.getUser_name();
         }
         List<ShippingAddress> shippingAddressList = shippingAddressService.getShippingAddressList(user_name);
         model.addAttribute("shippingAddressList", shippingAddressList);
