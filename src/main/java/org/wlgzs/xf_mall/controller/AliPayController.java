@@ -166,6 +166,8 @@ public class AliPayController extends BaseController {
     @RequestMapping("refund")
     public ModelAndView refund(long orderId, HttpServletResponse response,HttpSession session) throws AlipayApiException, IOException {
         ordersService.refund(orderId,response,session);
-        return new ModelAndView("aliPayRefund");
+        User user = (User) session.getAttribute("user");
+        long userId = user.getUserId();
+        return new ModelAndView("redirect:/UserOrderController/userOrderList?userId="+userId);
     }
 }

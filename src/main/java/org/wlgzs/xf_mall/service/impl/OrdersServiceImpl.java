@@ -377,7 +377,7 @@ public class OrdersServiceImpl implements OrdersService {
             System.out.println("返回用户积分");
             userRepository.save(user);
             //积分表
-            UserIntegral userIntegral = userIntegralRepository.findByUserIdAndProductId(userId,ordersList.get(0).getOrder_purchaseTime());
+            UserIntegral userIntegral = userIntegralRepository.findByUserIdAndProductId(userId,ordersList.get(0).getOrder_purchaseTime(),ordersList.get(0).getProduct_keywords());
             if(userIntegral!=null){
                 System.out.println("删除积分记录");
                 userIntegralRepository.deleteById(userIntegral.getUserIntegralId());
@@ -402,6 +402,7 @@ public class OrdersServiceImpl implements OrdersService {
                 + "\"out_request_no\":\""+ out_request_no +"\"}");
         //请求
         String result = alipayClient.execute(alipayRequest).getBody();
+        System.out.println(result);
         //输出
         out.println(result);
     }
