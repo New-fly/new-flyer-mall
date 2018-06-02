@@ -667,6 +667,7 @@ public class ProductServiceImpl implements ProductService {
                         orderProductId[i] = ordersList.get(i).getProductId();
                     }
                 }
+                //将订单中存在的商品去除
                 Iterator<Product> it = products.iterator(); // 迭代器,对集合ArrayList中的元素进行取出
                 for (long anOrderProductId : orderProductId) {
                     while (it.hasNext()) { // 调用方法hasNext()判断集合中是否有元素

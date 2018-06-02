@@ -34,9 +34,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @Auther: 阿杰
@@ -151,7 +149,7 @@ public class OrdersServiceImpl implements OrdersService {
         for (int i = 0; i < Ids.length; i++) {
             Product product = productRepository.findById(Ids[i]);
             //商品表
-            product.setProduct_inventory(product.getProduct_inventory() - 1);
+            product.setProduct_inventory((int) (product.getProduct_inventory() - shoppingCounts[i]));
             productRepository.save(product);
             //订单表
             Orders order = new Orders();
@@ -184,6 +182,7 @@ public class OrdersServiceImpl implements OrdersService {
             order.setProduct_needPoints(product.getProduct_needPoints()); //购买此商品需要多少积分
             order.setUser_name(user.getUser_name()); //用户名
             ordersRepository.save(order);
+            //用户积分
             user.setUserIntegral(user.getUserIntegral() + product.getProduct_getPoints());
             userRepository.save(user);
             //积分表
@@ -344,8 +343,40 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public void refund(long orderId, HttpServletResponse response) throws IOException, AlipayApiException {
+    public void refund(long orderId, HttpServletResponse response,HttpSession session) throws IOException, AlipayApiException {
+        User user = (User) session.getAttribute("user");
+        long userId = user.getUserId();
         Orders orders = ordersRepository.findById(orderId);
+        List<Orders> ordersList = ordersRepository.findByNumber(orders.getOrder_number());
+        int money = 0;
+        long[] Ids = new long[ordersList.size()];
+        long[] shoppingCounts = new long[ordersList.size()];
+        for (int i = 0; i < ordersList.size(); i++) {
+            money += ordersList.get(i).getProduct_PaidPrice();
+            Ids[i] = ordersList.get(i).getProductId();
+            shoppingCounts[i] = ordersList.get(i).getOrder_quantity();
+            System.out.println("修改订单状态");
+            ordersList.get(i).setOrder_status("已退款");
+        }
+        //ordersRepository.saveAll(ordersList);
+        for (int i = 0; i < Ids.length; i++) {
+            Product product = productRepository.findById(Ids[i]);
+            //商品表
+            product.setProduct_inventory((int) (product.getProduct_inventory() + shoppingCounts[i]));
+            System.out.println("返回商品库存");
+            productRepository.save(product);
+            //用户积分
+            user.setUserIntegral (user.getUserIntegral() + product.getProduct_getPoints());
+            System.out.println("返回用户积分");
+            userRepository.save(user);
+            //积分表
+            UserIntegral userIntegral = userIntegralRepository.findByUserIdAndProductId(userId,product.getProduct_keywords());
+            if(userIntegral!=null){
+                System.out.println("删除积分记录");
+                userIntegralRepository.deleteById(userIntegral.getUserIntegralId());
+            }
+        }
+
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
         //获得初始化的AlipayClient
@@ -356,17 +387,62 @@ public class OrdersServiceImpl implements OrdersService {
         System.out.println(orders.getOrder_number());
         String out_trade_no = new String(orders.getOrder_number());
         //需要退款的金额，该金额不能大于订单金额，必填
-        String refund_amount = new String(String.valueOf(orders.getProduct_PaidPrice()));
+        String refund_amount = new String(String.valueOf(money));
         //标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传
         String out_request_no = new String(UUID.randomUUID().toString());
 
         alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\","
                 + "\"refund_amount\":\""+ refund_amount +"\","
                 + "\"out_request_no\":\""+ out_request_no +"\"}");
-
         //请求
         String result = alipayClient.execute(alipayRequest).getBody();
         //输出
         out.println(result);
+    }
+
+    @Override
+    public Map<String, List> userOrder(long userId) {
+        List<Orders> orders = ordersRepository.userOrderList(userId);
+        //System.out.println("订单数："+orders.size());
+        String [] orderTwo = new String[100];
+        for (int i = 0; i < orderTwo.length; i++) {
+            orderTwo[i] = "批量购买"+i;
+        }
+        Map<String, List> map = new HashMap<String, List>();
+        int m = 0;
+        List<Orders> ordersTwo = new ArrayList<>();
+        for (int i = 0; i < orders.size(); i++) {
+            /*for (int j = 0; j < ordersTwo.size(); j++) {
+                System.out.println("集合中已经存的订单"+ordersTwo.get(i));
+            }*/
+            if (!ordersTwo.contains(orders.get(i))) {
+                //System.out.println("不存在的订单："+orders.get(i));
+                int n = 0;
+                List<Orders> ordersList = new ArrayList<>();
+                for (int j = i + 1; j < orders.size(); j++) {
+                    if (orders.get(i).getOrder_number().equals(orders.get(j).getOrder_number())) {
+                        System.out.println("j---第"+j+"次循环");
+                        if (n == 0) {
+                            ordersList.add(orders.get(i));
+                            ordersTwo.add(orders.get(i));
+                        }
+                        ordersList.add(orders.get(j));
+                        ordersTwo.add(orders.get(j));
+                        n++;
+                    }
+                }
+                if(n==0){
+                    System.out.println("iTwo---第"+i+"次循环");
+                    ordersList.add(orders.get(i));
+                }
+                System.out.println("第" + i + "次循环，订单集合：" + ordersList);
+                if (ordersList.size() != 0) {
+                    m++;
+                    //System.out.println("m的值:" + m);
+                    map.put(orderTwo[m], ordersList);
+                }
+            }
+        }
+        return map;
     }
 }

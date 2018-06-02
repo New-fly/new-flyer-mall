@@ -57,4 +57,6 @@ public interface OrdersRepository extends JpaRepository<Orders, Long>,JpaSpecifi
     @Query("DELETE FROM Orders o WHERE o.orderId in :Ids")
     void deleteByIds(@Param(value = "Ids") long [] Ids);
 
+    @Query(value = "SELECT * FROM orders WHERE order_number = ?",nativeQuery = true)
+    List<Orders> findByNumber(@Param("order_number") String order_number);
 }
