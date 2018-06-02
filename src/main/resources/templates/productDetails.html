@@ -102,7 +102,9 @@
         <div class="berelated-goods-long">
             <div th:each="recommend : ${recommendedProducts}">
                 <img th:src="${recommend.product_picture}"/>
-                <div class="keywor" th:text="${recommend.product_keywords}"></div>
+                <a th:href="@{/ProductListController/toProduct(productId=${recommend.productId})}">
+                    <div class="keywor" th:text="${recommend.product_keywords}"></div>
+                </a>
                 <div th:text="'单价：￥'+${recommend.product_mallPrice}" class="monony"></div>
             </div>
         </div>
@@ -160,7 +162,7 @@
     <h1 class="h1sty">猜你喜欢</h1>
     <div class="recommendedProduct" th:each="recommendedProducts:${recommendedProducts}">
         <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">
-            <img th:src="${recommendedProducts.product_picture}" style="height: 170px;width: 170px;"/>
+            <img th:src="${recommendedProducts.product_picture}" style="height: 170px;width:100%;"/>
         </a>
         <a href="#" class="asty" th:text="${recommendedProducts.product_mallPrice}">199元</a><s th:text="${recommendedProducts.product_counterPrice}">599元</s><br>
         <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">
