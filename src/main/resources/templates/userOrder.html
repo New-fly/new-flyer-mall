@@ -100,7 +100,7 @@
                                        th:text="${maps.get(orderNumbers.get(i)).get(0).order_status}" class="btn"
                                        style="background:#FF6700;color:#fff;"></a>
                                     <a th:if="${maps.get(orderNumbers.get(i)).get(0).order_status != '待收货'}"
-                                       th:text="已收货" class="btn"
+                                       th:text="${maps.get(orderNumbers.get(i)).get(0).order_status}" class="btn"
                                        style="background:#FF6700;color:#fff;"></a>
                                 </div>
                                 <div class="rightopcate"><a

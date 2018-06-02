@@ -37,7 +37,7 @@ public interface OrdersRepository extends JpaRepository<Orders, Long>,JpaSpecifi
     List<Orders> findByUserName(@Param("user_name") String user_name);
 
     //用户遍历订单
-    @Query(value = "SELECT * FROM orders WHERE user_id = ?",nativeQuery = true)
+    @Query(value = "SELECT * FROM orders WHERE user_id = ? order by order_id desc",nativeQuery = true)
     List<Orders> userOrderList(@Param("userId") long userId);
 
     @Query(value = "SELECT * FROM orders WHERE user_id = ? and order_status = '待收货'",nativeQuery = true)
@@ -60,7 +60,7 @@ public interface OrdersRepository extends JpaRepository<Orders, Long>,JpaSpecifi
     @Query(value = "SELECT * FROM orders WHERE order_number = ?",nativeQuery = true)
     List<Orders> findByNumber(@Param("order_number") String order_number);
 
-    @Query(value = "select distinct order_number from orders where user_id=?",nativeQuery = true)
+    @Query(value = "select distinct order_number from orders where user_id=? order by order_id desc",nativeQuery = true)
     List<String> findOrderNumbers(@Param("userId") long userId);
 
     @Query(value = "select distinct product_paid_price from orders where user_id=?",nativeQuery = true)

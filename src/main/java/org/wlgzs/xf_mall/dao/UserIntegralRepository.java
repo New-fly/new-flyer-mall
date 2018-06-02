@@ -30,6 +30,6 @@ public interface UserIntegralRepository extends JpaRepository<UserIntegral,Long>
     List<UserIntegral>  findByExpend(@Param("user_id") long userId);
 
     //查询一条积分记录
-    @Query(value = "SELECT * FROM user_integral WHERE user_id = ? and order_purchase_time = ?",nativeQuery = true)
-    UserIntegral findByUserIdAndProductId(@Param("user_id") long userId,@Param("order_purchase_time") Date order_purchase_time);
+    @Query(value = "SELECT * FROM user_integral WHERE user_id = ? and order_purchase_time = ? and product_keyword = ?",nativeQuery = true)
+    UserIntegral findByUserIdAndProductId(@Param("user_id") long userId,@Param("order_purchase_time") Date order_purchase_time,@Param("product_keyword") String product_keyword);
 }
