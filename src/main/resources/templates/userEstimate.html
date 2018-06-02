@@ -21,17 +21,17 @@
         <div>
             <dl>
                 <dt>全部功能</dt>
-                <dd><a th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}" target="_self">购物车</a>
+                <dd><a th:href="@{/ProductListController/shoppingCart(userId=${session.userId})}" target="_self">购物车</a>
                 </dd>
-                <dd><a th:href="@{/UserOrderController/userOrderList(userId=${session.user.userId})}" target="_self">我的淘宝</a>
+                <dd><a th:href="@{/UserOrderController/userOrderList(userId=${session.userId})}" target="_self">我的淘宝</a>
                 </dd>
-                <dd><a th:href="@{/FootprintController/userFootprint(userId=${session.user.userId})}" target="_self">我的足迹</a>
+                <dd><a th:href="@{/FootprintController/userFootprint(userId=${session.userId})}" target="_self">我的足迹</a>
                 </dd>
-                <dd><a th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}"
+                <dd><a th:href="@{/ProductListController/collectionProduct(userId=${session.userId})}"
                        target="_self">我的收藏</a></dd>
-                <dd><a th:href="@{/IntegralController/integralList(userId=${session.user.userId})}"
+                <dd><a th:href="@{/IntegralController/integralList(userId=${session.userId})}"
                        target="_self">我的积分</a></dd>
-                <dd><a th:href="@{/EstimateController/userEstimate(userId=${session.user.userId})}"
+                <dd><a th:href="@{/EstimateController/userEstimate(userId=${session.userId})}"
                        target="_self">我的评价</a></dd>
                 <dd><a th:href="@{/ProductListController/integralProduct}" target="_self">积分兑换</a></dd>
             </dl>

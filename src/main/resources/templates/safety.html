@@ -20,8 +20,8 @@
         <a href="#"><img th:src="${user.user_avatar}" class="headphoto"></a>
         <div>
             <dl>
-                <dd><a th:href="@{/UserManagementController/toSafety(userId=${session.user.userId})}" target="_self">安全设置</a></dd>
-                <dd><a th:href="@{/UserManagementController/information(userId=${session.user.userId})}" target="_self">个人资料</a></dd>
+                <dd><a th:href="@{/UserManagementController/toSafety(userId=${session.userId})}" target="_self">安全设置</a></dd>
+                <dd><a th:href="@{/UserManagementController/information(userId=${session.userId})}" target="_self">个人资料</a></dd>
                 <dd><a th:href="@{/UserAddressController/shippingAddress(user_name=${user.user_name})}" target="_self">收货地址</a></dd>
 
             </dl>

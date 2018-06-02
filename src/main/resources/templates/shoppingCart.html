@@ -92,10 +92,10 @@
                 <input class="yanse" th:value="${product.product_specification}" readonly style="background-color: #FCFCFC;border: 0"/>
             </div>
             <div class="single-text-a">
-                <form th:action="@{/ProductListController/moveToCollectionProduct(productId=*{product.productId},shoppingCartId=*{product.shoppingCartId},userId=${session.user.userId})}" method="post">
+                <form th:action="@{/ProductListController/moveToCollectionProduct(productId=*{product.productId},shoppingCartId=*{product.shoppingCartId},userId=${session.userId})}" method="post">
                     <input style="height: 24px;border: 0;background-color: #FCFCFC" value="移入收藏夹" type="submit" class="qwe yanse">
                 </form>
-                <form th:action="@{/ProductListController/deleteShoppingProduct(shoppingCartId=*{product.shoppingCartId},userId=${session.user.userId})}"
+                <form th:action="@{/ProductListController/deleteShoppingProduct(shoppingCartId=*{product.shoppingCartId},userId=${session.userId})}"
                       method="post">
                     <input style="height: 24px;border: 0;background-color: #FCFCFC" value="删除" type="submit" class="qwe yanse">
                 </form>

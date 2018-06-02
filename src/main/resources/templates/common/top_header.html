@@ -19,7 +19,7 @@
 			<div class="top-right">
 				<ul>
 					<li th:if="${session.user != null }">
-						<a th:href="@{/UserOrderController/userOrderList(userId=${session.user.userId})}">
+						<a th:href="@{/UserOrderController/userOrderList(userId=${session.userId})}">
 							<i class="fa fa-bars" style="color: #336699"></i>
 							&nbsp;&nbsp;我的新飞</a>
 					</li>
@@ -29,7 +29,7 @@
 							&nbsp;&nbsp;我的新飞</a>
 					</li>
 					<li th:if="${session.user != null }">
-						<a th:href="@{/ProductListController/shoppingCart(userId=${session.user.userId})}">
+						<a th:href="@{/ProductListController/shoppingCart(userId=${session.userId})}">
 	                    <i class="fa fa-cart-arrow-down" style="color: #336699"></i>
 	                    &nbsp;&nbsp;购物车</a>
 	                </li>
@@ -39,7 +39,7 @@
 							&nbsp;&nbsp;购物车</a>
 					</li>
 					<li th:if="${session.user != null }">
-						<a th:href="@{/ProductListController/collectionProduct(userId=${session.user.userId})}">
+						<a th:href="@{/ProductListController/collectionProduct(userId=${session.userId})}">
 	                    <i class="fa fa-star-o"></i>&nbsp;&nbsp;我的收藏</a>
 					</li>
 					<li th:if="${session.user == null }">
@@ -47,7 +47,7 @@
 							<i class="fa fa-star-o"></i>&nbsp;&nbsp;我的收藏</a>
 					</li>
 	                <li th:if="${session.user != null }">
-	                    <a th:href="@{/IntegralController/integralList(userId=${session.user.userId})}">
+	                    <a th:href="@{/IntegralController/integralList(userId=${session.userId})}">
 	                        <i class="fa fa-television"></i>&nbsp;&nbsp;我的积分</a>
 	                </li>
 	                <li th:if="${session.user == null }">
@@ -63,7 +63,7 @@
 							<i class="fa fa-retweet"></i>&nbsp;&nbsp;积分兑换</a>
 					</li>
 	                <li th:if="${session.user != null }">
-	                    <a th:href="@{/FootprintController/userFootprint(userId=${session.user.userId})}">
+	                    <a th:href="@{/FootprintController/userFootprint(userId=${session.userId})}">
 	                        <i class="fa fa-paw"></i>&nbsp;&nbsp;我的足迹</a>
 	                </li>
 	                <li th:if="${session.user == null }">
@@ -71,8 +71,8 @@
 	                        <i class="fa fa-paw"></i>&nbsp;&nbsp;我的足迹</a>
 	                </li>
 	                <li th:if="${session.user != null }">
-	                    <a th:href="@{/UserManagementController/information(userId=${session.user.userId})}">
-	                        <i class="fa fa-tags"></i>&nbsp;&nbsp;账号管理</a>
+	                    <a th:href="@{/UserManagementController/information(userId=${session.userId})}">
+						<i class="fa fa-tags"></i>&nbsp;&nbsp;账号管理</a>
 	                </li>
 	                <li th:if="${session.user == null }">
 	                    <a th:href="@{/toLogin}">
