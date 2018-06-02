@@ -27,7 +27,6 @@
 <div class="title">
     <img th:href="@{/HomeController/homeProduct}" th:src="@{/images/logo.png}" height="100%" style="float: left;"/>
 </div>
-<form th:action="@{/aliPay/aliPaySum}" method="post" onsubmit="return pay()">
     <div class="text">选择收货地址</div>
     <div class="address">
         <div class="shoppingaddress" th:each="shippingAddress : ${shippingAddressList}">
@@ -99,43 +98,54 @@
             </div>
         </div>
     </div>
-    <div class="pay">
-        <div class="pay-block" th:each="shippingAddress : ${shippingAddressList}" th:if="${shippingAddress.address_is_default==1}">
-                <span style="float: left">
-                    <span class="font"><b>总金额：</b></span><span style="color: red;font-size: 25px;">￥</span>
-                    <input class="money total_amount" name="WIDtotal_amount" id="top" type="text" readonly
-                           style="width: 80px;border: 0"><br/>
-                </span>
-            <!--<span>
-                <span th:if="${shoppingCarts[0].product_activity != '无'}">
-                    <span class="font"><b>实付款：</b></span><span style="color: red;font-size: 25px">￥</span>
-                    <input class="money total_amount" id="bottom" type="text" readonly
-                           style="width: 40px;border: 0"><br/>
-                </span>
-            </span>-->
-            <div>
-                <span class="font">
-                    <b>寄送至：</b>
-                    <input type="text" name="address_shipping" readonly class="addressshipping" th:value="${shippingAddress.address_shipping}">
-                </span>
-                <br/>
-                <span class="font">
-                    <b>收货人:</b>
-                    <input type="text" name="address_name" class="addressname namelength" readonly th:value="${shippingAddress.address_name}">
-                    <input type="text" name="address_phone" readonly class="addressphone" th:value="${shippingAddress.address_phone}">
-                </span>
+    <form th:action="@{/aliPay/aliPaySum}" method="post">
+        <div class="pay">
+            <div class="pay-block" th:each="shippingAddress : ${shippingAddressList}" th:if="${shippingAddress.address_is_default==1}">
+                    <span style="float: left">
+                        <span class="font"><b>总金额：</b></span><span style="color: red;font-size: 25px;">￥</span>
+                        <input class="money total_amount" name="WIDtotal_amount" id="top" type="text" readonly style="width: 80px;border: 0"><br/>
+                    </span>
+                    <div>
+                        <span class="font">
+                            <b>寄送至：</b>
+                            <input type="text" name="address_shipping" readonly class="addressshipping" th:value="${shippingAddress.address_shipping}">
+                        </span>
+                        <br/>
+                        <span class="font">
+                            <b>收货人:</b>
+                            <input type="text" name="address_name" class="addressname namelength" readonly th:value="${shippingAddress.address_name}">
+                            <input type="text" name="address_phone" readonly class="addressphone" th:value="${shippingAddress.address_phone}">
+                        </span>
+                    </div>
+                </div>
+                <div class="pay-block" th:if="${shippingAddressList.size() == 0}">
+                    <span style="float: left">
+                        <span class="font"><b>总金额：</b></span><span style="color: red;font-size: 25px;">￥</span>
+                        <input class="money total_amount" name="WIDtotal_amount" id="top" type="text" readonly
+                               style="width: 80px;border: 0"><br/>
+                    </span>
+                    <div>
+                        <span class="font">
+                            <b>寄送至：</b>
+                            <input type="text" name="address_shipping" readonly class="addressshipping" >
+                        </span>
+                        <br/>
+                        <span class="font">
+                            <b>收货人:</b>
+                            <input type="text" name="address_name" class="addressname namelength" readonly >
+                            <input type="text" name="address_phone" readonly class="addressphone" >
+                        </span>
+                    </div>
             </div>
         </div>
-    </div>
-    <input type="text" value=" " class="productId" name="productId"/>
-    <input type="text" value=" " class="shoppingCount" name="shoppingCount"/>
-    <!--readonly-->
-    <div class="pay2">
-        <div class="pay2-block">
-            <input value="提交订单" style="border: 0;background-color: red" type="submit">
+        <input type="text" value=" " class="productId" name="productId"/>
+        <input type="text" value=" " class="shoppingCount" name="shoppingCount"/>
+        <div class="pay2">
+            <div class="pay2-block">
+                <input value="提交订单" style="border: 0;background-color: red" type="submit">
+            </div>
         </div>
-    </div>
-</form>
+    </form>
 <div th:include="common/top_header :: duplicate"></div>
 </body>
 </html>
