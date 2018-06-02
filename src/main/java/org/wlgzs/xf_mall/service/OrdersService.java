@@ -25,6 +25,8 @@ public interface OrdersService {
 
     Orders findOrdersById(long orderId);
 
+    List<Orders> findOrdersByNumber(long orderId);
+
     String delete(long orderId);
 
     List<Orders> findOrdersByUserName(String user_name);
@@ -55,7 +57,13 @@ public interface OrdersService {
     //批量删除订单
     void deleteOrders(String orderId);
 
+    //退款
     void refund(long orderId, HttpServletResponse response,HttpSession session) throws IOException, AlipayApiException;
 
+    //用户订单
     Map<String,List> userOrder(long userId);
+
+    //用户订单号
+    List<String> findOrderNumbers(long userId);
+
 }
