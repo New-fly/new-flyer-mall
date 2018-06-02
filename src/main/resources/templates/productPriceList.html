@@ -155,24 +155,28 @@
         <div th:if="${session.user != null}">
             <div class="headersell">猜你喜欢</div>
             <div class="hotsell">
-                <figure th:each="recommendedProducts : ${recommendedProducts}">
-                    <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}">
-                        <img th:src="${recommendedProducts.product_picture}" style="width: 232px;height: 232px;">
-                    </a>
-                    <span style="color: red; font-size: 20px"
-                          th:text="${recommendedProducts.product_mallPrice}">¥6666</span>&nbsp;&nbsp;<s
-                        th:text="${recommendedProducts.product_counterPrice}">¥5555</s>
-                    <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}"
-                       class="jieshao" th:text="${recommendedProducts.product_keywords}">
-                        新飞除菌新飞除菌新飞除菌新飞除菌
-                    </a>
-                    <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
-                    <div class="xinfi">
-                        <a href="#" style="display: block;">
-                            <img th:src="@{/images/xflogo.ico}" class="lettle">
+                <div class="long-hotsell">
+                    <figure th:each="recommendedProducts : ${recommendedProducts}">
+                        <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}">
+                            <img th:src="${recommendedProducts.product_picture}" style="width: 232px;height: 232px;">
                         </a>
-                    </div>
-                </figure>
+                        <span style="color: red; font-size: 20px"
+                              th:text="${recommendedProducts.product_mallPrice}">¥6666</span>&nbsp;&nbsp;<s
+                            th:text="${recommendedProducts.product_counterPrice}">¥5555</s>
+                        <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}"
+                           class="jieshao" th:text="${recommendedProducts.product_keywords}">
+                            新飞除菌新飞除菌新飞除菌新飞除菌
+                        </a>
+                        <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
+                        <div class="xinfi">
+                            <a href="#" style="display: block;">
+                                <img th:src="@{/images/xflogo.ico}" class="lettle">
+                            </a>
+                        </div>
+                    </figure>
+                </div>
+                <div class="lastone"> < </div>
+                <div class="nextone"> > </div>
             </div>
         </div>
         <div class="search2">

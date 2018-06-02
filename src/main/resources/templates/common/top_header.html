@@ -12,6 +12,7 @@
 					</li>
 					<li th:if="${session.user == null }">
 						<a th:href="@{/toLogin}"><i class="fa fa-user-o"></i>&nbsp;&nbsp;<span>登录</span></a>
+                        &nbsp;&nbsp;&nbsp;
 						<a th:href="@{/toRegistered}"><span class="red">立即注册</span></a>
 					</li>
 				</ul>

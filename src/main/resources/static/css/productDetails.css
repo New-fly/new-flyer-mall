@@ -45,6 +45,7 @@ body{
 	width: 410px;
 	height: 530px;
 	float: left;
+	position: relative;
 }
 .img-big{
 	width: 100%;
@@ -347,6 +348,7 @@ s{
 	margin-left: 15px;
 }
 .spansty{
+	height: 59px;
 	color: gray;
 	font-size: 14px;
 }
