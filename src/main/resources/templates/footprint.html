@@ -33,7 +33,9 @@
                 <input class="demo--radio select1" type="checkbox">
                 <span class="demo--checkbox demo--radioInput"></span>
             </label>
+			<!--<a target="_blank" th:href="@{/ProductListController/toProduct(productId=${foot.productId})}">-->
 			<img th:src="${foot.product_picture}"/>
+			<!--</a>-->
 			<div style="padding: 0 5px;">
 				<div class="foot" th:text="${foot.footprintId}" style="display: none"></div>
 				<span class="mallPrice" th:text="${foot.product_mallPrice}"></span><br />
