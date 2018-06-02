@@ -6,8 +6,10 @@ import org.wlgzs.xf_mall.entity.Orders;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Auther: 李晓珊
@@ -53,5 +55,7 @@ public interface OrdersService {
     //批量删除订单
     void deleteOrders(String orderId);
 
-    void refund(long orderId, HttpServletResponse response) throws IOException, AlipayApiException;
+    void refund(long orderId, HttpServletResponse response,HttpSession session) throws IOException, AlipayApiException;
+
+    Map<String,List> userOrder(long userId);
 }
