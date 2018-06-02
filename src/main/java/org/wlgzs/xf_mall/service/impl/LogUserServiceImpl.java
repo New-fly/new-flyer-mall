@@ -52,9 +52,8 @@ public class LogUserServiceImpl implements LogUserService {
             if(user != null){
                 if(user.getUser_role().equals("普通用户")){
                     session.setMaxInactiveInterval(60 * 20);
-                    session.setAttribute("name", user.getUser_name());
-                    session.setAttribute("userId", user.getUserId());
                     session.setAttribute("user",user);
+                    session.setAttribute("userId",user.getUserId());
                 }
                 if(user.getUser_role().equals("管理员") || user.getUser_role().equals("超级管理员")){
                     session.setMaxInactiveInterval(60 * 20);
@@ -70,9 +69,9 @@ public class LogUserServiceImpl implements LogUserService {
         HttpSession session = request.getSession(true);
         User user = logUserRepository.loginId(userId);
         session.setMaxInactiveInterval(60 * 20);
-        session.setAttribute("name", user.getUser_name());//之后用过滤器实现
-        session.setAttribute("userId", user.getUserId());
+        System.out.println("hahahahah=====");
         session.setAttribute("user",user);
+        session.setAttribute("userId",user.getUserId());
     }
 
     @Override
@@ -136,8 +135,6 @@ public class LogUserServiceImpl implements LogUserService {
         mainMessage.setSubject("注册新飞商城");
         //发送的内容
         mainMessage.setText("验证码："+authCode+"您正在注册新飞商城，请输入您的验证码继续完成注册");
-        System.out.println(mainMessage+"////////////////////////////////////////////////////////////");
-        System.out.println(mailSender+"-------------------------------------------");
         mailSender.send(mainMessage);
         System.out.println(mailSender);
         System.out.println("ok");
@@ -162,8 +159,6 @@ public class LogUserServiceImpl implements LogUserService {
         mainMessage.setSubject("修改手机号");
         //发送的内容
         mainMessage.setText("验证码："+authCode+" ， 您正在修改您的手机号，请继续");
-        System.out.println(mainMessage+"////////////////////////////////////////////////////////////");
-        System.out.println(mailSender+"-------------------------------------------");
         mailSender.send(mainMessage);
         System.out.println(mailSender);
         System.out.println("ok");
@@ -188,8 +183,6 @@ public class LogUserServiceImpl implements LogUserService {
         mainMessage.setSubject("找回密码");
         //发送的内容
         mainMessage.setText("验证码："+authCode+"您正在找回您的密码，输入验证码以继续");
-        System.out.println(mainMessage+"////////////////////////////////////////////////////////////");
-        System.out.println(mailSender+"-------------------------------------------");
         mailSender.send(mainMessage);
         System.out.println(mailSender);
         System.out.println("ok");

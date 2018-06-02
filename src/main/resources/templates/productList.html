@@ -11,10 +11,6 @@
     <script th:src="@{/js/jquery.js}"></script>
     <script th:src="@{/bootstrap/dist/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/productList.js}"></script>
-    <script>
-        var test = window.location.pathname;
-        alert(test);
-    </script>
 </head>
 <body>
 <div th:include="common/top_header :: copy"></div>
@@ -66,13 +62,13 @@
         <div class="filter-group-list">
             <div class="list-left">价格区间</div>
             <div class="list-right">
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='1000')}">1000元以下</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='1000,2000')}">1000-2000</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='2001,3000')}">2001-3000</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='3001,5000')}">3001-5000</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='5001,8000')}">5001-8000</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='8001,10000')}">8001-10000</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='10000')}">10000以上</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='1000')}">1000元以下</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='1000',product_mallMaxPrice='2000')}">1000-2000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='2001',product_mallMaxPrice='3000')}">2001-3000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='3001',product_mallMaxPrice='5000')}">3001-5000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='5001',product_mallMaxPrice='8000')}">5001-8000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='8001',product_mallMaxPrice='10000')}">8001-10000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMaxPrice='10000')}">10000以上</a>
             </div>
         </div>
     </div><div class="sort-row">
@@ -86,9 +82,11 @@
                 <div class="price">
                     价格从低到高
                 </div>
-                <input type="text" class="priceipt" placeholder="¥"><em>-</em>
-                <input type="text" class="priceipt" placeholder="¥">
+                <!--<form th:action="@{/}" th:method="post">-->
+                <input type="text" class="priceipt" placeholder="¥" name="product_mallMinPrice"><em>-</em>
+                <input type="text" class="priceipt" placeholder="¥" name="product_mallMaxPrice">
                 <input type="submit" value="确定" class="queding">
+                <!--</form>-->
             </div>
         </div>
     </div>

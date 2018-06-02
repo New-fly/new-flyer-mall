@@ -23,7 +23,7 @@
             <font class="error font1"></font>
             <input type="submit" class="ipt ipt1" style=" border-radius: 5px;">
             <br>
-            <a th:href="@{/UserManagementController/toSafety(userId=${session.user.userId})}">
+            <a th:href="@{/UserManagementController/toSafety(userId=${session.userId})}">
                 <input type="button" class="ipt ipt1" style=" border-radius: 5px;margin-top:10px;background:red;" value="返回">
             </a>
         </form>

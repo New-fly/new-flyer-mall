@@ -49,7 +49,8 @@ public class ProductListController extends BaseController {
         //推荐商品
         HttpSession session = request.getSession();
         if (session.getAttribute("user") != null) {
-            long userId = (long) session.getAttribute("userId");
+            User user = (User) session.getAttribute("user");
+            long userId = user.getUserId();
             List<Product> recommendedProducts = productService.recommendedByUserId(userId, request);
             model.addAttribute("recommendedProducts", recommendedProducts);
         }
@@ -95,7 +96,8 @@ public class ProductListController extends BaseController {
         model.addAttribute("productEstimates", productEstimates);
         HttpSession session = request.getSession();
         if (session.getAttribute("userId") != null) {
-            long userId = (long) session.getAttribute("userId");
+            User user = (User) session.getAttribute("user");
+            long userId = user.getUserId();
             //添加足迹
             Collection collection = productService.findByCollectionUserIdAndProductId(userId, productId);
             model.addAttribute("collection", collection);
@@ -250,7 +252,8 @@ public class ProductListController extends BaseController {
     public ModelAndView deleteCollectionProducts(@RequestParam(value = "collectionId", defaultValue = "439,449") String collectionId,HttpServletRequest request) {
         productService.deleteCollections(collectionId);
         HttpSession session = request.getSession();
-        long userId = (long) session.getAttribute("userId");
+        User user = (User) session.getAttribute("user");
+        long userId = user.getUserId();
         String url = "redirect:/ProductListController/collectionProduct?userId=" + userId;
         return new ModelAndView(url);
     }
@@ -265,7 +268,8 @@ public class ProductListController extends BaseController {
     public ModelAndView findCollectionProducts(Model model, HttpServletRequest request, String product_keywords) throws IOException {
         //推荐商品
         HttpSession session = request.getSession();
-        long userId = (long) session.getAttribute("userId");
+        User user = (User) session.getAttribute("user");
+        long userId = user.getUserId();
         List<Collection> collections = productService.findCollections(product_keywords, userId);
         model.addAttribute("collections", collections);
         List<Product> recommendedProducts = productService.recommendedByUserId(userId, request);
@@ -337,7 +341,8 @@ public class ProductListController extends BaseController {
             //推荐商品
             HttpSession session = request.getSession();
             if (session.getAttribute("user") != null) {
-                long userId = (long) session.getAttribute("userId");
+                User user = (User) session.getAttribute("user");
+                long userId = user.getUserId();
                 List<Product> recommendedProducts = productService.recommendedByUserId(userId, request);
                 model.addAttribute("recommendedProducts", recommendedProducts);
             }
@@ -384,7 +389,8 @@ public class ProductListController extends BaseController {
             //推荐商品
             HttpSession session = request.getSession();
             if (session.getAttribute("user") != null) {
-                long userId = (long) session.getAttribute("userId");
+                User user = (User) session.getAttribute("user");
+                long userId = user.getUserId();
                 List<Product> recommendedProducts = productService.recommendedByUserId(userId, request);
                 model.addAttribute("recommendedProducts", recommendedProducts);
             }
@@ -419,7 +425,7 @@ public class ProductListController extends BaseController {
 
     //按价格区间划分商品
     @RequestMapping("/findByPrice")
-    public ModelAndView findByPrice(Model model,HttpServletRequest request ,String product_mallPrice ,@RequestParam(value = "page", defaultValue = "0") int page,
+    public ModelAndView findByPrice(Model model,HttpServletRequest request ,String product_mallMinPrice,String product_mallMaxPrice ,@RequestParam(value = "page", defaultValue = "0") int page,
                                     @RequestParam(value = "limit", defaultValue = "12") int limit) throws IOException {
         //遍历一级二级分类
         List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();
@@ -429,12 +435,13 @@ public class ProductListController extends BaseController {
         //推荐商品
         HttpSession session = request.getSession();
         if (session.getAttribute("user") != null) {
-            long userId = (long) session.getAttribute("userId");
+            User user = (User) session.getAttribute("user");
+            long userId = user.getUserId();
             List<Product> recommendedProducts = productService.recommendedByUserId(userId, request);
             model.addAttribute("recommendedProducts", recommendedProducts);
         }
         if (page != 0) page--;
-        Page<Product> pages = productService.findByPrice(product_mallPrice,page,limit);
+        Page<Product> pages = productService.findByPrice(product_mallMinPrice,product_mallMaxPrice,page,limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber() + 1);//查询的当前第几页
         List<Product> products = pages.getContent();
@@ -449,7 +456,8 @@ public class ProductListController extends BaseController {
         if(products.size()==0){
             model.addAttribute("mag","抱歉您搜索的商品不存在");
         }
-        model.addAttribute("product_mallPrice", product_mallPrice);
+        model.addAttribute("product_mallMinPrice", product_mallMinPrice);
+        model.addAttribute("product_mallMaxPrice", product_mallMaxPrice);
         model.addAttribute("products", products);//查询的当前页的集合
         return new ModelAndView("productPriceList");
     }

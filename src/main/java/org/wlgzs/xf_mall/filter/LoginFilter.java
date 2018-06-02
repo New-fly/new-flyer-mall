@@ -1,6 +1,7 @@
 package org.wlgzs.xf_mall.filter;
 
 import org.slf4j.LoggerFactory;
+import org.wlgzs.xf_mall.entity.User;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -56,8 +57,8 @@ public class LoginFilter implements Filter {
 
         if(!isInclude(url)){
             HttpSession session = httpRequest.getSession();
-            String name = (String) session.getAttribute("name");
-            if (name != null){
+            User user = (User) session.getAttribute("user");
+            if (user != null){
                 System.out.println("前台通过");
                 // session存在
                 chain.doFilter(httpRequest, httpResponse);
@@ -69,6 +70,7 @@ public class LoginFilter implements Filter {
                 return;
             }
         }else{
+            System.out.println("放行");
             chain.doFilter(httpRequest, httpResponse);
             return;
         }
