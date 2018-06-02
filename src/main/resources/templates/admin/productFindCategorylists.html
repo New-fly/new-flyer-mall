@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="Shortcut Icon" th:href="@{/images/logo.icon}">
+    <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <title>分类管理</title>
+    <script th:src="@{/js/jquery.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/productCategorylists.css}">
+</head>
+<body>
+<div class="contentbox">
+    <div class="header">
+        <form th:action="@{/AdminProductController/findProductCategory}" method="post">
+            <input type="text" name="category_name" placeholder="商品类别" th:value="*{category_name}" class="ipt">
+            <input type="submit" value="搜索分类" class="btn">
+            <a th:href="@{/AdminProductController/toAddProductCategoryTwo}" class="a-div adiv1" style="width: 136px;">添加二级分类配件</a>
+            <a th:href="@{/AdminProductController/toAddProductCategory}" class="a-div adiv1" style="width: 136px;">添加二级分类</a>
+            <a th:href="@{/AdminProductController/toAddProductOneCategory}" class="a-div adiv1" style="width: 136px;">添加一级分类</a>
+        </form>
+    </div>
+    <div class="contentbox">
+        <table class="table table-bordered able-box" id="mytable">
+            <thead style="background-color: #F2F2F2;">
+            <tr>
+                <th>名称</th>
+                <th>父类</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="Categorie : ${productCategories}">
+                <td th:text="${Categorie.category_name}">John</td>
+                <td th:if="${!Categorie.parent_name.equals('0')}" th:text="${Categorie.parent_name}">Doe</td>
+                <td th:if="${Categorie.parent_name.equals('0')}">一级分类</td>
+                <!--<td th:text="${Categorie.categoryId}"></td>-->
+                <td>
+                    <a class="a-div adiv1" href="javascript:void(0);" th:onclick="'javascript:deleteProduct('+${Categorie.categoryId}+');'">删除</a>
+                    <a class="a-div adiv2" th:href="@{/AdminProductController/toAdminEditProductCategory(categoryId=${Categorie.categoryId})}">修改</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="fenye" th:if="${TotalPages > 0}">
+
+            <ul class="pagination" th:if="${Number == 1} and ${TotalPages > 1}">
+                <!--//如果当前页等于1，总页数大于1（不显示上一页）   Number&ndash;&gt;当前页-->
+                <li><a th:href="@{/AdminProductController/findProductCategory(page=1,category_name=${category_name})}">首页</a></li>
+                <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
+                    <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
+                    <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);" th:text="${i}">#</a>
+                    <!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
+                    <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
+                       th:href="@{/AdminProductController/findProductCategory(page=${i},category_name=${category_name})}" th:text="${i}"
+                       style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
+                </li>
+                <li><a th:href="@{/AdminProductController/findProductCategory(page=${Number+1},category_name=${category_name})}">下一页</a></li><!--//请求页数+1-->
+                <li><a th:href="@{/AdminProductController/findProductCategory(page=${TotalPages},category_name=${category_name})}">尾页</a></li><!--//跳转至第Number页-->
+            </ul>
+
+            <ul class="pagination" th:if="${Number > 1} and ${TotalPages > 1}"><!--//显示上一页-->
+                <li><a th:href="@{/AdminProductController/findProductCategory(page=1,category_name=${category_name})}">首页</a></li><!--//跳转至第一页-->
+                <li><a th:href="@{/AdminProductController/findProductCategory(page=${Number-1},category_name=${category_name})}">上一页</a></li><!--//请求页数-1-->
+                <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
+                    <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
+                    <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);" th:text="${i}">#</a>
+                    <!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
+                    <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
+                       th:href="@{/AdminProductController/findProductCategory(page=${i},category_name=${category_name})}" th:text="${i}"
+                       style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
+                </li>
+                <li th:if="${Number != TotalPages}">
+                    <a th:href="@{/AdminProductController/findProductCategory(page=${Number+1},category_name=${category_name})}">下一页</a></li><!--//请求页数+1-->
+                <li><a th:href="@{/AdminProductController/findProductCategory(page=${TotalPages},category_name=${category_name})}">尾页</a></li><!--//跳转至第Number页-->
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/js/productCategorylists.js}"></script>
+
+</body>
+</html>

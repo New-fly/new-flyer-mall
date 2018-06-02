@@ -84,6 +84,18 @@ public class ProductController {
         model.addAttribute("product_keywords", product_keywords);
         return new ModelAndView("admin/adminProductList");
     }
+    /**     
+     * @author 胡亚星 
+     * @date 2018/5/31 22:41  
+     * @param   
+     * @return
+     *@Description: 搜索活动商品
+     */
+//    @RequestMapping
+////    public ModelAndView findActivityProduct(Model model, String product_keywords, @RequestParam(value = "page", defaultValue = "0") int page,
+////                                            @RequestParam(value = "limit", defaultValue = "8") int limit){
+////
+////    }
     /**
      * @return java.lang.String
      * @author 阿杰
@@ -341,7 +353,7 @@ public class ProductController {
         List<ProductCategory> productCategories = pages.getContent();
         model.addAttribute("productCategories", productCategories);//查询的当前页的集合
         model.addAttribute("category_name", category_name);
-        return new ModelAndView("admin/productCategorylists");
+        return new ModelAndView("admin/productFindCategorylists");
     }
 
 }

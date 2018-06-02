@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> getProductListPage(String product_keywords, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
-        Specification<Product> specification = new PageUtil<Product>(product_keywords).getPage("product_keywords", "product_serviceType", "product_category");
+        Specification<Product> specification = new PageUtil<Product>(product_keywords).getPage("product_keywords", "product_category");
         Page<Product> pages = productRepository.findAll(specification, pageable);
         return pages;
     }
@@ -250,7 +250,7 @@ public class ProductServiceImpl implements ProductService {
     public Page getProductCategoryList(String category_name, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "categoryId");
         Pageable pageable = new PageRequest(page, limit, sort);
-        Specification<ProductCategory> specification = new PageUtil<ProductCategory>(category_name).getPage("category_name");
+        Specification<ProductCategory> specification = new PageUtil<ProductCategory>(category_name).getPage("category_name","parent_name");
         Page<ProductCategory> pages = productCategoryRepository.findAll(specification, pageable);
         return pages;
     }

@@ -39,7 +39,9 @@
     </div>
     <div class="manage">
         <span id="all" style="float: left;">查看所有收货地址</span>
-        <a target="_blank" th:action="@{/UserAddressController/shippingAddress(user_name=${session.user.user_name})}"><span style="float: right;">管理收货地址</span></a>
+        <a th:href="@{/UserAddressController/shippingAddress(user_name=${session.user.user_name})}">
+            <span style="float: right;color: black">管理收货地址</span>
+        </a>
     </div>
     <div class="text" style="margin-top: 30px;">确认订单信息</div>
     <div class="annotation">

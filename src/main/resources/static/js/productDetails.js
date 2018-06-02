@@ -16,6 +16,7 @@ window.onload=function(){
     };
     var num = 0;
     var long = document.getElementsByClassName("berelated-goods-long")[0].clientWidth;
+    console.log(long);
     document.getElementsByClassName("left")[0].onclick=function(){
 		num=num+220;
 		if(num>0){num=0;document.getElementsByClassName("left")[0].style.cursor="not-allowed";}
@@ -23,7 +24,7 @@ window.onload=function(){
     };
     document.getElementsByClassName("right")[0].onclick=function(){
 		num=num-220;
-		if(num<(-1)*long){num=(-1)*long;document.getElementsByClassName("right")[0].style.cursor="not-allowed";}
+		if(num<(-1)*long+900){num=(-1)*long+900;document.getElementsByClassName("right")[0].style.cursor="not-allowed";}
 		document.getElementsByClassName("berelated-goods-long")[0].style.left = num + "px";
     };
     var productId=document.getElementsByClassName("productId")[0].value;
