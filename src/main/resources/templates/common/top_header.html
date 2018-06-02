@@ -11,7 +11,7 @@
 						<a th:href="@{/cancellation}" style="cursor: pointer">退出</a>
 					</li>
 					<li th:if="${session.user == null }">
-						<a th:href="@{/toLogin}"><i class="fa fa-paw"></i>&nbsp;&nbsp;<span>登录</span></a>
+						<a th:href="@{/toLogin}"><i class="fa fa-user-o"></i>&nbsp;&nbsp;<span>登录</span></a>
 						<a th:href="@{/toRegistered}"><span class="red">立即注册</span></a>
 					</li>
 				</ul>

@@ -129,7 +129,6 @@
                 </li>
                 <li><a th:href="@{/ProductListController/searchCategoryProduct(page=${Number+1},product_category=${product_category})}">下一页</a></li><!--//请求页数+1-->
             </ul>
-
             <ul class="pagination" th:if="${Number > 1} and ${Number > 1}"><!--//显示上一页-->
                 <li><a th:href="@{/ProductListController/searchCategoryProduct(page=1,product_category=${product_category})}">首页</a></li><!--//跳转至第一页-->
                 <li><a th:href="@{/ProductListController/searchCategoryProduct(page=${Number-1},product_category=${product_category})}">上一页</a></li><!--//请求页数-1-->
@@ -145,9 +144,7 @@
                         th:href="@{/ProductListController/searchCategoryProduct(page=${Number+1},product_category=${product_category})}">下一页</a></li><!--//请求页数+1-->
                 <li><a th:href="@{/ProductListController/searchCategoryProduct(page=${Number},product_category=${product_category})}">尾页</a></li><!--//跳转至第Number页-->
             </ul>
-
         </div>
-
         <div class="back-to-top" onclick="pageScroll()">
             <i class="iconfont">&#xe614;</i>
             <span class="b-to-t">返回顶部</span>
@@ -156,24 +153,26 @@
         <div th:if="${session.user != null}">
             <div class="headersell">猜你喜欢</div>
             <div class="hotsell">
-                <figure th:each="recommendedProducts : ${recommendedProducts}">
-                    <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}">
-                        <img th:src="${recommendedProducts.product_picture}" style="width: 232px;height: 232px;">
-                    </a>
-                    <span style="color: red; font-size: 20px"
-                          th:text="${recommendedProducts.product_mallPrice}">¥6666</span>&nbsp;&nbsp;<s
-                        th:text="${recommendedProducts.product_counterPrice}">¥5555</s>
-                    <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}"
-                       class="jieshao" th:text="${recommendedProducts.product_keywords}">
-                        新飞除菌新飞除菌新飞除菌新飞除菌
-                    </a>
-                    <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
-                    <div class="xinfi">
-                        <a href="#" style="display: block;">
-                            <img th:src="@{/images/xflogo.ico}" class="lettle">
+                <div class="long-hotsell">
+                    <figure th:each="recommendedProducts : ${recommendedProducts}">
+                        <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}">
+                            <img th:src="${recommendedProducts.product_picture}" style="width: 100%;height: 232px;">
                         </a>
-                    </div>
-                </figure>
+                        <span style="color: red; font-size: 20px"
+                              th:text="${recommendedProducts.product_mallPrice}">¥6666</span>&nbsp;&nbsp;<s
+                            th:text="${recommendedProducts.product_counterPrice}">¥5555</s>
+                        <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}"
+                           class="jieshao" th:text="${recommendedProducts.product_keywords}">
+                            新飞除菌新飞除菌新飞除菌新飞除菌
+                        </a>
+                        <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
+                        <div class="xinfi">
+                            <a href="#" style="display: block;">
+                                <img th:src="@{/images/xflogo.ico}" class="lettle">
+                            </a>
+                        </div>
+                    </figure>
+                </div>
             </div>
         </div>
         <div class="search2">

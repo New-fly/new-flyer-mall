@@ -26,12 +26,12 @@
 	<div class="chunk">
 		<div class="user_message">
 			<div class="user_img">
-				<img th:src="@{/images/01.jpg}" alt="" />
+				<img th:src="${session.user.user_avatar}" alt="" />
 			</div>
 			<div class="user_name">
-				<span class="name">胡帅博</span>
+				<span class="name" th:text="${session.user.user_name}">胡帅博</span>
 				<br />
-				<span class="number">20171554220</span>
+				<span class="number" th:text="${session.user.user_phone}">20171554220</span>
 			</div>
 		</div>
 		<div class="all_address">
