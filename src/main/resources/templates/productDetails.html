@@ -101,7 +101,9 @@
     <div class="berelated-goods">
         <div class="berelated-goods-long">
             <div th:each="recommend : ${recommendedProducts}">
-                <img th:src="${recommend.product_picture}"/>
+                <!--<a target="_blank" th:href="@{/ProductListController/toProduct(productId=${recommend.productId})}">-->
+                    <img th:src="${recommend.product_picture}"/>
+                <!--</a>-->
                 <div class="keywor" th:text="${recommend.product_keywords}"></div>
                 <div th:text="'单价：￥'+${recommend.product_mallPrice}" class="monony"></div>
             </div>

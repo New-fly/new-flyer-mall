@@ -42,7 +42,7 @@
 				<div class="addColor" id="src4">活动管理</div>
 			</div>
 		</div>
-		<div>
+		<div th:if="${session.adminUser.user_role} eq '超级管理员'">
 			<span><i class="iconfont">&#xe631;</i></span><div class="list_one" id="src5">敏感词汇管理</div>
 			<span><i class="iconfont">&#xe64c;</i></span><div class="list_one" id="src6">用户管理</div>
 			<span><i class="iconfont">&#xe78b;</i></span><div class="list_one" id="src7">商品分类管理</div>

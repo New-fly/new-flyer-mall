@@ -46,6 +46,7 @@
             <div class="list-left">电器分类</div>
             <div class="list-right">
                 <a th:each="oneCategory : ${productOneCategories}"
+                   th:style="${product_category} eq ${oneCategory.category_name}?'color:red':''"
                    th:href="@{/ProductListController/searchCategoryProduct(product_category=${oneCategory.category_name})}"
                    th:text="${oneCategory.category_name}"></a>
             </div>
@@ -53,9 +54,10 @@
         <div class="filter-group-list">
             <div class="list-left">详细分类</div>
             <div class="list-right" style="height: auto">
-                <a th:each="product_category : ${productTwoCategories}"
-                   th:href="@{/ProductListController/searchCategoryProduct(product_category=${product_category.category_name})}"
-                   th:text="${product_category.category_name}">一级</a>
+                <a th:each="category : ${productTwoCategories}"
+                   th:style="*{product_category} eq ${category.category_name}?'color:red':''"
+                   th:href="@{/ProductListController/searchCategoryProduct(product_category=${category.category_name})}"
+                   th:text="${category.category_name}">一级</a>
             </div>
         </div>
         <div class="filter-group-list">
@@ -81,6 +83,7 @@
                 <div class="price">
                     价格从低到高
                 </div>
+                <!--11111111-->
                 <!--<form th:action="@{/}" th:method="post">-->
                 <input type="text" class="priceipt" placeholder="¥" name="product_mallMinPrice"><em>-</em>
                 <input type="text" class="priceipt" placeholder="¥" name="product_mallMaxPrice">
@@ -128,12 +131,7 @@
                 </li>
                 <li><a th:href="@{/ProductListController/searchProductList(page=${Number+1},product_category=${product_category})}">下一页</a></li><!--//请求页数+1-->
             </ul>
-<<<<<<< HEAD
-            <ul class="pagination" th:if="${Number > 1} and ${Number > 1}"><!--//显示上一页-->
-=======
-
             <ul class="pagination" th:if="${Number > 1} and ${TotalPages > 1}"><!--//显示上一页-->
->>>>>>> eb06a8562ed138f295ac79b3f4eb6c0305d80073
                 <li><a th:href="@{/ProductListController/searchProductList(page=1,product_category=${product_category})}">首页</a></li><!--//跳转至第一页-->
                 <li><a th:href="@{/ProductListController/searchProductList(page=${Number-1},product_category=${product_category})}">上一页</a></li><!--//请求页数-1-->
                 <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
@@ -181,8 +179,9 @@
         </div>
         <div class="search2">
             <form th:action="@{/ProductListController/searchProductList}" method="post">
-                <input type="text" placeholder="请输入搜索内容" class="ipt1 ipt2"><input type="submit" name="product_keywords"
-                                                                                  class="submit submit2" value="搜索">
+                <span class=""><input type="text" name="product_category" th:value="*{product_category}" class="ipt1"
+                                      placeholder="请输入要搜索的内容"></span>
+                <input type="submit" value="搜索" class="submit">
             </form>
         </div>
     </div>
