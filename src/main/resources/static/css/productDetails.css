@@ -45,6 +45,7 @@ body{
 	width: 410px;
 	height: 530px;
 	float: left;
+	position: relative;
 }
 .img-big{
 	width: 100%;

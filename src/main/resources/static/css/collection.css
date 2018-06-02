@@ -85,7 +85,7 @@
 }
 .baby{
     width: 1000px;
-    margin: 0 auto;
+    margin: auto;
     height: 260px;
     overflow: hidden;
     position: relative;
@@ -299,4 +299,36 @@ a:hover{
     display: none;
     font-size: 17px;
     cursor: pointer;
+}
+.lastone{
+    width: 13px;
+    height: 100px;
+    position: absolute;
+    top: 78px;
+    left: 0;
+    background-color: bisque;
+    font-weight: bold;
+    line-height: 100px;
+    text-align: center;
+    color: white;
+    opacity: 0.7;
+}
+.lastone:hover{
+    opacity: 1;
+}
+.nextone{
+    width: 13px;
+    height: 100px;
+    position: absolute;
+    top: 78px;
+    right: 0;
+    background-color: bisque;
+    font-weight: bold;
+    line-height: 100px;
+    text-align: center;
+    color: white;
+    opacity: 0.7;
+}
+.nextone:hover{
+    opacity: 1;
 }
