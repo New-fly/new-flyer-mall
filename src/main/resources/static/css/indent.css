@@ -268,7 +268,7 @@ body{
 	color: #B1B1B1;
 }
 .ipt{
-	width: 80px;
+	width: auto;
 	border: 0;
 	outline: none;
     font-size: 12px;

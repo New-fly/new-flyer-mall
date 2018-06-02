@@ -12,3 +12,10 @@ function userAccepted(orderId) {
         location.href = "/UserOrderController/userAccepted?orderId="+orderId;
     }
 }
+function returnOrder(orderId) {
+    var isDel = confirm("您确认要退货吗？");
+    if(isDel){
+        //要删除
+        location.href = "/OrderController/deleteOrder?orderId="+orderId;
+    }
+}

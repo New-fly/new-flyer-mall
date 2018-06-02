@@ -313,7 +313,7 @@ public class OrdersServiceImpl implements OrdersService {
     public Page<Orders> adminSearchOrder(String order_word, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "orderId");
         Pageable pageable = new PageRequest(page, limit, sort);
-        Specification<Orders> specification = new PageUtil<Orders>(order_word).getPage("product_specification", "order_number", "user_name", "product_keywords");
+        Specification<Orders> specification = new PageUtil<Orders>(order_word).getPage("address_name", "order_number", "user_name", "product_keywords");
         Page pages = ordersRepository.findAll(specification, pageable);
         System.out.println(pages);
         return pages;

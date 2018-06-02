@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Product;
+import org.wlgzs.xf_mall.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,7 +25,8 @@ public class RecommendedController extends BaseController {
     public ModelAndView orderInfo(Model model, HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession();
         if(session!=null){
-            long userId = (long) session.getAttribute("userId");
+            User user = (User) session.getAttribute("user");
+            long userId = user.getUserId();
             List<Product> recommendedProducts = productService.recommendedByUserId(userId, request);
             model.addAttribute("products", recommendedProducts);
         }

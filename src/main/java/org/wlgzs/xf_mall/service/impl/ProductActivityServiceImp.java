@@ -19,6 +19,7 @@ import org.wlgzs.xf_mall.util.PageUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +48,7 @@ public class ProductActivityServiceImp implements ProductActivityService {
     public Page<ProductActivity> activityProductList(String product_keywords, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "activityId");
         Pageable pageable = new PageRequest(page,limit, sort);
-        Specification<ProductActivity> specification = new PageUtil<ProductActivity>(product_keywords).getPage("product_keywords");
+        Specification<ProductActivity> specification = new PageUtil<ProductActivity>(product_keywords).getPage("product_keywords","activity_name");
         Page pages = productActivityRepository.findAll(specification,pageable);
         return pages;
     }
@@ -83,6 +84,9 @@ public class ProductActivityServiceImp implements ProductActivityService {
         long[] productIds = idsUtil.IdsUtils(productId);
         List<Product> products = productRepository.findProductByProductId(productIds);
         Activity activity = activityRepository.findByActivityName(request.getParameter("activity_name"));
+        System.out.println(request.getParameter("activity_name"));
+        System.out.println(activity.getActivity_name());
+        List<ProductActivity> productActivities = new ArrayList<ProductActivity>();
         for(int i = 0;i < products.size();i++){
             ProductActivity productActivity = new ProductActivity();
             productActivity.setActivity_name(activity.getActivity_name());
@@ -98,8 +102,9 @@ public class ProductActivityServiceImp implements ProductActivityService {
             productActivity.setProduct_counterPrice(products.get(i).getProduct_counterPrice());
             productActivity.setProduct_mallPrice(products.get(i).getProduct_mallPrice());
             productActivity.setProduct_keywords(products.get(i).getProduct_keywords());
-            productActivityRepository.save(productActivity);
+            productActivities.add(productActivity);
         }
+        productActivityRepository.saveAll(productActivities);
     }
 
     //通过id查找活动商品

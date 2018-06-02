@@ -2,7 +2,7 @@ window.onload = function() {
 	//实现购物车内数量的增加
     var count = 0;
     var zongjiage = document.getElementsByClassName('zongjiage')[0];
-    var olist=document.getElementsByClassName('list')
+    var olist=document.getElementsByClassName('list');
 		for(let i = 0; i < olist.length; i++) {
 			document.getElementsByClassName("add")[i].onclick = function() {
 				var num = document.getElementsByClassName("number")[i].value;
@@ -20,8 +20,13 @@ window.onload = function() {
                         "shopping_cart_count":num,
                     },
                     dataType:"text",
-                    success:function(data){
+                    success:function(){
                         document.getElementsByClassName("qian")[i].value=renminbi;
+                        // var value = one[i].parentNode.getElementsByClassName("single-text")[0].children[0].value;
+                        // value = parseInt(value);
+                        // count=0;
+                        // count += value;
+                        // zongjiage.value = count;
                     },
                     error:function () {
                         alert("请求失败")
@@ -48,12 +53,14 @@ window.onload = function() {
                         "shopping_cart_id":shopcartid,
                         "shopping_cart_count":num,
                     },
-                    // async:true,
-                    // cache:true,
-                    // traditional:false,
                     dataType:"text",
-                    success:function(data){
+                    success:function(){
                         document.getElementsByClassName("qian")[i].value=renminbi;
+                        // var value = one[i].parentNode.getElementsByClassName("single-text")[0].children[0].value;
+                        // value = parseInt(value);
+                        // count=0;
+                        // count += value;
+                        // zongjiage.value = count;
                     },
                     error:function () {
                         alert("请求失败")
@@ -61,12 +68,12 @@ window.onload = function() {
                 });
 			}
 		}
-		document.getElementById("all").onclick=function(){  
-        var all=document.getElementById("all");//获取到点击全选的那个复选框 
+		document.getElementById("all").onclick=function(){
+        var all=document.getElementById("all");//获取到点击全选的那个复选框
         var one=document.getElementsByName('aaa');//获取到复选框的名称
         if(all.checked==true){//因为获得的是数组，所以要循环 为每一个checked赋值
             count = 0;
-            for(var i=0;i<olist.length;i++){  
+            for(var i=0;i<olist.length;i++){
                 one[i].checked=true;
                 document.getElementsByClassName("single")[i].style.backgroundColor="papayawhip";
                 var value = one[i].parentNode.getElementsByClassName("single-text")[0].children[0].value;
@@ -76,8 +83,8 @@ window.onload = function() {
             }
             $(this).parent().parent().parent().find("input.yanse").css("background-color","papayawhip");
             color();
-        }else{  
-            for(var j=0;j<olist.length;j++){  
+        }else{
+            for(var j=0;j<olist.length;j++){
                 one[j].checked=false;
                 document.getElementsByClassName("single")[j].style.backgroundColor="#FCFCFC";
                 var value = one[j].parentNode.getElementsByClassName("single-text")[0].children[0].value;
@@ -88,7 +95,7 @@ window.onload = function() {
             $(this).parent().parent().parent().find("input.yanse").css("background-color","#FCFCFC");
             color();
             $(this).parent().find("input").css("background-color","#FCFCFC");
-        }  
+        }
     }
 	var one=document.getElementsByName('aaa');
 	for(let k=0;k<olist.length;k++){
@@ -140,27 +147,33 @@ window.onload = function() {
         }
         document.getElementsByClassName("produc")[0].value=allid;
     }
+    var shopcartid=document.getElementsByClassName("produc")[0].value;
     document.getElementsByClassName("delet")[0].onclick=function(){
-	    var shopcartid=document.getElementsByClassName("produc")[0].value;
-	    var userid=document.getElementsByClassName("userId")[0].value;
-        $.ajax({
-            url:"/ProductListController/deleteShoppingProducts",
-            data:{
-                "shoppingCartId":shopcartid,
-                "userId":userid
-            },
-            dataType:"text",
-            success:function(){
-                $(":checked").parent().remove();
-                document.getElementsByClassName("prompt")[0].innerHTML = "删除成功";
-                document.getElementsByClassName("prompt")[0].style.display = "block";
-                setTimeout(function () {
-                    document.getElementsByClassName("prompt")[0].style.display = "none";
-                }, 1000)
-            },
-            error:function () {
-                alert("请求失败")
-            }
-        });
-    }
+        if(shopcartid.length>0){
+            var userid=document.getElementsByClassName("userId")[0].value;
+            $.ajax({
+                url:"/ProductListController/deleteShoppingProducts",
+                data:{
+                    "shoppingCartId":shopcartid,
+                    "userId":userid
+                },
+                dataType:"text",
+                success:function(){
+                    $(":checked").parent().remove();
+                    document.getElementsByClassName("prompt")[0].innerHTML = "删除成功";
+                    document.getElementsByClassName("prompt")[0].style.display = "block";
+                    setTimeout(function () {
+                        document.getElementsByClassName("prompt")[0].style.display = "none";
+                    }, 1000)
+                },
+                error:function () {
+                    alert("请求失败")
+                }
+            });
+        }
+        else{
+            alert("请勾选需要删除的商品！！！")
+        }
+    };
+
 };

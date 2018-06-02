@@ -11,10 +11,6 @@
     <script th:src="@{/js/jquery.js}"></script>
     <script th:src="@{/bootstrap/dist/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/productList.js}"></script>
-    <script>
-        var test = window.location.pathname;
-        alert(test);
-    </script>
 </head>
 <body>
 <div th:include="common/top_header :: copy"></div>
@@ -29,7 +25,6 @@
                                       placeholder="请输入要搜索的内容"></span>
                 <input type="submit" value="搜索" class="submit">
             </form>
-
         </div>
         <div class="search-links">
             <a th:each="oneCategory : ${productOneCategories}"
@@ -66,13 +61,13 @@
         <div class="filter-group-list">
             <div class="list-left">价格区间</div>
             <div class="list-right">
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='1000')}">1000元以下</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='1000,2000')}">1000-2000</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='2001,3000')}">2001-3000</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='3001,5000')}">3001-5000</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='5001,8000')}">5001-8000</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='8001,10000')}">8001-10000</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='10000')}">10000以上</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='1000')}">1000元以下</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='1000',product_mallMaxPrice='2000')}">1000-2000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='2001',product_mallMaxPrice='3000')}">2001-3000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='3001',product_mallMaxPrice='5000')}">3001-5000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='5001',product_mallMaxPrice='8000')}">5001-8000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='8001',product_mallMaxPrice='10000')}">8001-10000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMaxPrice='10000')}">10000以上</a>
             </div>
         </div>
     </div><div class="sort-row">
@@ -86,9 +81,11 @@
                 <div class="price">
                     价格从低到高
                 </div>
-                <input type="text" class="priceipt" placeholder="¥"><em>-</em>
-                <input type="text" class="priceipt" placeholder="¥">
+                <!--<form th:action="@{/}" th:method="post">-->
+                <input type="text" class="priceipt" placeholder="¥" name="product_mallMinPrice"><em>-</em>
+                <input type="text" class="priceipt" placeholder="¥" name="product_mallMaxPrice">
                 <input type="submit" value="确定" class="queding">
+                <!--</form>-->
             </div>
         </div>
     </div>
@@ -115,9 +112,7 @@
                 <div class="seller">共有88家商家在售</div>
             </div>
         </div>
-
         <!--分页功能-->
-
         <div class="fenye" th:if="${TotalPages > 0}" style="text-align: center">
 
             <ul class="pagination" th:if="${Number == 1} and ${TotalPages > 1}">
@@ -133,8 +128,12 @@
                 </li>
                 <li><a th:href="@{/ProductListController/searchProductList(page=${Number+1},product_category=${product_category})}">下一页</a></li><!--//请求页数+1-->
             </ul>
-
+<<<<<<< HEAD
             <ul class="pagination" th:if="${Number > 1} and ${Number > 1}"><!--//显示上一页-->
+=======
+
+            <ul class="pagination" th:if="${Number > 1} and ${TotalPages > 1}"><!--//显示上一页-->
+>>>>>>> eb06a8562ed138f295ac79b3f4eb6c0305d80073
                 <li><a th:href="@{/ProductListController/searchProductList(page=1,product_category=${product_category})}">首页</a></li><!--//跳转至第一页-->
                 <li><a th:href="@{/ProductListController/searchProductList(page=${Number-1},product_category=${product_category})}">上一页</a></li><!--//请求页数-1-->
                 <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
@@ -149,9 +148,7 @@
                         th:href="@{/ProductListController/searchProductList(page=${Number+1},product_category=${product_category})}">下一页</a></li><!--//请求页数+1-->
                 <li><a th:href="@{/ProductListController/searchProductList(page=${Number},product_category=${product_category})}">尾页</a></li><!--//跳转至第Number页-->
             </ul>
-
         </div>
-
         <div class="back-to-top" onclick="pageScroll()">
             <i class="iconfont">&#xe614;</i>
             <span class="b-to-t">返回顶部</span>
@@ -160,24 +157,26 @@
         <div th:if="${session.user != null}">
             <div class="headersell">猜你喜欢</div>
             <div class="hotsell">
-                <figure th:each="recommendedProducts : ${recommendedProducts}">
-                    <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}">
-                        <img th:src="${recommendedProducts.product_picture}" style="width: 232px;height: 232px;">
-                    </a>
-                    <span style="color: red; font-size: 20px"
-                          th:text="${recommendedProducts.product_mallPrice}">¥6666</span>&nbsp;&nbsp;<s
-                        th:text="${recommendedProducts.product_counterPrice}">¥5555</s>
-                    <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}"
-                       class="jieshao" th:text="${recommendedProducts.product_keywords}">
-                        新飞除菌新飞除菌新飞除菌新飞除菌
-                    </a>
-                    <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
-                    <div class="xinfi">
-                        <a href="#" style="display: block;">
-                            <img th:src="@{/images/xflogo.ico}" class="lettle">
+                <div class="long-hotsell">
+                    <figure th:each="recommendedProducts : ${recommendedProducts}">
+                        <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}">
+                            <img th:src="${recommendedProducts.product_picture}" style="width: 232px;height: 232px;">
                         </a>
-                    </div>
-                </figure>
+                        <span style="color: red; font-size: 20px"
+                              th:text="${recommendedProducts.product_mallPrice}">¥6666</span>&nbsp;&nbsp;<s
+                            th:text="${recommendedProducts.product_counterPrice}">¥5555</s>
+                        <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}"
+                           class="jieshao" th:text="${recommendedProducts.product_keywords}">
+                            新飞除菌新飞除菌新飞除菌新飞除菌
+                        </a>
+                        <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
+                        <div class="xinfi">
+                            <a href="#" style="display: block;">
+                                <img th:src="@{/images/xflogo.ico}" class="lettle">
+                            </a>
+                        </div>
+                    </figure>
+                </div>
             </div>
         </div>
         <div class="search2">

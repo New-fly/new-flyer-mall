@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> getProductListPage(String product_keywords, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
-        Specification<Product> specification = new PageUtil<Product>(product_keywords).getPage("product_keywords", "product_serviceType", "product_category");
+        Specification<Product> specification = new PageUtil<Product>(product_keywords).getPage("product_keywords", "product_category");
         Page<Product> pages = productRepository.findAll(specification, pageable);
         return pages;
     }
@@ -250,7 +250,7 @@ public class ProductServiceImpl implements ProductService {
     public Page getProductCategoryList(String category_name, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "categoryId");
         Pageable pageable = new PageRequest(page, limit, sort);
-        Specification<ProductCategory> specification = new PageUtil<ProductCategory>(category_name).getPage("category_name");
+        Specification<ProductCategory> specification = new PageUtil<ProductCategory>(category_name).getPage("category_name", "parent_name");
         Page<ProductCategory> pages = productCategoryRepository.findAll(specification, pageable);
         return pages;
     }
@@ -792,8 +792,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> findByPrice(String product_mallPrice,int page, int limit) {
-        //拆分价格为数组
+    public Page<Product> findByPrice(String product_mallMinPrice, String product_mallMaxPrice, int page, int limit) {
+
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
         Specification<Product> specification = new Specification<Product>() {
@@ -801,31 +801,32 @@ public class ProductServiceImpl implements ProductService {
             public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 Predicate predicate = null;
                 Path path = root.get("product_mallPrice");
-                float[] price = new float[1];
-                if (product_mallPrice.contains(",")) {
-                    String[] str = product_mallPrice.split(",");
-                    if (str.length != 0) {
-                        price = new float[str.length];
-                        for (int i = 0; i < price.length; i++) {
-                            price[i] = Integer.valueOf(str[i]);
+                if((product_mallMinPrice != null && !product_mallMinPrice.equals("")) || (product_mallMaxPrice != null && !product_mallMaxPrice.equals(""))) {
+                    if (product_mallMinPrice != null && !product_mallMinPrice.equals("") && product_mallMaxPrice != null && !product_mallMaxPrice.equals("") ) {
+                        float a;
+                        float minPrice = Integer.valueOf(product_mallMinPrice);
+                        float maxPrice = Integer.valueOf(product_mallMaxPrice);
+                        if (minPrice > maxPrice) {
+                            a = minPrice;
+                            minPrice = maxPrice;
+                            maxPrice = a;
                         }
-                    }
-                    predicate = criteriaBuilder.and(
-                            criteriaBuilder.ge(path,price[0]),
-                            criteriaBuilder.le(path,price[1])
-                    );
-                } else {
-                    float Price = Integer.valueOf(product_mallPrice);
-                    if (Price == 10000) {
-                        predicate = criteriaBuilder.gt(path, Price);
-                    } else if (Price == 1000) {
-                        predicate = criteriaBuilder.lt(path, Price);
+                        predicate = criteriaBuilder.and(
+                                criteriaBuilder.ge(path, minPrice),
+                                criteriaBuilder.le(path, maxPrice)
+                        );
+                    } else if (product_mallMinPrice != null) {
+                        float minPrice = Integer.valueOf(product_mallMinPrice);
+                        predicate = criteriaBuilder.lt(path, minPrice);
+                    } else {
+                        float maxPrice = Integer.valueOf(product_mallMaxPrice);
+                        predicate = criteriaBuilder.gt(path, maxPrice);
                     }
                 }
                 return predicate;
             }
         };
-        Page pages =  productRepository.findAll(specification,pageable);
+        Page pages = productRepository.findAll(specification, pageable);
         return pages;
     }
 

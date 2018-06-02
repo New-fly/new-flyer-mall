@@ -318,32 +318,36 @@ a:hover{
 }
 .hotsell{
     width: 1200px;
-    margin: 0 auto;
+    height: 440px;
+    margin: 15px auto;
     overflow: hidden;
-    height: 450px;
-    margin-top: 15px;
+    position: relative;
+}
+.long-hotsell{
+    /*clear:both;*/
+    /*white-space: nowrap;*/
 }
 .headersell{
-    width: 1160px;
+    width: 1178px;
     background: #fff;
     padding: 0px 20px;
     font-size: 16px;
     margin: 0 auto;
-
 }
 figure{
-    width: 268px;
+    width: 265px;
+    height: 400px;
     padding: 15px;
     margin: 15px;
     border: 1px solid #A3A3A3;
-    float: left;
+    display: inline-block;
+    /*white-space: pre-wrap;*/
 }
 .jieshao{
     height: 53px;
     display: block;
     padding: 10px 0;
 }
-
 .lettle{
     width: 40px;
     height: 40px;
@@ -472,4 +476,12 @@ figure{
     font-weight: 500;
     text-align: center;
     letter-spacing: 5px;
+}
+.abcd{
+    width: 300px;
+    height: 150px;
+    position: absolute;
+    top: 200px;
+    left: -300px;
+    background-color: black;
 }
