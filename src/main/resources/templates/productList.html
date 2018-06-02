@@ -128,12 +128,7 @@
                 </li>
                 <li><a th:href="@{/ProductListController/searchProductList(page=${Number+1},product_category=${product_category})}">下一页</a></li><!--//请求页数+1-->
             </ul>
-<<<<<<< HEAD
-            <ul class="pagination" th:if="${Number > 1} and ${Number > 1}"><!--//显示上一页-->
-=======
-
             <ul class="pagination" th:if="${Number > 1} and ${TotalPages > 1}"><!--//显示上一页-->
->>>>>>> eb06a8562ed138f295ac79b3f4eb6c0305d80073
                 <li><a th:href="@{/ProductListController/searchProductList(page=1,product_category=${product_category})}">首页</a></li><!--//跳转至第一页-->
                 <li><a th:href="@{/ProductListController/searchProductList(page=${Number-1},product_category=${product_category})}">上一页</a></li><!--//请求页数-1-->
                 <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">

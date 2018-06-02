@@ -25,8 +25,8 @@ public class UserOrderController extends BaseController {
     //订单详情
     @RequestMapping("/orderDetails")
     public ModelAndView orderInfo(Model model, long orderId) {
-        Orders order=ordersService.findOrdersById(orderId);
-        model.addAttribute("order", order);
+        List<Orders> orders = ordersService.findOrdersByNumber(orderId);
+        model.addAttribute("orders", orders);
         return new ModelAndView("OrderInfo");
     }
     /**
@@ -38,21 +38,21 @@ public class UserOrderController extends BaseController {
     @RequestMapping("/userOrderList")
     public ModelAndView userOrderList(Model model,long userId){
         Map<String, List> map = ordersService.userOrder(userId);
-        String [] orderTwo = new String[100];
-        for (int i = 0; i < orderTwo.length; i++) {
-            orderTwo[i] = "批量购买"+i;
-        }
+        List<String> orderNumbers = ordersService.findOrderNumbers(userId);
+        model.addAttribute("orderNumbers",orderNumbers);
+
         for (int i = 0; i < map.size(); i++) {
-            List orders1 = map.get(orderTwo[i+1]);
+            List orders1 = map.get(orderNumbers.get(i));
             for (Object anOrders11 : orders1) {
                 System.out.println(anOrders11);
             }
             System.out.println("----------------------");
         }
         for (int i = 0; i < map.size(); i++) {
-            model.addAttribute(orderTwo[i+1],map.get(orderTwo[i+1]));
+            model.addAttribute(orderNumbers.get(i),map.get(orderNumbers.get(i)));
         }
-        model.addAttribute("number",map.size());
+        model.addAttribute("maps",map);
+        model.addAttribute("number",map.size()-1);
 
         List<Orders> unacceptedOrder = ordersService.userUnacceptedOrder(userId);
         model.addAttribute("unacceptedOrder",unacceptedOrder);

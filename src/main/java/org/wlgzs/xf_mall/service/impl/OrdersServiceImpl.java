@@ -68,6 +68,11 @@ public class OrdersServiceImpl implements OrdersService {
     public Orders findOrdersById(long orderId) {
         return ordersRepository.findById(orderId);
     }
+    @Override
+    public List<Orders> findOrdersByNumber(long orderId) {
+        Orders orders = ordersRepository.findById(orderId);
+        return ordersRepository.findByNumber(orders.getOrder_number());
+    }
 
     //按照订单号查询订单
     public List<Orders> findOrdersByOrderNumber(String order_number) {
@@ -165,7 +170,7 @@ public class OrdersServiceImpl implements OrdersService {
             //int count = Integer.parseInt(request.getParameter("shoppingCart_count"));
             order.setOrder_quantity((int) shoppingCounts[i]);  //购买数量
             System.out.println(shoppingCounts[i]);
-            float amount = Float.parseFloat(request.getParameter("total_amount"));
+            float amount = Float.parseFloat(request.getParameter("WIDtotal_amount"));
             order.setProduct_PaidPrice(amount); //实付金额
             order.setProductId(Ids[i]); //商品id
             order.setProduct_isRedeemable(product.getProduct_isRedeemable());  //该商品是否积分兑换
@@ -218,7 +223,10 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public void userAccepted(long orderId) {
         Orders orders = ordersRepository.findById(orderId);
-        orders.setOrder_status("待评价");
+        List<Orders> ordersList = ordersRepository.findByNumber(orders.getOrder_number());
+        for (Orders anOrdersList : ordersList) {
+            anOrdersList.setOrder_status("待评价");
+        }
         ordersRepository.save(orders);
     }
 
@@ -342,17 +350,16 @@ public class OrdersServiceImpl implements OrdersService {
         ordersRepository.deleteByIds(ids);
     }
 
+    //退款
     @Override
     public void refund(long orderId, HttpServletResponse response,HttpSession session) throws IOException, AlipayApiException {
         User user = (User) session.getAttribute("user");
         long userId = user.getUserId();
         Orders orders = ordersRepository.findById(orderId);
         List<Orders> ordersList = ordersRepository.findByNumber(orders.getOrder_number());
-        int money = 0;
         long[] Ids = new long[ordersList.size()];
         long[] shoppingCounts = new long[ordersList.size()];
         for (int i = 0; i < ordersList.size(); i++) {
-            money += ordersList.get(i).getProduct_PaidPrice();
             Ids[i] = ordersList.get(i).getProductId();
             shoppingCounts[i] = ordersList.get(i).getOrder_quantity();
             System.out.println("修改订单状态");
@@ -370,13 +377,12 @@ public class OrdersServiceImpl implements OrdersService {
             System.out.println("返回用户积分");
             userRepository.save(user);
             //积分表
-            UserIntegral userIntegral = userIntegralRepository.findByUserIdAndProductId(userId,product.getProduct_keywords());
+            UserIntegral userIntegral = userIntegralRepository.findByUserIdAndProductId(userId,ordersList.get(0).getOrder_purchaseTime());
             if(userIntegral!=null){
                 System.out.println("删除积分记录");
                 userIntegralRepository.deleteById(userIntegral.getUserIntegralId());
             }
         }
-
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
         //获得初始化的AlipayClient
@@ -387,7 +393,7 @@ public class OrdersServiceImpl implements OrdersService {
         System.out.println(orders.getOrder_number());
         String out_trade_no = new String(orders.getOrder_number());
         //需要退款的金额，该金额不能大于订单金额，必填
-        String refund_amount = new String(String.valueOf(money));
+        String refund_amount = new String(String.valueOf(ordersList.get(0).getProduct_PaidPrice()));
         //标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传
         String out_request_no = new String(UUID.randomUUID().toString());
 
@@ -400,23 +406,18 @@ public class OrdersServiceImpl implements OrdersService {
         out.println(result);
     }
 
+    //用户的订单
     @Override
     public Map<String, List> userOrder(long userId) {
         List<Orders> orders = ordersRepository.userOrderList(userId);
         //System.out.println("订单数："+orders.size());
-        String [] orderTwo = new String[100];
-        for (int i = 0; i < orderTwo.length; i++) {
-            orderTwo[i] = "批量购买"+i;
-        }
+        List<String> orderNumbers = ordersRepository.findOrderNumbers(userId);
+
         Map<String, List> map = new HashMap<String, List>();
         int m = 0;
         List<Orders> ordersTwo = new ArrayList<>();
         for (int i = 0; i < orders.size(); i++) {
-            /*for (int j = 0; j < ordersTwo.size(); j++) {
-                System.out.println("集合中已经存的订单"+ordersTwo.get(i));
-            }*/
             if (!ordersTwo.contains(orders.get(i))) {
-                //System.out.println("不存在的订单："+orders.get(i));
                 int n = 0;
                 List<Orders> ordersList = new ArrayList<>();
                 for (int j = i + 1; j < orders.size(); j++) {
@@ -437,12 +438,17 @@ public class OrdersServiceImpl implements OrdersService {
                 }
                 System.out.println("第" + i + "次循环，订单集合：" + ordersList);
                 if (ordersList.size() != 0) {
-                    m++;
                     //System.out.println("m的值:" + m);
-                    map.put(orderTwo[m], ordersList);
+                    map.put(orderNumbers.get(m), ordersList);
+                    m++;
                 }
             }
         }
         return map;
+    }
+
+    @Override
+    public List<String> findOrderNumbers(long userId) {
+        return ordersRepository.findOrderNumbers(userId);
     }
 }

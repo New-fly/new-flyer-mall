@@ -16,7 +16,7 @@
 <body>
 <div th:include="common/top_header::header"></div>
 <div class="nav1">
-    <div class="navheader"> <img th:src="@{/images/logo-foot.png}" ></div>
+    <div class="navheader"><img th:src="@{/images/logo-foot.png}"></div>
 </div>
 <div class="site-header">
     <a th:href="@{/HomeController/homeProduct}">首页</a>
@@ -30,11 +30,16 @@
                 <div class="box-hd">
                     <h3 class="h33">个人中心</h3>
                     <ul>
-                        <li><a target="_blank" th:href="@{/ProductListController/shoppingCart(userId=${session.userId})}">购物车</a></li>
+                        <li><a target="_blank"
+                               th:href="@{/ProductListController/shoppingCart(userId=${session.userId})}">购物车</a></li>
                         <li><a th:href="@{/UserOrderController/userOrderList(userId=${session.userId})}">我的订单</a></li>
-                        <li><a target="_blank" th:href="@{/FootprintController/userFootprint(userId=${session.userId})}">我的足迹</a></li>
-                        <li><a target="_blank" th:href="@{/ProductListController/collectionProduct(userId=${session.userId})}">我的收藏</a></li>
-                        <li><a target="_blank" th:href="@{/IntegralController/integralList(userId=${session.userId})}">我的积分</a></li>
+                        <li><a target="_blank"
+                               th:href="@{/FootprintController/userFootprint(userId=${session.userId})}">我的足迹</a></li>
+                        <li><a target="_blank"
+                               th:href="@{/ProductListController/collectionProduct(userId=${session.userId})}">我的收藏</a>
+                        </li>
+                        <li><a target="_blank" th:href="@{/IntegralController/integralList(userId=${session.userId})}">我的积分</a>
+                        </li>
                         <!-- <li><a href="">我的评价</a></li> -->
                         <li><a th:href="@{/ProductListController/integralProduct}">积分兑换</a></li>
                     </ul>
@@ -52,93 +57,169 @@
             <div id="myTabContent" class="tab-content">
                 <!--1.所有订单-->
                 <div class="tab-pane fade in active" id="home">
-                    <div class="order-list-box">
+                    <div class="order-list-box"  th:each="i:${#numbers.sequence(0,number)}">
                         <div class="detail-header">
-                            <h1 >已付款</h1><h1 style="float:right;"><a href="" class="btn btn2">退款</a></h1>
+                            <h1 th:text="${maps.get(orderNumbers.get(i)).get(0).order_status}">已付款</h1>
+                            <h1 style="float:right;">
+                                <a th:if="${maps.get(orderNumbers.get(i)).get(0).order_status != '已退款' && maps.get(orderNumbers.get(i)).get(0).order_status != '交易成功'}"
+                                   href="javascript:void(0);"
+                                   th:onclick="'javascript:returnOrder('+${maps.get(orderNumbers.get(i)).get(0).orderId}+');'"
+                                   class="btn btn2">退款</a></h1>
+                            <h1 style="float:right;">
+                                <a th:if="${maps.get(orderNumbers.get(i)).get(0).order_status == '已退款'}"
+                                   class="btn btn2">已退款</a></h1>
+                            <h1 style="float:right;">
+                                <a th:if="${maps.get(orderNumbers.get(i)).get(0).order_status == '交易成功'}"
+                                   class="btn btn2">交易成功</a></h1>
                             <div class="info">
-                                <span class="span1"><a th:text="${orders.get(0).user_name}">王静晓&nbsp;&nbsp;&nbsp;&nbsp;</a></span>|&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span class="span1">订单号：<a th:text="${orders.get(0).order_number}">11223344556699877</a></span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span class="span1" style="float:right;">订单金额:&nbsp;&nbsp;&nbsp;&nbsp;<a style="color:red;font-size:20px;" th:text="${orders.get(0).product_PaidPrice}">666元</a></span>
+                                <span class="span1"><a
+                                        th:text="'收货人：'+${maps.get(orderNumbers.get(i)).get(0).address_name}"></a>&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="span1">订单号：<a th:text="${orderNumbers.get(i)}">11223344556699877</a></span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="span1" style="float:right;">订单金额:&nbsp;&nbsp;&nbsp;&nbsp;<a
+                                        style="color:red;font-size:20px;"
+                                        th:text="${maps.get(orderNumbers.get(i)).get(0).product_PaidPrice}">666元</a></span>
                             </div>
                         </div>
                         <div class="productdet">
-                            <div class="product" th:each="order : ${orders}">
-                                <a href=""><img th:src="${order.product_picture}" class="img2"></a>
+                            <div class="product" th:each="map : ${maps.get(orderNumbers.get(i))}">
+                                <a href=""><img th:src="${map.product_picture}" class="img2"></a>
                                 <span class="span2">
-                                <a th:href="@{/ProductListController/toProduct(productId=${order.productId})}" th:text="${order.product_keywords}" ></a></span><br>
-                                <span class="span2" style="margin-left: 104px;margin-top: -32px;"><a th:text="${order.product_PaidPrice}" class="aaa">299</a>元/个</span>
+                                <a th:href="@{/ProductListController/toProduct(productId=${map.productId})}"
+                                   th:text="${map.product_keywords}"></a></span><br>
+                                <span class="span2" style="margin-left: 104px;margin-top: -32px;">
+                                    <a th:text="${map.product_mallPrice}" class="aaa">299</a>元
+                                    <a th:if="${map.order_status == '待评价'}" th:href="@{/EstimateController/toAddEstimate(orderId=${map.orderId})}" class="btn3">评价</a>
+                                </span>
                             </div>
-                           
+
                             <div class="opcate">
-                                <div class="rightopcate"><a th:text="${orders.get(0).order_status}" class="btn" style="background:#FF6700;color:#fff;" >待付款</a></div>
-                                <div class="rightopcate"><a th:href="@{/UserOrderController/orderDetails(orderId=${orders.get(0).orderId})}" class="btn btn2">订单详情</a></div>
+                                <div class="rightopcate">
+                                    <a th:if="${maps.get(orderNumbers.get(i)).get(0).order_status == '待收货'}"
+                                       href="javascript:void(0);"
+                                       th:onclick="'javascript:userAccepted('+${maps.get(orderNumbers.get(i)).get(0).orderId}+');'"
+                                       th:text="${maps.get(orderNumbers.get(i)).get(0).order_status}" class="btn"
+                                       style="background:#FF6700;color:#fff;"></a>
+                                    <a th:if="${maps.get(orderNumbers.get(i)).get(0).order_status != '待收货'}"
+                                       th:text="已收货" class="btn"
+                                       style="background:#FF6700;color:#fff;"></a>
+                                </div>
+                                <div class="rightopcate"><a
+                                        th:href="@{/UserOrderController/orderDetails(orderId=${maps.get(orderNumbers.get(i)).get(0).orderId})}"
+                                        class="btn btn2">订单详情</a></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!--2.待收货-->
-             <div class="tab-pane fade" id="ejb">
-                  <div class="tab-pane fade in active" id="home">
-                      <div class="order-list-box">
-                          <div class="detail-header">
-                              <h1 th:text="${orders.get(0).order_status}">已付款</h1><h1 style="float:right;"><a href="" class="btn btn2">退款</a></h1>
-                              <div class="info">
-                                  <span class="span1"><a th:text="${orders.get(0).user_name}">王静晓&nbsp;&nbsp;&nbsp;&nbsp;</a></span>|&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <span class="span1">订单号：<a th:text="${orders.get(0).order_number}">11223344556699877</a></span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <span class="span1" style="float:right;">订单金额:&nbsp;&nbsp;&nbsp;&nbsp;<a style="color:red;font-size:20px;" th:text="${orders.get(0).product_PaidPrice}">666元</a></span>
-                              </div>
-                          </div>
-                          <div class="productdet">
-                              <div class="product" th:each="order : ${orders}">
-                                  <a href=""><img th:src="${order.product_picture}" class="img2"></a>
-                                  <span class="span2">
-                                <a th:href="@{/ProductListController/toProduct(productId=${order.productId})}" th:text="${order.product_keywords}" ></a></span><br>
-                                  <span class="span2" style="margin-left: 104px;margin-top: -32px;"><a th:text="${order.product_PaidPrice}" class="aaa">299</a>元/个</span>
-                              </div>
+                <div class="tab-pane fade" id="ejb">
+                    <div class="tab-pane fade in active" id="home">
+                        <div class="order-list-box" th:if="${maps.get(orderNumbers.get(i)).get(0).order_status == '待收货'}" th:each="i:${#numbers.sequence(0,number)}">
+                            <div class="detail-header">
+                                <h1>已付款</h1>
+                                <h1 style="float:right;">
+                                    <a th:if="${maps.get(orderNumbers.get(i)).get(0).order_status != '已退款'}"
+                                       href="javascript:void(0);"
+                                       th:onclick="'javascript:returnOrder('+${maps.get(orderNumbers.get(i)).get(0).orderId}+');'"
+                                       class="btn btn2">退款</a></h1>
+                                <h1 style="float:right;">
+                                    <a th:if="${maps.get(orderNumbers.get(i)).get(0).order_status == '已退款'}"
+                                       class="btn btn2">已退款</a></h1>
+                                <div class="info">
+                                <span class="span1"><a
+                                        th:text="'收货人：'+${maps.get(orderNumbers.get(i)).get(0).address_name}"></a>&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span class="span1">订单号：<a
+                                            th:text="${orderNumbers.get(i)}">11223344556699877</a></span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span class="span1" style="float:right;">订单金额:&nbsp;&nbsp;&nbsp;&nbsp;<a
+                                            style="color:red;font-size:20px;"
+                                            th:text="${maps.get(orderNumbers.get(i)).get(0).product_PaidPrice}">666元</a></span>
+                                </div>
+                            </div>
+                            <div class="productdet">
+                                <div class="product" th:each="map : ${maps.get(orderNumbers.get(i))}">
+                                    <a href=""><img th:src="${map.product_picture}" class="img2"></a>
+                                    <span class="span2">
+                                <a th:href="@{/ProductListController/toProduct(productId=${map.productId})}"
+                                   th:text="${map.product_keywords}"></a></span><br>
+                                    <span class="span2" style="margin-left: 104px;margin-top: -32px;"><a
+                                            th:text="${map.product_mallPrice}" class="aaa">299</a>元</span>
+                                </div>
 
-                              <div class="opcate">
-                                  <div class="rightopcate"><a th:text="${orders.get(0).order_status}" class="btn" style="background:#FF6700;color:#fff;" >待付款</a></div>
-                                  <div class="rightopcate"><a th:href="@{/UserOrderController/orderDetails(orderId=${orders.get(0).orderId})}" class="btn btn2">订单详情</a></div>
-                              </div>
-                          </div>
-                      </div>
-            </div> 
-            </div>
+                                <div class="opcate">
+                                    <div class="rightopcate">
+                                        <a th:if="${maps.get(orderNumbers.get(i)).get(0).order_status == '待收货'}"
+                                           href="javascript:void(0);"
+                                           th:onclick="'javascript:userAccepted('+${maps.get(orderNumbers.get(i)).get(0).orderId}+');'"
+                                           th:text="${maps.get(orderNumbers.get(i)).get(0).order_status}" class="btn"
+                                           style="background:#FF6700;color:#fff;"></a>
+                                        <a th:if="${maps.get(orderNumbers.get(i)).get(0).order_status != '待收货'}"
+                                           th:text="已收货" class="btn"
+                                           style="background:#FF6700;color:#fff;"></a>
+                                    </div>
+                                    <div class="rightopcate"><a
+                                            th:href="@{/UserOrderController/orderDetails(orderId=${maps.get(orderNumbers.get(i)).get(0).orderId})}"
+                                            class="btn btn2">订单详情</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!--3.待评价 -->
-        
-             <div class="tab-pane fade" id="ejba">
-                   <div class="tab-pane fade in active" id="home">
-                       <div class="order-list-box">
-                           <div class="detail-header">
-                               <h1 th:text="${orders.get(0).order_status}">已付款</h1><h1 style="float:right;"><a  class="btn btn2">退款</a></h1>
-                               <div class="info">
-                                   <span class="span1"><a th:text="${orders.get(0).user_name}">王静晓&nbsp;&nbsp;&nbsp;&nbsp;</a></span>|&nbsp;&nbsp;&nbsp;&nbsp;
-                                   <span class="span1">订单号：<a th:text="${orders.get(0).order_number}">11223344556699877</a></span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-                                   <span class="span1" style="float:right;">订单金额:&nbsp;&nbsp;&nbsp;&nbsp;<a style="color:red;font-size:20px;" th:text="${orders.get(0).product_PaidPrice}">666元</a></span>
-                               </div>
-                           </div>
-                           <div class="productdet">
-                               <div class="product" th:each="order : ${orders}">
-                                   <a href=""><img th:src="${order.product_picture}" class="img2"></a>
-                                   <span class="span2">
-                                <a th:href="@{/ProductListController/toProduct(productId=${order.productId})}" th:text="${order.product_keywords}" ></a></span><br>
-                                   <span class="span2" style="margin-left: 104px;margin-top: -32px;"><a th:text="${order.product_PaidPrice}" class="aaa">299</a>元/个</span>
-                               </div>
+                <div class="tab-pane fade" id="ejba">
+                    <div class="tab-pane fade in active" id="home">
+                        <div class="order-list-box" th:if="${maps.get(orderNumbers.get(i)).get(0).order_status == '待评价'}" th:each="i:${#numbers.sequence(0,number)}">
+                            <div class="detail-header">
+                                <h1>已付款</h1>
+                                <h1 style="float:right;">
+                                    <a th:if="${maps.get(orderNumbers.get(i)).get(0).order_status != '已退款'}"
+                                       href="javascript:void(0);"
+                                       th:onclick="'javascript:returnOrder('+${maps.get(orderNumbers.get(i)).get(0).orderId}+');'"
+                                       class="btn btn2">退款</a></h1>
+                                <h1 style="float:right;">
+                                    <a th:if="${maps.get(orderNumbers.get(i)).get(0).order_status == '已退款'}"
+                                       class="btn btn2">已退款</a></h1>
+                                <div class="info">
+                                <span class="span1"><a
+                                        th:text="'收货人：'+${maps.get(orderNumbers.get(i)).get(0).address_name}"></a>&nbsp;&nbsp;&nbsp;&nbsp;</span>|&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span class="span1">订单号：<a
+                                            th:text="${orderNumbers.get(i)}">11223344556699877</a></span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span class="span1" style="float:right;">订单金额:&nbsp;&nbsp;&nbsp;&nbsp;<a
+                                            style="color:red;font-size:20px;"
+                                            th:text="${maps.get(orderNumbers.get(i)).get(0).product_PaidPrice}">666元</a></span>
+                                </div>
+                            </div>
+                            <div class="productdet">
+                                <div class="product" th:each="map : ${maps.get(orderNumbers.get(i))}">
+                                    <a href=""><img th:src="${map.product_picture}" class="img2"></a>
+                                    <span class="span2">
+                                <a th:href="@{/ProductListController/toProduct(productId=${map.productId})}"
+                                   th:text="${map.product_keywords}"></a></span><br>
+                                    <span class="span2" style="margin-left: 104px;margin-top: -32px;"><a
+                                            th:text="${map.product_mallPrice}" class="aaa">299</a>元</span>
+                                </div>
 
-                               <div class="opcate">
-                                   <div class="rightopcate"><a th:text="${orders.get(0).order_status}" class="btn" style="background:#FF6700;color:#fff;" >待付款</a></div>
-                                   <div class="rightopcate"><a th:href="@{/UserOrderController/orderDetails(orderId=${orders.get(0).orderId})}" class="btn btn2">订单详情</a></div>
-                               </div>
-                           </div>
-                       </div>
-             </div> 
+                                <div class="opcate">
+                                    <div class="rightopcate">
+                                        <a th:if="${maps.get(orderNumbers.get(i)).get(0).order_status == '待收货'}"
+                                           href="javascript:void(0);"
+                                           th:onclick="'javascript:userAccepted('+${maps.get(orderNumbers.get(i)).get(0).orderId}+');'"
+                                           th:text="${maps.get(orderNumbers.get(i)).get(0).order_status}" class="btn"
+                                           style="background:#FF6700;color:#fff;"></a>
+                                        <a th:if="${maps.get(orderNumbers.get(i)).get(0).order_status != '待收货'}"
+                                           th:text="已收货" class="btn"
+                                           style="background:#FF6700;color:#fff;"></a>
+                                    </div>
+                                    <div class="rightopcate"><a
+                                            th:href="@{/UserOrderController/orderDetails(orderId=${maps.get(orderNumbers.get(i)).get(0).orderId})}"
+                                            class="btn btn2">订单详情</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-        
+        </div>
     </div>
-</div>
-</div>
 </div>
 <div th:include="common/top_header :: duplicate"></div>
 </body>
