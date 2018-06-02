@@ -38,7 +38,12 @@
         </div>
         <br />
         <form th:action="@{/ProductListController/addCollectionProduct(productId=*{productId},userId=${session.userId})}" method="post">
-            <br/><input class="collection" value="收藏商品" type="submit" style="display: block">
+            <div style="position: absolute;bottom: 0">
+                <i th:if="${collection==null}" class="fa fa-star-o" style="color: red"></i>
+                <i th:if="${collection!=null}" class="fa fa-star" style="color: red"></i>
+                <input th:if="${collection==null}" class="collection" value="收藏商品" type="submit">
+                <input th:if="${collection!=null}" class="collection" value="已收藏" type="button">
+            </div>
         </form>
     </div>
     <div class="all-right">
@@ -101,10 +106,10 @@
     <div class="berelated-goods">
         <div class="berelated-goods-long">
             <div th:each="recommend : ${recommendedProducts}">
-                <!--<a target="_blank" th:href="@{/ProductListController/toProduct(productId=${recommend.productId})}">-->
-                    <img th:src="${recommend.product_picture}"/>
-                <!--</a>-->
-                <div class="keywor" th:text="${recommend.product_keywords}"></div>
+                <img th:src="${recommend.product_picture}"/>
+                <a th:href="@{/ProductListController/toProduct(productId=${recommend.productId})}">
+                    <div class="keywor" th:text="${recommend.product_keywords}"></div>
+                </a>
                 <div th:text="'单价：￥'+${recommend.product_mallPrice}" class="monony"></div>
             </div>
         </div>
@@ -162,7 +167,7 @@
     <h1 class="h1sty">猜你喜欢</h1>
     <div class="recommendedProduct" th:each="recommendedProducts:${recommendedProducts}">
         <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">
-            <img th:src="${recommendedProducts.product_picture}" style="height: 170px;width: 170px;"/>
+            <img th:src="${recommendedProducts.product_picture}" style="height: 170px;width:100%;"/>
         </a>
         <a href="#" class="asty" th:text="${recommendedProducts.product_mallPrice}">199元</a><s th:text="${recommendedProducts.product_counterPrice}">599元</s><br>
         <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">

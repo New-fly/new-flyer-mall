@@ -35,17 +35,17 @@
             </div>
         </div>
     </div>
-    <div class="span16" th:object="${order}">
+    <div class="span16" th:object="${orders.get(0)}">
         <div class="main-box">
             <div class="main-hd">
                 <div class="title"><h1>订单详情</h1></div>
                 <div class="more">
-                    <div class="subtitle" th:text="*{order_number}" >订单号1111111111111111</div>
+                    <div class="subtitle" th:text="${orders.get(0).order_number}" >订单号1111111111111111</div>
                     <!--<div class="action"><a href="" class="order-a order-a1">取消订单</a><a href="" class="order-a order-a2">立即支付</a></div>-->
                 </div>
             </div>
             <div class="main-bd">
-                <div class="title"><h3 class="wite" th:text="*{order_status}">等待付款</h3></div>
+                <div class="title"><h3 class="wite" th:text="${orders.get(0).order_status}">等待付款</h3></div>
                 <!--<div class="later">47小时57分后订单将关闭</div>-->
                 <div class="more">
                     <div class="order-progress">
@@ -53,15 +53,15 @@
                             <li>下单</li>
                             <li>发货</li>
                             <li>交易成功</li>
-                            <li th:text="*{order_purchaseTime}" style="background: #fff;"></li>
-                            <li th:text="*{order_deliveryTime}" style="background: #fff;"></li>
-                            <li th:text="*{order_dealTime}" style="background: #fff;"></li>
+                            <li th:text="${orders.get(0).order_purchaseTime}" style="background: #fff;"></li>
+                            <li th:text="${orders.get(0).order_deliveryTime}" style="background: #fff;"></li>
+                            <li th:text="${orders.get(0).order_dealTime}" style="background: #fff;"></li>
                         </ul>
                     </div>
-                    <div class="product">
-                        <a href=""><img th:src="*{product_picture}" style="width: 80px;height: 80px;"></a>
-                        <span class="introduce"><a target="_blank" th:href="@{/ProductListController/toProduct(productId=${order.productId})}" th:text="*{product_keywords}">13.3小米笔记本AiR四核58GMX150深空灰</a></span>&nbsp;&nbsp;&nbsp;
-                        <span class="introduce" th:text="*{product_mallPrice}">5399元ⅹ1</span>
+                    <div class="product" style="height: 120px;" th:each="order : ${orders}">
+                        <a href=""><img th:src="${order.product_picture}" style="width: 80px;height: 80px;"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="introduce"><a target="_blank" th:href="@{/ProductListController/toProduct(order.productId)}" th:text="${order.product_keywords}">13.3小米笔记本AiR四核58GMX150深空灰</a></span>&nbsp;&nbsp;&nbsp;
+                        <span class="introduce" th:text="${order.product_mallPrice}">5399元ⅹ1</span>
                     </div>
                 </div>
             </div>
@@ -72,15 +72,15 @@
                     <tbody>
                     <tr>
                         <th>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</th>
-                        <td th:text="*{user_name}">王静晓</td>
+                        <td th:text="${orders.get(0).address_name}"></td>
                     </tr>
                     <tr>
                         <th>联系电话:</th>
-                        <td th:text="*{address_phone}">159****8126</td>
+                        <td th:text="${orders.get(0).address_phone}">159****8126</td>
                     </tr>
                     <tr>
                         <th>收货地址:</th>
-                        <td th:text="*{address_shipping}">河南 新乡市 红旗区 洪门镇 华兰大道东段河南科技学院</td>
+                        <td th:text="${orders.get(0).address_shipping}">河南 新乡市 红旗区 洪门镇 华兰大道东段河南科技学院</td>
                     </tr>
                     </tbody>
                 </table>
@@ -98,7 +98,7 @@
                     </tr>
                     <tr>
                         <th>送货时间: </th>
-                        <td th:text="*{order_deliveryTime}">不限送货时间</td>
+                        <td th:text="${orders.get(0).order_deliveryTime}">不限送货时间</td>
                     </tr>
                     </tbody>
                 </table>
@@ -107,18 +107,17 @@
             <div class="order-details">
                 <table class="details-table">
                     <tbody>
-
-                    <tr>
+                    <!--<tr>
                         <th>商品总价：</th>
-                        <td><a href="" class="aaa" th:text="*{product_mallPrice}">5399元</a></td>
-                    </tr>
+                        <td><a href="" class="aaa" th:text="${orders.get(0).product_mallPrice}">5399元</a></td>
+                    </tr>-->
                     <tr>
                         <th>运&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费: </th>
-                        <td><a href="" class="aaa" th:text="*{order_freight}">0元</a></td>
+                        <td><a href="" class="aaa" th:text="${orders.get(0).order_freight}">0元</a></td>
                     </tr>
                     <tr>
                         <th>应付金额: </th>
-                        <td><a href="" class="aaa" th:text="*{product_PaidPrice}">5399元</a></td>
+                        <td><a href="" class="aaa" th:text="${orders.get(0).product_PaidPrice}+'元'">5399元</a></td>
                     </tr>
                     </tbody>
                 </table>
