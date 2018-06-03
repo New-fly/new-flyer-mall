@@ -24,4 +24,6 @@ public interface ActivityService {
     void deleteActivity(long activityId);
 
     Activity findByActivityName(String activity_name);
+
+    boolean booleanByActivityName(String activity_name);
 }

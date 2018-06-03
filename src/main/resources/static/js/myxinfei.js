@@ -13,7 +13,7 @@ function userAccepted(orderId) {
     }
 }
 function returnOrder(orderId) {
-    var isDel = confirm("您确认要退货吗？");
+    var isDel = confirm("您确认要退款吗？");
     if(isDel){
         //要删除
         location.href = "/aliPay/refund?orderId="+orderId;
