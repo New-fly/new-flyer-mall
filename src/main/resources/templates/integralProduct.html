@@ -24,7 +24,7 @@
 </div>
 <div class="all-list">
     <div class="list" th:each="product : ${products}">
-        <form th:href="@{/aliPay/toChange(productId=${product.productId})}">
+        <form th:action="@{/aliPay/toChange(productId=${product.productId})}" method="post">
             <img class="listimg" th:src="${product.product_picture}"/>
             <div th:text="${product.product_keywords}" class="keywords"></div>
             <div class="list-fen" th:text="${product.product_needPoints}+'积分'">35453积分</div>
