@@ -1,0 +1,5 @@
+RestartInitInstance -> WaitForSingleObject
+RestartInitInstance -> WaitForSingleObject
+RestartInitInstance -> WaitForSingleObject
+RestartInitInstance -> WaitForSingleObject
+"C:\Program Files\TopDomain\e-Learning Class V6 2007 Premier\StudentMain.exe" "C:\Program Files\TopDomain\e-Learning Class V6 2007 Premier\StudentMain.exe" "C:\Program Files\TopDomain\e-Learning Class V6 2007 Premier\StudentMain.exe" "C:\Program Files\TopDomain\e-Learning Class V6 2007 Premier\StudentMain.exe" 
