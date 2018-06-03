@@ -39,6 +39,10 @@ public class LoginController extends BaseController {
         }
     }
 
+    @RequestMapping("/")
+    public String toIndex() {
+        return "redirect:/HomeController/homeProduct";
+    }
     //去注册
     @RequestMapping("/toRegistered")
     public String toRegister() {
