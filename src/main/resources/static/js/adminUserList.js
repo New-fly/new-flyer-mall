@@ -61,7 +61,6 @@ var del=document.getElementsByClassName("del")[0];
 var checx=document.getElementsByClassName("checx");
 var shanchu=document.getElementsByClassName("shanchu")[0];
 var radio=document.getElementsByClassName("demo--radio");
-console.log(radio.length);
 opcate.onclick=function () {
     opcate.style.display="none";
     del.style.display="inline-block";

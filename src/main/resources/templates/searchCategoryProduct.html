@@ -145,10 +145,6 @@
                 <li><a th:href="@{/ProductListController/searchCategoryProduct(page=${Number},product_category=${product_category})}">尾页</a></li><!--//跳转至第Number页-->
             </ul>
         </div>
-        <div class="back-to-top" onclick="pageScroll()">
-            <i class="iconfont">&#xe614;</i>
-            <span class="b-to-t">返回顶部</span>
-        </div>
         <!--//推荐商品-->
         <div th:if="${session.user != null}">
             <div class="headersell">猜你喜欢</div>
@@ -183,6 +179,12 @@
                                                                                   class="submit submit2" value="搜索">
             </form>
         </div>
+    </div>
+    <div class="back-to-top" >
+        <div class="iconfont">
+            <i class="fa fa-chevron-up fa-2x"></i>
+        </div>
+        <span class="b-to-t">返回顶部</span>
     </div>
     <div th:include="common/top_header :: duplicate"></div>
 </div>
