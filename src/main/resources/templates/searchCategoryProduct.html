@@ -199,13 +199,12 @@
                 <div class="nextone"> > </div>
             </div>
         </div>
-        <div class="search2">
-            <form th:action="@{/ProductListController/searchProductList}" method="post">
-                <span class=""><input type="text" name="product_category" th:value="*{product_category}" class="ipt1"
-                                      placeholder="请输入要搜索的内容"></span>
-                <input type="submit" value="搜索" class="submit">
-            </form>
+    </div>
+    <div class="back-to-top" >
+        <div class="iconfont">
+            <i class="fa fa-chevron-up fa-2x"></i>
         </div>
+        <span class="b-to-t">返回顶部</span>
     </div>
     <div th:include="common/top_header :: duplicate"></div>
 </div>

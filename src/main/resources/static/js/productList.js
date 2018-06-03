@@ -19,7 +19,7 @@ window.onload=function() {
             if (p == '末页') p = total;
             if (p != page) callback(parseInt(p));
         });
-    }
+    };
     onload = function () {
         //用用回调
         function go(p) {
@@ -27,8 +27,7 @@ window.onload=function() {
         }
 
         $('.pager').pager(1, 10, go);
-    }
-
+    };
 
 //返回顶部(缓慢滑动)
     document.getElementsByClassName("back-to-top")[0].onclick=pageScroll;
@@ -39,6 +38,7 @@ window.onload=function() {
         scrolldelay = setTimeout(pageScroll, 100);
         //获取scrollTop值，声明了DTD的标准网页取document.documentElement.scrollTop，否则取document.body.scrollTop；因为二者只有一个会生效，另一个就恒为0，所以取和值可以得到网页的真正的scrollTop值
         var sTop = document.documentElement.scrollTop + document.body.scrollTop;
+        console.log(sTop);
         //判断当页面到达顶部，取消延时代码（否则页面滚动到顶部会无法再向下正常浏览页面）
         if (sTop == 0) clearTimeout(scrolldelay);
     }
@@ -84,6 +84,5 @@ window.onload=function() {
         }
         document.getElementsByClassName("long-hotsell")[0].style.left = number + "px";
     };
-}
-
+};
 

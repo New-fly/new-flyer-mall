@@ -40,14 +40,13 @@ public class UserOrderController extends BaseController {
         Map<String, List> map = ordersService.userOrder(userId);
         List<String> orderNumbers = ordersService.findOrderNumbers(userId);
         model.addAttribute("orderNumbers",orderNumbers);
-
-        for (int i = 0; i < map.size(); i++) {
+        /*for (int i = 0; i < map.size(); i++) {
             List orders1 = map.get(orderNumbers.get(i));
             for (Object anOrders11 : orders1) {
                 System.out.println(anOrders11);
             }
             System.out.println("----------------------");
-        }
+        }*/
         for (int i = 0; i < map.size(); i++) {
             model.addAttribute(orderNumbers.get(i),map.get(orderNumbers.get(i)));
         }
