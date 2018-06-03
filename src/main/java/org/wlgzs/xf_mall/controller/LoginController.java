@@ -47,8 +47,7 @@ public class LoginController extends BaseController {
 
     //去登陆
     @RequestMapping("/toLogin")
-    public ModelAndView toLogin(Model model) {
-        String activity_name = "登录页面";
+    public ModelAndView toLogin(Model model,@RequestParam(value = "activity_name", defaultValue = "登录页面") String activity_name) {
         List<ProductActivity> productActivities = productActivityService.activityProductList(activity_name);
         model.addAttribute("productActivities",productActivities);
         Activity activity = activityService.findByActivityName(activity_name);

@@ -62,13 +62,13 @@ body,html{
     border-color: transparent transparent white transparent;
 }
 .user_message{
-	width: 250px;
-	height: 120px;
-	position: absolute;
-	top: -60px;
-	right: 30px;
-	overflow: hidden;
-}
+	 width: 250px;
+	 height: 120px;
+	 position: absolute;
+	 top: -60px;
+	 right: 30px;
+	 overflow: hidden;
+ }
 .user_img{
 	width: 80px;
 	height: 80px;

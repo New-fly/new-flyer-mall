@@ -31,7 +31,7 @@
 </div>
 <div class="main">
     <div class="main-content">
-        <p class="p-font">全国定制热销中</p>
+        <p class="p-font" th:text="${activity.activity_name}">全国定制热销中</p>
         <div class="photoshow">
             <div class="time">
                 <ul class="uull">
@@ -39,9 +39,12 @@
                     <li class="llii" th:text="${time}+'结束'">18:00结束</li>
                 </ul>
             </div>
+            <div th:if="${productActivities.size() == 0}">
+                <h1 th:text="${mag}" class="hh11"></h1>
+            </div>
             <div class="picture">
                 <div class="item" th:each="productActivity:${productActivities}">
-                    <form th:action="@{/aliPay/oneToPay(productId = ${productActivity.productId})}" method="post">
+                    <form th:action="@{/aliPay/oneActivityPay(productId = ${productActivity.productId})}" method="post">
                         <img th:src="${productActivity.product_picture}" class="imgsty">
                         <div class="keywords">
                             <a href="" th:text="${productActivity.product_keywords}">新飞（Frestec）BCD-501WHCC8C 501升
@@ -50,7 +53,7 @@
                                 <del th:text="${productActivity.product_counterPrice}">1899元</del>
                             </p>
                             <input type="submit" class="btn" value="立即购买" readonly>
-                            <p class="person">已有11人购买</p>
+                            <p class="person" th:text="'该商品为'+${productActivity.activity_discount}+'折，一次限购一个'"></p>
                         </div>
                     </form>
                 </div>
@@ -59,7 +62,7 @@
             </div>
             <div th:if="${session.user != null && recommendedProducts.size() !=0}">
                 <div class="headershow">
-                    掌柜热卖
+                    猜你喜欢
                 </div>
                 <div style="margin-top: 15px;overflow: hidden;height: 716px;">
                     <div class="showpicture" th:each="recommendedProducts:${recommendedProducts}">

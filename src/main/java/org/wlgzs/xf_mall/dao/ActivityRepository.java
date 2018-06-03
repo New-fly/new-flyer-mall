@@ -15,4 +15,7 @@ public interface ActivityRepository extends JpaRepository<Activity, Long>,JpaSpe
 
     @Query(value = "SELECT * FROM activity WHERE activity_name = ?",nativeQuery = true)
     Activity findByActivityName(String activity_name);
+
+    @Query("FROM Activity a WHERE a.activity_name=?1")
+    Activity selectActivity(String activity_name);
 }
