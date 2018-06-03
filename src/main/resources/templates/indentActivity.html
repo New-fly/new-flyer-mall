@@ -76,8 +76,8 @@
                 <input type="text" readonly class="count1" style="display: none" th:value="${shoppingCount}">
                 <input type="text" readonly class="pid" style="display: none" th:value="${shoppingCart.productId}">
             </div>
-            <!--<input style="display: none" id="rebate" type="text" th:if="${shoppingCarts[0].product_activity != '无'}"
-                   th:value="${activity.activity_discount}">-->
+            <input style="display: none" id="rebate" type="text" th:if="${shoppingCarts[0].product_activity != '无'}"
+                   th:value="${activity.activity_discount}">
             <div class="single-text">
                 <input type="text" class="ipt" readonly name="product_mallPrice"
                        th:value="${shoppingCart.product_mallPrice}" style="background-color: #FCFCFC">
@@ -86,41 +86,25 @@
     </div>
     <form th:action="@{/aliPay/aliPaySum}" method="post">
         <div class="pay">
-            <div class="pay-block" th:each="shippingAddress : ${shippingAddressList}" th:if="${shippingAddress.address_is_default==1}">
-                    <span style="float: left">
+            <div style="position: relative" class="pay-block" th:each="shippingAddress : ${shippingAddressList}" th:if="${shippingAddress.address_is_default==1}">
+                    <div style="position: absolute;top: 0;left: 0;">
                         <span class="font"><b>总金额：</b></span><span style="color: red;font-size: 25px;">￥</span>
-                        <input class="money total_amount" name="WIDtotal_amount" id="top" type="text" readonly style="width: 80px;border: 0"><br/>
-                    </span>
-                    <div>
-                        <span class="font">
-                            <b>寄送至：</b>
-                            <input type="text" name="address_shipping" readonly class="addressshipping" th:value="${shippingAddress.address_shipping}">
-                        </span>
-                        <br/>
-                        <span class="font">
+                        <input class="money total_amount" id="top" type="text" readonly style="width: 60px;border: 0"><br/>
+                    </div>
+                    <div style="position: absolute;top: 0;right: 0">
+                        <span class="font"><b>实付款：</b></span><span style="color: red;font-size: 25px;">￥</span>
+                        <input class="money total_amount" name="WIDtotal_amount" id="bottom" type="text" readonly style="width: 60px;border: 0;float: right;"><br/>
+                    </div>
+                    <div class="font" style="width:100%;position: absolute;top: 45px;left: 0;">
+                        <div style="position: absolute;top: 0;left: 0;"><b>寄送至：</b></div>
+                        <input type="text" name="address_shipping" readonly class="addressshipping" th:value="${shippingAddress.address_shipping}">
+                    </div>
+                    <br/>
+                        <div class="font" style="position: absolute;bottom: 0;left: 0;">
                             <b>收货人:</b>
                             <input type="text" name="address_name" class="addressname namelength" readonly th:value="${shippingAddress.address_name}">
                             <input type="text" name="address_phone" readonly class="addressphone" th:value="${shippingAddress.address_phone}">
-                        </span>
-                    </div>
-                </div>
-                <div class="pay-block" th:if="${shippingAddressList.size() == 0}">
-                    <span style="float: left">
-                        <span class="font"><b>总金额：</b></span><span style="color: red;font-size: 25px;">￥</span>
-                        <input class="money total_amount" name="WIDtotal_amount" id="top" type="text" readonly
-                               style="width: 80px;border: 0"><br/>
-                    </span>
-                    <div>
-                        <span class="font">
-                            <b>寄送至：</b>
-                            <input type="text" name="address_shipping" readonly class="addressshipping" >
-                        </span>
-                        <br/>
-                        <span class="font">
-                            <b>收货人:</b>
-                            <input type="text" name="address_name" class="addressname namelength" readonly >
-                            <input type="text" name="address_phone" readonly class="addressphone" >
-                        </span>
+                        </div>
                     </div>
             </div>
         </div>
