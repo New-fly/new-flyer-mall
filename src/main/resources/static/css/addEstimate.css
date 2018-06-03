@@ -71,10 +71,14 @@ body{
 }
 .text{
 	width: 500px;
-	height:160px;
+	height: 160px;
 	margin-left: 50px;
 	margin-top: 20px;
 	font-size: 18px;
+	max-width: 600px;
+	min-width: 500px;
+	min-height: 150px;
+	max-height: 180px;
 }
 .input{
 	width:800px;

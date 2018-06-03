@@ -32,6 +32,8 @@ public class ShippingAddressController extends BaseController {
         if(user_name == null){
             HttpSession session = request.getSession(true);
             User user = (User) session.getAttribute("user");
+            User userTwo = userService.findUserById(user.getUserId());
+            model.addAttribute("user", userTwo);
             user_name = user.getUser_name();
         }
         List<ShippingAddress> shippingAddresslists = shippingAddressService.getShippingAddressList(user_name);
