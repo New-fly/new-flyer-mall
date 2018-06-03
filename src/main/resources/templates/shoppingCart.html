@@ -26,13 +26,25 @@
 <body>
     <div th:include="common/top_header :: copy"></div>
     <div class="title">
-        <img th:src="@{/images/logo.png}" th:href="@{/HomeController/homeProduct}" height="100%" style="float: left;"/>
+        <img th:href="@{/HomeController/homeProduct}" th:src="@{/images/logo.png}" height="100%" style="float: left;"/>
         <div class="ipt">
-            <form th:action="@{/ProductListController/searchProductList}" method="post">
-                <span class=""><input type="text" name="product_category" th:value="*{product_category}" class="ipt-1"
-                                      placeholder="请输入要搜索的内容"></span>
-                <input type="submit" value="搜索" class="ipt-2">
-            </form>
+            <div style="position: relative">
+                <form th:action="@{/ProductListController/searchProductList/}">
+                    <div class="all-hint">
+                        <input name="product_category" class="ipt-1"/>
+                        <div class="hint">
+                        </div>
+                    </div>
+                    <input class="ipt-2" readonly type="submit" th:value="搜索"/>
+                </form>
+            </div>
+            <ul class="ipt-3">
+                <li><a th:href="@{/ProductListController/searchProductList(product_category='对开门冰箱')}">对开门冰箱</a></li>
+                <li><a th:href="@{/ProductListController/searchProductList(product_category='立式冷柜')}">立式冷柜</a></li>
+                <li><a th:href="@{/ProductListController/searchProductList(product_category='洗衣机')}">洗衣机</a></li>
+                <li><a th:href="@{/ProductListController/searchProductList(product_category='智能电视')}">智能电视</a></li>
+                <li><a th:href="@{/ProductListController/searchProductList(product_category='节能空调')}">节能空调</a></li>
+            </ul>
         </div>
     </div>
     <form th:action="@{/aliPay/toPay}" onsubmit="return pay()">
@@ -80,10 +92,10 @@
                 <input class="yanse" th:value="${product.product_specification}" readonly style="background-color: #FCFCFC;border: 0"/>
             </div>
             <div class="single-text-a">
-                <form th:action="@{/ProductListController/moveToCollectionProduct(productId=*{product.productId},shoppingCartId=*{product.shoppingCartId},userId=${session.user.userId})}" method="post">
+                <form th:action="@{/ProductListController/moveToCollectionProduct(productId=*{product.productId},shoppingCartId=*{product.shoppingCartId},userId=${session.userId})}" method="post">
                     <input style="height: 24px;border: 0;background-color: #FCFCFC" value="移入收藏夹" type="submit" class="qwe yanse">
                 </form>
-                <form th:action="@{/ProductListController/deleteShoppingProduct(shoppingCartId=*{product.shoppingCartId},userId=${session.user.userId})}"
+                <form th:action="@{/ProductListController/deleteShoppingProduct(shoppingCartId=*{product.shoppingCartId},userId=${session.userId})}"
                       method="post">
                     <input style="height: 24px;border: 0;background-color: #FCFCFC" value="删除" type="submit" class="qwe yanse">
                 </form>

@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.wlgzs.xf_mall.entity.UserIntegral;
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,4 +28,8 @@ public interface UserIntegralRepository extends JpaRepository<UserIntegral,Long>
     //遍历积分支出
     @Query(value = "SELECT * FROM user_integral WHERE user_integral_vary < 0 and user_id = ?",nativeQuery = true)
     List<UserIntegral>  findByExpend(@Param("user_id") long userId);
+
+    //查询一条积分记录
+    @Query(value = "SELECT * FROM user_integral WHERE user_id = ? and order_purchase_time = ? and product_keyword = ?",nativeQuery = true)
+    UserIntegral findByUserIdAndProductId(@Param("user_id") long userId,@Param("order_purchase_time") Date order_purchase_time,@Param("product_keyword") String product_keyword);
 }

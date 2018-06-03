@@ -13,7 +13,7 @@
 </head>
 <body>
 <div th:include="common/top_header :: copy"></div>
-<div class="userid" style="display: none" th:text="${session.user.userId}"></div>
+<div class="userid" style="display: none" th:text="${session.userId}"></div>
 <div class="nav">
     <div class="navheader">
         <img th:src="@{/images/logo-foot.png}" alt="" style="height: 50px;width: 190px;">
@@ -53,22 +53,26 @@
             <div  th:if="${session.user != null && recommendedProducts.size() !=0}">
                 <div class="allcoectionheader">猜你喜欢</div>
                 <div class="baby">
-                    <figure class="showall" th:each="recommendedProducts : ${recommendedProducts}">
-                        <div class="showpic">
-                            <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">
-                                <img th:src="${recommendedProducts.product_picture}" alt="" class="showpic">
-                            </a>
-                        </div>
-                        <div class="describe">
-                        <div class="describe1">
-                                <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}"
-                                   th:text="${recommendedProducts.product_keywords}">清凉一夏，热卖中</a>
-                        </div>
-                        <div><font style="color:red;" th:text="${recommendedProducts.product_mallPrice}">¥888</font>&nbsp;<s
-                                style="color: #3C3F41;"
-                                th:text="${recommendedProducts.product_counterPrice}">¥666</s></div>
-                        </div>
-                    </figure>
+                    <div class="baby-long">
+                        <figure class="showall" th:each="recommendedProducts : ${recommendedProducts}">
+                            <div class="showpic">
+                                <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}">
+                                    <img th:src="${recommendedProducts.product_picture}" alt="" class="showpic">
+                                </a>
+                            </div>
+                            <div class="describe">
+                            <div class="describe1">
+                                    <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId},userId=${session.userId})}"
+                                       th:text="${recommendedProducts.product_keywords}">清凉一夏，热卖中</a>
+                            </div>
+                            <div><font style="color:red;" th:text="${recommendedProducts.product_mallPrice}">¥888</font>&nbsp;<s
+                                    style="color: #3C3F41;"
+                                    th:text="${recommendedProducts.product_counterPrice}">¥666</s></div>
+                            </div>
+                        </figure>
+                    </div>
+                    <div class="lastone"> < </div>
+                    <div class="nextone"> > </div>
                 </div>
             </div>
         </div>

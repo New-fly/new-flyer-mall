@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Orders;
 import org.wlgzs.xf_mall.entity.ProductEstimate;
+import org.wlgzs.xf_mall.entity.User;
 import org.wlgzs.xf_mall.service.OrdersService;
 import org.wlgzs.xf_mall.service.ProductEstimateService;
 
@@ -43,7 +44,8 @@ public class ProductEstimateController extends BaseController {
     @RequestMapping("/AddEstimate")
     public ModelAndView AddEstimate(HttpServletRequest request, @RequestParam("file") MultipartFile[] myFileNames, HttpSession session, long orderId){
         productEstimateService.save(request,myFileNames,session,orderId);
-        long userId = (long) session.getAttribute("userId");
+        User user = (User) session.getAttribute("user");
+        long userId = user.getUserId();
         return new ModelAndView("redirect:/UserOrderController/userOrderList?userId="+userId);
     }
     /**

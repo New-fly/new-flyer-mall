@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Footprint;
+import org.wlgzs.xf_mall.entity.User;
 import org.wlgzs.xf_mall.service.FootprintService;
 
 import javax.annotation.Resource;
@@ -56,7 +57,8 @@ public class FootprintController extends BaseController {
     public ModelAndView deleteFootprints(@RequestParam(value = "footprintId", defaultValue = "466,467") String footprintId
             ,HttpServletRequest request) {
         HttpSession session = request.getSession();
-        long userId = (long) session.getAttribute("userId");
+        User user = (User) session.getAttribute("user");
+        long userId = user.getUserId();
         footprintService.deleteFootprints(footprintId);
         String url = "redirect:/FootprintController/userFootprint?userId=" + userId;
         return new ModelAndView(url);

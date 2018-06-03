@@ -11,7 +11,7 @@ import org.wlgzs.xf_mall.entity.Orders;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author:胡亚星
@@ -25,8 +25,8 @@ public class UserOrderController extends BaseController {
     //订单详情
     @RequestMapping("/orderDetails")
     public ModelAndView orderInfo(Model model, long orderId) {
-        Orders order=ordersService.findOrdersById(orderId);
-        model.addAttribute("order", order);
+        List<Orders> orders = ordersService.findOrdersByNumber(orderId);
+        model.addAttribute("orders", orders);
         return new ModelAndView("OrderInfo");
     }
     /**
@@ -37,8 +37,23 @@ public class UserOrderController extends BaseController {
      */
     @RequestMapping("/userOrderList")
     public ModelAndView userOrderList(Model model,long userId){
-        List<Orders> orders = ordersService.userOrderList(userId);
-        model.addAttribute("orders",orders);
+        Map<String, List> map = ordersService.userOrder(userId);
+        List<String> orderNumbers = ordersService.findOrderNumbers(userId);
+        model.addAttribute("orderNumbers",orderNumbers);
+
+        for (int i = 0; i < map.size(); i++) {
+            List orders1 = map.get(orderNumbers.get(i));
+            for (Object anOrders11 : orders1) {
+                System.out.println(anOrders11);
+            }
+            System.out.println("----------------------");
+        }
+        for (int i = 0; i < map.size(); i++) {
+            model.addAttribute(orderNumbers.get(i),map.get(orderNumbers.get(i)));
+        }
+        model.addAttribute("maps",map);
+        model.addAttribute("number",map.size()-1);
+
         List<Orders> unacceptedOrder = ordersService.userUnacceptedOrder(userId);
         model.addAttribute("unacceptedOrder",unacceptedOrder);
         List<Orders> unEstimateOrder = ordersService.userUnEstimateOrder(userId);

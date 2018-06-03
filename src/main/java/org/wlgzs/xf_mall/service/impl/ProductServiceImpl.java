@@ -250,7 +250,7 @@ public class ProductServiceImpl implements ProductService {
     public Page getProductCategoryList(String category_name, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "categoryId");
         Pageable pageable = new PageRequest(page, limit, sort);
-        Specification<ProductCategory> specification = new PageUtil<ProductCategory>(category_name).getPage("category_name","parent_name");
+        Specification<ProductCategory> specification = new PageUtil<ProductCategory>(category_name).getPage("category_name", "parent_name");
         Page<ProductCategory> pages = productCategoryRepository.findAll(specification, pageable);
         return pages;
     }
@@ -589,7 +589,7 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> recommendedByUserId(long userId, HttpServletRequest request) throws IOException {
         //通过用户id查询最新足迹商品
         List<Footprint> footprints = footprintRepository.recommendedByUserId(userId);
-        System.out.println(footprints);
+        //System.out.println(footprints);
         List<Product> products = new ArrayList<Product>();
         if (footprints != null && footprints.size() != 0) {
 
@@ -644,11 +644,11 @@ public class ProductServiceImpl implements ProductService {
             PageUtilTwo pageUtilTwo = new PageUtilTwo();
             Specification<Product> specification = pageUtilTwo.getPage(product_category);
             products = productRepository.findAll(specification, sort);
-            System.out.println(products.size());
+            //System.out.println(products.size());
 
             //查询用户的订单
             List<Orders> orders = ordersRepository.userOrderList(userId);
-            System.out.println(orders);
+            //System.out.println(orders);
             if (orders != null && orders.size() != 0) {
                 Date data = new Date();
                 //将近半年的订单放在一个集合中
@@ -667,6 +667,7 @@ public class ProductServiceImpl implements ProductService {
                         orderProductId[i] = ordersList.get(i).getProductId();
                     }
                 }
+                //将订单中存在的商品去除
                 Iterator<Product> it = products.iterator(); // 迭代器,对集合ArrayList中的元素进行取出
                 for (long anOrderProductId : orderProductId) {
                     while (it.hasNext()) { // 调用方法hasNext()判断集合中是否有元素
@@ -677,13 +678,13 @@ public class ProductServiceImpl implements ProductService {
                         }
                     }
                 }
-                String img;
-                for (Product product : products) {
-                    if (product.getProduct_picture().contains(",")) {
-                        img = product.getProduct_picture();
-                        img = img.substring(0, img.indexOf(","));
-                        product.setProduct_picture(img);
-                    }
+            }
+            String img;
+            for (Product product : products) {
+                if (product.getProduct_picture().contains(",")) {
+                    img = product.getProduct_picture();
+                    img = img.substring(0, img.indexOf(","));
+                    product.setProduct_picture(img);
                 }
             }
         }
@@ -791,8 +792,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> findByPrice(String product_mallPrice,int page, int limit) {
-        //拆分价格为数组
+    public Page<Product> findByPrice(String product_mallMinPrice, String product_mallMaxPrice, int page, int limit) {
+
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
         Specification<Product> specification = new Specification<Product>() {
@@ -800,31 +801,32 @@ public class ProductServiceImpl implements ProductService {
             public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 Predicate predicate = null;
                 Path path = root.get("product_mallPrice");
-                float[] price = new float[1];
-                if (product_mallPrice.contains(",")) {
-                    String[] str = product_mallPrice.split(",");
-                    if (str.length != 0) {
-                        price = new float[str.length];
-                        for (int i = 0; i < price.length; i++) {
-                            price[i] = Integer.valueOf(str[i]);
+                if((product_mallMinPrice != null && !product_mallMinPrice.equals("")) || (product_mallMaxPrice != null && !product_mallMaxPrice.equals(""))) {
+                    if (product_mallMinPrice != null && !product_mallMinPrice.equals("") && product_mallMaxPrice != null && !product_mallMaxPrice.equals("") ) {
+                        float a;
+                        float minPrice = Integer.valueOf(product_mallMinPrice);
+                        float maxPrice = Integer.valueOf(product_mallMaxPrice);
+                        if (minPrice > maxPrice) {
+                            a = minPrice;
+                            minPrice = maxPrice;
+                            maxPrice = a;
                         }
-                    }
-                    predicate = criteriaBuilder.and(
-                            criteriaBuilder.ge(path,price[0]),
-                            criteriaBuilder.le(path,price[1])
-                    );
-                } else {
-                    float Price = Integer.valueOf(product_mallPrice);
-                    if (Price == 10000) {
-                        predicate = criteriaBuilder.gt(path, Price);
-                    } else if (Price == 1000) {
-                        predicate = criteriaBuilder.lt(path, Price);
+                        predicate = criteriaBuilder.and(
+                                criteriaBuilder.ge(path, minPrice),
+                                criteriaBuilder.le(path, maxPrice)
+                        );
+                    } else if (product_mallMinPrice != null) {
+                        float minPrice = Integer.valueOf(product_mallMinPrice);
+                        predicate = criteriaBuilder.lt(path, minPrice);
+                    } else {
+                        float maxPrice = Integer.valueOf(product_mallMaxPrice);
+                        predicate = criteriaBuilder.gt(path, maxPrice);
                     }
                 }
                 return predicate;
             }
         };
-        Page pages =  productRepository.findAll(specification,pageable);
+        Page pages = productRepository.findAll(specification, pageable);
         return pages;
     }
 

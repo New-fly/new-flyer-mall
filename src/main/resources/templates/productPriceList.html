@@ -47,6 +47,7 @@
             <div class="list-left">电器分类</div>
             <div class="list-right">
                 <a th:each="oneCategory : ${productOneCategories}"
+                   th:style="*{product_category} eq ${oneCategory.category_name}?'color:red':''"
                    th:href="@{/ProductListController/searchCategoryProduct(product_category=${oneCategory.category_name})}"
                    th:text="${oneCategory.category_name}"></a>
             </div>
@@ -54,40 +55,47 @@
         <div class="filter-group-list">
             <div class="list-left">详细分类</div>
             <div class="list-right" style="height: auto">
-                <a th:each="product_category : ${productTwoCategories}"
-                   th:href="@{/ProductListController/searchCategoryProduct(product_category=${product_category.category_name})}"
-                   th:text="${product_category.category_name}">一级</a>
+                <a th:each="category : ${productTwoCategories}"
+                   th:style="*{product_category} eq ${category.category_name}?'color:red':''"
+                   th:href="@{/ProductListController/searchCategoryProduct(product_category=${category.category_name})}"
+                   th:text="${category.category_name}">一级</a>
             </div>
         </div>
         <div class="filter-group-list">
             <div class="list-left">价格区间</div>
             <div class="list-right">
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='1000')}">1000元以下</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='1000,2000')}">1000-2000</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='2001,3000')}">2001-3000</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='3001,5000')}">3001-5000</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='5001,8000')}">5001-8000</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='8001,10000')}">8001-10000</a>
-                <a th:href="@{/ProductListController/findByPrice(product_mallPrice='10000')}">10000以上</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='1000')}">1000元以下</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='1000',product_mallMaxPrice='2000')}">1000-2000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='2001',product_mallMaxPrice='3000')}">2001-3000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='3001',product_mallMaxPrice='5000')}">3001-5000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='5001',product_mallMaxPrice='8000')}">5001-8000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMinPrice='8001',product_mallMaxPrice='10000')}">8001-10000</a>
+                <a th:href="@{/ProductListController/findByPrice(product_mallMaxPrice='10000')}">10000以上</a>
             </div>
-        </div>
-    </div><div class="sort-row">
-    <div class="filter-group-list" style="border: 1px solid #e8e8e8;">
-        <div class="list-left">综合排名</div>
-        <div class="list-right" style="background-color:#FAFAFA;">
-            <div class="time">上市时间</div>
-            <div class="price">
-                价格从高到低
-            </div>
-            <div class="price">
-                价格从低到高
-            </div>
-            <input type="text" class="priceipt" placeholder="¥"><em>-</em>
-            <input type="text" class="priceipt" placeholder="¥">
-            <input type="submit" value="确定" class="queding">
         </div>
     </div>
-</div>
+    <div class="sort-row">
+        <div class="filter-group-list" style="border: 1px solid #e8e8e8;">
+            <div class="list-left">综合排名</div>
+            <div class="list-right" style="background-color:#FAFAFA;">
+                <div class="time">上市时间</div>
+                <div class="price">
+                    价格从高到低
+                </div>
+                <div class="price">
+                    价格从低到高
+                </div>
+                <!--<form th:action="@{/}" th:method="post">-->
+                <input type="text" class="priceipt" placeholder="¥" name="product_mallMinPrice"><em>-</em>
+                <input type="text" class="priceipt" placeholder="¥" name="product_mallMaxPrice">
+                <input type="submit" value="确定" class="queding">
+                <!--</form>-->
+            </div>
+        </div>
+    </div>
+    <div th:if="${products.size() == 0}" class="cure">
+        <h1 th:text="${mag}" class="hh11"></h1>
+    </div>
     <div class="show-product">
         <div class="product" th:each="product:${products}">
             <div class="img-box">
@@ -115,32 +123,45 @@
 
             <ul class="pagination" th:if="${Number == 1} and ${TotalPages > 1}">
                 <!--//如果当前页等于1，总页数大于1（不显示上一页）   Number&ndash;&gt;当前页-->
-                <li><a th:href="@{/ProductListController/findByPrice(page=1,product_mallPrice=${product_mallPrice})}">首页</a></li>
+                <li>
+                    <a th:href="@{/ProductListController/findByPrice(page=1,product_mallMinPrice=${product_mallMinPrice},product_mallMaxPrice=${product_mallMaxPrice})}">首页</a>
+                </li>
                 <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
                     <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
                     <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);"
                        th:text="${i}">#</a><!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
                     <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
-                       th:href="@{/ProductListController/findByPrice(page=${i},product_mallPrice=${product_mallPrice})}" th:text="${i}"
+                       th:href="@{/ProductListController/findByPrice(page=${i},product_mallMinPrice=${product_mallMinPrice},product_mallMaxPrice=${product_mallMaxPrice})}"
+                       th:text="${i}"
                        style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
                 </li>
-                <li><a th:href="@{/ProductListController/findByPrice(page=${Number+1},product_mallPrice=${product_mallPrice})}">下一页</a></li><!--//请求页数+1-->
+                <li>
+                    <a th:href="@{/ProductListController/findByPrice(page=${Number+1},product_mallMinPrice=${product_mallMinPrice},product_mallMaxPrice=${product_mallMaxPrice})}">下一页</a>
+                </li><!--//请求页数+1-->
             </ul>
 
             <ul class="pagination" th:if="${Number > 1} and ${TotalPages > 1}"><!--//显示上一页-->
-                <li><a th:href="@{/ProductListController/findByPrice(page=1,product_mallPrice=${product_mallPrice})}">首页</a></li><!--//跳转至第一页-->
-                <li><a th:href="@{/ProductListController/findByPrice(page=${Number-1},product_mallPrice=${product_mallPrice})}">上一页</a></li><!--//请求页数-1-->
+                <li>
+                    <a th:href="@{/ProductListController/findByPrice(page=1,product_mallMinPrice=${product_mallMinPrice},product_mallMaxPrice=${product_mallMaxPrice})}">首页</a>
+                </li><!--//跳转至第一页-->
+                <li>
+                    <a th:href="@{/ProductListController/findByPrice(page=${Number-1},product_mallMinPrice=${product_mallMinPrice},product_mallMaxPrice=${product_mallMaxPrice})}">上一页</a>
+                </li><!--//请求页数-1-->
                 <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
                     <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
                     <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);"
                        th:text="${i}">#</a><!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
                     <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
-                       th:href="@{/ProductListController/findByPrice(page=${i},product_mallPrice=${product_mallPrice})}" th:text="${i}"
+                       th:href="@{/ProductListController/findByPrice(page=${i},product_mallMinPrice=${product_mallMinPrice},product_mallMaxPrice=${product_mallMaxPrice})}"
+                       th:text="${i}"
                        style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
                 </li>
                 <li th:if="${Number != TotalPages}"><a
-                        th:href="@{/ProductListController/findByPrice(page=${Number+1},product_mallPrice=${product_mallPrice})}">下一页</a></li><!--//请求页数+1-->
-                <li><a th:href="@{/ProductListController/findByPrice(page=${Number},product_mallPrice=${product_mallPrice})}">尾页</a></li><!--//跳转至第Number页-->
+                        th:href="@{/ProductListController/findByPrice(page=${Number+1},product_mallMinPrice=${product_mallMinPrice},product_mallMaxPrice=${product_mallMaxPrice})}">下一页</a>
+                </li><!--//请求页数+1-->
+                <li>
+                    <a th:href="@{/ProductListController/findByPrice(page=${Number},product_mallMinPrice=${product_mallMinPrice},product_mallMaxPrice=${product_mallMaxPrice})}">尾页</a>
+                </li><!--//跳转至第Number页-->
             </ul>
 
         </div>
@@ -153,30 +174,33 @@
         <div th:if="${session.user != null}">
             <div class="headersell">猜你喜欢</div>
             <div class="hotsell">
-                <figure th:each="recommendedProducts : ${recommendedProducts}">
-                    <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}">
-                        <img th:src="${recommendedProducts.product_picture}" style="width: 232px;height: 232px;">
-                    </a>
-                    <span style="color: red; font-size: 20px"
-                          th:text="${recommendedProducts.product_mallPrice}">¥6666</span>&nbsp;&nbsp;<s
-                        th:text="${recommendedProducts.product_counterPrice}">¥5555</s>
-                    <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}"
-                       class="jieshao" th:text="${recommendedProducts.product_keywords}">
-                        新飞除菌新飞除菌新飞除菌新飞除菌
-                    </a>
-                    <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
-                    <div class="xinfi">
-                        <a href="#" style="display: block;">
-                            <img th:src="@{/images/xflogo.ico}" class="lettle">
+                <div class="long-hotsell">
+                    <figure th:each="recommendedProducts : ${recommendedProducts}">
+                        <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}">
+                            <img th:src="${recommendedProducts.product_picture}" style="width: 232px;height: 232px;">
                         </a>
-                    </div>
-                </figure>
+                        <span style="color: red; font-size: 20px"
+                              th:text="${recommendedProducts.product_mallPrice}">¥6666</span>&nbsp;&nbsp;<s
+                            th:text="${recommendedProducts.product_counterPrice}">¥5555</s>
+                        <a th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}"
+                           class="jieshao" th:text="${recommendedProducts.product_keywords}">
+                            新飞除菌新飞除菌新飞除菌新飞除菌
+                        </a>
+                        <a href="#">新飞有限责任公司</a><span style="float: right;">销量 &nbsp;7</span>
+                        <div class="xinfi">
+                            <a href="#" style="display: block;">
+                                <img th:src="@{/images/xflogo.ico}" class="lettle">
+                            </a>
+                        </div>
+                    </figure>
+                </div>
+                <div class="lastone"> < </div>
+                <div class="nextone"> > </div>
             </div>
         </div>
         <div class="search2">
             <form th:action="@{/ProductListController/searchProductList}" method="post">
-                <input type="text" placeholder="请输入搜索内容" class="ipt1 ipt2"><input type="submit" name="product_keywords"
-                                                                                  class="submit submit2" value="搜索">
+                <input type="text" placeholder="请输入搜索内容" class="ipt1 ipt2"><input type="submit" name="product_keywords" class="submit submit2" value="搜索">
             </form>
         </div>
     </div>

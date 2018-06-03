@@ -1,7 +1,5 @@
-window.onload=function () {
-
-
-//生成Pager，当前页码, 总页数, 回调function
+window.onload=function() {
+    //生成Pager，当前页码, 总页数, 回调function
     $.fn.pager = function (page, total, callback) {
         var html = '';
         html += '<a class="first" href="javascript:;">首页</a>';
@@ -19,11 +17,9 @@ window.onload=function () {
             if (p == '下一页') p = page == total ? total : page + 1;
             if (p == '首页') p = 1;
             if (p == '末页') p = total;
-
             if (p != page) callback(parseInt(p));
         });
     }
-
     onload = function () {
         //用用回调
         function go(p) {
@@ -32,6 +28,7 @@ window.onload=function () {
 
         $('.pager').pager(1, 10, go);
     }
+
 
 //返回顶部(缓慢滑动)
     document.getElementsByClassName("back-to-top")[0].onclick=pageScroll;
@@ -45,7 +42,6 @@ window.onload=function () {
         //判断当页面到达顶部，取消延时代码（否则页面滚动到顶部会无法再向下正常浏览页面）
         if (sTop == 0) clearTimeout(scrolldelay);
     }
-
 //顶部吸顶盒
     var oDiv = document.getElementsByClassName("top-search")[0];
     var searchLinks=document.getElementsByClassName("search-links")[0];
@@ -70,4 +66,24 @@ window.onload=function () {
             xflogo.style.marginTop="15px";
         }
     };
-};
+
+    //推荐翻页
+    var number = 0;
+    var length = document.getElementsByClassName("long-hotsell")[0].offsetWidth;
+    document.getElementsByClassName("nextone")[0].onclick = function () {
+        number -= 298;
+        if (number < (-1) * length + 1190) {
+            number = (-1) * length + 1190;
+        }
+        document.getElementsByClassName("long-hotsell")[0].style.left = number + "px";
+    };
+    document.getElementsByClassName("lastone")[0].onclick = function () {
+        number += 298;
+        if (number > 0) {
+            number = 0;
+        }
+        document.getElementsByClassName("long-hotsell")[0].style.left = number + "px";
+    };
+}
+
+

@@ -10,6 +10,7 @@ import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Activity;
 import org.wlgzs.xf_mall.entity.Product;
 import org.wlgzs.xf_mall.entity.ProductActivity;
+import org.wlgzs.xf_mall.entity.User;
 import org.wlgzs.xf_mall.service.ActivityService;
 import org.wlgzs.xf_mall.service.ProductActivityService;
 
@@ -48,7 +49,8 @@ public class ProductActivityController extends BaseController {
         //推荐商品
         HttpSession session = request.getSession();
         if(session.getAttribute("user")!=null){
-            long userId = (long) session.getAttribute("userId");
+            User user = (User) session.getAttribute("user");
+            long userId = user.getUserId();
             List<Product> recommendedProducts = productService.recommendedByUserId(userId,request);
             model.addAttribute("recommendedProducts", recommendedProducts);
         }

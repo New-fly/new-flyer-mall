@@ -47,8 +47,7 @@ public class UserManagementController extends BaseController {
     @RequestMapping("changeInformation")
     public ModelAndView ModifyName(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        long userId = (long) session.getAttribute("userId");
-        User user = userService.findUserById(userId);
+        User user = (User) session.getAttribute("user");
         userService.ModifyName(request,user);
         model.addAttribute("user", user);
         return new ModelAndView("information");
@@ -125,7 +124,8 @@ public class UserManagementController extends BaseController {
         System.out.println(logUserService.selectEmail(user_mail));
         if(!logUserService.selectEmail(user_mail)){//可以继续
             HttpSession session = request.getSession();
-            long userId = (long) session.getAttribute("userId");
+            User user1 = (User) session.getAttribute("user");
+            long userId = user1.getUserId();
             model.addAttribute("mgs", "修改成功");
             userService.changeEmail(user_mail,userId);//修改
             User user = userService.findUserById(userId);
@@ -161,7 +161,8 @@ public class UserManagementController extends BaseController {
         String user_password = request.getParameter("user_password");
         String user_rePassword = request.getParameter("user_rePassword");
         HttpSession session = request.getSession();
-        long userId = (long) session.getAttribute("userId");
+        User user = (User) session.getAttribute("user");
+        long userId = user.getUserId();
         System.out.println(user_password);
         System.out.println(user_rePassword);
         if (userService.checkPassWord(user_password, userId)) {//正确ze修改密码

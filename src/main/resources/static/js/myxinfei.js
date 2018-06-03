@@ -16,6 +16,6 @@ function returnOrder(orderId) {
     var isDel = confirm("您确认要退货吗？");
     if(isDel){
         //要删除
-        location.href = "/OrderController/deleteOrder?orderId="+orderId;
+        location.href = "/aliPay/refund?orderId="+orderId;
     }
 }

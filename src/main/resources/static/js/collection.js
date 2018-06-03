@@ -24,7 +24,7 @@ window.onload=function(){
                     }, 1000)
                 },
                 error:function(){
-                    alert("删除失败，请稍后重试！");
+                    alert("服务器忙，请稍后再试！！");
                 }
             });
         }
@@ -80,5 +80,22 @@ window.onload=function(){
                 alert("请求失败！！")
             }
         })
+    };
+    var number=0;
+    var length=document.getElementsByClassName("baby-long")[0].offsetWidth;
+    console.log(length);
+    document.getElementsByClassName("nextone")[0].onclick=function(){
+        number-=200;
+        if(number<(-1)*length+1000){
+            number=(-1)*length+1000;
+        }
+        document.getElementsByClassName("baby-long")[0].style.left=number+"px";
+    };
+    document.getElementsByClassName("lastone")[0].onclick=function(){
+        number+=200;
+        if(number>0){
+            number=0;
+        }
+        document.getElementsByClassName("baby-long")[0].style.left=number+"px";
     }
 };
