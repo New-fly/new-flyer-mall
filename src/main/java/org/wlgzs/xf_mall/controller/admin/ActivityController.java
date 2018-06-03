@@ -133,6 +133,24 @@ public class ActivityController extends BaseController {
         model.addAttribute("productId", productId);
         return new ModelAndView("admin/adminAddActivity");
     }
+    
+    /**     
+     * @author 胡亚星 
+     * @date 2018/6/3 10:47
+     * @param   
+     * @return   
+     *@Description: 批量添加活动商品页面
+     */  
+    @RequestMapping("/toAdminAddActivitys")
+    public ModelAndView toAdminAddActivitys(Model model, String productId){
+        List<Activity> activities = activityService.getActivity();
+        System.out.println("productId"+productId);
+        System.out.println("批量添加活动商品页面");
+        model.addAttribute("activities", activities);
+        model.addAttribute("productId", productId);
+        return new ModelAndView("admin/adminAddActivitys");
+    }
+
 
     /**
      * @param [productId, request]
@@ -151,11 +169,12 @@ public class ActivityController extends BaseController {
      * @date 2018/5/24 11:34
      * @param
      * @return
-     *@Description:将商品批量添加到活动
+     *@Description: 将商品批量添加到活动
      */
     @RequestMapping("/adminAddActivitys")
-    public ModelAndView adminAddActivitys(@RequestParam(value = "productId",defaultValue = "494,495") String productIds,HttpServletRequest request){
-        productActivityService.adminAddActivitys(productIds,request);
+    public ModelAndView adminAddActivitys(String productId,HttpServletRequest request){
+        System.out.println("productId"+productId);
+        productActivityService.adminAddActivitys(productId,request);
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
     }
     /**
@@ -226,7 +245,7 @@ public class ActivityController extends BaseController {
         model.addAttribute("Number", activityPages.getNumber() + 1);//查询的当前第几页
         model.addAttribute("activities", activityPages.getContent());//查询的当前页的集合
         model.addAttribute("product_keywords", product_keywords);
-        return new ModelAndView("admin/adminFindActivityList");
+        return new ModelAndView("admin/adminActivityList");
     }
 
 }

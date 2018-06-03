@@ -17,11 +17,14 @@
     <form th:action="@{/AdminProductController/adminFindProduct}" method="post">
         <input type="text" name="product_keywords" placeholder="商品名称,分类" th:value="*{product_keywords}" class="ipt">
         <input type="submit" value="搜索商品" class="btn">
-        <a  th:href="@{/AdminProductController/toAdminAddProduct}" class="a-div">添加</a>
+    </form>
+    <form th:action="@{/AdminActivityController/toAdminAddActivitys}">
+        <a th:href="@{/AdminProductController/toAdminAddProduct}" class="a-div">添加</a>
         <div class="a-div arise">批量操作</div>
         <div class="a-div hide delet">删除</div>
-        <div class="a-div hide">添加为活动</div>
-        <input class="ids" type="text" style="display: none" />
+        <input class="ids" name="productId" type="text" style="display: none" />
+        <div class="a-div hide add">添加为活动</div>
+        <input type="submit" value="添加为活动">
     </form>
 </div>
 <div class="mytable">
