@@ -147,7 +147,7 @@
                     <div th:each="productActivity : ${productActivities}">
                         <a target="_blank"
                            th:href="@{/ActivityController/activityProducts(activity_name=${productActivities[0].activity_name})}">
-                            <img th:src="${productActivity.product_picture}" width="100%"/>
+                            <img th:src="${productActivity.product_picture}" th:width="170px" style="height: 170px;"/>
                         </a>
                         <p th:text="${productActivity.product_keywords}">速度非常，开心贷款，查看训练现场V领可持续</p>
                         <div class="all-money">
