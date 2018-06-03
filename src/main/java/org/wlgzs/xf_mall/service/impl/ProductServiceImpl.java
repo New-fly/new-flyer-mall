@@ -678,13 +678,13 @@ public class ProductServiceImpl implements ProductService {
                         }
                     }
                 }
-                String img;
-                for (Product product : products) {
-                    if (product.getProduct_picture().contains(",")) {
-                        img = product.getProduct_picture();
-                        img = img.substring(0, img.indexOf(","));
-                        product.setProduct_picture(img);
-                    }
+            }
+            String img;
+            for (Product product : products) {
+                if (product.getProduct_picture().contains(",")) {
+                    img = product.getProduct_picture();
+                    img = img.substring(0, img.indexOf(","));
+                    product.setProduct_picture(img);
                 }
             }
         }

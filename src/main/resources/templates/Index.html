@@ -19,7 +19,7 @@
 <body>
 <!--<div th:include="common/top_header :: copy"></div>-->
 <!--<div th:include="common/top_header :: duplicate"></div>-->
-<input type="text" th:value="${activity}" class="activity_time" style="display: none" />
+<input type="text" th:value="${activity}" class="activity_time" style="display: none"/>
 <div th:include="common/top_header :: copy"></div>
 <div class="title">
     <img th:href="@{/HomeController/homeProduct}" th:src="@{/images/logo.png}" height="100%" style="float: left;"/>
@@ -84,15 +84,24 @@
         </div>
     </div>
     <div class="classify-right">
-        <a th:href="@{/ActivityController/activityProducts}">
-            <div class="classify-right-long" >
-                <img class="lunbo"th:each="active:${activities[0]}" th:src="${active.activity_picture}">
-                <img class="lunbo"th:each="active:${activities[1]}" th:src="${active.activity_picture}">
-                <img class="lunbo"th:each="active:${activities[0]}" th:src="${active.activity_picture}">
-                <img class="lunbo"th:each="active:${activities[1]}" th:src="${active.activity_picture}">
-                <img class="lunbo"th:each="active:${activities[0]}" th:src="${active.activity_picture}">
+            <div class="classify-right-long">
+                <a th:href="@{/ActivityController/activityProducts(activity_name=${activities[0].activity_name})}">
+                <img class="lunbo" th:src="${activities[0].activity_picture}">
+                </a>
+                <a th:href="@{/ActivityController/activityProducts(activity_name=${activities[1].activity_name})}">
+                    <img class="lunbo" th:src="${activities[1].activity_picture}">
+                </a>
+                <a th:href="@{/ActivityController/activityProducts(activity_name=${activities[0].activity_name})}">
+                    <img class="lunbo" th:src="${activities[0].activity_picture}">
+                </a>
+                <a th:href="@{/ActivityController/activityProducts(activity_name=${activities[1].activity_name})}">
+                    <img class="lunbo" th:src="${activities[1].activity_picture}">
+                </a>
+                <a th:href="@{/ActivityController/activityProducts(activity_name=${activities[0].activity_name})}">
+                    <img class="lunbo" th:src="${activities[0].activity_picture}">
+                </a>
             </div>
-        </a>
+
         <div class="last">
             <div class="last_1">
                 <span class="last1"><i class="fa fa-chevron-left fa-3x"></i></span>
@@ -111,40 +120,45 @@
         </div>
     </div>
 </div>
-<div class="recommend">限时抢购</div>
+<div  th:if="${productActivities.size() != 0 && is > 0}" class="recommend">限时抢购</div>
 <div class="time">
-    <div class="count-down">
-        <div class="count-down-text">
-            新飞抢购 <br/>
-            <span class="count-down-english">FLASH DEALS</span><br/>
-            <i class="fa fa-bolt"></i><br/>
-            <span class="count-down-text-little">距离本次抢购剩余：</span><br/>
-            <!--<p class="count-down-p"><span id="time">a</span></p>-->
-            <div id="aa">
-                <div class="time4" id="time4"></div>
-                <div class="time1" id="time1"></div>
-                <div class="time2" id="time2"></div>
-                <div class="time3" id="time3"></div>
+    <div th:if="${productActivities.size() != 0 && is > 0}">
+        <div class="count-down">
+            <div class="count-down-text">
+                新飞抢购 <br/>
+                <span class="count-down-english">FLASH DEALS</span><br/>
+                <i class="fa fa-bolt"></i><br/>
+                <span class="count-down-text-little">距离本次抢购剩余：</span><br/>
+                <!--<p class="count-down-p"><span id="time">a</span></p>-->
+                <div id="aa">
+                    <div class="time4" id="time4"></div>
+                    <div class="time1" id="time1"></div>
+                    <div class="time2" id="time2"></div>
+                    <div class="time3" id="time3"></div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="all-rob">
-        <div class="button-last" id="button-last"><</div>
-        <div class="button-next" id="button-next">></div>
-        <div class="all-rob-long" id="all-rob-long">
-            <a th:href="@{/ActivityController/activityProducts}">
-                <div th:each="productActivity : ${productActivities}">
-                    <a  target="_blank" th:href="@{/ActivityController/activityProducts}">
-                        <img th:src="${productActivity.product_picture}" width="100%"/>
-                    </a>
-                    <p th:text="${productActivity.product_keywords}">速度非常，开心贷款，查看训练现场V领可持续</p>
-                    <div class="all-money">
-                        <div class="money-left" th:text="'￥'+${productActivity.product_mallPrice}">￥:5535元</div>
-                        <div class="money-right"><s th:text="'￥'+${productActivity.product_counterPrice}">￥:5335元</s>
+        <div class="all-rob">
+            <div class="button-last" id="button-last"><</div>
+            <div class="button-next" id="button-next">></div>
+            <div class="all-rob-long" id="all-rob-long">
+                <a target="_blank"
+                   th:href="@{/ActivityController/activityProducts(activity_name=${productActivities[0].activity_name})}">
+                    <div th:each="productActivity : ${productActivities}">
+                        <a target="_blank"
+                           th:href="@{/ActivityController/activityProducts(activity_name=${productActivities[0].activity_name})}">
+                            <img th:src="${productActivity.product_picture}" width="100%"/>
+                        </a>
+                        <p th:text="${productActivity.product_keywords}">速度非常，开心贷款，查看训练现场V领可持续</p>
+                        <div class="all-money">
+                            <div class="money-left" th:text="'￥'+${productActivity.product_mallPrice}">￥:5535元</div>
+                            <div class="money-right"><s
+                                    th:text="'￥'+${productActivity.product_counterPrice}">￥:5335元</s>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
     </div>
 </div>

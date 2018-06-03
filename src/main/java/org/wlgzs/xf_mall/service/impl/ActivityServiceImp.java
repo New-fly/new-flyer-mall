@@ -127,4 +127,17 @@ public class ActivityServiceImp implements ActivityService {
     public Activity findByActivityName(String activity_name) {
         return activityRepository.findByActivityName(activity_name);
     }
+
+    //检验抢购活动是否存在
+    @Override
+    public boolean booleanByActivityName(String activity_name) {
+        System.out.println("activity_name:"+activity_name);
+        Activity activity = activityRepository.selectActivity(activity_name);
+        System.out.println(activity);
+        if(activity != null){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

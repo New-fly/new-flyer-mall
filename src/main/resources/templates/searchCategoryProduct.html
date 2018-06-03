@@ -47,6 +47,7 @@
             <div class="list-left">电器分类</div>
             <div class="list-right">
                 <a th:each="oneCategory : ${productOneCategories}"
+                   th:style="*{product_category} eq ${oneCategory.category_name}?'color:red':''"
                    th:href="@{/ProductListController/searchCategoryProduct(product_category=${oneCategory.category_name})}"
                    th:text="${oneCategory.category_name}"></a>
             </div>
@@ -54,9 +55,10 @@
         <div class="filter-group-list">
             <div class="list-left">详细分类</div>
             <div class="list-right" style="height: auto">
-                <a th:each="product_category : ${productTwoCategories}"
-                   th:href="@{/ProductListController/searchCategoryProduct(product_category=${product_category.category_name})}"
-                   th:text="${product_category.category_name}">一级</a>
+                <a th:each="category : ${productTwoCategories}"
+                   th:style="*{product_category} eq ${category.category_name}?'color:red':''"
+                   th:href="@{/ProductListController/searchCategoryProduct(product_category=${category.category_name})}"
+                   th:text="${category.category_name}">一级</a>
             </div>
         </div>
         <div class="filter-group-list">
@@ -83,13 +85,17 @@
                 <div class="price">
                     价格从低到高
                 </div>
+                <!--123546-->
                 <!--<form th:action="@{/}" th:method="post">-->
-                    <input type="text" class="priceipt" placeholder="¥" name="product_mallMinPrice"><em>-</em>
-                    <input type="text" class="priceipt" placeholder="¥" name="product_mallMaxPrice">
-                    <input type="submit" value="确定" class="queding">
+                <input type="text" class="priceipt" placeholder="¥" name="product_mallMinPrice"><em>-</em>
+                <input type="text" class="priceipt" placeholder="¥" name="product_mallMaxPrice">
+                <input type="submit" value="确定" class="queding">
                 <!--</form>-->
             </div>
         </div>
+    </div>
+    <div th:if="${products.size() == 0}" class="cure">
+        <h1 th:text="${mag}" class="hh11"></h1>
     </div>
     <div class="show-product">
         <div class="product" th:each="product:${products}">
@@ -118,32 +124,51 @@
 
             <ul class="pagination" th:if="${Number == 1} and ${TotalPages > 1}">
                 <!--//如果当前页等于1，总页数大于1（不显示上一页）   Number&ndash;&gt;当前页-->
-                <li><a th:href="@{/ProductListController/searchCategoryProduct(page=1,product_category=${product_category})}">首页</a></li>
+                <li>
+                    <a th:href="@{/ProductListController/searchCategoryProduct(page=1,product_category=${product_category})}">首页</a>
+                </li>
                 <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
                     <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
                     <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);"
                        th:text="${i}">#</a><!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
                     <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
-                       th:href="@{/ProductListController/searchCategoryProduct(page=${i},product_category=${product_category})}" th:text="${i}"
+                       th:href="@{/ProductListController/searchCategoryProduct(page=${i},product_category=${product_category})}"
+                       th:text="${i}"
                        style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
                 </li>
-                <li><a th:href="@{/ProductListController/searchCategoryProduct(page=${Number+1},product_category=${product_category})}">下一页</a></li><!--//请求页数+1-->
+                <li>
+                    <a th:href="@{/ProductListController/searchCategoryProduct(page=${Number+1},product_category=${product_category})}">下一页</a>
+                </li><!--//请求页数+1-->
             </ul>
             <ul class="pagination" th:if="${Number > 1} and ${Number > 1}"><!--//显示上一页-->
-                <li><a th:href="@{/ProductListController/searchCategoryProduct(page=1,product_category=${product_category})}">首页</a></li><!--//跳转至第一页-->
-                <li><a th:href="@{/ProductListController/searchCategoryProduct(page=${Number-1},product_category=${product_category})}">上一页</a></li><!--//请求页数-1-->
+                <li>
+                    <a th:href="@{/ProductListController/searchCategoryProduct(page=1,product_category=${product_category})}">首页</a>
+                </li><!--//跳转至第一页-->
+                <li>
+                    <a th:href="@{/ProductListController/searchCategoryProduct(page=${Number-1},product_category=${product_category})}">上一页</a>
+                </li><!--//请求页数-1-->
                 <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
                     <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
                     <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);"
                        th:text="${i}">#</a><!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
                     <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
-                       th:href="@{/ProductListController/searchCategoryProduct(page=${i},product_category=${product_category})}" th:text="${i}"
+                       th:href="@{/ProductListController/searchCategoryProduct(page=${i},product_category=${product_category})}"
+                       th:text="${i}"
                        style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
                 </li>
                 <li th:if="${Number != TotalPages}"><a
-                        th:href="@{/ProductListController/searchCategoryProduct(page=${Number+1},product_category=${product_category})}">下一页</a></li><!--//请求页数+1-->
-                <li><a th:href="@{/ProductListController/searchCategoryProduct(page=${Number},product_category=${product_category})}">尾页</a></li><!--//跳转至第Number页-->
+                        th:href="@{/ProductListController/searchCategoryProduct(page=${Number+1},product_category=${product_category})}">下一页</a>
+                </li><!--//请求页数+1-->
+                <li>
+                    <a th:href="@{/ProductListController/searchCategoryProduct(page=${Number},product_category=${product_category})}">尾页</a>
+                </li><!--//跳转至第Number页-->
             </ul>
+        </div>
+        <div class="back-to-top">
+            <!--<i class="iconfont">&#xe62d;</i>-->
+            <!--//mycode-->
+            <i class="fa fa-chevron-up" id="iconfont"></i>
+            <span class="b-to-t">返回顶部</span>
         </div>
         <!--//推荐商品-->
         <div th:if="${session.user != null}">
@@ -151,7 +176,8 @@
             <div class="hotsell">
                 <div class="long-hotsell">
                     <figure th:each="recommendedProducts : ${recommendedProducts}">
-                        <a target="_blank" th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}">
+                        <a target="_blank"
+                           th:href="@{/ProductListController/toProduct(productId=${recommendedProducts.productId})}">
                             <img th:src="${recommendedProducts.product_picture}" style="width: 100%;height: 232px;">
                         </a>
                         <span style="color: red; font-size: 20px"
@@ -172,12 +198,6 @@
                 <div class="lastone"> < </div>
                 <div class="nextone"> > </div>
             </div>
-        </div>
-        <div class="search2">
-            <form th:action="@{/ProductListController/searchProductList}" method="post">
-                <input type="text" placeholder="请输入搜索内容" class="ipt1 ipt2"><input type="submit" name="product_keywords"
-                                                                                  class="submit submit2" value="搜索">
-            </form>
         </div>
     </div>
     <div class="back-to-top" >

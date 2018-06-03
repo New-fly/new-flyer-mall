@@ -5,6 +5,7 @@ body{
 }
 .title{
 	width: 1000px;
+
 	height: 80px;
 	padding: 20px;
 	margin: 0 auto;
@@ -79,6 +80,7 @@ body{
 	line-height: 40px;
 	margin-top: 15px;
 	background-color:#E5E4E4;
+	padding-left: 10px;
 }
 .gray{
 	font-size:12px ;
@@ -351,4 +353,19 @@ s{
 	height: 59px;
 	color: gray;
 	font-size: 14px;
+}
+.date{
+	width: 50px;
+	display: inline-block;
+	line-height: 40px;
+}
+.evaluate{
+	display: inline-block;
+	height: 45px;
+	overflow: hidden;
+	width: 400px;
+}
+.img2{
+	vertical-align: top;
+	margin-top: -15px;
 }

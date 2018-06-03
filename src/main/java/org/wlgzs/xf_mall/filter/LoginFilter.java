@@ -70,7 +70,6 @@ public class LoginFilter implements Filter {
                 return;
             }
         }else{
-            System.out.println("放行");
             chain.doFilter(httpRequest, httpResponse);
             return;
         }

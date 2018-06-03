@@ -46,6 +46,7 @@
             <div class="list-left">电器分类</div>
             <div class="list-right">
                 <a th:each="oneCategory : ${productOneCategories}"
+                   th:style="${product_category} eq ${oneCategory.category_name}?'color:red':''"
                    th:href="@{/ProductListController/searchCategoryProduct(product_category=${oneCategory.category_name})}"
                    th:text="${oneCategory.category_name}"></a>
             </div>
@@ -53,9 +54,10 @@
         <div class="filter-group-list">
             <div class="list-left">详细分类</div>
             <div class="list-right" style="height: auto">
-                <a th:each="product_category : ${productTwoCategories}"
-                   th:href="@{/ProductListController/searchCategoryProduct(product_category=${product_category.category_name})}"
-                   th:text="${product_category.category_name}">一级</a>
+                <a th:each="category : ${productTwoCategories}"
+                   th:style="*{product_category} eq ${category.category_name}?'color:red':''"
+                   th:href="@{/ProductListController/searchCategoryProduct(product_category=${category.category_name})}"
+                   th:text="${category.category_name}">一级</a>
             </div>
         </div>
         <div class="filter-group-list">
@@ -81,6 +83,7 @@
                 <div class="price">
                     价格从低到高
                 </div>
+                <!--11111111-->
                 <!--<form th:action="@{/}" th:method="post">-->
                 <input type="text" class="priceipt" placeholder="¥" name="product_mallMinPrice"><em>-</em>
                 <input type="text" class="priceipt" placeholder="¥" name="product_mallMaxPrice">
@@ -144,6 +147,10 @@
                 <li><a th:href="@{/ProductListController/searchProductList(page=${Number},product_category=${product_category})}">尾页</a></li><!--//跳转至第Number页-->
             </ul>
         </div>
+        <div class="back-to-top">
+            <i class="fa fa-chevron-up" id="iconfont"></i>
+            <span class="b-to-t">返回顶部</span>
+        </div>
         <!--//推荐商品-->
         <div th:if="${session.user != null}">
             <div class="headersell">猜你喜欢</div>
@@ -171,12 +178,6 @@
                     <div class="nextone"> > </div>
                 </div>
             </div>
-        </div>
-        <div class="search2">
-            <form th:action="@{/ProductListController/searchProductList}" method="post">
-                <input type="text" placeholder="请输入搜索内容" class="ipt1 ipt2">
-                <input type="submit" name="product_keywords" class="submit submit2" value="搜索">
-            </form>
         </div>
     </div>
     <div class="back-to-top">

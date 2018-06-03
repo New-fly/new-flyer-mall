@@ -2,6 +2,7 @@ package org.wlgzs.xf_mall.controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
@@ -13,6 +14,7 @@ import org.wlgzs.xf_mall.entity.ProductCategory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,35 +27,40 @@ import java.util.List;
 public class HomeController extends BaseController {
 
     /**
-     * @author 阿杰
      * @param [model]
      * @return org.springframework.web.servlet.ModelAndView
+     * @author 阿杰
      * @description 主页商品数据
      */
     @RequestMapping("/homeProduct")
-    public ModelAndView homeProduct(Model model, HttpServletRequest request){
+    public ModelAndView homeProduct(Model model, @RequestParam(value = "activity_name", defaultValue = "新飞抢购") String activity_name) {
         List<ProductCategory> productOneCategories = productService.findProductOneCategoryList();
         model.addAttribute("productOneCategories", productOneCategories);
         List<ProductCategory> productTwoCategories = productService.findProductTwoCategoryList();
         model.addAttribute("productTwoCategories", productTwoCategories);
         //活动商品  轮播图
         List<Activity> activities = activityService.getActivity();
-        model.addAttribute("activities",activities);
+        model.addAttribute("activities", activities);
         //抢购商品
-        String activity_name = "520狂欢";
         List<ProductActivity> productActivities = productActivityService.activityProductList(activity_name);
-        model.addAttribute("productActivities",productActivities);
-        Activity activity = activityService.findByActivityName(activity_name);
-        String time = String.valueOf(activity.getActivity_time());
-        time = time.substring(0,time.length()-5);
-        model.addAttribute("time",time);
-        model.addAttribute("activity",activity.getActivity_time());
+        model.addAttribute("productActivities", productActivities);
+        if(activityService.booleanByActivityName(activity_name)){
+            Activity activity = activityService.findByActivityName(activity_name);
+            String time = String.valueOf(activity.getActivity_time());
+            time = time.substring(0, time.length() - 5);
+            model.addAttribute("time", time);
+            Date date = new Date();
+            int is = activity.getActivity_time().compareTo(date);
+            model.addAttribute("is",is);
+            model.addAttribute("activity", activity.getActivity_time());
+        }
+
         //商品展示
         List<Product> products = productService.homeProductList(productOneCategories);
-        model.addAttribute("products",products);
+        model.addAttribute("products", products);
         //新品商品
         List<Product> productList = productService.getProductList();
-        model.addAttribute("productList",productList);
+        model.addAttribute("productList", productList);
         return new ModelAndView("Index");
     }
 }
