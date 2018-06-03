@@ -37,15 +37,15 @@
     <form enctype="multipart/form-data" method="post"
           th:action="@{/EstimateController/AddEstimate(orderId=${order.orderId})}">
         <div class="anniu">
-            <input type="radio" name="estimate_grade" value="3" checked="checked"/>好评
-            <input type="radio" name="estimate_grade" value="2"/>中评
+            <input type="radio" name="estimate_grade" value="3" checked="checked" />好评
+            <input type="radio" name="estimate_grade" value="2" />中评
             <input type="radio" name="estimate_grade" value="1"/>差评
         </div>
-        <textarea name="estimate_content" class="text" maxlength="200"></textarea>
+        <textarea name="estimate_content" class="text" maxlength="200" required></textarea>
         <div class="input">
-            <input type="file" id="file_input" name="file">
+            <input type="file" id="file_input" name="file" required>
            <!-- <img src="" style="width: 54px;height: 53px;margin-top: -16px;" class="img"/>-->
-            <img src="" class="imgs"/>
+            <!--<img src="" class="imgs"/>-->
         </div>
         <div class="submit">
             <!--<input type="checkbox" />匿名评价-->
