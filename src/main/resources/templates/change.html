@@ -72,18 +72,18 @@
             </div>
         </div>
         <div class="pay">
-            <div class="pay-block">
+            <div class="pay-block"  th:each="shippingAddress : ${shippingAddressList}" th:if="${shippingAddress.address_is_default==1}">
                 <span class="font"><b>实付积分：</b></span><span style="color: red;font-size: 25px">￥</span>
                 <input class="money total_amount" type="text" readonly name="WIDtotal_amount" style="width: 100px;border: 0"><br/>
                 <span class="font">
                     <b>寄送至：</b>
-                    <input type="text" name="address_shipping" readonly class="addressshipping">
+                    <input type="text" name="address_shipping" th:value="${shippingAddress.address_shipping}" readonly class="addressshipping">
                 </span>
                 <br/>
                 <span class="font">
                     <b>收货人:</b>
-                    <input type="text" name="address_name" class="addressname" readonly>
-                    <input type="text" name="address_phone" readonly class="addressphone">
+                    <input type="text" name="address_name" th:value="${shippingAddress.address_name}" class="addressname" readonly>
+                    <input type="text" name="address_phone" readonly class="addressphone" th:value="${shippingAddress.address_phone}">
                 </span>
             </div>
         </div>
