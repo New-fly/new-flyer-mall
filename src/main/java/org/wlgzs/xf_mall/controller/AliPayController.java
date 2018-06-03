@@ -142,14 +142,16 @@ public class AliPayController extends BaseController {
     @RequestMapping("toChange")
     public ModelAndView toChange(Model model, @RequestParam(value = "productId", defaultValue = "494") long productId,
                                  @RequestParam(value = "shoppingCart_count", defaultValue = "1") int shoppingCart_count,
-                                 String user_name, HttpServletRequest request) {
+                                 HttpServletRequest request) {
         List<Product> shoppingCarts = productService.findProductListById(productId);
         model.addAttribute("shoppingCarts", shoppingCarts);
         model.addAttribute("shoppingCount", shoppingCart_count);
-        if (user_name == null) {
-            HttpSession session = request.getSession(true);
-            User user = (User) session.getAttribute("user");
-            user_name = user.getUser_name();
+        HttpSession session = request.getSession(true);
+        User user = (User) session.getAttribute("user");
+        String user_name = user.getUser_name();
+        if (user.getUserIntegral() < shoppingCarts.get(0).getProduct_needPoints()) {
+            model.addAttribute("mag","您的积分不足");
+            return new ModelAndView("redirect:/ProductListController/integralProduct");
         }
         List<ShippingAddress> shippingAddressList = shippingAddressService.getShippingAddressList(user_name);
         model.addAttribute("shippingAddressList", shippingAddressList);
