@@ -142,6 +142,7 @@ public class OrdersServiceImpl implements OrdersService {
         HttpSession session = request.getSession(true);
         User user = (User) session.getAttribute("user");
         long userId = user.getUserId();
+        System.out.println(userId+"-------------------------------");
         //User user = userRepository.findById(userId);
 
         IdsUtil idsUtil = new IdsUtil();
