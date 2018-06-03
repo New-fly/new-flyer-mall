@@ -41,7 +41,7 @@
                 <input class="demo--radio" type="checkbox" name="demo-checkbox1"  th:if="${user.user_role}=='超级管理员'" disabled>
                 <input class="demo--radio" type="checkbox" name="demo-checkbox1"  th:unless="${user.user_role}=='超级管理员'">
                 <span class="demo--checkbox demo--radioInput"></span>
-            </label>
+            < /label>
         </td>
         <td th:text="${user.userId}" style="display: none" class="activityid"></td>
         <td th:text="${user.user_name}"></td>
