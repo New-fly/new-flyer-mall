@@ -133,12 +133,11 @@
                         <tbody>
                             <tr th:each="productEstimat : ${productEstimates}">
                                 <td style="width: 500px;">
-                                    <span th:text="${productEstimat.estimate_content}">
-                                    [来自天猫] 此用户没有填写评价。[来自天猫] 此用户没有填写评价。[来自天猫]此用户没有填写评价.
-                                    </span>
-                                    <br />
                                     <span class="date">
-                                        <img th:src="${productEstimat.estimate_img}" style="width:50px">
+                                        <img th:src="${productEstimat.estimate_img}" style="width:50px" class="img2">
+                                    </span>
+                                    <span th:text="${productEstimat.estimate_content}" class="evaluate">
+                                    [来自天猫] 此用户没有填写评价。[来自天猫] 此用户没有填写评价。[来自天猫]此用户没有填写评价.
                                     </span>
                                 </td>
                                 <td style="text-align: center;vertical-align:middle" th:text="${productEstimat.product_specification}">颜色分类</td>

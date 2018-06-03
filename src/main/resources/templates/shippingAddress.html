@@ -15,7 +15,7 @@
     <div class="username" style="display: none" th:text="${session.user.user_name}"></div>
     <div th:include="common/top_header :: copy"></div>
 	<div class="title">
-		<img th:src="@{/images/xin.png}" alt="" />
+		<img th:src="@{/images/xin.png}"/>
 		新飞账号
         <span class="span"><a class="aaa" th:href="@{/cancellation}">退出</a></span>
 	</div>
@@ -26,7 +26,7 @@
 	<div class="chunk">
 		<div class="user_message">
 			<div class="user_img">
-				<img th:src="${session.user.user_avatar}" alt="" />
+				<img th:src="${session.user.user_avatar}"/>
 			</div>
 			<div class="user_name">
 				<span class="name" th:text="${session.user.user_name}">胡帅博</span>

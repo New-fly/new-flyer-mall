@@ -14,7 +14,7 @@
 <div class="nav">
     <div class="navheader"> <img th:src="@{/images/logo-foot.png}" alt=""></div>
 </div>
-<div class="site-header"><a th:href="@{/HomeController/homeProduct}">首页</a><span> ＞ </span><a>订单详情</a></div>
+<div class="site-header"><a th:href="@{/HomeController/homeProduct}">首页</a><span> ＞ </span><a th:href="@{/UserOrderController/orderDetails?orderId=769}">订单详情</a></div>
 <div class="contain">
     <div class="span4">
         <div class="span4-box">
@@ -60,7 +60,7 @@
                     </div>
                     <div class="product">
                         <a href=""><img th:src="*{product_picture}" style="width: 80px;height: 80px;"></a>
-                        <span class="introduce"><a target="_blank" th:href="@{/ProductListController/toProduct(productId=${order.productId})}" th:text="*{product_keywords}">13.3小米笔记本AiR四核58GMX150深空灰</a></span>&nbsp;&nbsp;&nbsp;
+                        <span class="introduce"><a href="" th:text="*{product_keywords}">13.3小米笔记本AiR四核58GMX150深空灰</a></span>&nbsp;&nbsp;&nbsp;
                         <span class="introduce" th:text="*{product_mallPrice}">5399元ⅹ1</span>
                     </div>
                 </div>
