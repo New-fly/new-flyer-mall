@@ -245,26 +245,26 @@
 <div class="side-bar">
     <div class="side-bar-2">
         <i class="fa fa-paw"></i>
-        <div class="foo style"></div>
-        <a href="#">
-            <div class="side-bar-1-hidden">我的足迹</div>
+        <a th:href="@{/FootprintController/userFootprint(userId=${session.userId})}">
+            <div class="foo style"></div>
         </a>
+        <div class="side-bar-1-hidden">我的足迹</div>
     </div>
     <div class="border"></div>
     <div class="side-bar-3">
         <i class="fa fa-shopping-cart"></i><span>购物车</span>
-        <div class="shoppingca style"></div>
-        <a href="#">
-            <div class="side-bar-2-hidden">我的购物车</div>
+        <a th:href="@{/ProductListController/shoppingCart(userId=${session.userId})}">
+            <div class="shoppingca style"></div>
         </a>
+        <div class="side-bar-2-hidden">我的购物车</div>
     </div>
     <div class="border"></div>
     <div class="side-bar-1">
         <i class="fa fa-star-o"></i>
-        <div class="collec style"></div>
-        <a href="#">
-            <div class="side-bar-1-hidden">我的收藏</div>
+        <a th:href="@{/ProductListController/collectionProduct(userId=${session.userId})}">
+            <div class="collec style"></div>
         </a>
+        <div class="side-bar-1-hidden">我的收藏</div>
     </div>
     <div class="side-bar-1">
         <i class="fa fa-gears"></i>
