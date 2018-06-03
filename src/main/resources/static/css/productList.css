@@ -280,18 +280,12 @@ a:hover{
     cursor: pointer;
     border-radius: 5px;
 }
-.iconfont{
-    width: 50px;
-    height: 30px;
-    position: absolute;
-    top: 0;
-    text-align: center;
-}
 .b-to-t{
     width: 50px;
     height: 15px;
     position: absolute;
     bottom: 4px;
+    color: white;
 }
 .back-to-top:hover .iconfont{
     animation:myfirst 0.5s;
@@ -316,10 +310,13 @@ a:hover{
         transform: rotate(10deg);
     }
 }
-#iconfont{
+.iconfont{
     color: #fff;
-    font-size: 30px;
-    margin-left: 14px;
+    width: 50px;
+    height: 30px;
+    text-align: center;
+    position: absolute;
+    top: 0;
 }
 .back-to-top:hover #iconfont{
     animation: mymove 0.5s ;
@@ -333,10 +330,6 @@ a:hover{
      80%  {transform:rotate(-15deg);}
      100% {transform:rotate(10deg);}
  }
-.b-to-t{
-    color: #fff;
-    margin-left: 7px;
-}
 .hotsell{
     width: 1190px;
     height: 440px;
