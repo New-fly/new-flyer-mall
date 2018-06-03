@@ -62,7 +62,7 @@ window.onload=function() {
             oDiv.style.position = "";
             searchLinks.style.display="block";
             topSearch.style.height="113px";
-            searchBox.style.marginTop="35px";
+            searchBox.style.marginTop="28px";
             xflogo.style.marginTop="15px";
         }
     };
