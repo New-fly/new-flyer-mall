@@ -14,6 +14,7 @@ import org.wlgzs.xf_mall.entity.ProductActivity;
 import org.wlgzs.xf_mall.service.ActivityService;
 import org.wlgzs.xf_mall.service.ProductActivityService;
 import org.wlgzs.xf_mall.service.ProductService;
+import org.wlgzs.xf_mall.util.CheckImage;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -59,8 +60,14 @@ public class ActivityController extends BaseController {
      * @description 添加活动
      */
     @RequestMapping("/addActivity")
-    public ModelAndView addActivity(@RequestParam("file") MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
-        activityService.addActivity(myFileName, session, request);
+    public ModelAndView addActivity(@RequestParam("file") MultipartFile myFileName,Model model,HttpSession session, HttpServletRequest request) {
+        String fileName = myFileName.getOriginalFilename();
+        CheckImage checkImage = new CheckImage();
+        if(checkImage.verifyImage(fileName)){
+            activityService.addActivity(myFileName, session, request);
+        }else{
+            model.addAttribute("mag","文件格式不正确");
+        }
         return new ModelAndView("redirect:/AdminActivityController/activity");
     }
 

@@ -8,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.User;
+import org.wlgzs.xf_mall.util.CheckImage;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -79,7 +81,15 @@ public class UserManagementController extends BaseController {
     @RequestMapping("/ModifyAvatar")
     public ModelAndView add(@RequestParam("file") MultipartFile myFileName, HttpSession session,
                             Model model, HttpServletRequest request) throws IOException {
-        User user = userService.ModifyAvatar(session,request,myFileName);
+        String fileName = myFileName.getOriginalFilename();
+        CheckImage checkImage = new CheckImage();
+        User user = null;
+        if(checkImage.verifyImage(fileName)){
+            user = userService.ModifyAvatar(session,request,myFileName);
+        }else{
+            user = (User) session.getAttribute("user");
+            model.addAttribute("mag","文件格式不正确");
+        }
         model.addAttribute("user", user);
         return new ModelAndView("information");
     }

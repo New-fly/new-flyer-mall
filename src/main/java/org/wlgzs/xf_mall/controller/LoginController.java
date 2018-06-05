@@ -14,6 +14,7 @@ import org.wlgzs.xf_mall.util.AuthUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -79,8 +80,11 @@ public class LoginController extends BaseController {
      */
     @RequestMapping("/login")
     public String login(HttpServletRequest request, Model model, String user_name, String user_password) {
+        HttpSession session = request.getSession(true);
         User user = logUserService.login(request, user_name, user_password);
         System.out.println(user);
+        System.out.println("session==="+session.getAttribute("user"));
+        System.out.println("adminSession==="+session.getAttribute("adminUser"));
         if (user != null) {
             if("管理员".equals(user.getUser_role())) {
                 return "adminIndex";
@@ -103,7 +107,8 @@ public class LoginController extends BaseController {
         JSONObject res = null;
         try {
             me = AuthUtils.doGetStr
-                    ("https://github.com/login/oauth/access_token?client_id=" + AuthUtils.CLIENT_ID + "&client_secret=" + AuthUtils.CLIENT_SECRET + "&code=" + code);
+                    ("https://github.com/login/oauth/access_token?client_id=" + AuthUtils.CLIENT_ID +
+                            "&client_secret=" + AuthUtils.CLIENT_SECRET + "&code=" + code);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -166,7 +171,7 @@ public class LoginController extends BaseController {
      * @return
      * @author 胡亚星
      * @date 2018/4/21 19:45
-     * @Description:向邮箱发送验证码
+     * @Description: 向邮箱发送验证码
      */
     @ResponseBody
     @RequestMapping(value = "sendEmail", method = RequestMethod.POST)

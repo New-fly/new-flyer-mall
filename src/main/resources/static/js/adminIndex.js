@@ -17,10 +17,14 @@ $(document).ready(function(){
             $("#jiantou1").css("transform", "rotate(90deg)");
             flag1=false;
             flag2=true;
+            if(flag2==true) {
+                $("#jiantou2").css("transform", "rotate(0deg)");
+            }else{
+                $("#jiantou2").css("transform", "rotate(90deg)");
+            }
         }else{
             $("#jiantou1").css("transform", "rotate(0deg)");
             flag1=true;
-
         }
     });
     $("#two").click(function(){
@@ -28,10 +32,14 @@ $(document).ready(function(){
             $("#jiantou2").css("transform", "rotate(90deg)");
             flag2=false;
             flag1=true;
+            if(flag1==true) {
+                $("#jiantou1").css("transform", "rotate(0deg)");
+            }else{
+                $("#jiantou1").css("transform", "rotate(90deg)");
+            }
         }else{
             $("#jiantou2").css("transform", "rotate(0deg)");
             flag2=true;
-
         }
     });
 
@@ -57,8 +65,4 @@ $(document).ready(function(){
     $("#src4").click(function(){
         $(".frame").attr("src","/AdminActivityController/activity")
     })
-
-
-
-
 });
