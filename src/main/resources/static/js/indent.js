@@ -59,6 +59,6 @@ window.onload=function(){
     document.getElementsByClassName("shoppingCount")[0].value=allcount;
     var top=document.getElementById("top").value;
     var rebate=document.getElementById("rebate").value;
-    var bottom=top*rebate*0.1;
+    var bottom=top*rebate/10;
     document.getElementById("bottom").value=bottom;
 };

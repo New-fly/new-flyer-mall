@@ -13,6 +13,7 @@ import org.wlgzs.xf_mall.entity.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,11 +36,15 @@ public class ProductActivityController extends BaseController {
         List<ProductActivity> productActivities = productActivityService.activityProductList(activity_name);
         model.addAttribute("productActivities",productActivities);
         Activity activity = activityService.findByActivityName(activity_name);
-        String time = String.valueOf(activity.getActivity_time());
-        time = time.substring(0,time.length()-5);
-        model.addAttribute("time",time);
         model.addAttribute("activityTime",activity.getActivity_time());
         model.addAttribute("activity",activity);
+        Date date = new Date();
+        int is = activity.getActivity_time().compareTo(date);
+        model.addAttribute("is",is);
+        if(is<0){
+            model.addAttribute("mag","抢购活动时间已经结束");
+            return new ModelAndView("redirect:/HomeController/homeProduct");
+        }
         if(productActivities.size() == 0){
             model.addAttribute("mag","该活动暂时没有商品");
         }

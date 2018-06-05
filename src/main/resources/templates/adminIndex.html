@@ -19,8 +19,8 @@
 		</div>
 		<div class="user">
 			<div class="user_message">
-				<img th:src="${session.adminUser.user_avatar}"/>
-				<span th:text="${session.adminUser.user_name}"></span>
+				<!--<img th:src="${session.adminUser.user_avatar}"/>-->
+				<span th:text="'欢迎'+${session.adminUser.user_name}"></span>
 			</div>
 			<div><a th:href="@{adminCancellation}" style="color: #fff;text-decoration: none;">退出</a></div>
 		</div>

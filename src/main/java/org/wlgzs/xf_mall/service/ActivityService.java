@@ -26,4 +26,6 @@ public interface ActivityService {
     Activity findByActivityName(String activity_name);
 
     boolean booleanByActivityName(String activity_name);
+
+    List<Activity> findByActivity(String activity_name);
 }
