@@ -73,19 +73,19 @@
         </ul>
 
         <ul class="pagination" th:if="${Number > 1} and ${TotalPages > 1}"><!--//显示上一页-->
-            <li><a th:href="@{/OrderController/allProductOrdersLists(page=1,user_name=${user_name})}">首页</a></li><!--//跳转至第一页-->
-            <li><a th:href="@{/OrderController/allProductOrdersLists(page=${Number-1},user_name=${user_name})}">上一页</a></li><!--//请求页数-1-->
+            <li><a th:href="@{/AdminUserController/adminUserList(page=1,user_name=${user_name})}">首页</a></li><!--//跳转至第一页-->
+            <li><a th:href="@{/AdminUserController/adminUserList(page=${Number-1},user_name=${user_name})}">上一页</a></li><!--//请求页数-1-->
             <li class="active" th:each="i:${#numbers.sequence(1,TotalPages)}">
                 <!--//从1到总页数遍历，并赋值给i    TotalPages&ndash;&gt;总页数-->
                 <a th:if="${i > Number-3} and ${i < Number+3} and ${i == Number}" href="javascript:void(0);" th:text="${i}">#</a>
                 <!--//限制显示页数的条数  4到6个页数   而且等于当前页，不能点击-->
                 <a th:if="${i > Number-3} and ${i < Number+3} and ${i != Number}"
-                   th:href="@{/OrderController/allProductOrdersLists(page=${i},user_name=${user_name})}" th:text="${i}"
+                   th:href="@{/AdminUserController/adminUserList(page=${i},user_name=${user_name})}" th:text="${i}"
                    style="color: #337ab7;background-color: #fff;border-color: #fff;">#</a><!--//限制显示页数的条数  4到6个页数-->
             </li>
             <li th:if="${Number != TotalPages}"><a
-                    th:href="@{/OrderController/allProductOrdersLists(page=${Number+1},user_name=${user_name})}">下一页</a></li><!--//请求页数+1-->
-            <li><a th:href="@{/OrderController/allProductOrdersLists(page=${TotalPages},user_name=${user_name})}">尾页</a></li><!--//跳转至第Number页-->
+                    th:href="@{/AdminUserController/adminUserList(page=${Number+1},user_name=${user_name})}">下一页</a></li><!--//请求页数+1-->
+            <li><a th:href="@{/AdminUserController/adminUserList(page=${TotalPages},user_name=${user_name})}">尾页</a></li><!--//跳转至第Number页-->
         </ul>
 
     </div>
