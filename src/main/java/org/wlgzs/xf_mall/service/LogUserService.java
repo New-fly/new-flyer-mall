@@ -14,11 +14,11 @@ import javax.servlet.http.HttpServletRequest;
  **/
 public interface LogUserService {
 
-    User
-    login(HttpServletRequest request,String user_name, String user_password);
+    User login(HttpServletRequest request,String user_name, String user_password);
 
     void cancellation(HttpServletRequest request);
 
+    void adminCancellation(HttpServletRequest request);
     //验证注册用户
     boolean validationUser(HttpServletRequest request,String code);
 

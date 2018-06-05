@@ -77,7 +77,19 @@ public class LogUserServiceImpl implements LogUserService {
     @Override
     public void cancellation(HttpServletRequest request){
         HttpSession session = request.getSession(true);
-        session.invalidate();
+        if(session.getAttribute("user") != null){
+            session.removeAttribute("user");
+            session.removeAttribute("userId");
+        }
+    }
+
+    @Override
+    public void adminCancellation(HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+        if(session.getAttribute("adminUser") != null){
+            session.removeAttribute("adminName");
+            session.removeAttribute("adminUser");
+        }
     }
 
     //注册

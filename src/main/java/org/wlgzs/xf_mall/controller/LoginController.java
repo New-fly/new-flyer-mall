@@ -167,6 +167,12 @@ public class LoginController extends BaseController {
         return "redirect:/toLogin";
     }
 
+    //管理员退出
+    @RequestMapping("adminCancellation")
+    public String adminCancellation(HttpServletRequest request){
+        logUserService.adminCancellation(request);
+        return "redirect:/toLogin";
+    }
     /**
      * @param
      * @return
