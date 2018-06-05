@@ -694,38 +694,37 @@ public class ProductServiceImpl implements ProductService {
     //主页商品数据
     @Override
     public List<Product> homeProductList(List<ProductCategory> productOneCategories) {
-        List<Product> products = new ArrayList<Product>();
         List<Product> productsOne = productOneCategory(productOneCategories.get(0).getCategory_name());//主页部分第一分类商品
-        for (int i = 0; i < productsOne.size(); i++) {
-            productsOne.get(i).setProduct_category(productOneCategories.get(0).getCategory_name());
+        for (Product aProductsOne : productsOne) {
+            aProductsOne.setProduct_category(productOneCategories.get(0).getCategory_name());
         }
-        products.addAll(productsOne);
+        List<Product> products = new ArrayList<Product>(productsOne);
         List<Product> productsTwo = productOneCategory(productOneCategories.get(1).getCategory_name());//主页部分第二分类商品
-        for (int i = 0; i < productsTwo.size(); i++) {
-            productsTwo.get(i).setProduct_category(productOneCategories.get(1).getCategory_name());
+        for (Product aProductsTwo : productsTwo) {
+            aProductsTwo.setProduct_category(productOneCategories.get(1).getCategory_name());
         }
         products.addAll(productsTwo);
         List<Product> productsThree = productOneCategory(productOneCategories.get(2).getCategory_name());//主页部分第三分类商品
-        for (int i = 0; i < productsThree.size(); i++) {
-            productsThree.get(i).setProduct_category(productOneCategories.get(2).getCategory_name());
+        for (Product aProductsThree : productsThree) {
+            aProductsThree.setProduct_category(productOneCategories.get(2).getCategory_name());
         }
         products.addAll(productsThree);
         List<Product> productsFour = productOneCategory(productOneCategories.get(3).getCategory_name());//主页部分第四分类商品
-        for (int i = 0; i < productsFour.size(); i++) {
-            productsFour.get(i).setProduct_category(productOneCategories.get(3).getCategory_name());
+        for (Product aProductsFour : productsFour) {
+            aProductsFour.setProduct_category(productOneCategories.get(3).getCategory_name());
         }
         products.addAll(productsFour);
         List<Product> productsFive = productOneCategory(productOneCategories.get(4).getCategory_name());//主页部分第五分类商品
-        for (int i = 0; i < productsFive.size(); i++) {
-            productsFive.get(i).setProduct_category(productOneCategories.get(4).getCategory_name());
+        for (Product aProductsFive : productsFive) {
+            aProductsFive.setProduct_category(productOneCategories.get(4).getCategory_name());
         }
         products.addAll(productsFive);
         String img;
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getProduct_picture().contains(",")) {
-                img = products.get(i).getProduct_picture();
+        for (Product product : products) {
+            if (product.getProduct_picture().contains(",")) {
+                img = product.getProduct_picture();
                 img = img.substring(0, img.indexOf(","));
-                products.get(i).setProduct_picture(img);
+                product.setProduct_picture(img);
             }
         }
         return products;

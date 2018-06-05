@@ -131,13 +131,12 @@ public class ActivityServiceImp implements ActivityService {
     //检验抢购活动是否存在
     @Override
     public boolean booleanByActivityName(String activity_name) {
-        System.out.println("activity_name:"+activity_name);
         Activity activity = activityRepository.selectActivity(activity_name);
-        System.out.println(activity);
-        if(activity != null){
-            return true;
-        }else{
-            return false;
-        }
+        return activity != null;
+    }
+
+    @Override
+    public List<Activity> findByActivity(String activity_name) {
+        return activityRepository.findActivity(activity_name);
     }
 }

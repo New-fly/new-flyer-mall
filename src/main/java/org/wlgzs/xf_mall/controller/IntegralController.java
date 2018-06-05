@@ -4,9 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.wlgzs.xf_mall.base.BaseController;
+import org.wlgzs.xf_mall.entity.User;
 import org.wlgzs.xf_mall.entity.UserIntegral;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -22,6 +24,8 @@ public class IntegralController extends BaseController {
     public String integralList(Model model,long userId) {
         List<UserIntegral> integralLists = userIntegralService.getUserIntegral(userId);
         model.addAttribute("integralLists", integralLists);
+        User user = userService.findUserById(userId);
+        model.addAttribute("user",user);
         return "userIntegralList";
     }
 

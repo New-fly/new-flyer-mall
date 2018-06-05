@@ -46,15 +46,11 @@ public class HomeController extends BaseController {
         model.addAttribute("productActivities", productActivities);
         if(activityService.booleanByActivityName(activity_name)){
             Activity activity = activityService.findByActivityName(activity_name);
-            String time = String.valueOf(activity.getActivity_time());
-            time = time.substring(0, time.length() - 5);
-            model.addAttribute("time", time);
             Date date = new Date();
             int is = activity.getActivity_time().compareTo(date);
             model.addAttribute("is",is);
             model.addAttribute("activity", activity.getActivity_time());
         }
-
         //商品展示
         List<Product> products = productService.homeProductList(productOneCategories);
         model.addAttribute("products", products);

@@ -22,7 +22,7 @@
 	<hr style="color: gray;"/>
 	<div class="present-integral">
         <div style="display: inline-block;font-size: 20px">
-            我的积分：<span style="color: red" th:text="${session.user.userIntegral}"></span>
+            我的积分：<span style="color: red" th:text="${user.userIntegral}"></span>
         </div>
         <div style="display: inline-block;float: right;font-size: 16px;">
             <a th:href="@{/ProductListController/integralProduct}">兑换商品</a>

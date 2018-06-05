@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.wlgzs.xf_mall.entity.Activity;
 
+import java.util.List;
+
 /**
  * @Auther: 阿杰
  * @Date: 2018/5/10 09:06
@@ -18,4 +20,7 @@ public interface ActivityRepository extends JpaRepository<Activity, Long>,JpaSpe
 
     @Query("FROM Activity a WHERE a.activity_name=?1")
     Activity selectActivity(String activity_name);
+
+    @Query(value = "SELECT * FROM activity WHERE activity_name = ?",nativeQuery = true)
+    List<Activity> findActivity(String activity_name);
 }
