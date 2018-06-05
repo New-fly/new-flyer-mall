@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>商品表</title>
+    <title>商品</title>
     <!--<link  th:href="@{/bootstrap/dist/css/bootstrap.css}" rel="stylesheet">-->
     <link th:href="@{/css/commodity.css}" rel="stylesheet" type="text/css">
     <link  th:href="@{/images/xflogo.ico}" rel="shortcut icon"  type="image/x-icon"/>
@@ -23,8 +23,7 @@
         <div class="a-div arise">批量操作</div>
         <div class="a-div hide delet">删除</div>
         <input class="ids" name="productId" type="text" style="display: none" />
-        <div class="a-div hide add">添加为活动</div>
-        <input type="submit" value="添加为活动">
+        <input type="submit" value="添加为活动" class="a-div hide add" style="border: 0;">
     </form>
 </div>
 <div class="mytable">
@@ -35,14 +34,14 @@
         <th>库存</th>
         <th>类别</th>
         <th>图片</th>
-        <th>商城名称</th>
-        <th>商城价</th>
+        <th>商品名称</th>
+        <th>商品价格</th>
         <th style="width: 300px;">操作</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="product : ${products}">
-        <td class="hide2" style="position: relative">
+        <td class="hide2" style="position: relative;width: 126px;">
             <label class="demo--label">
                 <input class="demo--radio select" type="checkbox">
                 <span class="demo--checkbox demo--radioInput"></span>

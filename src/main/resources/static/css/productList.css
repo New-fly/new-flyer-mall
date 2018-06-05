@@ -524,4 +524,5 @@ figure{
     line-height: 158px;
     font-weight: bold;
     top: 128px;
+    cursor: pointer;
 }

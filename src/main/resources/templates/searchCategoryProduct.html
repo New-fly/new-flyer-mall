@@ -74,26 +74,26 @@
             </div>
         </div>
     </div>
-    <div class="sort-row">
-        <div class="filter-group-list" style="border: 1px solid #e8e8e8;">
-            <div class="list-left">综合排名</div>
-            <div class="list-right" style="background-color:#FAFAFA;">
-                <div class="time">上市时间</div>
-                <div class="price">
-                    价格从高到低
-                </div>
-                <div class="price">
-                    价格从低到高
-                </div>
-                <!--123546-->
-                <!--<form th:action="@{/}" th:method="post">-->
-                <input type="text" class="priceipt" placeholder="¥" name="product_mallMinPrice"><em>-</em>
-                <input type="text" class="priceipt" placeholder="¥" name="product_mallMaxPrice">
-                <input type="submit" value="确定" class="queding">
-                <!--</form>-->
-            </div>
-        </div>
-    </div>
+    <!--<div class="sort-row">-->
+        <!--<div class="filter-group-list" style="border: 1px solid #e8e8e8;">-->
+            <!--<div class="list-left">综合排名</div>-->
+            <!--<div class="list-right" style="background-color:#FAFAFA;">-->
+                <!--<div class="time">上市时间</div>-->
+                <!--<div class="price">-->
+                    <!--价格从高到低-->
+                <!--</div>-->
+                <!--<div class="price">-->
+                    <!--价格从低到高-->
+                <!--</div>-->
+                <!--&lt;!&ndash;123546&ndash;&gt;-->
+                <!--&lt;!&ndash;<form th:action="@{/}" th:method="post">&ndash;&gt;-->
+                <!--<input type="text" class="priceipt" placeholder="¥" name="product_mallMinPrice"><em>-</em>-->
+                <!--<input type="text" class="priceipt" placeholder="¥" name="product_mallMaxPrice">-->
+                <!--<input type="submit" value="确定" class="queding">-->
+                <!--&lt;!&ndash;</form>&ndash;&gt;-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
     <div th:if="${products.size() == 0}" class="cure">
         <h1 th:text="${mag}" class="hh11"></h1>
     </div>

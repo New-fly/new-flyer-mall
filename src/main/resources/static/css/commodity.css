@@ -12,7 +12,6 @@
     z-index: 999;
     display: none;
     /*background-color: hsla(0,0%,100%,.7);*/
-
 }
 .popup-windows{
     position: absolute;
@@ -62,7 +61,7 @@ tr{
     line-height: 35px;
 }
 th{
-    width: 110px;
+    width: 143px;
     height: 35px;
     line-height: 35px;
     border-right: 1px solid #e6e6e6;
@@ -164,4 +163,10 @@ li>a{
     margin-top: -25px;
     margin-left: -75px;
     display: none;
+}
+.add{
+    border: 0;
+}
+form{
+    display: inline-block;
 }

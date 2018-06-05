@@ -27,7 +27,7 @@
 	    <thead style="background-color: #F2F2F2;">
 	    <tr>
 	        <th>名称</th>
-			<th>父类</th>
+			<th>上级分类</th>
 			<th>操作</th>
 	    </tr>
 	    </thead>
@@ -35,7 +35,7 @@
 			<tr th:each="Categorie : ${productCategories}">
 				<td th:text="${Categorie.category_name}">John</td>
 				<td th:if="${!Categorie.parent_name.equals('0')}" th:text="${Categorie.parent_name}">Doe</td>
-                <td th:if="${Categorie.parent_name.equals('0')}">一级分类</td>
+                <td th:if="${Categorie.parent_name.equals('0')}">此分类为一级分类</td>
 				<!--<td th:text="${Categorie.categoryId}"></td>-->
 				<td>
 					<a class="a-div adiv1" href="javascript:void(0);" th:onclick="'javascript:deleteProduct('+${Categorie.categoryId}+');'">删除</a>

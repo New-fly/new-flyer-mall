@@ -741,14 +741,16 @@ public class ProductServiceImpl implements ProductService {
     //搜索商品
     @Override
     public Page<Product> searchProduct(HttpServletRequest request, String product_category, int page, int limit) throws IOException {
+        // 生成实际存储的真实文件名
+        String realName = UUID.randomUUID().toString();
         String path = request.getSession().getServletContext().getRealPath("/");
-        String pathTwo = path + "txtFile/" + product_category;
+        String pathTwo = path + "txtFile/" + realName;
         File dir = new File(pathTwo);
         if (!dir.exists()) {
             dir.mkdirs();
         }
         IdsUtil idsUtil = new IdsUtil();
-        idsUtil.writerFile(product_category, pathTwo + "/" + product_category + ".txt");
+        idsUtil.writerFile(product_category, pathTwo + "/" + realName + ".txt");
 
         //System.out.println(pathTwo);
         Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(pathTwo);
@@ -756,9 +758,9 @@ public class ProductServiceImpl implements ProductService {
         List<String> stringList = new ArrayList<String>();
         for (String word : idf.keySet()) {
             stringList.add(word);
-            System.out.println(word);
+            //System.out.println(word);
         }
-        File file = new File(pathTwo + "/" + product_category + ".txt");
+        File file = new File(pathTwo + "/" + realName + ".txt");
         if (file.exists() && file.isFile()) {
             file.delete();
         }
@@ -767,6 +769,14 @@ public class ProductServiceImpl implements ProductService {
             fileTwo.delete();
         }
         String[] product_categories = stringList.toArray(new String[stringList.size()]);
+        for (int i = 0; i < product_categories.length; i++) {
+            System.out.println(product_categories[i]);
+            if (product_categories[i].equals("新") || product_categories[i].equals("飞") || product_categories[i].equals("新飞") || product_categories[i].equals("40/") || product_categories[i].equals("43/50") || product_categories[i].equals("双") || product_categories[i].equals("家用") || product_categories[i].equals("8/6") || product_categories[i].equals("6.8kg/7.5") || product_categories[i].equals("家用") || product_categories[i].equals("丰包邮") || product_categories[i].equals("飞8公斤")) {
+                product_categories[i] = product_categories[product_categories.length - 1];
+                product_categories = Arrays.copyOf(product_categories, product_categories.length - 1);
+                i--;
+            }
+        }
         //通过关键词查询商品
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
         Pageable pageable = new PageRequest(page, limit, sort);
