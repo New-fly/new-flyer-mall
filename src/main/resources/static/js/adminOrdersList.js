@@ -79,24 +79,28 @@ window.onload=function(){
     }
     document.getElementsByClassName("delete")[0].onclick=function(){
         var ids=document.getElementsByClassName("ids")[0].value;
-        $.ajax({
-            url: "/OrderController/deleteOrders",
-            data: {
-                "orderId":ids,
-            },
-            dataType: "text",
-            type:"POST",
-            success: function () {
-                $(":checked").parent().parent().parent().remove();
-                document.getElementsByClassName("arise")[0].style.display="inline-block";
-                document.getElementsByClassName("hide2")[0].style.display="none";
-                for(let i=0;i<good.length+1;i++){
-                    document.getElementsByClassName("hide")[i].style.display="none";
+        if(ids.length<1){
+            alert("请勾选需要删除的项")
+        }else{
+            $.ajax({
+                url: "/OrderController/deleteOrders",
+                data: {
+                    "orderId":ids,
+                },
+                dataType: "text",
+                type:"POST",
+                success: function () {
+                    $(":checked").parent().parent().parent().remove();
+                    document.getElementsByClassName("arise")[0].style.display="inline-block";
+                    document.getElementsByClassName("hide2")[0].style.display="none";
+                    for(let i=0;i<good.length+1;i++){
+                        document.getElementsByClassName("hide")[i].style.display="none";
+                    }
+                },
+                error: function () {
+                    alert("请求失败！！")
                 }
-            },
-            error: function () {
-                alert("请求失败！！")
-            }
-        })
+            })
+        }
     }
 };

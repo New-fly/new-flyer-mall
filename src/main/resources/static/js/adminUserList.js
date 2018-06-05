@@ -87,27 +87,30 @@ for (let i = 0; i < radio.length; i++) {
 //删除用户
 del.onclick=function () {
     var ids = document.getElementsByClassName("ids")[0].value;
-    $.ajax({
-        url: "/AdminUserController/adminDeleteUsers",
-        data: {
-            "userId": ids
-        },
-        dataType: "text",
-        success: function () {
-            $(":checked").parent().parent().parent().remove();
-            opcate.style.display="inline-block";
-            del.style.display="none";
-            shanchu.style.display="none";
-            // checx.style.display="none";
-            for(let i=0;i<radio.length;i++){
-                checx[i].style.display="none";
+    if(ids.length<1){
+        alert("请勾选需要删除项")
+    }else{
+        $.ajax({
+            url: "/AdminUserController/adminDeleteUsers",
+            data: {
+                "userId": ids
+            },
+            dataType: "text",
+            success: function () {
+                $(":checked").parent().parent().parent().remove();
+                opcate.style.display="inline-block";
+                del.style.display="none";
+                shanchu.style.display="none";
+                // checx.style.display="none";
+                for(let i=0;i<radio.length;i++){
+                    checx[i].style.display="none";
+                }
+            },
+            error: function () {
+                alert("请求失败");
             }
-        },
-        error: function () {
-            alert("请求失败");
-        }
-
-    });
+        });
+    }
 };
 
 

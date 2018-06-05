@@ -26,28 +26,32 @@ window.onload=function(){
     }
     document.getElementsByClassName("delet")[0].onclick=function(){
         var allid=document.getElementsByClassName("ids")[0].value;
-        $.ajax({
-            url: "/AdminActivityController/adminDeleteActivitys",
-            data: {
-                "activityId":allid,
-            },
-            dataType: "text",
-            type:"POST",
-            success: function () {
-                $(":checked").parent().parent().parent().remove();
-                var hide=document.getElementsByClassName("hide");
-                for(let i = 0 ; i < hide.length ; i++){
-                    document.getElementsByClassName("hide")[i].style.display="none";
+        if(allid.length<1){
+            alert("请勾选需要删除项")
+        }else{
+            $.ajax({
+                url: "/AdminActivityController/adminDeleteActivitys",
+                data: {
+                    "activityId":allid,
+                },
+                dataType: "text",
+                type:"POST",
+                success: function () {
+                    $(":checked").parent().parent().parent().remove();
+                    var hide=document.getElementsByClassName("hide");
+                    for(let i = 0 ; i < hide.length ; i++){
+                        document.getElementsByClassName("hide")[i].style.display="none";
+                    }
+                    var hide2=document.getElementsByClassName("hide2");
+                    for(let i = 0 ; i < hide2.length ; i++){
+                        document.getElementsByClassName("hide2")[i].style.display="none";
+                    }
+                    document.getElementsByClassName("arise")[0].style.display="inline-block"
+                },
+                error: function () {
+                    alert("请求失败！！")
                 }
-                var hide2=document.getElementsByClassName("hide2");
-                for(let i = 0 ; i < hide2.length ; i++){
-                    document.getElementsByClassName("hide2")[i].style.display="none";
-                }
-                document.getElementsByClassName("arise")[0].style.display="inline-block"
-            },
-            error: function () {
-                alert("请求失败！！")
-            }
-        })
+            })
+        }
     };
 };
