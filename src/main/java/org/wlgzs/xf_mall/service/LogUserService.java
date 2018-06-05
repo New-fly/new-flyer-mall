@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletRequest;
  **/
 public interface LogUserService {
 
-    User login(HttpServletRequest request,String user_name, String user_password);
+    User
+    login(HttpServletRequest request,String user_name, String user_password);
 
     void cancellation(HttpServletRequest request);
 
