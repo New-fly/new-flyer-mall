@@ -74,18 +74,20 @@ window.onload = function(){
     }
     getDate();
     setInterval(getDate, 1000);
-	//控制分页
+	//控制抢购翻页
+    var length=document.getElementsByClassName("all-rob-long")[0].offsetWidth;
 	var num = 0;
+	document.getElementById("button-next").onclick=function(){
+		num=num-200;
+		if(num<(-1)*length+1000){num=(-1)*length+1000;}
+		document.getElementById("all-rob-long").style.left = num + "px";
+	};
 	document.getElementById("button-last").onclick=function(){
-		num=num+1000;
+		num=num+200;
 		if(num>0){num=0}
 		document.getElementById("all-rob-long").style.left = num + "px";
 	};
-	document.getElementById("button-next").onclick=function(){
-		num=num-1000;
-		if(num<-1600){num=-1600}
-		document.getElementById("all-rob-long").style.left = num + "px";
-	};
+
    document.getElementsByClassName("ipt-1")[0].onblur=function() {
        setTimeout(function(){$('.hint').hide()},1000)
    };

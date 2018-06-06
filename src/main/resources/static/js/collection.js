@@ -83,7 +83,6 @@ window.onload=function(){
     };
     var number=0;
     var length=document.getElementsByClassName("baby-long")[0].offsetWidth;
-    console.log(length);
     document.getElementsByClassName("nextone")[0].onclick=function(){
         number-=200;
         if(number<(-1)*length+1000){
