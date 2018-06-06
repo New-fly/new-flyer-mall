@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -94,13 +95,20 @@ public class AliPayController extends BaseController {
                                        HttpServletRequest request) {
         List<Product> shoppingCarts = productService.findProductListById(productId);
         model.addAttribute("shoppingCarts", shoppingCarts);
-        System.out.println("购买商品id：" + productId);
+        //System.out.println("购买商品id：" + productId);
         model.addAttribute("shoppingCount", 1);
         HttpSession session = request.getSession(true);
         User user = (User) session.getAttribute("user");
         String user_name = user.getUser_name();
         Activity activity = activityService.findByActivityName(shoppingCarts.get(0).getProduct_activity());
         model.addAttribute("activity", activity);
+        Date date = new Date();
+        int is = activity.getActivity_time().compareTo(date);
+        model.addAttribute("is",is);
+        if(is<0){
+            model.addAttribute("mag","抢购活动时间已经结束");
+            return new ModelAndView("redirect:/HomeController/homeProduct");
+        }
         List<ShippingAddress> shippingAddressList = shippingAddressService.getShippingAddressList(user_name);
         model.addAttribute("shippingAddressList", shippingAddressList);
         return new ModelAndView("indentActivity");
@@ -165,8 +173,16 @@ public class AliPayController extends BaseController {
      * @description 积分兑换
      */
     @RequestMapping("estimatePay")
-    public ModelAndView estimatePay(@RequestParam(value = "productId", defaultValue = "233") long productId,
+    public ModelAndView estimatePay(Model model,@RequestParam(value = "productId", defaultValue = "233") long productId,
                                     HttpServletRequest request) {
+        List<Product> shoppingCarts = productService.findProductListById(productId);
+        model.addAttribute("shoppingCarts", shoppingCarts);
+        HttpSession session = request.getSession(true);
+        User user = (User) session.getAttribute("user");
+        if (user.getUserIntegral() < shoppingCarts.get(0).getProduct_needPoints()) {
+            model.addAttribute("mag","您的积分不足");
+            return new ModelAndView("redirect:/ProductListController/integralProduct");
+        }
         ordersService.estimatePaySave(request, productId);
         return new ModelAndView("redirect:/ProductListController/integralProduct");
     }

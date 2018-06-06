@@ -18,6 +18,7 @@ public interface LogUserService {
 
     void cancellation(HttpServletRequest request);
 
+    void adminCancellation(HttpServletRequest request);
     //验证注册用户
     boolean validationUser(HttpServletRequest request,String code);
 

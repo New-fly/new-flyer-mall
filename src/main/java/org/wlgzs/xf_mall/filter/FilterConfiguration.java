@@ -22,6 +22,7 @@ public class FilterConfiguration {
         registration.addUrlPatterns("/AdminProductController/*");
         registration.addUrlPatterns("/findProductSensitive/*");
         registration.addUrlPatterns("/AdminUserController/*");
+        registration.addUrlPatterns("/SearchShieldController/*");
         //过滤器名称
         registration.setName("DemoFilter");
         //是否自动注册 false 取消Filter的自动注册

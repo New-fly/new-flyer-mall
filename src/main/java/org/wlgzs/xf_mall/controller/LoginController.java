@@ -14,6 +14,7 @@ import org.wlgzs.xf_mall.util.AuthUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -52,10 +53,9 @@ public class LoginController extends BaseController {
     //去登陆
     @RequestMapping("/toLogin")
     public ModelAndView toLogin(Model model,@RequestParam(value = "activity_name", defaultValue = "登录页面") String activity_name) {
-        List<ProductActivity> productActivities = productActivityService.activityProductList(activity_name);
-        model.addAttribute("productActivities",productActivities);
-        Activity activity = activityService.findByActivityName(activity_name);
-        model.addAttribute("activity",activity);
+        List<Activity> activities = activityService.findByActivity(activity_name);
+        System.out.println(activities);
+        model.addAttribute("activities",activities);
         return new ModelAndView("login");
     }
 
@@ -80,8 +80,11 @@ public class LoginController extends BaseController {
      */
     @RequestMapping("/login")
     public String login(HttpServletRequest request, Model model, String user_name, String user_password) {
+        HttpSession session = request.getSession(true);
         User user = logUserService.login(request, user_name, user_password);
         System.out.println(user);
+        System.out.println("session==="+session.getAttribute("user"));
+        System.out.println("adminSession==="+session.getAttribute("adminUser"));
         if (user != null) {
             if("管理员".equals(user.getUser_role())) {
                 return "adminIndex";
@@ -104,7 +107,8 @@ public class LoginController extends BaseController {
         JSONObject res = null;
         try {
             me = AuthUtils.doGetStr
-                    ("https://github.com/login/oauth/access_token?client_id=" + AuthUtils.CLIENT_ID + "&client_secret=" + AuthUtils.CLIENT_SECRET + "&code=" + code);
+                    ("https://github.com/login/oauth/access_token?client_id=" + AuthUtils.CLIENT_ID +
+                            "&client_secret=" + AuthUtils.CLIENT_SECRET + "&code=" + code);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -162,12 +166,18 @@ public class LoginController extends BaseController {
         return "redirect:/toLogin";
     }
 
+    //管理员退出
+    @RequestMapping("adminCancellation")
+    public String adminCancellation(HttpServletRequest request){
+        logUserService.adminCancellation(request);
+        return "redirect:/toLogin";
+    }
     /**
      * @param
      * @return
      * @author 胡亚星
      * @date 2018/4/21 19:45
-     * @Description:向邮箱发送验证码
+     * @Description: 向邮箱发送验证码
      */
     @ResponseBody
     @RequestMapping(value = "sendEmail", method = RequestMethod.POST)

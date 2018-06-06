@@ -53,7 +53,7 @@
                                 <del th:text="${productActivity.product_counterPrice}">1899元</del>
                             </p>
                             <input type="submit" class="btn" value="立即购买" readonly>
-                            <p class="person" th:text="'该商品为'+${productActivity.activity_discount}+'折，一次限购一个'"></p>
+                            <p class="person" th:text="'该商品为'+${productActivity.activity_discount}+'折，折后约为 ￥'+${productActivity.product_mallPrice*productActivity.activity_discount/10}"></p>
                         </div>
                     </form>
                 </div>

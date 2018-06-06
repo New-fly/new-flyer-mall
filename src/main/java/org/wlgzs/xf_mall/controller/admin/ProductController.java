@@ -127,6 +127,7 @@ public class ProductController {
     @RequestMapping("/adminAddProduct")
     public ModelAndView add(String product_details, @RequestParam("file") MultipartFile[] myFileNames, HttpSession session,
                             Model model, HttpServletRequest request) {
+
         productService.saveProduct(product_details, myFileNames, session, request);
         model.addAttribute("product_details", product_details);
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
