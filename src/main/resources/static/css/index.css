@@ -524,6 +524,8 @@
 	position: absolute;
 	transition: 1s;
 	left: 0;
+	clear: both;
+	white-space: nowrap;
 }
 .little-books{
     width: 100%;
@@ -546,14 +548,14 @@
     width: 100%;
     height: 170px;
 }
-.all-rob-long>div{
+.onediv{
 	width: 170px;
 	height: 230px;
 	padding: 10px;
 	font-size: 12px;
-	margin: 0 5px;
+	margin: 0 3px;
 	background-color: white;
-	float: left;
+	display: inline-block;
 }
 .all-rob-long>div>p{
 	margin: 0;

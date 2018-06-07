@@ -97,10 +97,17 @@
             }else{
                 document.getElementById("error2").innerHTML = "";
             }
-
-
         }
     }
+    document.getElementById("prepassword").onblur=function(){
+        var oldpassword1=document.getElementById("prepassword").value;
+        var oldpassword2=document.getElementsByClassName("password1")[0].innerHTML;
+        console.log(oldpassword1);
+        console.log(oldpassword2);
+        if (oldpassword1!=oldpassword2){
+            alert("原密码输入错误！！")
+        }
+    };
 
 
 
