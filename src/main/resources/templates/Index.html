@@ -120,9 +120,9 @@
         </div>
     </div>
 </div>
-<div  th:if="${productActivities.size()>0}" class="recommend">限时抢购</div>
-<div class="time">
-    <div th:if="${productActivities.size()>0}">
+<div  th:if="${productActivities.size()>0 && is>0}" class="recommend">限时抢购</div>
+<div class="time" th:if="${productActivities.size()>0 && is>0}">
+    <div>
         <div class="count-down">
             <div class="count-down-text">
                 新飞抢购 <br/>
