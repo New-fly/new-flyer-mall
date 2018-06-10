@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  * @Auther: 阿杰
  * @Date: 2018/5/1 10:06
- * @Description:
+ * @Description: 沙箱配置
  */
 public class AlipayConfig{
     // 应用ID,您的APPID，收款账号既是您的APPID对应支付宝账号

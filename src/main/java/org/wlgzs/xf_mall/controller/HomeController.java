@@ -11,9 +11,6 @@ import org.wlgzs.xf_mall.entity.Product;
 import org.wlgzs.xf_mall.entity.ProductActivity;
 import org.wlgzs.xf_mall.entity.ProductCategory;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
