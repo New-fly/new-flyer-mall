@@ -121,27 +121,50 @@ public class UserManagementController extends BaseController {
         return new ModelAndView("changeEmail");
     }
 
+    /**
+     * @param
+     * @return
+     * @author 胡亚星
+     * @date 2018/4/27 20:06
+     * @Description: 修改邮箱发送验证码
+     */
+    @RequestMapping("sendChangePhone")
+    public void sendChangeEmail(HttpServletRequest request) {
+        String user_mail = request.getParameter("user_mail");
+        logUserService.sendEmail1(request, user_mail);//发送
+    }
+
     /**     
      * @author 胡亚星
      * @date 2018/5/9 17:54  
      * @param   
-     * @return   
-     *@Description:实现修改邮箱
+     * @return
+     *@Description: 实现修改邮箱
      */
     @RequestMapping("changeEmail")
-    public ModelAndView changeEmail(Model model,String user_mail,HttpServletRequest request){
+    public ModelAndView changeEmail(Model model,HttpServletRequest request){
         //检查邮箱是否存在
-        System.out.println(logUserService.selectEmail(user_mail));
-        if(!logUserService.selectEmail(user_mail)){//可以继续
-            HttpSession session = request.getSession();
-            User user1 = (User) session.getAttribute("user");
-            long userId = user1.getUserId();
-            model.addAttribute("mgs", "修改成功");
-            userService.changeEmail(user_mail,userId);//修改
-            User user = userService.findUserById(userId);
-            model.addAttribute("user", user);
-            return new ModelAndView("information");
+        HttpSession session = request.getSession();
+        String user_mail = request.getParameter("user_mail");
+        String sessionMail = "";
+        String usercode = "";
+        String sessioncode = "";
+        if (logUserService.contrastCode(request,user_mail,sessionMail,usercode,sessioncode)){
+            if(!logUserService.selectEmail(user_mail)){//可以继续
+                User user1 = (User) session.getAttribute("user");
+                long userId = user1.getUserId();
+                model.addAttribute("mgs", "修改成功");
+                userService.changeEmail(user_mail,userId);//修改
+                User user = userService.findUserById(userId);
+                model.addAttribute("user", user);
+                return new ModelAndView("information");
+            }else{
+                model.addAttribute("mgs", "修改失败");
+                String url = "redirect:/UserManagementController/toChangeEmail";
+                return new ModelAndView(url);
+            }
         }else{
+            model.addAttribute("mgs", "验证码错误");
             String url = "redirect:/UserManagementController/toChangeEmail";
             return new ModelAndView(url);
         }
@@ -187,26 +210,12 @@ public class UserManagementController extends BaseController {
         }
     }
 
-
-    /**
-     * @param
-     * @return
-     * @author 胡亚星
-     * @date 2018/4/27 20:06
-     * @Description: 发送验证码
-     */
-    @RequestMapping("sendChangePhone")
-    public void sendChangePhone(HttpServletRequest request) {
-        String user_mail = request.getParameter("user_mail");
-        logUserService.sendEmail1(request, user_mail);//发送
-    }
-
     /**
      * @param
      * @return
      * @author 胡亚星
      * @date 2018/5/2 18:19
-     * @Description:用户电话的修改
+     * @Description: 用户电话的修改
      */
     @RequestMapping("changePhone")
     public ModelAndView changePhone(Model model, HttpServletRequest request) {
@@ -221,7 +230,7 @@ public class UserManagementController extends BaseController {
      * @return
      * @author 胡亚星
      * @date 2018/5/3 8:51
-     * @Description:跳转到找回密码页面
+     * @Description: 跳转到找回密码页面
      */
     @RequestMapping("toSendRetrievePassword")
     public ModelAndView toSendRetrievePassword() {
@@ -233,7 +242,7 @@ public class UserManagementController extends BaseController {
      * @return
      * @author 胡亚星
      * @date 2018/5/3 8:43
-     * @Description:找回密码发送邮箱
+     * @Description: 找回密码发送邮箱
      */
     @ResponseBody
     @RequestMapping(value = "sendRetrievePassword", method = RequestMethod.POST)
@@ -255,7 +264,7 @@ public class UserManagementController extends BaseController {
      * @return
      * @author 胡亚星
      * @date 2018/5/2 17:57
-     * @Description:找回密码验证
+     * @Description: 找回密码验证
      */
     @RequestMapping("passwordContrastCode")
     public ModelAndView passwordContrastCode(Model model, HttpServletRequest request) {

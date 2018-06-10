@@ -120,9 +120,9 @@
         </div>
     </div>
 </div>
-<div  th:if="${productActivities.size() != 0 && is > 0}" class="recommend">限时抢购</div>
+<div  th:if="${productActivities.size()>0}" class="recommend">限时抢购</div>
 <div class="time">
-    <div th:if="${productActivities.size() != 0 && is > 0}">
+    <div th:if="${productActivities.size()>0}">
         <div class="count-down">
             <div class="count-down-text">
                 新飞抢购 <br/>
@@ -139,12 +139,11 @@
             </div>
         </div>
         <div class="all-rob">
-            <div class="button-last" id="button-last"><</div>
-            <div class="button-next" id="button-next">></div>
+            <div class="button-last" id="button-last" th:if="${productActivities.size()>5}"> < </div>
+            <div class="button-next" id="button-next" th:if="${productActivities.size()>5}"> > </div>
             <div class="all-rob-long" id="all-rob-long">
-                <a target="_blank"
-                   th:href="@{/ActivityController/activityProducts(activity_name=${productActivities[0].activity_name})}">
-                    <div th:each="productActivity : ${productActivities}">
+                <a target="_blank" th:href="@{/ActivityController/activityProducts(activity_name=${productActivities[0].activity_name})}">
+                    <div class="onediv" th:each="productActivity : ${productActivities}">
                         <a target="_blank"
                            th:href="@{/ActivityController/activityProducts(activity_name=${productActivities[0].activity_name})}">
                             <img th:src="${productActivity.product_picture}" th:width="170px" style="height: 170px;"/>

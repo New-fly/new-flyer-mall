@@ -28,17 +28,17 @@ import java.util.List;
 @Controller
 public class LoginController extends BaseController {
 
-    @RequestMapping("/registeredMail")
-    public String register(HttpServletRequest request, Model model, User user, String code) {
-        //判断用户是否合法
-        if (logUserService.validationUser(request, code)) {
-            userService.save(user);
-            return "redirect:/toRegistered";
-        } else {
-            model.addAttribute("msg", "验证码错误");
-            return "redirect:/toRegistered";
-        }
-    }
+//    @RequestMapping("/registeredMail")
+//    public String register(HttpServletRequest request, Model model, User user, String code) {
+//        //判断用户是否合法
+//        if (logUserService.validationUser(request, code)) {
+//            userService.save(user);
+//            return "redirect:/toRegistered";
+//        } else {
+//            model.addAttribute("msg", "验证码错误");
+//            return "redirect:/toRegistered";
+//        }
+//    }
 
     @RequestMapping("/")
     public String toIndex() {
@@ -166,6 +166,12 @@ public class LoginController extends BaseController {
         return "redirect:/toLogin";
     }
 
+    //管理员退出
+    @RequestMapping("adminCancellation")
+    public String adminCancellation(HttpServletRequest request){
+        logUserService.adminCancellation(request);
+        return "redirect:/toLogin";
+    }
     /**
      * @param
      * @return
@@ -205,7 +211,7 @@ public class LoginController extends BaseController {
      * @return
      * @author 胡亚星
      * @date 2018/4/22 15:36
-     * @Description:验证用户验证码是否正确
+     * @Description: 验证用户验证码是否正确
      */
     @RequestMapping("contrastCode")
     public String contrastCode(Model model, HttpServletRequest request) {

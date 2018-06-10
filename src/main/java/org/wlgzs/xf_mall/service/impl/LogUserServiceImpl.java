@@ -77,7 +77,19 @@ public class LogUserServiceImpl implements LogUserService {
     @Override
     public void cancellation(HttpServletRequest request){
         HttpSession session = request.getSession(true);
-        session.invalidate();
+        if(session.getAttribute("user") != null){
+            session.removeAttribute("user");
+            session.removeAttribute("userId");
+        }
+    }
+
+    @Override
+    public void adminCancellation(HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+        if(session.getAttribute("adminUser") != null){
+            session.removeAttribute("adminName");
+            session.removeAttribute("adminUser");
+        }
     }
 
     //注册
@@ -156,9 +168,9 @@ public class LogUserServiceImpl implements LogUserService {
         //接收者
         mainMessage.setTo(user_mail);
         //发送的标题
-        mainMessage.setSubject("修改手机号");
+        mainMessage.setSubject("修改邮箱号");
         //发送的内容
-        mainMessage.setText("验证码："+authCode+" ， 您正在修改您的手机号，请继续");
+        mainMessage.setText("验证码："+authCode+" ， 您正在修改您的邮箱号，请继续");
         mailSender.send(mainMessage);
         System.out.println(mailSender);
         System.out.println("ok");
