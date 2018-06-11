@@ -126,6 +126,25 @@
 			</form>
 		</div>
 	</div>
+	<div class="black black_oldmail">
+		<div class="revise">
+			<div class="revise_top">
+				验证邮箱
+				<div class="close">×</div>
+			</div>
+			<div class="revise_body">
+                <div class="oldmaill">
+                    我们已经将验证码发送至你的原邮箱:
+                    <span th:text="${user.user_mail}"></span>
+                    <input  type="text" class="iptipt">
+                </div>
+			</div>
+			<div class="revise_foot">
+				<div class="definite modify2" onclick="test()">确定</div>
+				<div class="cancel">取消</div>
+			</div>
+		</div>
+	</div>
 	<div class="prompt">略略略</div>
 	<script type="text/javascript" th:src="@{/js/information.js}"></script>
 </body>

@@ -14,10 +14,10 @@
 	};
 	//修改邮箱
 	document.getElementsByClassName("change_mail")[0].onclick=function(){
-		document.getElementsByClassName("black_mail")[0].style.width="100%";
-		document.getElementsByClassName("black_mail")[0].style.height="100%";
-		document.getElementsByClassName("black_mail")[0].style.top="0";
-		document.getElementsByClassName("black_mail")[0].style.left="0";
+		document.getElementsByClassName("black_oldmail")[0].style.width="100%";
+		document.getElementsByClassName("black_oldmail")[0].style.height="100%";
+		document.getElementsByClassName("black_oldmail")[0].style.top="0";
+		document.getElementsByClassName("black_oldmail")[0].style.left="0";
 	};
     //修改头像
     document.getElementsByClassName("chang_img")[0].onclick=function(){
@@ -64,7 +64,6 @@
         }
         var new_mail= document.getElementsByClassName("new_mail")[0];
         function test() {
-
             //II.对电子邮件的验证
             var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
             if (new_mail.value != "") {

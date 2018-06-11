@@ -84,7 +84,7 @@
             </div>
         </div>
     </div>
-    <form th:action="@{/aliPay/aliPaySum}" method="post">
+    <form th:action="@{/aliPay/ali}" method="post">
         <div class="pay">
             <div style="position: relative" class="pay-block" th:each="shippingAddress : ${shippingAddressList}" th:if="${shippingAddress.address_is_default==1}">
                     <div style="position: absolute;top: 0;left: 0;">

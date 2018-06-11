@@ -66,4 +66,5 @@ public interface OrdersService {
     //用户订单号
     List<String> findOrderNumbers(long userId);
 
+    void ali(HttpServletResponse response, HttpServletRequest request) throws AlipayApiException, IOException;
 }
