@@ -21,7 +21,7 @@
     <div class="content" th:style="'background:url(' + @{(${activities.get(0).activity_picture}=='' ? 'images/背景6.jpg' : ${activities.get(0).activity_picture})} + ');'+'background-size: 100% 100%;'+'background-repeat: no-repeat'">
         <div class="register-box-warp">
             <div class="register-box">
-                <h5 class="h5-sty1">密码登录</h5>
+                <h5 class="h5-sty1">用户登录</h5>
                 <form th:action="@{/login}" method="post" class="">
                     <div class="static-form">
                         <label><i class="fa fa-user-o"></i></label>
