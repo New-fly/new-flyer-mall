@@ -31,10 +31,10 @@
     <thead style="background-color: #F2F2F2;">
     <tr>
         <th class="hide2"></th>
+        <th>商品名称</th>
         <th>库存</th>
         <th>类别</th>
         <th>图片</th>
-        <th>商品名称</th>
         <th>商品价格</th>
         <th style="width: 300px;">操作</th>
     </tr>
@@ -47,11 +47,11 @@
                 <span class="demo--checkbox demo--radioInput"></span>
             </label>
         </td>
+        <td th:text="${product.product_keywords}" style="width: 200px"></td>
         <td class="productid" style="display: none" th:text="${product.productId}"></td>
         <td th:text="${product.product_inventory}"></td>
         <td th:text="${product.product_category}"></td>
         <td><img th:src="${product.product_picture}" style="width: 45px;height: 45px;"></td>
-        <td th:text="${product.product_keywords}" style="width: 200px"></td>
         <td th:text="${product.product_mallPrice}"></td>
         <td>
             <a th:href="@{/AdminActivityController/toAdminAddActivity(productId=${product.productId})}" class="a-div" style="background: #009688;">添加为活动</a>

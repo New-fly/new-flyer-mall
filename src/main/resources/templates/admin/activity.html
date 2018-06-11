@@ -35,8 +35,8 @@
             <td><img th:src="${activitie.activity_picture}" style="width: 50px;"></td>
             <td th:text="${activitie.activity_time}"></td>
             <td>
-                <a th:href="@{/AdminActivityController/deleteActivity(activitySumId=${activitie.activitySumId})}" class="a-div adiv1">删除</a>
                 <a th:href="@{/AdminActivityController/toEditActivity(activitySumId=${activitie.activitySumId})}" class="a-div adiv2">修改</a>
+                <a th:href="@{/AdminActivityController/deleteActivity(activitySumId=${activitie.activitySumId})}" class="a-div adiv1">删除</a>
             </td>
         </tr>
         </tbody>
