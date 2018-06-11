@@ -112,39 +112,14 @@ public class OrdersServiceImpl implements OrdersService {
 
     //支付   添加订单
     @Override
-    public void save(HttpServletRequest request, HttpServletResponse response, String productId, String shoppingCount) throws AlipayApiException, IOException {
-        response.setContentType("text/html;charset=utf-8");
+    public void save(HttpServletRequest request, HttpServletResponse response, String productId, String shoppingCount) {
 
-        PrintWriter out = response.getWriter();
-        //获得初始化的AlipayClient
-        AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
-        //设置请求参数
-        AlipayTradePagePayRequest aliPayRequest = new AlipayTradePagePayRequest();
-        aliPayRequest.setReturnUrl(AlipayConfig.return_url);
-        aliPayRequest.setNotifyUrl(AlipayConfig.notify_url);
-
-        //商户订单号，商户网站订单系统中唯一订单号，必填
-        String orderNumber = RandonNumberUtils.getOrderIdByUUId();
-        String order_number = new String(orderNumber);
-        System.out.println(order_number+"------------------");
-        //付款金额，必填
-        String total_amount = new String(request.getParameter("WIDtotal_amount"));
-        System.out.println(total_amount+"-------------------");
-        //订单名称，必填
-        String subject = new String("支付宝沙箱支付");
-        aliPayRequest.setBizContent("{\"out_trade_no\":\"" + order_number + "\","
-                + "\"total_amount\":\"" + total_amount + "\","
-                + "\"subject\":\"" + subject + "\","
-                + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
-        //请求
-        String result = alipayClient.pageExecute(aliPayRequest).getBody();
-        //输出
-        out.println(result);
         HttpSession session = request.getSession(true);
         User user = (User) session.getAttribute("user");
+        String orderNumber = (String) session.getAttribute("orderNumber");
+        productId = (String) session.getAttribute("productId");
+        shoppingCount = (String) session.getAttribute("shoppingCount");
         long userId = user.getUserId();
-        System.out.println(userId+"-------------------------------");
-        //User user = userRepository.findById(userId);
 
         IdsUtil idsUtil = new IdsUtil();
         productId = productId.substring(1, productId.length() - 1);
@@ -153,6 +128,10 @@ public class OrdersServiceImpl implements OrdersService {
         IdsUtil idsUtilTwo = new IdsUtil();
         shoppingCount = shoppingCount.substring(1, shoppingCount.length() - 1);
         long[] shoppingCounts = idsUtilTwo.IdsUtils(shoppingCount);
+        String address_name = (String) session.getAttribute("address_name"); //收货人
+        String address_phone = (String) session.getAttribute("address_phone"); //收货人电话
+        String address_shipping = (String) session.getAttribute("address_shipping"); //收货地址
+        String WIDtotal_amount = (String) session.getAttribute("WIDtotal_amount"); //收货地址
         for (int i = 0; i < Ids.length; i++) {
             Product product = productRepository.findById(Ids[i]);
             //商品表
@@ -160,9 +139,9 @@ public class OrdersServiceImpl implements OrdersService {
             productRepository.save(product);
             //订单表
             Orders order = new Orders();
-            order.setAddress_name(request.getParameter("address_name")); //收货人
-            order.setAddress_phone(request.getParameter("address_phone")); //收货人电话
-            order.setAddress_shipping(request.getParameter("address_shipping")); //收货地址
+            order.setAddress_name(address_name); //收货人
+            order.setAddress_phone(address_phone); //收货人电话
+            order.setAddress_shipping(address_shipping); //收货地址
             order.setOrder_expressNumber(RandonNumberUtils.getOrderIdByUUId());  //快递单号
             order.setOrder_freight(0);  //运费
             order.setOrder_number(orderNumber);  //订单编号
@@ -172,7 +151,7 @@ public class OrdersServiceImpl implements OrdersService {
             //int count = Integer.parseInt(request.getParameter("shoppingCart_count"));
             order.setOrder_quantity((int) shoppingCounts[i]);  //购买数量
             System.out.println(shoppingCounts[i]);
-            float amount = Float.parseFloat(request.getParameter("WIDtotal_amount"));
+            float amount = Float.parseFloat(WIDtotal_amount);
             order.setProduct_PaidPrice(amount); //实付金额
             order.setProductId(Ids[i]); //商品id
             order.setProduct_isRedeemable(product.getProduct_isRedeemable());  //该商品是否积分兑换
@@ -425,7 +404,6 @@ public class OrdersServiceImpl implements OrdersService {
                 List<Orders> ordersList = new ArrayList<>();
                 for (int j = i + 1; j < orders.size(); j++) {
                     if (orders.get(i).getOrder_number().equals(orders.get(j).getOrder_number())) {
-                        System.out.println("j---第"+j+"次循环");
                         if (n == 0) {
                             ordersList.add(orders.get(i));
                             ordersTwo.add(orders.get(i));
@@ -436,7 +414,6 @@ public class OrdersServiceImpl implements OrdersService {
                     }
                 }
                 if(n==0){
-                    System.out.println("iTwo---第"+i+"次循环");
                     ordersList.add(orders.get(i));
                 }
                 System.out.println("第" + i + "次循环，订单集合：" + ordersList);
@@ -453,5 +430,44 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public List<String> findOrderNumbers(long userId) {
         return ordersRepository.findOrderNumbers(userId);
+    }
+
+    @Override
+    public void ali(HttpServletResponse response, HttpServletRequest request) throws AlipayApiException, IOException {
+        response.setContentType("text/html;charset=utf-8");
+
+        PrintWriter out = response.getWriter();
+        //获得初始化的AlipayClient
+        AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
+        //设置请求参数
+        AlipayTradePagePayRequest aliPayRequest = new AlipayTradePagePayRequest();
+        aliPayRequest.setReturnUrl(AlipayConfig.return_url);
+        aliPayRequest.setNotifyUrl(AlipayConfig.notify_url);
+
+        //商户订单号，商户网站订单系统中唯一订单号，必填
+        String orderNumber = RandonNumberUtils.getOrderIdByUUId();
+        HttpSession session = request.getSession(true);
+        session.setAttribute("orderNumber",orderNumber);
+        session.setAttribute("productId",request.getParameter("productId"));
+        session.setAttribute("shoppingCount",request.getParameter("shoppingCount"));
+        session.setAttribute("WIDtotal_amount",request.getParameter("WIDtotal_amount"));
+        session.setAttribute("address_name",request.getParameter("address_name"));
+        session.setAttribute("address_phone",request.getParameter("address_phone"));
+        session.setAttribute("address_shipping",request.getParameter("address_shipping"));
+        String order_number = new String(orderNumber);
+        System.out.println(order_number+"------------------");
+        //付款金额，必填
+        String total_amount = new String(request.getParameter("WIDtotal_amount"));
+        System.out.println(total_amount+"-------------------");
+        //订单名称，必填
+        String subject = new String("支付宝沙箱支付");
+        aliPayRequest.setBizContent("{\"out_trade_no\":\"" + order_number + "\","
+                + "\"total_amount\":\"" + total_amount + "\","
+                + "\"subject\":\"" + subject + "\","
+                + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
+        //请求
+        String result = alipayClient.pageExecute(aliPayRequest).getBody();
+        //输出
+        out.println(result);
     }
 }

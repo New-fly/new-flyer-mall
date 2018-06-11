@@ -98,7 +98,7 @@
             </div>
         </div>
     </div>
-    <form th:action="@{/aliPay/aliPaySum}" onsubmit="return pay()" method="post">
+    <form th:action="@{/aliPay/ali}" onsubmit="return pay()" method="post">
         <div class="pay">
             <div class="pay-block" th:each="shippingAddress : ${shippingAddressList}" th:if="${shippingAddress.address_is_default==1}">
                     <span style="float: left">
