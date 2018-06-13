@@ -107,6 +107,24 @@
             alert("原密码输入错误！！")
         }
     };
-
+	//验证验证码
+    $(".fdgdfgfdgfd").on("click",function () {
+        var user_mail=document.getElementsByClassName("user_mail")[0].value;
+        var user_code=document.getElementsByClassName("user_code1")[0].value;
+        $.ajax({
+            type: 'POST',
+            url: '/contrastCode',
+            data: {
+                "user_mail":user_mail,
+                "user_code":user_code
+            },
+            error: function () {
+                alert("123")
+            },
+            success: function (data) {
+                alert("成功")
+            }
+        });
+    });
 
 

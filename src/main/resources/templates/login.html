@@ -23,13 +23,16 @@
             <div class="register-box">
                 <h5 class="h5-sty1">用户登录</h5>
                 <form th:action="@{/login}" method="post" class="">
-                    <div class="static-form">
+                    <div class="static-form" style="margin-top: 30px">
                         <label><i class="fa fa-user-o"></i></label>
-                        <input placeholder="请输入用户名/邮箱" th:name="user_name" type="text" class="ipt ipt1">
+                        <input placeholder="请输入用户名/邮箱" th:name="user_name" type="text" class="ipt ipt1"><br>
+                        <font></font>
+
                     </div>
                     <div class="static-form">
                         <label><i class="fa fa-expeditedssl"></i></label>
-                        <input placeholder="请输入密码" type="password" th:name="user_password" class="ipt ipt2">
+                        <input placeholder="请输入密码" type="password" th:name="user_password" class="ipt ipt2"><br>
+                        <font th:text="${msg}"></font>
                     </div>
                     <div class="static-form">
                        <input class="divbtn aa1" type="submit" th:value="登录">

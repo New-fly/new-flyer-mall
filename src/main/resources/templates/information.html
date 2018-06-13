@@ -6,13 +6,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 	<title>账号管理</title>
+    <script type="text/javascript" th:src="@{/js/jquery-1.9.0.min.js}"></script>
 	<link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap.css}">
 	<link rel="stylesheet" th:href="@{/bootstrap/dist/css/bootstrap-theme.css}">
-	<script src="bootstrap/jquery-1.10.2.js"></script>
+	<script th:src="@{/bootstrap/jquery-1.9.0.min.js}"></script>
 	<script th:src="@{/bootstrap/dist/js/bootstrap.js}"></script>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/information.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/css/copy.css}" />
-	<script type="text/javascript" th:src="@{/js/jquery-1.9.0.min.js}"></script>
 	<script th:src="@{/js/test.js}"></script>
 </head>
 <body>
@@ -46,7 +46,7 @@
 			<div class="message_body">用户名 ：<span th:text="${user.user_name}" class="span1">胡帅博</span><span class="change change_name">修改</span></div>
             <div class="message_body">用户密码 ：*******<span class="change change_password">修改</span></div>
 			<div class="password1" style="display: none" th:text="${user.user_password}"></div>
-            <div class="message_body">邮箱 ：<span th:text="${user.user_mail}" class="span3"></span><span class="change change_mail">修改</span></div>
+            <div class="message_body">邮箱 ：<span th:text="${user.user_mail}" class="span3" id="premail"></span><span class="change change_mail" id="change">修改</span></div>
 			<div class="message_title">高级设置</div>
 			<div class="message_body">用户积分 ：<span th:text="${user.userIntegral}">51335</span></div>
 			<div class="message_body">手机号 ：<span th:text="${user.user_phone}">18239290281</span></div>
@@ -136,11 +136,12 @@
                 <div class="oldmaill">
                     我们已经将验证码发送至你的原邮箱:
                     <span th:text="${user.user_mail}"></span>
-                    <input  type="text" class="iptipt">
+                    <input  type="text" class="iptipt user_code1" >
+                    <input type="text" class="iptipt user_mail">
                 </div>
 			</div>
 			<div class="revise_foot">
-				<div class="definite modify2" onclick="test()">确定</div>
+				<div class="definite fdgdfgfdgfd modify2" onclick="test()">确定</div>
 				<div class="cancel">取消</div>
 			</div>
 		</div>

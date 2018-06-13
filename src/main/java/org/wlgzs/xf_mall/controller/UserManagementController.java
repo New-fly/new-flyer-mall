@@ -128,7 +128,7 @@ public class UserManagementController extends BaseController {
      * @date 2018/4/27 20:06
      * @Description: 修改邮箱发送验证码
      */
-    @RequestMapping("sendChangePhone")
+    @RequestMapping("sendChangeEmail")
     public void sendChangeEmail(HttpServletRequest request) {
         String user_mail = request.getParameter("user_mail");
         logUserService.sendEmail1(request, user_mail);//发送

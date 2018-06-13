@@ -96,7 +96,10 @@ public class LoginController extends BaseController {
             }
         } else {
             model.addAttribute("msg", "账号或密码错误");
-            return "redirect:/toLogin";
+            List<Activity> activities = activityService.findByActivity("登录页面");
+            System.out.println(activities);
+            model.addAttribute("activities",activities);
+            return "login";
         }
     }
 

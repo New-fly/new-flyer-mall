@@ -63,38 +63,60 @@ $(window).load(function(){
             });
         }
     });
-    //3.修改邮箱的请求
-    var change_mail=document.getElementsByClassName("span3")[0];
-    $(".modify2").click(function (){
-        if(test()==true) {
-            var new_mail = document.getElementsByClassName("new_mail")[0].value;
+    // //3.修改邮箱的请求
+    // var change_mail=document.getElementsByClassName("span3")[0];
+    // $(".modify2").click(function (){
+    //     if(test()==true) {
+    //         var new_mail = document.getElementsByClassName("new_mail")[0].value;
+    //         $.ajax({
+    //             url: "/UserManagementController/changeEmail",
+    //             type: 'POST',
+    //             data: {
+    //                 "user_mail": new_mail
+    //             },
+    //             dataType: "text",
+    //             success: function (data) {
+    //                 document.getElementsByClassName("black")[2].style.width = "0";
+    //                 document.getElementsByClassName("black")[2].style.height = "0";
+    //                 document.getElementsByClassName("black")[2].style.top = "50%";
+    //                 document.getElementsByClassName("black")[2].style.left = "50%";
+    //                 document.getElementsByClassName("prompt")[0].innerHTML = "修改成功";
+    //                 document.getElementsByClassName("prompt")[0].style.display = "block";
+    //                 change_mail.innerHTML = new_mail;
+    //                 setTimeout(function () {
+    //                     document.getElementsByClassName("prompt")[0].style.display = "none";
+    //                 }, 1000)
+    //
+    //             },
+    //
+    //             error: function () {
+    //                 alert("邮箱格式不正确");
+    //             }
+    //         });
+    //     }
+    // })
+//发送验证码
+    $(document).ready(function() {
+        // if(test()==true) {
+            document.getElementsByClassName("change_mail")[0].onclick=function(){
+            //获取原邮箱号
+            var pre_mail=document.getElementById("premail").innerHTML;
+            console.log(pre_mail);
             $.ajax({
-                url: "/UserManagementController/changeEmail",
                 type: 'POST',
-                data: {
-                    "user_mail": new_mail
+                url: '/sendChangeEmail',
+                data:{
+                    "user_mail":pre_mail
                 },
-                dataType: "text",
+                error: function ( ) {
+                    alert("123")
+                },
                 success: function (data) {
-                    document.getElementsByClassName("black")[2].style.width = "0";
-                    document.getElementsByClassName("black")[2].style.height = "0";
-                    document.getElementsByClassName("black")[2].style.top = "50%";
-                    document.getElementsByClassName("black")[2].style.left = "50%";
-                    document.getElementsByClassName("prompt")[0].innerHTML = "修改成功";
-                    document.getElementsByClassName("prompt")[0].style.display = "block";
-                    change_mail.innerHTML = new_mail;
-                    setTimeout(function () {
-                        document.getElementsByClassName("prompt")[0].style.display = "none";
-                    }, 1000)
-
-                },
-
-                error: function () {
-                    alert("邮箱格式不正确");
+                    alert("yes")
                 }
             });
-        }
-    })
+        };
+    });
 // //4.修改头像的请求
 // //     var user_img2=document.getElementsByClassName("user_img2")[0];
 //     var user_name=document.getElementById("user_name");

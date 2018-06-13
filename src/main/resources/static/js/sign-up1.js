@@ -73,7 +73,7 @@ $(document).ready(function() {
                     alert("123")
                 },
                 success: function (data) {
-                    alert("成功")
+                    //alert("成功")
                 }
             });
         });

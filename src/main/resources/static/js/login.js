@@ -21,3 +21,16 @@ $(".divbtn").click(function () {
 if (window != top){
     top.location.href = location.href;
 }
+//输入错误提示
+var ipt1=document.getElementsByName("user_name")[0];
+var ipt2=document.getElementsByName("user_password")[0];
+if(ipt1){
+    document.getElementsByClassName("error")[0].innerHTML="";
+}else{
+    document.getElementsByClassName("error")[0].innerHTML="没有此用户哦";
+}
+if(ipt2){
+    document.getElementsByClassName("error")[1].innerHTML="";
+}else{
+    document.getElementsByClassName("error")[1].innerHTML="密码有误";
+}
