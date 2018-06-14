@@ -1,11 +1,11 @@
-window.onload=function(){
-    function deleteProduct(productId) {
-        var isDel = confirm("您确认要删除吗？");
-        if(isDel){
-            //要删除
-            location.href = "/AdminProductController/adminDeleteProduct?productId="+productId;
-        }
+function deleteProduct(productId) {
+    var isDel = confirm("您确认要删除吗？");
+    if(isDel){
+        //要删除
+        location.href = "/AdminProductController/adminDeleteProduct?productId="+productId;
     }
+}
+window.onload=function(){
 // //2.点击添加出现弹窗
     function tanchuang(){
         var modifi = document.getElementsByClassName("windoww")[0];

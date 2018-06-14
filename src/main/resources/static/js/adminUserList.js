@@ -1,17 +1,3 @@
-//获取所有a标签
-/*var adelbtns=document.getElementsByClassName("aa2");
-function delA(){
-    var tr=this.parentNode.parentNode;
-    //获取要删除的名字
-    var name=tr.children[0].innerHTML;
-    var flag=confirm("确定要删除"+name+"吗？");
-    if(flag){
-        tr.parentNode.removeChild(tr);
-    }
-}
-for(i=0;i<adelbtns.length;i++){
-    adelbtns[i].onclick=delA;
-}*/
 function deleteUser(userId) {
     var isDel = confirm("您确认要删除吗？");
     if(isDel){
@@ -26,34 +12,6 @@ function block1() {
     var modifi = document.getElementsByClassName("windoww")[0];
     modifi.style.display = "block";
 }
-//添加的值不能为空
-// function dd(){
-//     var ousername = document.getElementById('username');
-//     var userrole = document.getElementById('userrole');
-//     var userphone = document.getElementById('userphone');
-//     var pwd = document.getElementById('pwd');
-//     var email = document.getElementById('email');
-//     if(ousername.value==''){
-//         alert("请输入用户名");
-//         return false;
-//     }if(userrole.value=='' ){
-//         alert("请输入角色");
-//         return false;
-//     }if(userphone.value==''){
-//         alert("请输入电话");
-//         return false;
-//     }if(pwd.value==''){
-//         alert("请输入密码");
-//         return false;
-//     }if(email.value=='') {
-//         alert("请输入邮箱");
-//         return false;
-//     }else{
-//         document.getElementById('add').setAttribute('type','submit');
-//         return true;
-//     }
-//
-// }
 var i;
 var opcate=document.getElementsByClassName("opcate")[0];
 var del=document.getElementsByClassName("del")[0];

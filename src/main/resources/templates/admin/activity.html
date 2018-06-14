@@ -7,13 +7,12 @@
     <link th:href="@{/css/activity.css}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" th:href="@{/images/xflogo.ico}" type="image/x-icon"/>
     <link rel="stylesheet" th:href="@{/font/css/font-awesome.min.css}">
+    <script type="text/javascript" th:src="@{/js/addProductCategory.js}"></script>
 </head>
 <body>
 <div class="contentbox">
 <div class="header">
     <form th:action="@{/AdminActivityController/adminFindActivityProduct}" method="post">
-        <!--<input type="text" name="product_keywords" placeholder="商品名称" th:value="*{}" class="ipt">-->
-        <!--<input type="submit" value="搜索" class="btn">-->
         <a  th:href="@{/AdminActivityController/toAddActivity}" class="a-div adiv1">添加</a>
     </form>
 </div>
@@ -33,10 +32,10 @@
             <td th:text="${activitie.activity_name}">Doe</td>
             <td th:text="${activitie.activity_discount}"></td>
             <td><img th:src="${activitie.activity_picture}" style="width: 50px;"></td>
-            <td th:text="${activitie.activity_time}"></td>
+            <td th:text="${activitie.activity_time}" class="overtime"></td>
             <td>
                 <a th:href="@{/AdminActivityController/toEditActivity(activitySumId=${activitie.activitySumId})}" class="a-div adiv2">修改</a>
-                <a th:href="@{/AdminActivityController/deleteActivity(activitySumId=${activitie.activitySumId})}" class="a-div adiv1">删除</a>
+                <a href="javascript:void(0);" th:onclick="'javascript:deleteActivity('+${activitie.activitySumId}+');'" class="a-div adiv1">删除</a>
             </td>
         </tr>
         </tbody>

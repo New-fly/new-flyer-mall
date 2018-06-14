@@ -14,10 +14,10 @@
 	};
 	//修改邮箱
 	document.getElementsByClassName("change_mail")[0].onclick=function(){
-		document.getElementsByClassName("black_mail")[0].style.width="100%";
-		document.getElementsByClassName("black_mail")[0].style.height="100%";
-		document.getElementsByClassName("black_mail")[0].style.top="0";
-		document.getElementsByClassName("black_mail")[0].style.left="0";
+		document.getElementsByClassName("black_oldmail")[0].style.width="100%";
+		document.getElementsByClassName("black_oldmail")[0].style.height="100%";
+		document.getElementsByClassName("black_oldmail")[0].style.top="0";
+		document.getElementsByClassName("black_oldmail")[0].style.left="0";
 	};
     //修改头像
     document.getElementsByClassName("chang_img")[0].onclick=function(){
@@ -64,7 +64,6 @@
         }
         var new_mail= document.getElementsByClassName("new_mail")[0];
         function test() {
-
             //II.对电子邮件的验证
             var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
             if (new_mail.value != "") {
@@ -108,6 +107,37 @@
             alert("原密码输入错误！！")
         }
     };
-
+	//验证验证码
+    $(".fdgdfgfdgfd").on("click",function () {
+        document.getElementsByClassName("user_code1")[0].value="";
+        document.getElementsByClassName("user_mail")[0].value="";
+        var user_mail=document.getElementsByClassName("user_mail")[0].value;
+        var user_code=document.getElementsByClassName("user_code1")[0].value;
+        $.ajax({
+            type: 'POST',
+            url: '/UserManagementController/changeEmail',
+            data: {
+                "user_mail":user_mail,
+                "user_code":user_code
+            },
+            error: function () {
+                alert("123")
+            },
+            success: function (data) {
+               // alert("成功")
+                document.getElementsByClassName("black_oldmail")[0].style.width="0";
+                document.getElementsByClassName("black_oldmail")[0].style.height="0";
+                document.getElementsByClassName("black_oldmail")[0].style.top="50%";
+                document.getElementsByClassName("black_oldmail")[0].style.left="50%";
+                document.getElementById("premail").innerHTML=user_mail;
+                document.getElementsByClassName("prompt")[0].innerHTML = "修改成功";
+                document.getElementsByClassName("prompt")[0].style.display = "block";
+                // change_password.innerHTML=repassword;
+                setTimeout(function () {
+                    document.getElementsByClassName("prompt")[0].style.display = "none";
+                }, 1000)
+            }
+        });
+    });
 
 
