@@ -104,15 +104,18 @@ $(window).load(function(){
             console.log(pre_mail);
             $.ajax({
                 type: 'POST',
-                url: '/sendChangeEmail',
+                url: '/UserManagementController/sendChangeEmail',
                 data:{
                     "user_mail":pre_mail
                 },
                 error: function ( ) {
-                    alert("123")
+                    alert("错误")
                 },
                 success: function (data) {
-                    alert("yes")
+                    document.getElementsByClassName("black_oldmail")[0].style.width="100%";
+                    document.getElementsByClassName("black_oldmail")[0].style.height="100%";
+                    document.getElementsByClassName("black_oldmail")[0].style.top="0";
+                    document.getElementsByClassName("black_oldmail")[0].style.left="0";
                 }
             });
         };

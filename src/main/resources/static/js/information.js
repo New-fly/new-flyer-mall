@@ -113,7 +113,7 @@
         var user_code=document.getElementsByClassName("user_code1")[0].value;
         $.ajax({
             type: 'POST',
-            url: '/contrastCode',
+            url: '/UserManagementController/changeEmail',
             data: {
                 "user_mail":user_mail,
                 "user_code":user_code
@@ -122,7 +122,17 @@
                 alert("123")
             },
             success: function (data) {
-                alert("成功")
+               // alert("成功")
+                document.getElementsByClassName("black_oldmail")[0].style.width="0";
+                document.getElementsByClassName("black_oldmail")[0].style.height="0";
+                document.getElementsByClassName("black_oldmail")[0].style.top="50%";
+                document.getElementsByClassName("black_oldmail")[0].style.left="50%";
+                document.getElementsByClassName("prompt")[0].innerHTML = "修改成功";
+                document.getElementsByClassName("prompt")[0].style.display = "block";
+                // change_password.innerHTML=repassword;
+                setTimeout(function () {
+                    document.getElementsByClassName("prompt")[0].style.display = "none";
+                }, 1000)
             }
         });
     });
