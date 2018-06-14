@@ -48,13 +48,12 @@
                     <td>
                         <label class="jelabel">年月日时分秒选择</label>
                         <div class="jeinpbox">
-                            <input name="activity_time" class="jeinput" id="test04" placeholder="YYYY-MM-DD hh:mm:ss">
+                            <input name="activity_time" class="jeinput" id="test04" th:placeholder="${activity.activity_time}">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="reset" value="重置" class="btn btn-primary" id="reset" />
                         <input type="submit" value="修改" class="btn btn-success" id="add"/>
                         <a th:href="@{/AdminActivityController/activity}">
                             <input type="button" value="取消" class="btn btn-info" style="background-color: orangered"/>

@@ -150,6 +150,7 @@ public class UserManagementController extends BaseController {
         String usercode = "";
         String sessioncode = "";
         if (logUserService.contrastCode(request,user_mail,sessionMail,usercode,sessioncode)){
+            System.out.println(logUserService.selectEmail(user_mail)+"--------------------");
             if(!logUserService.selectEmail(user_mail)){//可以继续
                 User user1 = (User) session.getAttribute("user");
                 long userId = user1.getUserId();

@@ -109,6 +109,8 @@
     };
 	//验证验证码
     $(".fdgdfgfdgfd").on("click",function () {
+        document.getElementsByClassName("user_code1")[0].value="";
+        document.getElementsByClassName("user_mail")[0].value="";
         var user_mail=document.getElementsByClassName("user_mail")[0].value;
         var user_code=document.getElementsByClassName("user_code1")[0].value;
         $.ajax({
@@ -127,6 +129,7 @@
                 document.getElementsByClassName("black_oldmail")[0].style.height="0";
                 document.getElementsByClassName("black_oldmail")[0].style.top="50%";
                 document.getElementsByClassName("black_oldmail")[0].style.left="50%";
+                document.getElementById("premail").innerHTML=user_mail;
                 document.getElementsByClassName("prompt")[0].innerHTML = "修改成功";
                 document.getElementsByClassName("prompt")[0].style.display = "block";
                 // change_password.innerHTML=repassword;
