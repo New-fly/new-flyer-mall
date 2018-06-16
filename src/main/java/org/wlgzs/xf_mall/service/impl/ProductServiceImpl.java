@@ -600,13 +600,13 @@ public class ProductServiceImpl implements ProductService {
                 String realName = UUID.randomUUID().toString();
 
                 String path = request.getSession().getServletContext().getRealPath("/");
-                String pathTwo = path + "txtFile/" + realName;
+                String pathTwo = path + "txtFile/" + realName;//txtFile/dsds2321/////////2342.txt
                 File dir = new File(pathTwo);
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
                 IdsUtil idsUtil = new IdsUtil();
-                idsUtil.writerFile(footprints.get(i).getProduct_keywords(), pathTwo + "/" + realName + ".txt");
+                idsUtil.writerFile(footprints.get(i).getProduct_keywords(), pathTwo , realName + ".txt");
 
                 Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(pathTwo);
                 Map<String, Float> idf = ReadFiles.idf(pathTwo);
@@ -743,13 +743,14 @@ public class ProductServiceImpl implements ProductService {
         // 生成实际存储的真实文件名
         String realName = UUID.randomUUID().toString();
         String path = request.getSession().getServletContext().getRealPath("/");
+        //System.out.println(request.getSession().getServletContext().getRealPath("/"));
         String pathTwo = path + "txtFile/" + realName;
         File dir = new File(pathTwo);
         if (!dir.exists()) {
             dir.mkdirs();
         }
         IdsUtil idsUtil = new IdsUtil();
-        idsUtil.writerFile(product_category, pathTwo + "/" + realName + ".txt");
+        idsUtil.writerFile(product_category, pathTwo , realName + ".txt");
 
         //System.out.println(pathTwo);
         Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(pathTwo);

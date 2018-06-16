@@ -24,9 +24,10 @@ public class IdsUtil {
         }
         return Ids;
     }
-    public static void writerFile(String content,String filePath){
+    public static void writerFile(String content,String filePath,String fileName){
         try {
-            FileOutputStream writerStream = new FileOutputStream(filePath);
+            File file = new File(filePath,fileName);
+            FileOutputStream writerStream = new FileOutputStream(file);
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(writerStream, "GBK"));
             writer.write(content);
             writer.close();

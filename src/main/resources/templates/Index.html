@@ -35,11 +35,11 @@
             </form>
         </div>
         <ul class="ipt-3">
-            <li><a th:href="@{/ProductListController/searchProductList(product_category='对开门冰箱')}">对开门冰箱</a></li>
-            <li><a th:href="@{/ProductListController/searchProductList(product_category='立式冷柜')}">立式冷柜</a></li>
-            <li><a th:href="@{/ProductListController/searchProductList(product_category='洗衣机')}">洗衣机</a></li>
-            <li><a th:href="@{/ProductListController/searchProductList(product_category='智能电视')}">智能电视</a></li>
-            <li><a th:href="@{/ProductListController/searchProductList(product_category='节能空调')}">节能空调</a></li>
+            <li><a th:href="@{/ProductListController/searchCategoryProduct(product_category='对开门冰箱')}">对开门冰箱</a></li>
+            <li><a th:href="@{/ProductListController/searchCategoryProduct(product_category='立式冷柜')}">立式冷柜</a></li>
+            <li><a th:href="@{/ProductListController/searchCategoryProduct(product_category='洗衣机')}">洗衣机</a></li>
+            <li><a th:href="@{/ProductListController/searchCategoryProduct(product_category='智能电视')}">智能电视</a></li>
+            <li><a th:href="@{/ProductListController/searchCategoryProduct(product_category='节能空调')}">节能空调</a></li>
         </ul>
     </div>
 </div>
@@ -50,13 +50,13 @@
             <ul class="classify-left-bottom-ul">
                 <li th:each="oneCategory : ${productOneCategories}">
                     <img th:src="@{/images/donghua.png}" class="donghua">
-                    <a th:href="@{/ProductListController/searchProductList(product_category=${oneCategory.category_name})}"
+                    <a th:href="@{/ProductListController/searchCategoryProduct(product_category=${oneCategory.category_name})}"
                        th:text="${oneCategory.category_name}" class="a"></a><br/>
                     <span th:text="${'淘你想要的'+oneCategory.category_name}">
                         </span>
                     <div class="classify-list">
                         <div class="classify-fiexd">
-                            <a th:href="@{/ProductListController/searchProductList(product_category=${oneCategory.category_name})}">
+                            <a th:href="@{/ProductListController/searchCategoryProduct(product_category=${oneCategory.category_name})}">
                                 <i class="fa fa-arrow-right"></i>
                             </a>
                         </div>
@@ -64,7 +64,7 @@
                                 style="color: gray"/></div>
                         <div class="classify-list-body">
                             <a th:each="TwoCategories : ${productTwoCategories}"
-                               th:href="@{/ProductListController/searchProductList(product_category=${TwoCategories.category_name})}"
+                               th:href="@{/ProductListController/searchCategoryProduct(product_category=${TwoCategories.category_name})}"
                                th:text="${TwoCategories.category_name}"
                                th:if="${TwoCategories.parent_name == oneCategory.category_name && TwoCategories.category_show!=2}">
                             </a>

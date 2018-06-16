@@ -52,11 +52,6 @@ public class UserOrderController extends BaseController {
         }
         model.addAttribute("maps",map);
         model.addAttribute("number",map.size()-1);
-
-        List<Orders> unacceptedOrder = ordersService.userUnacceptedOrder(userId);
-        model.addAttribute("unacceptedOrder",unacceptedOrder);
-        List<Orders> unEstimateOrder = ordersService.userUnEstimateOrder(userId);
-        model.addAttribute("unEstimateOrder",unEstimateOrder);
         return new ModelAndView("userOrder");
     }
     /**

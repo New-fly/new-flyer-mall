@@ -127,14 +127,14 @@
             <artifactId>lucene-core</artifactId>
             <version>2.9.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libs/lucene-core-2.9.1.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/webapp/lib/lucene-core-2.9.1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>jeasy.analysis</artifactId>
             <version>1.5.3</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libs/je-analysis-1.5.3.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/webapp/lib/je-analysis-1.5.3.jar</systemPath>
         </dependency>
 
         <!--分页的插件-->
@@ -153,6 +153,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <fork>true</fork><!--注意要修改这里-->
+                    <includeSystemScope>true</includeSystemScope>
                 </configuration>
             </plugin>
         </plugins>
@@ -167,6 +168,21 @@
                     <include>**/**</include>
                 </includes>
             </resource>
+
+          <!--  <resource>
+                <directory>lib</directory>
+                <targetPath>BOOT-INF/lib/</targetPath>
+                <includes>
+                    <include>**/*.jar</include>
+                </includes>
+            </resource>-->
+
+           <!-- <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>BOOT-INF/classes/</targetPath>
+            </resource>-->
+
+
         </resources>
 
     </build>
