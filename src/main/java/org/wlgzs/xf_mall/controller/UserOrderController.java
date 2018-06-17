@@ -39,6 +39,7 @@ public class UserOrderController extends BaseController {
     public ModelAndView userOrderList(Model model,long userId){
         Map<String, List> map = ordersService.userOrder(userId);
         List<String> orderNumbers = ordersService.findOrderNumbers(userId);
+
         model.addAttribute("orderNumbers",orderNumbers);
         /*for (int i = 0; i < map.size(); i++) {
             List orders1 = map.get(orderNumbers.get(i));

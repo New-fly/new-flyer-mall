@@ -202,6 +202,13 @@ public class UserServiceImpl implements UserService {
             realName = UUID.randomUUID().toString() + fileNameExtension;
 
             // "/upload"是你自己定义的上传目录
+            System.out.println(session.getServletContext().getRealPath("/")+":rootPath");
+            System.out.println("11111  String classPath = Thread.currentThread().getContextClassLoader()" + ".getResource(\"\").getPath(); --->"+
+                    Thread.currentThread().getContextClassLoader().getResource("").getPath());
+            System.out.println("22222  this.getClass().getClassLoader().getResource(\"\").getPath()--->"+this.getClass().getClassLoader().getResource("").getPath());
+            System.out.println("33333  this.getClass().getResource(\"\").getPath().toString()--->"+this.getClass().getResource("").getPath().toString());
+
+            System.out.println(session.getServletContext().getRealPath("/")+"/xf_mall/webapp/headPortrait"+":filePath");
             String realPath = session.getServletContext().getRealPath("/headPortrait");
             File uploadFile = new File(realPath, realName);
             myFileName.transferTo(uploadFile);

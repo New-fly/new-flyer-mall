@@ -57,8 +57,11 @@ public interface OrdersRepository extends JpaRepository<Orders, Long>,JpaSpecifi
     @Query(value = "SELECT * FROM orders WHERE order_number = ?",nativeQuery = true)
     List<Orders> findByNumber(@Param("order_number") String order_number);
 
-    @Query(value = "select distinct order_number from orders where user_id=? order by order_id desc",nativeQuery = true)
+    @Query(value = "select distinct order_number from orders where user_id=?1 order by order_id desc",nativeQuery = true)
     List<String> findOrderNumbers(@Param("userId") long userId);
+
+    @Query(value = "select * from orders where user_id=?1 order by order_id desc",nativeQuery = true)
+    List<Orders> findOrders(@Param("userId") long userId);
 
     @Query(value = "select distinct product_paid_price from orders where user_id=?",nativeQuery = true)
     List<String> findOrderPay(@Param("userId") long userId);

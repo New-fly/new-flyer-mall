@@ -239,7 +239,7 @@ public class OrdersServiceImpl implements OrdersService {
         order.setProduct_isRedeemable(1);  //该商品是否积分兑换
         order.setProduct_keywords(product.getProduct_keywords()); //商品关键字
         order.setProduct_mallPrice(product.getProduct_mallPrice());//商城价
-        String img = null;
+        String img = product.getProduct_picture();
         if (product.getProduct_picture().contains(",")) {
             img = product.getProduct_picture();
             img = img.substring(0, img.indexOf(","));
@@ -251,6 +251,7 @@ public class OrdersServiceImpl implements OrdersService {
         order.setUser_name(user.getUser_name()); //用户名
         order.setOrder_methodOfPurchase("积分兑换");
         order.setOrder_status("交易成功");
+
         ordersRepository.save(order);
         user.setUserIntegral(user.getUserIntegral() - product.getProduct_needPoints());
         userRepository.save(user);
@@ -392,8 +393,23 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public Map<String, List> userOrder(long userId) {
         List<Orders> orders = ordersRepository.userOrderList(userId);
-        //System.out.println("订单数："+orders.size());
-        List<String> orderNumbers = ordersRepository.findOrderNumbers(userId);
+
+        //List<String> orderNumbers = ordersRepository.findOrderNumbers(userId);
+        List<Orders> ordersT = ordersRepository.findOrders(userId);
+        List<String> ordersTw = new ArrayList<>();
+        for (Orders anOrdersT : ordersT) {
+            ordersTw.add(anOrdersT.getOrder_number());
+        }
+        //去重 利用set顺序不变
+        Set<String> set = new HashSet<>();
+        List<String> orderNumbers = new ArrayList<String>();
+        for (String cd : ordersTw) {
+            if (set.add(cd)) {
+                orderNumbers.add(cd);
+            }
+        }
+        System.out.println(orders.size()+"orders的长度");
+        System.out.println(orderNumbers.size()+"orderNumber的长度");
 
         Map<String, List> map = new HashMap<String, List>();
         int m = 0;
@@ -429,7 +445,21 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public List<String> findOrderNumbers(long userId) {
-        return ordersRepository.findOrderNumbers(userId);
+        List<Orders> ordersT = ordersRepository.findOrders(userId);
+        List<String> ordersTw = new ArrayList<>();
+        for (Orders anOrdersT : ordersT) {
+            ordersTw.add(anOrdersT.getOrder_number());
+        }
+        //去重 利用set顺序不变
+        Set<String> set = new HashSet<>();
+        List<String> orderNumbers = new ArrayList<String>();
+        for (String cd : ordersTw) {
+            if (set.add(cd)) {
+                orderNumbers.add(cd);
+            }
+        }
+        return orderNumbers;
+        //return ordersRepository.findOrderNumbers(userId);
     }
 
     @Override
