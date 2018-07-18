@@ -67,6 +67,7 @@ public class UserServiceImpl implements UserService {
                 user.setUser_role("超级管理员");
             }
             user.setUser_avatar("/headPortrait/morende.jpg ");
+            user.setUserIntegral(userTwo.getUserIntegral());
             userRepository.saveAndFlush(user);
             return "成功";
         }

@@ -35,7 +35,7 @@ public class OrderController {
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
         model.addAttribute("orders", pages.getContent());
-        System.out.println(pages.getContent());
+        //System.out.println(pages.getContent());
         return "admin/adminOrdersList";
     }
     //后台订单列表  搜索商品
