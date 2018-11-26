@@ -92,9 +92,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = new Product();
         try {
             BeanUtils.populate(product, properties);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         product.setProduct_details(product_details);
@@ -181,12 +179,12 @@ public class ProductServiceImpl implements ProductService {
     public List<ShoppingCart> findAllByIds(long[] Ids) {
         List<ShoppingCart> shoppingCarts = shoppingCartRepository.findAllByIds(Ids);
         String img;
-        for (int i = 0; i < shoppingCarts.size(); i++) {
-            if (shoppingCarts.get(i).getProduct_picture().contains(",")) {
-                img = shoppingCarts.get(i).getProduct_picture();
+        for (ShoppingCart shoppingCart : shoppingCarts) {
+            if (shoppingCart.getProduct_picture().contains(",")) {
+                img = shoppingCart.getProduct_picture();
                 img = img.substring(0, img.indexOf(","));
                 System.out.println("结算商品图片");
-                shoppingCarts.get(i).setProduct_picture(img);
+                shoppingCart.setProduct_picture(img);
             }
         }
         return shoppingCarts;
@@ -221,19 +219,17 @@ public class ProductServiceImpl implements ProductService {
                     str[i] = request.getContextPath() + "/upload/" + realName;
                 }
             }
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             for (int i = 0; i < str.length; i++) {
                 if (!myFileNames[i].getOriginalFilename().equals("")) {
-                    stringBuffer.append(str[i] + ",");
+                    stringBuffer.append(str[i]).append(",");
                 }
             }
             String product_picture = stringBuffer.substring(0, stringBuffer.length() - 1);
             Map<String, String[]> properties = request.getParameterMap();
             try {
                 BeanUtils.populate(product, properties);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
+            } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
             product.setProduct_details(product_details);
@@ -251,8 +247,7 @@ public class ProductServiceImpl implements ProductService {
         Sort sort = new Sort(Sort.Direction.DESC, "categoryId");
         Pageable pageable = new PageRequest(page, limit, sort);
         Specification<ProductCategory> specification = new PageUtil<ProductCategory>(category_name).getPage("category_name", "parent_name");
-        Page<ProductCategory> pages = productCategoryRepository.findAll(specification, pageable);
-        return pages;
+        return productCategoryRepository.findAll(specification, pageable);
     }
 
     //遍历一级分类  不分页
@@ -282,8 +277,7 @@ public class ProductServiceImpl implements ProductService {
         for (int i = 0; i < toBeStored.length; i++) {
             str[i] = toBeStored[i].getCategory_name();
         }
-        List<Product> products = productRepository.findProductByTwoCategory(str);//查询的当前页商品的集合
-        return products;
+        return productRepository.findProductByTwoCategory(str);//查询的当前页商品的集合
     }
 
     //通过二级分类查找商品  分页
@@ -293,8 +287,7 @@ public class ProductServiceImpl implements ProductService {
         Pageable pageable = new PageRequest(page, limit, sort);
         //商品分类，活动，关键字，服务类型三种方式
         Specification<Product> specification = new PageUtil<Product>(product_category).getPage("product_category", "product_serviceType", "product_activity", "product_keywords");
-        Page<Product> pages = productRepository.findAll(specification, pageable);
-        return pages;
+        return productRepository.findAll(specification, pageable);
     }
 
     //通过多条件查询商品    分页
@@ -487,9 +480,7 @@ public class ProductServiceImpl implements ProductService {
         Collection collection = new Collection();
         try {
             BeanUtils.populate(collection, properties);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         Collection findCollection = collectionRepository.findByCollectionUserIdAndProductId(userId, productId);
@@ -522,8 +513,7 @@ public class ProductServiceImpl implements ProductService {
     //批量删除购物车
     @Override
     public void deleteShoppingCarts(String shoppingCartIds) {
-        IdsUtil idsUtil = new IdsUtil();
-        long[] Ids = idsUtil.IdsUtils(shoppingCartIds);
+        long[] Ids = IdsUtil.IdsUtils(shoppingCartIds);
         shoppingCartRepository.deleteByIds(Ids);
     }
 
@@ -550,8 +540,7 @@ public class ProductServiceImpl implements ProductService {
     //批量删除收藏
     @Override
     public void deleteCollections(String collectionId) {
-        IdsUtil idsUtil = new IdsUtil();
-        long[] Ids = idsUtil.IdsUtils(collectionId);
+        long[] Ids = IdsUtil.IdsUtils(collectionId);
         collectionRepository.deleteByIds(Ids);
     }
 
@@ -594,8 +583,8 @@ public class ProductServiceImpl implements ProductService {
         if (footprints != null && footprints.size() != 0) {
 
             List<String> stringListOne = new ArrayList<String>();
-            for (int i = 0; i < footprints.size(); i++) {
-                String fileName = footprints.get(i).getProduct_keywords();
+            for (Footprint footprint : footprints) {
+                String fileName = footprint.getProduct_keywords();
                 // 生成实际存储的真实文件名
                 String realName = UUID.randomUUID().toString();
 
@@ -605,14 +594,11 @@ public class ProductServiceImpl implements ProductService {
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
-                IdsUtil idsUtil = new IdsUtil();
-                idsUtil.writerFile(footprints.get(i).getProduct_keywords(), pathTwo , realName + ".txt");
+                IdsUtil.writerFile(footprint.getProduct_keywords(), pathTwo, realName + ".txt");
 
                 Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(pathTwo);
                 Map<String, Float> idf = ReadFiles.idf(pathTwo);
-                for (String word : idf.keySet()) {
-                    stringListOne.add(word);
-                }
+                stringListOne.addAll(idf.keySet());
                 File file = new File(pathTwo + "/" + realName + ".txt");
                 if (file.exists() && file.isFile()) {
                     file.delete();
@@ -653,10 +639,10 @@ public class ProductServiceImpl implements ProductService {
                 Date data = new Date();
                 //将近半年的订单放在一个集合中
                 List<Orders> ordersList = new ArrayList<Orders>();
-                for (int i = 0; i < orders.size(); i++) {
-                    double between = (double) (data.getTime() - orders.get(i).getOrder_purchaseTime().getTime()) / (double) (1000 * 60 * 60 * 24);
+                for (Orders order : orders) {
+                    double between = (double) (data.getTime() - order.getOrder_purchaseTime().getTime()) / (double) (1000 * 60 * 60 * 24);
                     if (between < 180) {
-                        ordersList.add(orders.get(i));
+                        ordersList.add(order);
                     }
                 }
                 //将近半年订单的商品id放在一个数组里
@@ -749,17 +735,13 @@ public class ProductServiceImpl implements ProductService {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        IdsUtil idsUtil = new IdsUtil();
-        idsUtil.writerFile(product_category, pathTwo , realName + ".txt");
+        IdsUtil.writerFile(product_category, pathTwo , realName + ".txt");
 
         //System.out.println(pathTwo);
         Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(pathTwo);
         Map<String, Float> idf = ReadFiles.idf(pathTwo);
-        List<String> stringList = new ArrayList<String>();
-        for (String word : idf.keySet()) {
-            stringList.add(word);
-            //System.out.println(word);
-        }
+        //System.out.println(word);
+        List<String> stringList = new ArrayList<String>(idf.keySet());
         File file = new File(pathTwo + "/" + realName + ".txt");
         if (file.exists() && file.isFile()) {
             file.delete();
@@ -786,9 +768,8 @@ public class ProductServiceImpl implements ProductService {
         }*/
         PageUtilTwo pageUtilTwo = new PageUtilTwo();
         Specification<Product> specification = pageUtilTwo.getPage(product_categories);
-        Page<Product> pages = productRepository.findAll(specification, pageable);
         //Page<Product> pages = new PageImpl<>(productList,pageable,productList.size());
-        return pages;
+        return productRepository.findAll(specification, pageable);
     }
 
     private List<Product> productOneCategory(String category_name) {
@@ -836,14 +817,12 @@ public class ProductServiceImpl implements ProductService {
                 return predicate;
             }
         };
-        Page pages = productRepository.findAll(specification, pageable);
-        return pages;
+        return productRepository.findAll(specification, pageable);
     }
 
     @Override
     public void adminDeleteProducts(String productId) {
-        IdsUtil idsUtil = new IdsUtil();
-        long[] ids = idsUtil.IdsUtils(productId);
+        long[] ids = IdsUtil.IdsUtils(productId);
         productRepository.deleteByIds(ids);
     }
 }

@@ -8,8 +8,7 @@ import javax.annotation.Resource;
 import java.io.Serializable;
 
 /**
- * @author zjg
- * @day 18-1-27
+ * @author 胡亚星
  * @description 简化控制层代码
  */
 public abstract class BaseController implements Serializable {

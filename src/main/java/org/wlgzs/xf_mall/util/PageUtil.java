@@ -15,15 +15,9 @@ public class PageUtil<T> {
         this.searchKeywords=searchKeywords;
     }
 
-    /**
-     * @author 阿杰
-     * @param [strings]
-     * @return org.springframework.data.jpa.domain.Specification<T>
-     * @description
-     */
     public Specification<T> getPage(String...strings){
         return  new Specification<T>() {
-            /*
+            /**
             * root就是我们要查询的类型
             * query添加查询条件
             * criteriaBuilder构建Predicate
@@ -55,11 +49,11 @@ public class PageUtil<T> {
         };
     }
 
-    /*
+    /**
      * @author 阿杰
      * @param [attribute, userId, strings]
      * @return org.springframework.data.jpa.domain.Specification<T>
-     * @description
+     * @description 批量模糊搜索
      */
     public Specification<T> getPages(String userId, String...strings){
         return  new Specification<T>() {
@@ -69,14 +63,14 @@ public class PageUtil<T> {
                                          CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new ArrayList<Predicate>();
                 Path<Long> pathId = root.get(userId);
-                if(searchKeywords!=null&&searchKeywords!="") { //没有查询条件
+                if(searchKeywords!=null&&searchKeywords!="") {
                     for (String s : strings) {
                         Path<String> $name = root.get(s);
                         Predicate _name = criteriaBuilder.like($name, "%" + searchKeywords + "%");
                         predicates.add(_name);
                     }
                 } else {
-                    return criteriaBuilder.equal(pathId,userId);//没有模糊查询
+                    return criteriaBuilder.equal(pathId,userId);
                 }
                 Predicate predicate = criteriaBuilder.or(criteriaBuilder.or(predicates
                         .toArray(new Predicate[] {})));

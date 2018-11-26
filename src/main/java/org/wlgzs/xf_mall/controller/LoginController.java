@@ -54,7 +54,6 @@ public class LoginController extends BaseController {
     @RequestMapping("/toLogin")
     public ModelAndView toLogin(Model model,@RequestParam(value = "activity_name", defaultValue = "登录页面") String activity_name) {
         List<Activity> activities = activityService.findByActivity(activity_name);
-        System.out.println(activities);
         model.addAttribute("activities",activities);
         return new ModelAndView("login");
     }
