@@ -66,7 +66,6 @@
                             <option value="1">是</option>
                             <option value="0">否</option>
                         </select>
-                        <!--<input type="text" name="product_isTop" class="form-control" id="details" />-->
                     </td>
                 </tr>
                 <tr>
@@ -123,7 +122,7 @@
                 <script type="text/javascript">
                     var E = window.wangEditor
                     var editor = new E('#editor')
-                    /* 处理上传图片的controller路径 */
+                    /* 处理上传图片的请求URL */
                     editor.customConfig.uploadImgServer = '/AdminProductController/upload'
                     /* 定义上传图片的默认名字 */
                     editor.customConfig.uploadFileName = 'myFileName'
@@ -137,6 +136,7 @@
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="submit" value="提交" class="btn btn-info" id="sub"/>
                     &nbsp; &nbsp; &nbsp;
+                    <!-- 请求URL -->
                     <a th:href="@{/AdminProductController/adminProductList}">
                         <input type="button" value="取消"  class="btn btn-info" id="cancel" style="background-color: orangered"/>
                     </a>
@@ -145,75 +145,5 @@
         </form>
     </div>
 </div>
-<!--<script type="text/javascript">-->
-   <!--var keywords=document.getElementById('keywords');-->
-   <!--var condition=document.getElementById('condition');-->
-   <!--var kind=document.getElementById('kind');-->
-   <!--var product_mallPrice=document.getElementById('product_mallPrice');-->
-   <!--var product_counterPrice=document.getElementById('product_counterPrice');-->
-   <!--var product_needPoints=document.getElementById('product_needPoints');-->
-   <!--var product_getPoints=document.getElementById('product_getPoints');-->
-   <!--var product_serviceType=document.getElementById('product_serviceType');-->
-   <!--var product_specification=document.getElementById('product_specification');-->
-   <!--var file=document.getElementById('file');-->
-   <!--var file2=document.getElementById('file2');-->
-   <!--var file3=document.getElementById('file3');-->
-   <!--var file4=document.getElementById('file4');-->
-   <!--var file5=document.getElementById('file5');-->
-   <!--var sub=document.getElementById('sub');-->
-   <!--sub.onclick=function () {-->
-       <!--if (keywords.value == null || keywords.value == "") {-->
-           <!--alert("请输入库存");-->
-       <!--}-->
-       <!--if (condition.value == null || condition.value == "") {-->
-           <!--alert("请输入活动名称");-->
-       <!--}-->
-       <!--if (kind.value == null || kind.value == "") {-->
-           <!--alert("请输入关键字");-->
-       <!--}-->
-       <!--if (product_mallPrice.value == null || product_mallPrice.value == "") {-->
-           <!--alert("请输入商城价");-->
-       <!--}-->
-       <!--if (product_counterPrice.value == null || product_counterPrice.value == "") {-->
-           <!--alert("请输入专柜价");-->
-       <!--}-->
-       <!--if (product_needPoints.value == null || product_needPoints.value == "") {-->
-           <!--alert("请输入积分");-->
-       <!--}-->
-       <!--if (product_getPoints.value == null || product_getPoints.value == "") {-->
-           <!--alert("请输入积分");-->
-       <!--}-->
-       <!--if (product_serviceType.value == null || product_serviceType.value == "") {-->
-           <!--alert("请输入服务类型");-->
-       <!--}-->
-       <!--if (product_specification.value == null || product_specification.value == "") {-->
-           <!--alert("请输入商品规格");-->
-       <!--}-->
-       <!--if (file.value == null || file.value == "") {-->
-           <!--alert("最少上传第一张图片");-->
-       <!--}-->
-       <!--// if (file2.value == null || file2.value == "") {-->
-       <!--//     //alert("请上传图片");-->
-       <!--// }-->
-       <!--// if (file3.value == null || file3.value == "") {-->
-       <!--//     // alert("请上传图片");-->
-       <!--// }-->
-       <!--// if (file4.value == null || file4.value == "") {-->
-       <!--//     // alert("请上传图片");-->
-       <!--// }-->
-       <!--// if (file5.value == null || file5.value == "") {-->
-       <!--//     // alert("请上传图片");-->
-       <!--// }-->
-       <!--else {-->
-           <!--sub.setAttribute('type', 'submit');-->
-           <!--return true;-->
-
-       <!--}-->
-   <!--};-->
-
-
-
-
-<!--</script>-->
 </body>
 </html>

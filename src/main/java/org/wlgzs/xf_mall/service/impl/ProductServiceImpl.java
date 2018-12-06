@@ -104,13 +104,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public String[] uploadImg(MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
         String realName = "";
-        if (myFileName != null) {
+        if (myFileName != null && myFileName.getOriginalFilename()!=null) {
             String fileName = myFileName.getOriginalFilename();
-            String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
-
+            String fileNameExtension = fileName.substring(fileName.indexOf("."));
             // 生成实际存储的真实文件名
             realName = UUID.randomUUID().toString() + fileNameExtension;
-
             // "/upload"是你自己定义的上传目录
             String realPath = session.getServletContext().getRealPath("/upload");
             File uploadFile = new File(realPath, realName);
@@ -120,8 +118,7 @@ public class ProductServiceImpl implements ProductService {
                 e.printStackTrace();
             }
         }
-        String[] str = {request.getContextPath() + "/upload/" + realName};
-        return str;
+        return new String[]{request.getContextPath() + "/upload/" + realName};
     }
 
     //删除商品
@@ -131,10 +128,9 @@ public class ProductServiceImpl implements ProductService {
         if (product != null) {
             String path = request.getSession().getServletContext().getRealPath("/");
             String image = product.getProduct_picture();
-
             String[] img = image.split(",");
-            for (int i = 0; i < img.length; i++) {
-                File file = new File(path + "" + img[i].substring(1, img[0].length()));
+            for (String anImg : img) {
+                File file = new File(path + "" + anImg.substring(1, img[0].length()));
                 if (file.exists() && file.isFile()) {
                     file.delete();
                 }

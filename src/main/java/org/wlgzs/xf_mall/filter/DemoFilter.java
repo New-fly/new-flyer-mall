@@ -33,22 +33,20 @@ public class DemoFilter implements Filter {
             url = url.substring(1);
         }
         System.out.println(url);
-
-
-            HttpSession session = httpRequest.getSession();
-            String adminName = (String) session.getAttribute("adminName");
-            if (adminName != null){
-                System.out.println("后台通过");
-                // session存在
-                chain.doFilter(httpRequest, httpResponse);
-                return;
-            } else {
-                System.out.println("后台未通过");
-                // session不存在 准备跳转失败
-                httpResponse.sendRedirect("../toLogin");
-                return;
-            }
+        HttpSession session = httpRequest.getSession();
+        String adminName = (String) session.getAttribute("adminName");
+        if (adminName != null) {
+            System.out.println("后台通过");
+            // session存在
+            chain.doFilter(httpRequest, httpResponse);
+            return;
+        } else {
+            System.out.println("后台未通过");
+            // session不存在 准备跳转失败
+            httpResponse.sendRedirect("../toLogin");
+            return;
         }
+    }
 
 
     @Override

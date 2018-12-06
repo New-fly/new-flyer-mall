@@ -54,7 +54,6 @@ public class LoginFilter implements Filter {
             url = url.substring(1);
         }
         System.out.println(url);
-
         if(!isInclude(url)){
             HttpSession session = httpRequest.getSession();
             User user = (User) session.getAttribute("user");

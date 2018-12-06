@@ -135,7 +135,7 @@
             <systemPath>${project.basedir}/src/main/webapp/lib/je-analysis-1.5.3.jar</systemPath>
         </dependency>
 
-        <!--Mybatis分页的插件-->
+        <!--通用分页的插件-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
