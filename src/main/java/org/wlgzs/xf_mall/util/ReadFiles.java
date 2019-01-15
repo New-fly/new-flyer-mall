@@ -1,15 +1,9 @@
 package org.wlgzs.xf_mall.util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.*;
-
 import jeasy.analysis.MMAnalyzer;
+
+import java.io.*;
+import java.util.*;
 
 public class ReadFiles {
 
@@ -27,9 +21,7 @@ public class ReadFiles {
                 String[] filelist = file.list();
                 for (int i = 0; i < filelist.length; i++) {
                     File readfile = new File(filepath , filelist[i]);
-                    //System.out.println(readfile+"依次读取文件");
                     if (!readfile.isDirectory()) {
-                        //System.out.println("filepath: " + readfile.getAbsolutePath());
                         for (int j = 0; j < fileList.size(); j++) {
                             fileList.remove(i);
                         }
@@ -39,7 +31,6 @@ public class ReadFiles {
                     }
                 }
             }
-
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -48,7 +39,6 @@ public class ReadFiles {
 
     public static String readFiles(String file) throws IOException {
         StringBuffer sb = new StringBuffer();
-        System.out.println(file+"->readFile");
         InputStreamReader is = new InputStreamReader(new FileInputStream(file), "gbk");
         BufferedReader br = new BufferedReader(is);
         String line = br.readLine();
@@ -126,17 +116,16 @@ public class ReadFiles {
 
     public static Map<String, HashMap<String, Integer>> NormalTFOfAll(String dir) throws IOException {
         List<String> fileList = ReadFiles.readDirs(dir);
-        //System.out.println("程序停止");
-        for (int i = 0; i < fileList.size(); i++) {
+        for (String s : fileList) {
             HashMap<String, Integer> dict = new HashMap<String, Integer>();
 
-            for (Iterator<Map.Entry<String, HashMap<String, Integer>>> it = allTheNormalTF.entrySet().iterator(); it.hasNext();){
+            for (Iterator<Map.Entry<String, HashMap<String, Integer>>> it = allTheNormalTF.entrySet().iterator(); it.hasNext(); ) {
                 Map.Entry<String, HashMap<String, Integer>> item = it.next();
                 it.remove();
             }
 
-            dict = ReadFiles.normalTF(ReadFiles.cutWord(fileList.get(i)));
-            allTheNormalTF.put(fileList.get(i), dict);
+            dict = ReadFiles.normalTF(ReadFiles.cutWord(s));
+            allTheNormalTF.put(s, dict);
         }
         return allTheNormalTF;
     }

@@ -19,8 +19,8 @@ public class DemoFilter implements Filter {
 //    protected static List<Pattern> patterns = new ArrayList<Pattern>();
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        System.out.println("后台过滤器启动");
+    public void init(FilterConfig filterConfig) {
+        logger.info("后台过滤器启动");
     }
 
     @Override
@@ -32,19 +32,17 @@ public class DemoFilter implements Filter {
         if (url.startsWith("/") && url.length() > 1) {
             url = url.substring(1);
         }
-        System.out.println(url);
+        logger.info(url);
         HttpSession session = httpRequest.getSession();
         String adminName = (String) session.getAttribute("adminName");
         if (adminName != null) {
-            System.out.println("后台通过");
+            logger.info("后台通过");
             // session存在
             chain.doFilter(httpRequest, httpResponse);
-            return;
         } else {
-            System.out.println("后台未通过");
+            logger.info("后台未通过");
             // session不存在 准备跳转失败
             httpResponse.sendRedirect("../toLogin");
-            return;
         }
     }
 
@@ -54,28 +52,4 @@ public class DemoFilter implements Filter {
 
     }
 
-//    private boolean isInclude(String url) {
-//        for (Pattern pattern : patterns) {
-//            Matcher matcher = pattern.matcher(url);
-//            if (matcher.matches()) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
-//    @Bean
-//    public FilterRegistrationBean someFilterRegistration() {
-//        FilterRegistrationBean registration = new FilterRegistrationBean();
-//        registration.setFilter(sessionFilter());
-//        registration.addUrlPatterns("/UserAddressController/*");
-//        registration.addInitParameter("paramName", "paramValue");
-//        registration.setName("sessionFilter");
-//        return registration;
-//    }
-//
-//    @Bean(name = "sessionFilter")
-//    public Filter sessionFilter() {
-//        return new DemoFilter();
-//    }
 }

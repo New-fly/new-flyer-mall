@@ -10,11 +10,7 @@ import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Orders;
 import org.wlgzs.xf_mall.entity.ProductEstimate;
 import org.wlgzs.xf_mall.entity.User;
-import org.wlgzs.xf_mall.service.OrdersService;
-import org.wlgzs.xf_mall.service.ProductEstimateService;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;

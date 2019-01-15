@@ -9,14 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Activity;
-import org.wlgzs.xf_mall.entity.Product;
 import org.wlgzs.xf_mall.entity.ProductActivity;
-import org.wlgzs.xf_mall.service.ActivityService;
-import org.wlgzs.xf_mall.service.ProductActivityService;
-import org.wlgzs.xf_mall.service.ProductService;
 import org.wlgzs.xf_mall.util.CheckImage;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -62,8 +57,7 @@ public class ActivityController extends BaseController {
     @RequestMapping("/addActivity")
     public ModelAndView addActivity(@RequestParam("file") MultipartFile myFileName,Model model,HttpSession session, HttpServletRequest request) {
         String fileName = myFileName.getOriginalFilename();
-        CheckImage checkImage = new CheckImage();
-        if(checkImage.verifyImage(fileName)){
+        if(fileName!=null && CheckImage.verifyImage(fileName)){
             activityService.addActivity(myFileName, session, request);
         }else{
             model.addAttribute("mag","文件格式不正确");
@@ -119,7 +113,6 @@ public class ActivityController extends BaseController {
                                             @RequestParam(value = "limit", defaultValue = "8") int limit) {
         String activity_name = "";
         if (page != 0) page--;
-        System.out.println("进入");
         Page activityPages = productActivityService.activityProductList(activity_name, page, limit);
         model.addAttribute("TotalPages", activityPages.getTotalPages());//查询的页数
         model.addAttribute("Number", activityPages.getNumber() + 1);//查询的当前第几页
@@ -151,8 +144,6 @@ public class ActivityController extends BaseController {
     @RequestMapping("/toAdminAddActivitys")
     public ModelAndView toAdminAddActivitys(Model model, String productId){
         List<Activity> activities = activityService.getActivity();
-        System.out.println("productId"+productId);
-        System.out.println("批量添加活动商品页面");
         model.addAttribute("activities", activities);
         model.addAttribute("productId", productId);
         return new ModelAndView("admin/adminAddActivitys");
@@ -180,7 +171,6 @@ public class ActivityController extends BaseController {
      */
     @RequestMapping("/adminAddActivitys")
     public ModelAndView adminAddActivitys(String productId,HttpServletRequest request){
-        System.out.println("productId"+productId);
         productActivityService.adminAddActivitys(productId,request);
         return new ModelAndView("redirect:/AdminProductController/adminProductList");
     }

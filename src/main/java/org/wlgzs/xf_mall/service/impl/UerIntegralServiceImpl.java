@@ -1,15 +1,15 @@
 package org.wlgzs.xf_mall.service.impl;
+
 import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wlgzs.xf_mall.dao.UserIntegralRepository;
 import org.wlgzs.xf_mall.entity.Product;
 import org.wlgzs.xf_mall.entity.UserIntegral;
 import org.wlgzs.xf_mall.service.UserIntegralService;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @Service
 public class UerIntegralServiceImpl implements UserIntegralService {
-    @Autowired
+    @Resource
     private UserIntegralRepository userIntegralRepository;
     //通过积分id查询用户积分
     @Override
@@ -55,13 +55,10 @@ public class UerIntegralServiceImpl implements UserIntegralService {
         Product product = new Product();
         try {
             BeanUtils.populate(userIntegral, properties);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         Date data = new Date();
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
         userIntegral.setOrder_purchaseTime(data);
         userIntegral.setUserId(userId);
         userIntegral.setProduct_keyword(product.getProduct_keywords());

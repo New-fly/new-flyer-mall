@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.entity.Orders;
 import org.wlgzs.xf_mall.service.OrdersService;
@@ -35,7 +34,6 @@ public class OrderController {
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
         model.addAttribute("orders", pages.getContent());
-        //System.out.println(pages.getContent());
         return "admin/adminOrdersList";
     }
     //后台订单列表  搜索商品
@@ -86,7 +84,7 @@ public class OrderController {
     }
     //后台批量删除订单
     @RequestMapping("/deleteOrders")
-    public ModelAndView deleteOrders(Model model,String orderId){
+    public ModelAndView deleteOrders(String orderId){
         ordersService.deleteOrders(orderId);
         return new ModelAndView("redirect:/OrderController/allProductOrdersLists");
     }

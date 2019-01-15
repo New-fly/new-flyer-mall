@@ -9,19 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.*;
-import org.wlgzs.xf_mall.util.IdsUtil;
-import org.wlgzs.xf_mall.util.RandonNumberUtils;
-import org.wlgzs.xf_mall.util.ReadFiles;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Auther: 阿杰
@@ -56,17 +50,16 @@ public class ProductListController extends BaseController {
         }
         String product_keywords = "";
         if (page != 0) page--;
-        Page pages = productService.getProductListPage(product_keywords, page, limit);
+        Page<Product> pages = productService.getProductListPage(product_keywords, page, limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber() + 1);//查询的当前第几页
         List<Product> products = pages.getContent();
         String img;
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getProduct_picture().contains(",")) {
-                img = products.get(i).getProduct_picture();
+        for (Product product : products) {
+            if (product.getProduct_picture().contains(",")) {
+                img = product.getProduct_picture();
                 img = img.substring(0, img.indexOf(","));
-                System.out.println();
-                products.get(i).setProduct_picture(img);
+                product.setProduct_picture(img);
             }
         }
         model.addAttribute("products", products);//查询的当前页的集合
@@ -136,7 +129,6 @@ public class ProductListController extends BaseController {
     public ModelAndView addCollectionProduct(long productId, HttpServletRequest request) {
         long userId = 0;
         HttpSession session = request.getSession();
-        System.out.println(productId);
         if (session.getAttribute("userId") != null) {
             userId = (long) session.getAttribute("userId");
         }
@@ -158,7 +150,6 @@ public class ProductListController extends BaseController {
         //推荐商品
         List<Product> recommendedProducts = productService.recommendedByUserId(userId, request);
         model.addAttribute("recommendedProducts", recommendedProducts);
-        System.out.println(recommendedProducts);
         return new ModelAndView("shoppingCart");
     }
 
@@ -289,10 +280,9 @@ public class ProductListController extends BaseController {
         String category_name = request.getParameter("product_keywords");
         //category_name = "2";
         List<ProductCategory> productCategories = productService.findProductByWord(category_name);
-        System.out.println(productCategories);
-        List<Object> productKeywordList = new ArrayList<Object>();
-        for (int i = 0; i < productCategories.size(); i++) {
-            productKeywordList.add(productCategories.get(i).getCategory_name());
+        List<Object> productKeywordList = new ArrayList<>();
+        for (ProductCategory productCategory : productCategories) {
+            productKeywordList.add(productCategory.getCategory_name());
         }
         Gson gson = new Gson();
         String json = gson.toJson(productKeywordList);
@@ -321,11 +311,11 @@ public class ProductListController extends BaseController {
             model.addAttribute("Number", pages.getNumber() + 1);//查询的当前第几页
             List<Product> products = pages.getContent();
             String img;
-            for (int i = 0; i < products.size(); i++) {
-                if (products.get(i).getProduct_picture().contains(",")) {
-                    img = products.get(i).getProduct_picture();
+            for (Product product : products) {
+                if (product.getProduct_picture().contains(",")) {
+                    img = product.getProduct_picture();
                     img = img.substring(0, img.indexOf(","));
-                    products.get(i).setProduct_picture(img);
+                    product.setProduct_picture(img);
                 }
             }
             if(products.size()==0){
@@ -369,11 +359,11 @@ public class ProductListController extends BaseController {
             model.addAttribute("Number", pages.getNumber() + 1);//查询的当前第几页
             List<Product> products = pages.getContent();
             String img;
-            for (int i = 0; i < products.size(); i++) {
-                if (products.get(i).getProduct_picture().contains(",")) {
-                    img = products.get(i).getProduct_picture();
+            for (Product product : products) {
+                if (product.getProduct_picture().contains(",")) {
+                    img = product.getProduct_picture();
                     img = img.substring(0, img.indexOf(","));
-                    products.get(i).setProduct_picture(img);
+                    product.setProduct_picture(img);
                 }
             }
             if(products.size()==0){
@@ -395,7 +385,6 @@ public class ProductListController extends BaseController {
                 model.addAttribute("recommendedProducts", recommendedProducts);
             }
         } else {
-            System.out.println(4123);
             model.addAttribute("mag", "抱歉您搜索的商品不存在");
         }
         return new ModelAndView("searchCategoryProduct");
@@ -412,11 +401,11 @@ public class ProductListController extends BaseController {
         model.addAttribute("Number", pages.getNumber() + 1);//查询的当前第几页
         List<Product> products = pages.getContent();
         String img;
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getProduct_picture().contains(",")) {
-                img = products.get(i).getProduct_picture();
+        for (Product product : products) {
+            if (product.getProduct_picture().contains(",")) {
+                img = product.getProduct_picture();
                 img = img.substring(0, img.indexOf(","));
-                products.get(i).setProduct_picture(img);
+                product.setProduct_picture(img);
             }
         }
         model.addAttribute("products", products);//查询的当前页的集合
@@ -446,11 +435,11 @@ public class ProductListController extends BaseController {
         model.addAttribute("Number", pages.getNumber() + 1);//查询的当前第几页
         List<Product> products = pages.getContent();
         String img;
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getProduct_picture().contains(",")) {
-                img = products.get(i).getProduct_picture();
+        for (Product product : products) {
+            if (product.getProduct_picture().contains(",")) {
+                img = product.getProduct_picture();
                 img = img.substring(0, img.indexOf(","));
-                products.get(i).setProduct_picture(img);
+                product.setProduct_picture(img);
             }
         }
         if(products.size()==0){

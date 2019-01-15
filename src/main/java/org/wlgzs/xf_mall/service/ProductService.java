@@ -81,7 +81,7 @@ public interface ProductService {
      * @return org.springframework.data.domain.Page
      * @description 遍历所有分类  搜索分类
      */
-    Page getProductCategoryList(String category_name, int page, int limit);
+    Page<ProductCategory> getProductCategoryList(String category_name, int page, int limit);
     /**
      * @author 阿杰
      * @param []

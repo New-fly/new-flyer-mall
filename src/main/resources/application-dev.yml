@@ -1,7 +1,5 @@
 server:
   port: 8081
-  servlet:
-    content-type: text/html
 logging:
   config: classpath:logback-spring.xml
 spring:

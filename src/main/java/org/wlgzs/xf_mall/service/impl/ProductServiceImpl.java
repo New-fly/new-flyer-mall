@@ -1,20 +1,23 @@
 package org.wlgzs.xf_mall.service.impl;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.wlgzs.xf_mall.dao.*;
-import org.wlgzs.xf_mall.entity.*;
 import org.wlgzs.xf_mall.entity.Collection;
+import org.wlgzs.xf_mall.entity.*;
 import org.wlgzs.xf_mall.service.ProductService;
 import org.wlgzs.xf_mall.util.IdsUtil;
 import org.wlgzs.xf_mall.util.PageUtil;
 import org.wlgzs.xf_mall.util.PageUtilTwo;
 import org.wlgzs.xf_mall.util.ReadFiles;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,27 +34,26 @@ import java.util.*;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
+    @Resource
     private ProductRepository productRepository;
-    @Autowired
+    @Resource
     private ProductCategoryRepository productCategoryRepository;
-    @Autowired
+    @Resource
     private ShoppingCartRepository shoppingCartRepository;
-    @Autowired
+    @Resource
     private CollectionRepository collectionRepository;
-    @Autowired
+    @Resource
     FootprintRepository footprintRepository;
-    @Autowired
+    @Resource
     private OrdersRepository ordersRepository;
 
     //分页遍历商品  搜索商品
     @Override
     public Page<Product> getProductListPage(String product_keywords, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
-        Pageable pageable = new PageRequest(page, limit, sort);
+        Pageable pageable = PageRequest.of(page, limit, sort);
         Specification<Product> specification = new PageUtil<Product>(product_keywords).getPage("product_keywords", "product_category");
-        Page<Product> pages = productRepository.findAll(specification, pageable);
-        return pages;
+        return productRepository.findAll(specification, pageable);
     }
 
     //添加商品
@@ -60,13 +62,13 @@ public class ProductServiceImpl implements ProductService {
         String realName = "";
         String[] str = new String[myFileNames.length];
         for (int i = 0; i < myFileNames.length; i++) {
-            if (!myFileNames[i].getOriginalFilename().equals("")) {
+            if (!Objects.equals(myFileNames[i].getOriginalFilename(), "")) {
                 String fileName = myFileNames[i].getOriginalFilename();
-                String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
+                assert fileName != null;
+                String fileNameExtension = fileName.substring(fileName.indexOf("."));
 
                 // 生成实际存储的真实文件名
                 realName = UUID.randomUUID().toString() + fileNameExtension;
-
                 // "/upload"是你自己定义的上传目录
                 String realPath = session.getServletContext().getRealPath("/upload");
                 File uploadFile = new File(realPath, realName);
@@ -76,14 +78,14 @@ public class ProductServiceImpl implements ProductService {
                     e.printStackTrace();
                 }
             }
-            if (!myFileNames[i].getOriginalFilename().equals("")) {
+            if (!Objects.equals(myFileNames[i].getOriginalFilename(), "")) {
                 str[i] = request.getContextPath() + "/upload/" + realName;
             }
         }
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         for (int i = 0; i < str.length; i++) {
-            if (!myFileNames[i].getOriginalFilename().equals("")) {
-                stringBuffer.append(str[i] + ",");
+            if (!Objects.equals(myFileNames[i].getOriginalFilename(), "")) {
+                stringBuffer.append(str[i]).append(",");
             }
         }
         String product_picture = stringBuffer.substring(0, stringBuffer.length() - 1);
@@ -154,12 +156,11 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findProductListById(long productId) {
         List<Product> products = productRepository.findByIdReturnOne(productId);
         String img;
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getProduct_picture().contains(",")) {
-                img = products.get(i).getProduct_picture();
+        for (Product product : products) {
+            if (product.getProduct_picture().contains(",")) {
+                img = product.getProduct_picture();
                 img = img.substring(0, img.indexOf(","));
-                System.out.println(img + "");
-                products.get(i).setProduct_picture(img);
+                product.setProduct_picture(img);
             }
         }
         return products;
@@ -179,7 +180,6 @@ public class ProductServiceImpl implements ProductService {
             if (shoppingCart.getProduct_picture().contains(",")) {
                 img = shoppingCart.getProduct_picture();
                 img = img.substring(0, img.indexOf(","));
-                System.out.println("结算商品图片");
                 shoppingCart.setProduct_picture(img);
             }
         }
@@ -195,29 +195,29 @@ public class ProductServiceImpl implements ProductService {
             String realName = "";
             String[] str = new String[myFileNames.length];
             for (int i = 0; i < myFileNames.length; i++) {
-                if (!myFileNames[i].getOriginalFilename().equals("")) {
+                if (!"".equals(myFileNames[i].getOriginalFilename())) {
                     String fileName = myFileNames[i].getOriginalFilename();
-                    String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
+                    assert fileName != null;
+                    String fileNameExtension = fileName.substring(fileName.indexOf("."));
 
                     // 生成实际存储的真实文件名
                     realName = UUID.randomUUID().toString() + fileNameExtension;
                     // "/upload"是你自己定义的上传目录
                     String realPath = session.getServletContext().getRealPath("/upload");
                     File uploadFile = new File(realPath, realName);
-                    System.out.println(uploadFile);
                     try {
                         myFileNames[i].transferTo(uploadFile);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-                if (!myFileNames[i].getOriginalFilename().equals("")) {
+                if (!Objects.equals(myFileNames[i].getOriginalFilename(), "")) {
                     str[i] = request.getContextPath() + "/upload/" + realName;
                 }
             }
             StringBuilder stringBuffer = new StringBuilder();
             for (int i = 0; i < str.length; i++) {
-                if (!myFileNames[i].getOriginalFilename().equals("")) {
+                if (!Objects.equals(myFileNames[i].getOriginalFilename(), "")) {
                     stringBuffer.append(str[i]).append(",");
                 }
             }
@@ -239,9 +239,9 @@ public class ProductServiceImpl implements ProductService {
 
     //遍历所有分类  搜索分类
     @Override
-    public Page getProductCategoryList(String category_name, int page, int limit) {
+    public Page<ProductCategory> getProductCategoryList(String category_name, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "categoryId");
-        Pageable pageable = new PageRequest(page, limit, sort);
+        Pageable pageable = PageRequest.of(page, limit, sort);
         Specification<ProductCategory> specification = new PageUtil<ProductCategory>(category_name).getPage("category_name", "parent_name");
         return productCategoryRepository.findAll(specification, pageable);
     }
@@ -280,7 +280,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<Product> findProductByTwoCategory(String product_category, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
-        Pageable pageable = new PageRequest(page, limit, sort);
+        Pageable pageable = PageRequest.of(page, limit, sort);
         //商品分类，活动，关键字，服务类型三种方式
         Specification<Product> specification = new PageUtil<Product>(product_category).getPage("product_category", "product_serviceType", "product_activity", "product_keywords");
         return productRepository.findAll(specification, pageable);
@@ -299,6 +299,7 @@ public class ProductServiceImpl implements ProductService {
         String realName = "";
         if (myFileName != null) {
             String fileName = myFileName.getOriginalFilename();
+            assert fileName != null;
             String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
             // 生成实际存储的真实文件名
             realName = UUID.randomUUID().toString() + fileNameExtension;
@@ -372,9 +373,9 @@ public class ProductServiceImpl implements ProductService {
         if (productCategory.getParent_name().equals("0")) {
             String realName = "";
             if (myFileName != null) {
-                System.out.println("修改分类图片");
                 String fileName = myFileName.getOriginalFilename();
-                String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
+                assert fileName != null;
+                String fileNameExtension = fileName.substring(fileName.indexOf("."));
                 // 生成实际存储的真实文件名
                 realName = UUID.randomUUID().toString() + fileNameExtension;
                 // "/category"是你自己定义的上传目录
@@ -495,7 +496,6 @@ public class ProductServiceImpl implements ProductService {
             collection.setProduct_keywords(product.getProduct_keywords());
             collection.setProduct_mallPrice(product.getProduct_mallPrice());
             collection.setUserId(userId);
-            System.out.println();
             collectionRepository.save(collection);
         }
     }
@@ -556,15 +556,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<Product> findByProduct_isRedeemable(int product_isRedeemable, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.ASC, "productId");
-        Pageable pageable = new PageRequest(page, limit, sort);
-        Specification<Product> specification = new Specification<Product>() {
-            @Override
-            public Predicate toPredicate(Root<Product> root,
-                                         CriteriaQuery<?> criteriaQuery,
-                                         CriteriaBuilder criteriaBuilder) {
-                Predicate predicate = criteriaBuilder.equal(root.get("product_isRedeemable"), product_isRedeemable);
-                return criteriaBuilder.and(predicate);
-            }
+        Pageable pageable = PageRequest.of(page, limit, sort);
+        Specification<Product> specification = (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> {
+            Predicate predicate = criteriaBuilder.equal(root.get("product_isRedeemable"), product_isRedeemable);
+            return criteriaBuilder.and(predicate);
         };
         return productRepository.findAll(specification, pageable);
     }
@@ -574,13 +569,11 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> recommendedByUserId(long userId, HttpServletRequest request) throws IOException {
         //通过用户id查询最新足迹商品
         List<Footprint> footprints = footprintRepository.recommendedByUserId(userId);
-        //System.out.println(footprints);
-        List<Product> products = new ArrayList<Product>();
+        List<Product> products = new ArrayList<>();
         if (footprints != null && footprints.size() != 0) {
-
-            List<String> stringListOne = new ArrayList<String>();
+            List<String> stringListOne = new ArrayList<>();
             for (Footprint footprint : footprints) {
-                String fileName = footprint.getProduct_keywords();
+                //String fileName = footprint.getProduct_keywords();
                 // 生成实际存储的真实文件名
                 String realName = UUID.randomUUID().toString();
 
@@ -592,7 +585,7 @@ public class ProductServiceImpl implements ProductService {
                 }
                 IdsUtil.writerFile(footprint.getProduct_keywords(), pathTwo, realName + ".txt");
 
-                Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(pathTwo);
+                //Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(pathTwo);
                 Map<String, Float> idf = ReadFiles.idf(pathTwo);
                 stringListOne.addAll(idf.keySet());
                 File file = new File(pathTwo + "/" + realName + ".txt");
@@ -614,7 +607,7 @@ public class ProductServiceImpl implements ProductService {
             }
             String[] product_category = stringList.toArray(new String[stringList.size()]);
             for (int i = 0; i < product_category.length; i++) {
-                if (product_category[i].equals("新") || product_category[i].equals("飞") || product_category[i].equals("新飞") || product_category[i].equals("40/") || product_category[i].equals("43/50") || product_category[i].equals("双") || product_category[i].equals("家用") || product_category[i].equals("8/6") || product_category[i].equals("6.8kg/7.5") || product_category[i].equals("家用") || product_category[i].equals("丰包邮") || product_category[i].equals("飞8公斤")) {
+                if (product_category[i].equals("新") || product_category[i].equals("飞") || product_category[i].equals("新飞") || product_category[i].equals("40/") || product_category[i].equals("43/50") || product_category[i].equals("双") || product_category[i].equals("8/6") || product_category[i].equals("6.8kg/7.5") || product_category[i].equals("家用") || product_category[i].equals("丰包邮") || product_category[i].equals("飞8公斤")) {
                     product_category[i] = product_category[product_category.length - 1];
                     product_category = Arrays.copyOf(product_category, product_category.length - 1);
                     i--;
@@ -623,18 +616,16 @@ public class ProductServiceImpl implements ProductService {
 
             //通过关键词查询商品
             Sort sort = new Sort(Sort.Direction.DESC, "productId");
-            PageUtilTwo pageUtilTwo = new PageUtilTwo();
+            PageUtilTwo<Product> pageUtilTwo = new PageUtilTwo<>();
             Specification<Product> specification = pageUtilTwo.getPage(product_category);
             products = productRepository.findAll(specification, sort);
-            //System.out.println(products.size());
 
             //查询用户的订单
             List<Orders> orders = ordersRepository.userOrderList(userId);
-            //System.out.println(orders);
             if (orders != null && orders.size() != 0) {
                 Date data = new Date();
                 //将近半年的订单放在一个集合中
-                List<Orders> ordersList = new ArrayList<Orders>();
+                List<Orders> ordersList = new ArrayList<>();
                 for (Orders order : orders) {
                     double between = (double) (data.getTime() - order.getOrder_purchaseTime().getTime()) / (double) (1000 * 60 * 60 * 24);
                     if (between < 180) {
@@ -680,7 +671,7 @@ public class ProductServiceImpl implements ProductService {
         for (Product aProductsOne : productsOne) {
             aProductsOne.setProduct_category(productOneCategories.get(0).getCategory_name());
         }
-        List<Product> products = new ArrayList<Product>(productsOne);
+        List<Product> products = new ArrayList<>(productsOne);
         List<Product> productsTwo = productOneCategory(productOneCategories.get(1).getCategory_name());//主页部分第二分类商品
         for (Product aProductsTwo : productsTwo) {
             aProductsTwo.setProduct_category(productOneCategories.get(1).getCategory_name());
@@ -725,7 +716,6 @@ public class ProductServiceImpl implements ProductService {
         // 生成实际存储的真实文件名
         String realName = UUID.randomUUID().toString();
         String path = request.getSession().getServletContext().getRealPath("/");
-        //System.out.println(request.getSession().getServletContext().getRealPath("/"));
         String pathTwo = path + "txtFile/" + realName;
         File dir = new File(pathTwo);
         if (!dir.exists()) {
@@ -733,11 +723,9 @@ public class ProductServiceImpl implements ProductService {
         }
         IdsUtil.writerFile(product_category, pathTwo , realName + ".txt");
 
-        //System.out.println(pathTwo);
-        Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(pathTwo);
+        //Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(pathTwo);
         Map<String, Float> idf = ReadFiles.idf(pathTwo);
-        //System.out.println(word);
-        List<String> stringList = new ArrayList<String>(idf.keySet());
+        List<String> stringList = new ArrayList<>(idf.keySet());
         File file = new File(pathTwo + "/" + realName + ".txt");
         if (file.exists() && file.isFile()) {
             file.delete();
@@ -748,8 +736,7 @@ public class ProductServiceImpl implements ProductService {
         }
         String[] product_categories = stringList.toArray(new String[stringList.size()]);
         for (int i = 0; i < product_categories.length; i++) {
-            System.out.println(product_categories[i]);
-            if (product_categories[i].equals("新") || product_categories[i].equals("飞") || product_categories[i].equals("新飞") || product_categories[i].equals("40/") || product_categories[i].equals("43/50") || product_categories[i].equals("双") || product_categories[i].equals("家用") || product_categories[i].equals("8/6") || product_categories[i].equals("6.8kg/7.5") || product_categories[i].equals("家用") || product_categories[i].equals("丰包邮") || product_categories[i].equals("飞8公斤")) {
+            if (product_categories[i].equals("新") || product_categories[i].equals("飞") || product_categories[i].equals("新飞") || product_categories[i].equals("40/") || product_categories[i].equals("43/50") || product_categories[i].equals("双") || product_categories[i].equals("8/6") || product_categories[i].equals("6.8kg/7.5") || product_categories[i].equals("家用") || product_categories[i].equals("丰包邮") || product_categories[i].equals("飞8公斤")) {
                 product_categories[i] = product_categories[product_categories.length - 1];
                 product_categories = Arrays.copyOf(product_categories, product_categories.length - 1);
                 i--;
@@ -757,12 +744,12 @@ public class ProductServiceImpl implements ProductService {
         }
         //通过关键词查询商品
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
-        Pageable pageable = new PageRequest(page, limit, sort);
+        Pageable pageable = PageRequest.of(page, limit, sort);
         /*List<Product> productList = new ArrayList<>();
         for (int i = 0; i < product_categories.length; i++) {
             productList.addAll(productRepository.findProductByProductKeywords(product_categories[i]));
         }*/
-        PageUtilTwo pageUtilTwo = new PageUtilTwo();
+        PageUtilTwo<Product> pageUtilTwo = new PageUtilTwo<>();
         Specification<Product> specification = pageUtilTwo.getPage(product_categories);
         //Page<Product> pages = new PageImpl<>(productList,pageable,productList.size());
         return productRepository.findAll(specification, pageable);
@@ -782,7 +769,7 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> findByPrice(String product_mallMinPrice, String product_mallMaxPrice, int page, int limit) {
 
         Sort sort = new Sort(Sort.Direction.DESC, "productId");
-        Pageable pageable = new PageRequest(page, limit, sort);
+        Pageable pageable = PageRequest.of(page, limit, sort);
         Specification<Product> specification = new Specification<Product>() {
             @Override
             public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {

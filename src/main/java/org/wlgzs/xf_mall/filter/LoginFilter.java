@@ -22,11 +22,11 @@ public class LoginFilter implements Filter {
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DemoFilter.class);
 
     //不需要过滤
-    protected static List<Pattern> patterns = new ArrayList<Pattern>();
+    protected static List<Pattern> patterns = new ArrayList<>();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        System.out.println("前台过滤器启动");
+        logger.info("前台过滤器启动");
         patterns.add(Pattern.compile("UserManagementController/toSendRetrievePassword"));
         patterns.add(Pattern.compile("AdminProductController/adminFindProduct"));
         patterns.add(Pattern.compile("ActivityController/activityProducts"));
@@ -53,24 +53,21 @@ public class LoginFilter implements Filter {
         if (url.startsWith("/") && url.length() > 1) {
             url = url.substring(1);
         }
-        System.out.println(url);
-        if(!isInclude(url)){
+        logger.info(url);
+        if (!isInclude(url)) {
             HttpSession session = httpRequest.getSession();
             User user = (User) session.getAttribute("user");
-            if (user != null){
-                System.out.println("前台通过");
+            if (user != null) {
+                logger.info("前台通过");
                 // session存在
                 chain.doFilter(httpRequest, httpResponse);
-                return;
             } else {
-                System.out.println("前台未通过");
+                logger.info("前台未通过");
                 // session不存在 准备跳转失败
                 httpResponse.sendRedirect("../toLogin");
-                return;
             }
-        }else{
+        } else {
             chain.doFilter(httpRequest, httpResponse);
-            return;
         }
     }
 
@@ -79,15 +76,14 @@ public class LoginFilter implements Filter {
 
     }
 
-
-        private boolean isInclude(String url) {
-            for (Pattern pattern : patterns) {
-                Matcher matcher = pattern.matcher(url);
-                if (matcher.matches()) {
-                    return true;
-                }
+    private boolean isInclude(String url) {
+        for (Pattern pattern : patterns) {
+            Matcher matcher = pattern.matcher(url);
+            if (matcher.matches()) {
+                return true;
             }
-            return false;
         }
+        return false;
+    }
 
 }

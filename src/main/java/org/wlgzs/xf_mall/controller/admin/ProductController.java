@@ -40,20 +40,19 @@ public class ProductController {
                              @RequestParam(value = "limit", defaultValue = "8") int limit) {
         String product_keywords = "";
         if (page != 0) page--;
-        Page pages = productService.getProductListPage(product_keywords, page, limit);
+        Page<Product> pages = productService.getProductListPage(product_keywords, page, limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber() + 1);//查询的当前第几页
         List<Product> products = pages.getContent();
         String img;
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getProduct_picture().contains(",")) {
-                img = products.get(i).getProduct_picture();
+        for (Product product : products) {
+            if (product.getProduct_picture().contains(",")) {
+                img = product.getProduct_picture();
                 img = img.substring(0, img.indexOf(","));
-                products.get(i).setProduct_picture(img);
+                product.setProduct_picture(img);
             }
         }
         model.addAttribute("products", products);//查询的当前页的集合
-        System.out.println(products);
         return new ModelAndView("admin/adminProductList");
     }
     /**
@@ -66,21 +65,19 @@ public class ProductController {
     public ModelAndView findProduct(Model model, String product_keywords, @RequestParam(value = "page", defaultValue = "0") int page,
                                     @RequestParam(value = "limit", defaultValue = "8") int limit) {
         if (page != 0) page--;
-        Page pages = productService.getProductListPage(product_keywords, page, limit);
+        Page<Product> pages = productService.getProductListPage(product_keywords, page, limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber() + 1);//查询的当前第几页
         List<Product> products = pages.getContent();
         String img;
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getProduct_picture().contains(",")) {
-                img = products.get(i).getProduct_picture();
+        for (Product product : products) {
+            if (product.getProduct_picture().contains(",")) {
+                img = product.getProduct_picture();
                 img = img.substring(0, img.indexOf(","));
-                System.out.println("  ");
-                products.get(i).setProduct_picture(img);
+                product.setProduct_picture(img);
             }
         }
         model.addAttribute("products", products);//查询的当前页的集合
-        System.out.println("列表"+products);
         model.addAttribute("product_keywords", product_keywords);
         return new ModelAndView("admin/adminProductList");
     }
@@ -222,7 +219,7 @@ public class ProductController {
                                  @RequestParam(value = "limit", defaultValue = "8") int limit) {
         String category_name = "";
         if (page != 0) page--;
-        Page pages = productService.getProductCategoryList(category_name, page, limit);
+        Page<ProductCategory> pages = productService.getProductCategoryList(category_name, page, limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber() + 1);//查询的当前第几页
         List<ProductCategory> productCategories = pages.getContent();
@@ -348,7 +345,7 @@ public class ProductController {
     public ModelAndView findCategory(Model model, String category_name, @RequestParam(value = "page", defaultValue = "0") int page,
                                      @RequestParam(value = "limit", defaultValue = "10") int limit) {
         if (page != 0) page--;
-        Page pages = productService.getProductCategoryList(category_name, page, limit);
+        Page<ProductCategory> pages = productService.getProductCategoryList(category_name, page, limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber() + 1);//查询的当前第几页
         List<ProductCategory> productCategories = pages.getContent();

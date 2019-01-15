@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FilterConfiguration {
     @Bean
-    public FilterRegistrationBean filterDemoRegistration() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
+    public FilterRegistrationBean<DemoFilter> filterDemoRegistration() {
+        FilterRegistrationBean<DemoFilter> registration = new FilterRegistrationBean<>();
         //注入过滤器
         registration.setFilter(new DemoFilter());
         //拦截规则
@@ -33,8 +33,8 @@ public class FilterConfiguration {
     }
 
     @Bean
-    public FilterRegistrationBean filterLoginRegistration() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
+    public FilterRegistrationBean<LoginFilter> filterLoginRegistration() {
+        FilterRegistrationBean<LoginFilter> registration = new FilterRegistrationBean<>();
         //注入过滤器
         registration.setFilter(new LoginFilter());
         //拦截规则

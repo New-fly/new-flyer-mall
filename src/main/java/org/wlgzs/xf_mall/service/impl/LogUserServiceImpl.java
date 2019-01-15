@@ -1,22 +1,20 @@
 package org.wlgzs.xf_mall.service.impl;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.wlgzs.xf_mall.dao.AuthorizationRepository;
 import org.wlgzs.xf_mall.dao.LogUserRepository;
 import org.wlgzs.xf_mall.dao.UserRepository;
 import org.wlgzs.xf_mall.entity.Authorization;
 import org.wlgzs.xf_mall.entity.User;
-
+import org.wlgzs.xf_mall.filter.DemoFilter;
 import org.wlgzs.xf_mall.service.LogUserService;
-import org.wlgzs.xf_mall.service.UserService;
 import org.wlgzs.xf_mall.util.RandonNumberUtils;
 
-import javax.servlet.http.Cookie;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.InvocationTargetException;
@@ -31,17 +29,18 @@ import java.util.regex.Pattern;
  **/
 @Service
 public class LogUserServiceImpl implements LogUserService {
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DemoFilter.class);
 
-    @Autowired
+    @Resource
     private LogUserRepository logUserRepository;
 
-    @Autowired
+    @Resource
     private UserRepository userRepository;
 
-    @Autowired
+    @Resource
     private AuthorizationRepository authorizationRepository;
 
-   @Autowired
+   @Resource
     private JavaMailSender mailSender;
 
     //实现登陆的方法
@@ -69,7 +68,6 @@ public class LogUserServiceImpl implements LogUserService {
         HttpSession session = request.getSession(true);
         User user = logUserRepository.loginId(userId);
         session.setMaxInactiveInterval(60 * 20);
-        System.out.println("hahahahah=====");
         session.setAttribute("user",user);
         session.setAttribute("userId",user.getUserId());
     }
@@ -98,9 +96,7 @@ public class LogUserServiceImpl implements LogUserService {
         Map<String, String[]> properties = request.getParameterMap();
         try {
             BeanUtils.populate(user, properties);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         Pattern p =  Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");//复杂匹配
@@ -113,7 +109,6 @@ public class LogUserServiceImpl implements LogUserService {
                 String name = randonNumberUtils.getNumber(8);
                 String user_name = "XF_" + name;
                 String user_avatar = request.getContextPath() + "/headPortrait/morende.jpg";
-                System.out.println("====="+user.getUser_role());
                 user.setUser_name(user_name);
                 user.setUser_avatar(user_avatar);
                 user.setUser_role("普通用户");
@@ -135,7 +130,6 @@ public class LogUserServiceImpl implements LogUserService {
         SimpleMailMessage mainMessage = new SimpleMailMessage();
         RandonNumberUtils randonNumberUtils = new RandonNumberUtils();
         String authCode = randonNumberUtils.getRandonString(6);
-        System.out.println(authCode);
         session.setMaxInactiveInterval(60 * 2);
         session.setAttribute("authCode", authCode);
         session.setAttribute("user_mail", user_mail);
@@ -148,8 +142,7 @@ public class LogUserServiceImpl implements LogUserService {
         //发送的内容
         mainMessage.setText("验证码："+authCode+"您正在注册新飞商城，请输入您的验证码继续完成注册");
         mailSender.send(mainMessage);
-        System.out.println(mailSender);
-        System.out.println("ok");
+        logger.info("ok");
     }
 
     //发送邮箱
@@ -159,7 +152,6 @@ public class LogUserServiceImpl implements LogUserService {
         SimpleMailMessage mainMessage = new SimpleMailMessage();
         RandonNumberUtils randonNumberUtils = new RandonNumberUtils();
         String authCode = randonNumberUtils.getRandonString(6);
-        System.out.println(authCode);
         session.setMaxInactiveInterval(60 * 2);
         session.setAttribute("authCode", authCode);
         session.setAttribute("user_mail", user_mail);
@@ -172,8 +164,7 @@ public class LogUserServiceImpl implements LogUserService {
         //发送的内容
         mainMessage.setText("验证码："+authCode+" ， 您正在修改您的邮箱号，请继续");
         mailSender.send(mainMessage);
-        System.out.println(mailSender);
-        System.out.println("ok");
+        logger.info("ok");
     }
 
     //发送邮箱
@@ -183,7 +174,6 @@ public class LogUserServiceImpl implements LogUserService {
         SimpleMailMessage mainMessage = new SimpleMailMessage();
         RandonNumberUtils randonNumberUtils = new RandonNumberUtils();
         String authCode = randonNumberUtils.getRandonString(6);
-        System.out.println(authCode);
         session.setMaxInactiveInterval(60 * 2);
         session.setAttribute("authCode", authCode);
         session.setAttribute("user_mail", user_mail);
@@ -196,8 +186,7 @@ public class LogUserServiceImpl implements LogUserService {
         //发送的内容
         mainMessage.setText("验证码："+authCode+"您正在找回您的密码，输入验证码以继续");
         mailSender.send(mainMessage);
-        System.out.println(mailSender);
-        System.out.println("ok");
+        logger.info("ok");
     }
 
     //验证注册用户
@@ -205,33 +194,20 @@ public class LogUserServiceImpl implements LogUserService {
     public boolean validationUser(HttpServletRequest request,String code){
         HttpSession session = request.getSession(true);
         String Code = (String) session.getAttribute("code");
-        if(Code.equals(code)){
-            return true;
-        }else{
-            return false;
-        }
+        return Code.equals(code);
     }
     //判断邮箱是否已存在
     @Override
     public boolean selectEmail(String user_mail){
-        System.out.println("user_mall:"+user_mail);
         User user = logUserRepository.selectEmail(user_mail);
-        if(user != null){
-            return true;
-        }else{
-            return false;
-        }
+        return user != null;
     }
 
     //判断用户名是否已存在
     @Override
     public boolean selectName(String user_name) {
         User user = logUserRepository.selectName(user_name);
-        if(user != null){
-            return true;
-        }else{
-            return false;
-        }
+        return user != null;
     }
 
     //验证用户验证吗和邮箱是否正确
@@ -240,11 +216,8 @@ public class LogUserServiceImpl implements LogUserService {
         HttpSession session = request.getSession();
         usercode = request.getParameter("user_code"); //获取用户输入的验证码
         sessioncode = (String) session.getAttribute("authCode"); //获取保存在session里面的验证码
-        if (usercode != null && usercode.equals(sessioncode)&&user_mail != null) { //对比两个code是否正确
-           return true;
-        } else {
-            return false;
-        }
+        //对比两个code是否正确
+        return usercode != null && usercode.equals(sessioncode) && user_mail != null;
     }
 
     @Override

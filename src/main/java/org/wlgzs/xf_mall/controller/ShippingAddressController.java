@@ -56,8 +56,6 @@ public class ShippingAddressController extends BaseController {
         }
         //是否默认
         int address_is_default = shippingAddress.getAddress_is_default();
-        System.out.println("address_is_default===="+address_is_default);
-        System.out.println("user_name"+user_name);
         //查询该用户数据是否有默认的
         if(shippingAddressService.findState(user_name)){//有
             //1变为0

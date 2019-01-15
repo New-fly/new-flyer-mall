@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "server.servlet.content-type",
+      "type": "java.lang.String",
+      "description": "Description for server.servlet.content-type."
+  }
+] }

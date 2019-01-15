@@ -1,12 +1,11 @@
 package org.wlgzs.xf_mall.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import org.wlgzs.xf_mall.dao.ShippingAddressRepository;
 import org.wlgzs.xf_mall.entity.ShippingAddress;
 import org.wlgzs.xf_mall.service.ShippingAddressService;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -17,7 +16,7 @@ import java.util.List;
 @Service
 public class ShippingAddressServiceImpl implements ShippingAddressService {
 
-    @Autowired
+    @Resource
     ShippingAddressRepository shippingAddressRepository;
 
     @Override
@@ -57,16 +56,8 @@ public class ShippingAddressServiceImpl implements ShippingAddressService {
 
     @Override
     public boolean findState(String user_name) {
-        System.out.println("userName==="+user_name);
         ShippingAddress shippingAddress = shippingAddressRepository.findState(user_name);
-        if(shippingAddress != null){
-            System.out.println("true");
-            System.out.println(shippingAddress);
-            System.out.println(user_name);
-            return true;
-        }
-        System.out.println("false");
-        return false;
+        return shippingAddress != null;
     }
 
     @Override

@@ -8,7 +8,6 @@ import org.wlgzs.xf_mall.entity.User;
 import org.wlgzs.xf_mall.entity.UserIntegral;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**

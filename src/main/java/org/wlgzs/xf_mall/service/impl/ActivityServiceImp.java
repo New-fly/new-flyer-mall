@@ -1,14 +1,13 @@
 package org.wlgzs.xf_mall.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ClassUtils;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.wlgzs.xf_mall.dao.ActivityRepository;
 import org.wlgzs.xf_mall.entity.Activity;
 import org.wlgzs.xf_mall.service.ActivityService;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -28,7 +27,7 @@ import java.util.UUID;
  */
 @Service
 public class ActivityServiceImp implements ActivityService {
-    @Autowired
+    @Resource
     private ActivityRepository activityRepository;
 
     //遍历所有活动
@@ -43,28 +42,22 @@ public class ActivityServiceImp implements ActivityService {
         String realName = "";
         if (myFileName != null) {
             String fileName = myFileName.getOriginalFilename();
-            String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
+            assert fileName != null;
+            String fileNameExtension = fileName.substring(fileName.indexOf("."));
             // 生成实际存储的真实文件名
             realName = UUID.randomUUID().toString() + fileNameExtension;
             // "/upload"是你自己定义的上传目录
-            String realPath = session.getServletContext().getRealPath("/activity");
-
+            //String realPath = session.getServletContext().getRealPath("/activity");
             String s = "";
             try {
                 s = ResourceUtils.getURL("classpath:").getPath();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            System.out.println("s："+s.substring(5,s.length()-24)+"/META-INF/resources/activity"+realName);
             s = s.substring(5,s.length()-20)+"/META-INF/resources/activity"+realName;
             //s = "xf_mall-0.0.1-SNAPSHOT/META-INF/resources/activity"+realName;
             File path = new File(s);
-            System.out.println(path.getAbsolutePath());
             File upload = new File(path.getAbsolutePath());
-            System.out.println("uploadUrl:"+upload.getAbsolutePath());
-
-            System.out.println("后台添加活动");
-            //File uploadFile = new File(realPath, realName);
             try {
                 myFileName.transferTo(upload);
             } catch (IOException e) {
@@ -103,12 +96,12 @@ public class ActivityServiceImp implements ActivityService {
         String realName = "";
         if (myFileName != null) {
             String fileName = myFileName.getOriginalFilename();
-            String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
+            assert fileName != null;
+            String fileNameExtension = fileName.substring(fileName.indexOf("."));
             // 生成实际存储的真实文件名
             realName = UUID.randomUUID().toString() + fileNameExtension;
             // "/upload"是你自己定义的上传目录
             String realPath = session.getServletContext().getRealPath("/activity");
-            System.out.println("后台修改活动");
             File uploadFile = new File(realPath, realName);
             try {
                 myFileName.transferTo(uploadFile);

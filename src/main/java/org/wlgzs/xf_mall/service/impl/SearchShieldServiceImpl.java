@@ -1,6 +1,5 @@
 package org.wlgzs.xf_mall.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,8 +11,7 @@ import org.wlgzs.xf_mall.entity.SearchShield;
 import org.wlgzs.xf_mall.service.SearchShieldService;
 import org.wlgzs.xf_mall.util.PageUtil;
 
-import javax.swing.text.html.HTMLDocument;
-import java.util.List;
+import javax.annotation.Resource;
 
 /**
  * @author:胡亚星
@@ -23,7 +21,7 @@ import java.util.List;
 @Service
 public class SearchShieldServiceImpl implements SearchShieldService {
 
-    @Autowired
+    @Resource
     SearchShieldRepository searchShieldRepository;
 
     //遍历敏感词汇
@@ -31,10 +29,9 @@ public class SearchShieldServiceImpl implements SearchShieldService {
     @Override
     public Page<SearchShield> getSearchShieldListPage(String search_keywords, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC,"searchShieldId");
-        Pageable pageable = new PageRequest(page,limit,sort);
+        Pageable pageable = PageRequest.of(page,limit,sort);
         Specification<SearchShield> specification = new PageUtil<SearchShield>(search_keywords).getPage("searchShield_Sensitive");
-        Page pages = searchShieldRepository.findAll(specification,pageable);
-        return pages;
+        return searchShieldRepository.findAll(specification,pageable);
     }
 
     //添加敏感词汇
@@ -63,13 +60,9 @@ public class SearchShieldServiceImpl implements SearchShieldService {
 //        return searchShieldRepository.findBySearchShieldSensitive(search_shield_sensitive);
 //    }
 
-
     @Override
     public boolean querySensitive(String searchShield_Sensitive) {
         SearchShield searchShield = searchShieldRepository.querySensitive(searchShield_Sensitive);
-        if(searchShield != null){
-            return false;
-        }
-        return true;
+        return searchShield == null;
     }
 }

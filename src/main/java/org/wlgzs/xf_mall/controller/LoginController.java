@@ -1,6 +1,7 @@
 package org.wlgzs.xf_mall.controller;
 
 import net.sf.json.JSONObject;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -8,13 +9,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Activity;
 import org.wlgzs.xf_mall.entity.Authorization;
-import org.wlgzs.xf_mall.entity.ProductActivity;
 import org.wlgzs.xf_mall.entity.User;
+import org.wlgzs.xf_mall.filter.DemoFilter;
 import org.wlgzs.xf_mall.util.AuthUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -27,6 +27,7 @@ import java.util.List;
 
 @Controller
 public class LoginController extends BaseController {
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DemoFilter.class);
 
 //    @RequestMapping("/registeredMail")
 //    public String register(HttpServletRequest request, Model model, User user, String code) {
@@ -79,11 +80,7 @@ public class LoginController extends BaseController {
      */
     @RequestMapping("/login")
     public String login(HttpServletRequest request, Model model, String user_name, String user_password) {
-        HttpSession session = request.getSession(true);
         User user = logUserService.login(request, user_name, user_password);
-        System.out.println(user);
-        System.out.println("session==="+session.getAttribute("user"));
-        System.out.println("adminSession==="+session.getAttribute("adminUser"));
         if (user != null) {
             if("管理员".equals(user.getUser_role())) {
                 return "adminIndex";
@@ -96,7 +93,6 @@ public class LoginController extends BaseController {
         } else {
             model.addAttribute("msg", "账号或密码错误");
             List<Activity> activities = activityService.findByActivity("登录页面");
-            System.out.println(activities);
             model.addAttribute("activities",activities);
             return "login";
         }
@@ -120,9 +116,9 @@ public class LoginController extends BaseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(res);
+        assert res != null;
         Object o = res.get("id");
-        long githubId = Long.valueOf(String.valueOf(o)).longValue();
+        long githubId = Long.valueOf(String.valueOf(o));
         //查询该id是否已存在，并返回该数据
         Authorization authorization = authorizationService.isBinding(githubId);
         if(authorization == null){//首次登陆
@@ -137,7 +133,7 @@ public class LoginController extends BaseController {
 
     //github注册新用户
     @RequestMapping("githubRegistered")
-    public String githubRegistered(HttpServletRequest request,Model model,String user_mail,String user_password){
+    public String githubRegistered(HttpServletRequest request,String user_mail,String user_password){
         return logUserService.githubRegistered(request,user_mail,user_password);
     }
 
@@ -185,9 +181,7 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "sendEmail", method = RequestMethod.POST)
     public void sendEmail(Model model, HttpServletRequest request, HttpServletResponse response) {
         String user_mail = request.getParameter("user_mail");
-        System.out.println(user_mail);
         if (logUserService.selectEmail(user_mail)) {
-            System.out.println("out---------------");
             model.addAttribute("mag", "该邮箱已存在");
             String result = "该邮箱已存在";
             PrintWriter out = null;
@@ -196,9 +190,9 @@ public class LoginController extends BaseController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            out.write(result.toString()); //将数据传到前台
+            assert out != null;
+            out.write(result); //将数据传到前台
         } else {
-            System.out.println("in-----------------");
             try {
                 logUserService.sendEmail(request, user_mail);//发送
             } catch (Exception e) {
@@ -224,12 +218,11 @@ public class LoginController extends BaseController {
         if (logUserService.contrastCode(request, user_mail, sessionMail, usercode, sessioncode)) { //对比两个code是否正确
             model.addAttribute("user_mail", user_mail);
             model.addAttribute("mag", "验证通过");
-            System.out.println(user_mail);
-            System.out.println("验证码正确");
+            logger.info("验证码正确");
             return "sign-up2";
         } else {
             model.addAttribute("mag", "请检查您的验证码或邮箱是否正确");
-            System.out.println("验证码错误");
+            logger.info("验证码错误");
             return "sign-up1";
         }
     }

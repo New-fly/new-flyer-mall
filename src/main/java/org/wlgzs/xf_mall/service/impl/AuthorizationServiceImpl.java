@@ -1,10 +1,11 @@
 package org.wlgzs.xf_mall.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wlgzs.xf_mall.dao.AuthorizationRepository;
 import org.wlgzs.xf_mall.entity.Authorization;
 import org.wlgzs.xf_mall.service.AuthorizationService;
+
+import javax.annotation.Resource;
 
 /**
  * @author:胡亚星
@@ -13,7 +14,7 @@ import org.wlgzs.xf_mall.service.AuthorizationService;
  **/
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService {
-    @Autowired
+    @Resource
     AuthorizationRepository authorizationRepository;
 
     @Override
@@ -23,7 +24,6 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public Authorization isBinding(long githubId) {
-        Authorization authorization = authorizationRepository.isBinding(githubId);
-        return authorization;
+        return authorizationRepository.isBinding(githubId);
     }
 }

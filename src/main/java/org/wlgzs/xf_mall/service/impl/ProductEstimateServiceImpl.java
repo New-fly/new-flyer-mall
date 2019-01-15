@@ -1,6 +1,5 @@
 package org.wlgzs.xf_mall.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.wlgzs.xf_mall.dao.OrdersRepository;
@@ -9,13 +8,14 @@ import org.wlgzs.xf_mall.entity.Orders;
 import org.wlgzs.xf_mall.entity.ProductEstimate;
 import org.wlgzs.xf_mall.service.ProductEstimateService;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -25,9 +25,9 @@ import java.util.UUID;
  */
 @Service
 public class ProductEstimateServiceImpl implements ProductEstimateService {
-    @Autowired
+    @Resource
     private ProductEstimateRepository productEstimateRepository;
-    @Autowired
+    @Resource
     private OrdersRepository ordersRepository;
 
     //添加评论
@@ -36,32 +36,31 @@ public class ProductEstimateServiceImpl implements ProductEstimateService {
         String realName = "";
         String[] str = new String[myFileNames.length];
         for (int i = 0; i < myFileNames.length; i++) {
-            if (!myFileNames[i].getOriginalFilename().equals("")) {
+            if (!Objects.equals(myFileNames[i].getOriginalFilename(), "")) {
                 String fileName = myFileNames[i].getOriginalFilename();
-                String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
+                assert fileName != null;
+                String fileNameExtension = fileName.substring(fileName.indexOf("."));
                 // 生成实际存储的真实文件名
                 realName = UUID.randomUUID().toString() + fileNameExtension;
                 // "/upload"是你自己定义的上传目录
                 String realPath = session.getServletContext().getRealPath("/upload");
                 File uploadFile = new File(realPath, realName);
-                System.out.println("评价图片");
                 try {
                     myFileNames[i].transferTo(uploadFile);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            if (!myFileNames[i].getOriginalFilename().equals("")) {
+            if (!Objects.equals(myFileNames[i].getOriginalFilename(), "")) {
                 str[i] = request.getContextPath() + "/upload/" + realName;
             }
         }
         StringBuffer stringBuffer = new StringBuffer();
         for (int i = 0; i < str.length; i++) {
-            if (!myFileNames[i].getOriginalFilename().equals("")) {
-                stringBuffer.append(str[i] + ",");
+            if (!Objects.equals(myFileNames[i].getOriginalFilename(), "")) {
+                stringBuffer.append(str[i]).append(",");
             }
         }
-        System.out.println(stringBuffer);
         String estimate_img = stringBuffer.substring(0, stringBuffer.length() - 1);
 
         ProductEstimate productEstimate = new ProductEstimate();
@@ -75,7 +74,6 @@ public class ProductEstimateServiceImpl implements ProductEstimateService {
         }
         productEstimate.setEstimate_isNameless(estimate_is_nameless);
         Date date = new Date();
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
         productEstimate.setEstimate_time(date);
         Orders orders = ordersRepository.findById(orderId);
         productEstimate.setUserId(orders.getUserId());

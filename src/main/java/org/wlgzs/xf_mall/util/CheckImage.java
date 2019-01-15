@@ -14,8 +14,8 @@ public class CheckImage {
 
     public static boolean verifyImages(String[] fileNames){
         String reg="(?i).+?\\.(jpg|gif|bmp|png|jpeg)";
-        for(int i = 0;i<fileNames.length;i++){
-            if(!fileNames[i].matches(reg)){
+        for (String fileName : fileNames) {
+            if (!fileName.matches(reg)) {
                 return false;
             }
         }

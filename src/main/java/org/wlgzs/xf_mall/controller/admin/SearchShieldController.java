@@ -34,11 +34,10 @@ public class SearchShieldController {
                        @RequestParam(value = "limit", defaultValue = "10") int limit) {
         String search_keywords = "";
         if(page != 0) page--;
-        Page pages = searchShieldService.getSearchShieldListPage(search_keywords,page,limit);
+        Page<SearchShield> pages = searchShieldService.getSearchShieldListPage(search_keywords,page,limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
         List<SearchShield> searchShields = pages.getContent();
-
         model.addAttribute("searchShields", searchShields);//查询的当前页的集合
         return "admin/productSensitive";
     }
@@ -52,7 +51,6 @@ public class SearchShieldController {
     @RequestMapping("/addProductSensitive")
     public String addSearchShield(SearchShield searchShield) {
         searchShieldService.save(searchShield);
-        System.out.println("添加成功");
         return "redirect:/SearchShieldController/toProductSensitive";
     }
 
@@ -79,7 +77,6 @@ public class SearchShieldController {
     @RequestMapping("/findProductSensitive")
     public String findSearchShield(Model model,String search_keywords, @RequestParam(value = "page", defaultValue = "0") int page,
                                    @RequestParam(value = "limit", defaultValue = "10") int limit) {
-        System.out.println("准备查找");
         Page<SearchShield> pages = searchShieldService.getSearchShieldListPage(search_keywords,page,limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber());//查询的当前第几页

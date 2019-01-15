@@ -23,7 +23,7 @@ public class RandonNumberUtils {
             int temp = random.nextInt(2)%2==0?65:97;
             int ascii = random.nextInt(26);
             value += (char)(ascii + temp);
-        }else if ("num".equals(charOrNum)) {
+        }else {
             //是数字
             value += String.valueOf(random.nextInt(10));
         }
@@ -39,13 +39,13 @@ public class RandonNumberUtils {
      *@Description:生成6位随机数字
      */
     public String getNumber(int lenth){
-        String value = "";
+        StringBuilder value = new StringBuilder();
         Random random = new Random();
         for (int i = 0;i < lenth;i++){
             int gen = random.nextInt(5);
-            value = value + gen;
+            value.append(gen);
         }
-        return value;
+        return value.toString();
     }
     
     /**
@@ -74,12 +74,12 @@ public class RandonNumberUtils {
      */
     private  String printSet(Set set){ //打印set的方法
         Iterator iterator = set.iterator();
-        String value = "";
+        StringBuilder value = new StringBuilder();
         while (iterator.hasNext()) {
             //String ele = (String) iterator.next();
-            value += (String)iterator.next();
+            value.append((String) iterator.next());
         }
-        return value;
+        return value.toString();
     }
 
     /**
@@ -91,10 +91,8 @@ public class RandonNumberUtils {
         String value= "";
         if (length > 0) {
             //如果返回的字符串小于指定长度 重新生成
-            if (value.length() < length) {
-                Set<String> store = getStrAndNum(length);
-                value = printSet(store);
-            }
+            Set<String> store = getStrAndNum(length);
+            value = printSet(store);
             return value;
         }else{
             return value;

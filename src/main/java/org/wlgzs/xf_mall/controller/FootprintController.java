@@ -8,9 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.Footprint;
 import org.wlgzs.xf_mall.entity.User;
-import org.wlgzs.xf_mall.service.FootprintService;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;

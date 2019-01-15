@@ -1,6 +1,5 @@
 package org.wlgzs.xf_mall.controller.admin;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,7 +38,7 @@ public class UserController {
                        @RequestParam(value = "limit",defaultValue = "10") int limit) {
         String user_name="";
         if(page != 0) page--;
-        Page pages = userService.findUserPage(user_name,page,limit);
+        Page<User> pages = userService.findUserPage(user_name,page,limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
         List<User> users = pages.getContent();
@@ -74,7 +73,7 @@ public class UserController {
     public  String findUserName(Model model,String user_name,@RequestParam(value = "page",defaultValue = "0") int page,
                                 @RequestParam(value = "limit",defaultValue = "10") int limit){
         if(page != 0) page--;
-        Page pages = userService.findUserPage(user_name,page,limit);
+        Page<User> pages = userService.findUserPage(user_name,page,limit);
         model.addAttribute("TotalPages", pages.getTotalPages());//查询的页数
         model.addAttribute("Number", pages.getNumber()+1);//查询的当前第几页
         List<User> users = pages.getContent();

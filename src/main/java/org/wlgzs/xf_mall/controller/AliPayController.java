@@ -1,10 +1,6 @@
 package org.wlgzs.xf_mall.controller;
 
 import com.alipay.api.AlipayApiException;
-import com.alipay.api.AlipayClient;
-import com.alipay.api.DefaultAlipayClient;
-import com.alipay.api.internal.util.AlipaySignature;
-import com.alipay.api.request.AlipayTradeRefundRequest;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,21 +8,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.wlgzs.xf_mall.base.BaseController;
 import org.wlgzs.xf_mall.entity.*;
-import org.wlgzs.xf_mall.service.OrdersService;
-import org.wlgzs.xf_mall.service.ProductService;
-import org.wlgzs.xf_mall.service.ShippingAddressService;
-import org.wlgzs.xf_mall.util.AlipayConfig;
 import org.wlgzs.xf_mall.util.IdsUtil;
-import org.wlgzs.xf_mall.util.RandonNumberUtils;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Auther: 阿杰
@@ -46,8 +35,7 @@ public class AliPayController extends BaseController {
     @RequestMapping("toPay")
     public ModelAndView toPay(Model model, @RequestParam(value = "shoppingCartId", defaultValue = "630,637") String shoppingCartId,
                               String user_name, HttpServletRequest request) {
-        IdsUtil idsUtil = new IdsUtil();
-        long[] Ids = idsUtil.IdsUtils(shoppingCartId);
+        long[] Ids = IdsUtil.IdsUtils(shoppingCartId);
         List<ShoppingCart> shoppingCarts = productService.findAllByIds(Ids);
         model.addAttribute("shoppingCarts", shoppingCarts);
         model.addAttribute("shoppingCount", 0);
@@ -73,8 +61,6 @@ public class AliPayController extends BaseController {
                                  String user_name, HttpServletRequest request) {
         List<Product> shoppingCarts = productService.findProductListById(productId);
         model.addAttribute("shoppingCarts", shoppingCarts);
-        System.out.println("购买商品id：" + productId);
-        System.out.println("单个购买数量：" + shoppingCart_count);
         model.addAttribute("shoppingCount", shoppingCart_count);
         if (user_name == null) {
             HttpSession session = request.getSession(true);
@@ -97,7 +83,6 @@ public class AliPayController extends BaseController {
                                        HttpServletRequest request) {
         List<Product> shoppingCarts = productService.findProductListById(productId);
         model.addAttribute("shoppingCarts", shoppingCarts);
-        //System.out.println("购买商品id：" + productId);
         model.addAttribute("shoppingCount", 1);
         HttpSession session = request.getSession(true);
         User user = (User) session.getAttribute("user");

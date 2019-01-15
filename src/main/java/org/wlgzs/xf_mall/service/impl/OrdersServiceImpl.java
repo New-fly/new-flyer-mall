@@ -5,15 +5,13 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.request.AlipayTradeRefundRequest;
-import org.hibernate.criterion.Order;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.wlgzs.xf_mall.dao.OrdersRepository;
 import org.wlgzs.xf_mall.dao.ProductRepository;
 import org.wlgzs.xf_mall.dao.UserIntegralRepository;
@@ -22,18 +20,19 @@ import org.wlgzs.xf_mall.entity.Orders;
 import org.wlgzs.xf_mall.entity.Product;
 import org.wlgzs.xf_mall.entity.User;
 import org.wlgzs.xf_mall.entity.UserIntegral;
+import org.wlgzs.xf_mall.filter.DemoFilter;
 import org.wlgzs.xf_mall.service.OrdersService;
 import org.wlgzs.xf_mall.util.AlipayConfig;
 import org.wlgzs.xf_mall.util.IdsUtil;
 import org.wlgzs.xf_mall.util.PageUtil;
 import org.wlgzs.xf_mall.util.RandonNumberUtils;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -43,24 +42,24 @@ import java.util.*;
  */
 @Service
 public class OrdersServiceImpl implements OrdersService {
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DemoFilter.class);
 
-    @Autowired
+    @Resource
     private OrdersRepository ordersRepository;
-    @Autowired
+    @Resource
     private ProductRepository productRepository;
-    @Autowired
+    @Resource
     private UserRepository userRepository;
-    @Autowired
+    @Resource
     private UserIntegralRepository userIntegralRepository;
 
     //后台遍历订单
     @Override
     public Page<Orders> getOrdersList(String order_number, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "orderId");
-        Pageable pageable = new PageRequest(page, limit, sort);
+        Pageable pageable = PageRequest.of(page, limit, sort);
         Specification<Orders> specification = new PageUtil<Orders>(order_number).getPage("order_number");
-        Page pages = ordersRepository.findAll(specification, pageable);
-        return pages;
+        return ordersRepository.findAll(specification, pageable);
     }
 
     //后台按照id查找订单
@@ -121,13 +120,12 @@ public class OrdersServiceImpl implements OrdersService {
         shoppingCount = (String) session.getAttribute("shoppingCount");
         long userId = user.getUserId();
 
-        IdsUtil idsUtil = new IdsUtil();
         productId = productId.substring(1, productId.length() - 1);
-        System.out.println(productId);
-        long[] Ids = idsUtil.IdsUtils(productId);
-        IdsUtil idsUtilTwo = new IdsUtil();
+        logger.info(productId);
+        long[] Ids = IdsUtil.IdsUtils(productId);
         shoppingCount = shoppingCount.substring(1, shoppingCount.length() - 1);
-        long[] shoppingCounts = idsUtilTwo.IdsUtils(shoppingCount);
+        long[] shoppingCounts = IdsUtil.IdsUtils(shoppingCount);
+
         String address_name = (String) session.getAttribute("address_name"); //收货人
         String address_phone = (String) session.getAttribute("address_phone"); //收货人电话
         String address_shipping = (String) session.getAttribute("address_shipping"); //收货地址
@@ -146,11 +144,10 @@ public class OrdersServiceImpl implements OrdersService {
             order.setOrder_freight(0);  //运费
             order.setOrder_number(orderNumber);  //订单编号
             Date data = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
             order.setOrder_purchaseTime(data); //下单时间
             //int count = Integer.parseInt(request.getParameter("shoppingCart_count"));
             order.setOrder_quantity((int) shoppingCounts[i]);  //购买数量
-            System.out.println(shoppingCounts[i]);
+            logger.info(String.valueOf(shoppingCounts[i]));
             float amount = Float.parseFloat(WIDtotal_amount);
             order.setProduct_PaidPrice(amount); //实付金额
             order.setProductId(Ids[i]); //商品id
@@ -231,7 +228,6 @@ public class OrdersServiceImpl implements OrdersService {
         order.setOrder_freight(0);  //运费
         order.setOrder_number(RandonNumberUtils.getOrderIdByUUId());  //订单编号
         Date data = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
         order.setOrder_purchaseTime(data); //下单时间
         order.setOrder_quantity(1);  //购买数量
         order.setProduct_PaidPrice(0); //实付金额
@@ -302,11 +298,9 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public Page<Orders> adminSearchOrder(String order_word, int page, int limit) {
         Sort sort = new Sort(Sort.Direction.DESC, "orderId");
-        Pageable pageable = new PageRequest(page, limit, sort);
+        Pageable pageable = PageRequest.of(page, limit, sort);
         Specification<Orders> specification = new PageUtil<Orders>(order_word).getPage("address_name", "order_number", "user_name", "product_keywords");
-        Page pages = ordersRepository.findAll(specification, pageable);
-        System.out.println(pages);
-        return pages;
+        return ordersRepository.findAll(specification, pageable);
     }
 
     //前台查询
@@ -314,10 +308,9 @@ public class OrdersServiceImpl implements OrdersService {
     public Page<Orders> searchOrder(String order_word,int page, int limit,long userId) {
         String id=String.valueOf(userId);
         Sort sort = new Sort(Sort.Direction.DESC, "orderId");
-        Pageable pageable = new PageRequest(page, limit, sort);
+        Pageable pageable = PageRequest.of(page, limit, sort);
         Specification<Orders> specification = new PageUtil<Orders>(order_word).getPages(id,"product_specification", "order_number", "user_name", "product_keywords");
-        Page pages = ordersRepository.findAll(specification, pageable);
-        return pages;
+        return ordersRepository.findAll(specification, pageable);
     }
 
     @Override
@@ -327,8 +320,7 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public void deleteOrders(String orderId) {
-        IdsUtil idsUtil = new IdsUtil();
-        long[] ids = idsUtil.IdsUtils(orderId);
+        long[] ids = IdsUtil.IdsUtils(orderId);
         ordersRepository.deleteByIds(ids);
     }
 
@@ -344,7 +336,7 @@ public class OrdersServiceImpl implements OrdersService {
         for (int i = 0; i < ordersList.size(); i++) {
             Ids[i] = ordersList.get(i).getProductId();
             shoppingCounts[i] = ordersList.get(i).getOrder_quantity();
-            System.out.println("修改订单状态");
+            logger.info("修改订单状态");
             ordersList.get(i).setOrder_status("已退款");
         }
         //ordersRepository.saveAll(ordersList);
@@ -352,16 +344,16 @@ public class OrdersServiceImpl implements OrdersService {
             Product product = productRepository.findById(Ids[i]);
             //商品表
             product.setProduct_inventory((int) (product.getProduct_inventory() + shoppingCounts[i]));
-            System.out.println("返回商品库存");
+            logger.info("返回商品库存");
             productRepository.save(product);
             //用户积分
             user.setUserIntegral (user.getUserIntegral() + product.getProduct_getPoints());
-            System.out.println("返回用户积分");
+            logger.info("返回用户积分");
             userRepository.save(user);
             //积分表
             UserIntegral userIntegral = userIntegralRepository.findByUserIdAndProductId(userId,ordersList.get(0).getOrder_purchaseTime(),ordersList.get(0).getProduct_keywords());
             if(userIntegral!=null){
-                System.out.println("删除积分记录");
+                logger.info("删除积分记录");
                 userIntegralRepository.deleteById(userIntegral.getUserIntegralId());
             }
         }
@@ -372,19 +364,19 @@ public class OrdersServiceImpl implements OrdersService {
         //设置请求参数
         AlipayTradeRefundRequest alipayRequest = new AlipayTradeRefundRequest();
         //商户订单号，商户网站订单系统中唯一订单号
-        System.out.println(orders.getOrder_number());
-        String out_trade_no = new String(orders.getOrder_number());
+        logger.info(orders.getOrder_number());
+        String out_trade_no = orders.getOrder_number();
         //需要退款的金额，该金额不能大于订单金额，必填
-        String refund_amount = new String(String.valueOf(ordersList.get(0).getProduct_PaidPrice()));
+        String refund_amount = String.valueOf(ordersList.get(0).getProduct_PaidPrice());
         //标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传
-        String out_request_no = new String(UUID.randomUUID().toString());
+        String out_request_no = UUID.randomUUID().toString();
 
         alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\","
                 + "\"refund_amount\":\""+ refund_amount +"\","
                 + "\"out_request_no\":\""+ out_request_no +"\"}");
         //请求
         String result = alipayClient.execute(alipayRequest).getBody();
-        System.out.println(result);
+        logger.info(result);
         //输出
         out.println(result);
     }
@@ -393,7 +385,6 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public Map<String, List> userOrder(long userId) {
         List<Orders> orders = ordersRepository.userOrderList(userId);
-
         //List<String> orderNumbers = ordersRepository.findOrderNumbers(userId);
         List<Orders> ordersT = ordersRepository.findOrders(userId);
         List<String> ordersTw = new ArrayList<>();
@@ -402,16 +393,16 @@ public class OrdersServiceImpl implements OrdersService {
         }
         //去重 利用set顺序不变
         Set<String> set = new HashSet<>();
-        List<String> orderNumbers = new ArrayList<String>();
+        List<String> orderNumbers = new ArrayList<>();
         for (String cd : ordersTw) {
             if (set.add(cd)) {
                 orderNumbers.add(cd);
             }
         }
-        System.out.println(orders.size()+"orders的长度");
-        System.out.println(orderNumbers.size()+"orderNumber的长度");
+        logger.info(orders.size()+"orders的长度");
+        logger.info(orderNumbers.size()+"orderNumber的长度");
 
-        Map<String, List> map = new HashMap<String, List>();
+        Map<String, List> map = new HashMap<>();
         int m = 0;
         List<Orders> ordersTwo = new ArrayList<>();
         for (int i = 0; i < orders.size(); i++) {
@@ -432,9 +423,9 @@ public class OrdersServiceImpl implements OrdersService {
                 if(n==0){
                     ordersList.add(orders.get(i));
                 }
-                System.out.println("第" + i + "次循环，订单集合：" + ordersList);
+                logger.info("第" + i + "次循环，订单集合：" + ordersList);
                 if (ordersList.size() != 0) {
-                    //System.out.println("m的值:" + m);
+                    //logger.info("m的值:" + m);
                     map.put(orderNumbers.get(m), ordersList);
                     m++;
                 }
@@ -452,7 +443,7 @@ public class OrdersServiceImpl implements OrdersService {
         }
         //去重 利用set顺序不变
         Set<String> set = new HashSet<>();
-        List<String> orderNumbers = new ArrayList<String>();
+        List<String> orderNumbers = new ArrayList<>();
         for (String cd : ordersTw) {
             if (set.add(cd)) {
                 orderNumbers.add(cd);
@@ -484,14 +475,13 @@ public class OrdersServiceImpl implements OrdersService {
         session.setAttribute("address_name",request.getParameter("address_name"));
         session.setAttribute("address_phone",request.getParameter("address_phone"));
         session.setAttribute("address_shipping",request.getParameter("address_shipping"));
-        String order_number = new String(orderNumber);
-        System.out.println(order_number+"------------------");
+        logger.info(orderNumber +"------------------");
         //付款金额，必填
-        String total_amount = new String(request.getParameter("WIDtotal_amount"));
-        System.out.println(total_amount+"-------------------");
+        String total_amount = request.getParameter("WIDtotal_amount");
+        logger.info(total_amount+"-------------------");
         //订单名称，必填
-        String subject = new String("支付宝沙箱支付");
-        aliPayRequest.setBizContent("{\"out_trade_no\":\"" + order_number + "\","
+        String subject = "支付宝沙箱支付";
+        aliPayRequest.setBizContent("{\"out_trade_no\":\"" + orderNumber + "\","
                 + "\"total_amount\":\"" + total_amount + "\","
                 + "\"subject\":\"" + subject + "\","
                 + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");

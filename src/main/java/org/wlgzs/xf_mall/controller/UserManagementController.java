@@ -1,7 +1,6 @@
 package org.wlgzs.xf_mall.controller;
 
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,8 +12,6 @@ import org.wlgzs.xf_mall.util.CheckImage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
 
 /**
  * @author:胡亚星
@@ -82,9 +79,8 @@ public class UserManagementController extends BaseController {
     public ModelAndView add(@RequestParam("file") MultipartFile myFileName, HttpSession session,
                             Model model, HttpServletRequest request) throws IOException {
         String fileName = myFileName.getOriginalFilename();
-        CheckImage checkImage = new CheckImage();
-        User user = null;
-        if(checkImage.verifyImage(fileName)){
+        User user;
+        if(fileName != null && CheckImage.verifyImage(fileName)){
             user = userService.ModifyAvatar(session,request,myFileName);
         }else{
             user = (User) session.getAttribute("user");
@@ -117,7 +113,6 @@ public class UserManagementController extends BaseController {
      */
     @RequestMapping("toChangeEmail")
     public ModelAndView toChangeEmail(){
-        System.out.println("123123");
         return new ModelAndView("changeEmail");
     }
 
@@ -150,7 +145,6 @@ public class UserManagementController extends BaseController {
         String usercode = "";
         String sessioncode = "";
         if (logUserService.contrastCode(request,user_mail,sessionMail,usercode,sessioncode)){
-            System.out.println(logUserService.selectEmail(user_mail)+"--------------------");
             if(!logUserService.selectEmail(user_mail)){//可以继续
                 User user1 = (User) session.getAttribute("user");
                 long userId = user1.getUserId();
@@ -197,11 +191,7 @@ public class UserManagementController extends BaseController {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         long userId = user.getUserId();
-        System.out.println(user_password);
-        System.out.println(user_rePassword);
         if (userService.checkPassWord(user_password, userId)) {//正确ze修改密码
-            System.out.println("正确");
-            //model.addAttribute("mgs", "修改成功");
             userService.changePassword(user_rePassword, userId);
             return new ModelAndView("redirect:/toLogin");
         } else {//原密码错误
@@ -251,8 +241,6 @@ public class UserManagementController extends BaseController {
         String user_mail = request.getParameter("user_mail");
         //判断邮箱是否存在
         if(!logUserService.selectEmail(user_mail)){
-            System.out.println("进入");
-            System.out.println(user_mail);
             logUserService.sendEmail2(request, user_mail);//发送
             return "成功";
         }
@@ -269,19 +257,15 @@ public class UserManagementController extends BaseController {
      */
     @RequestMapping("passwordContrastCode")
     public ModelAndView passwordContrastCode(Model model, HttpServletRequest request) {
-
-        HttpSession session = request.getSession();
         String user_mail = request.getParameter("user_mail");
         String sessionMail = "";
         String usercode = "";
         String sessioncode = "";
         if (logUserService.contrastCode(request,user_mail,sessionMail,usercode,sessioncode) ){ //对比两个code是否正确
             model.addAttribute("user_mail", user_mail);
-            System.out.println("222");
             return new ModelAndView("retrievePassword");
         } else {
             model.addAttribute("mag", "请检查您的验证码或邮箱是否正确");
-            System.out.println("111");
             return new ModelAndView("toSendRetrievePassword");
         }
     }
@@ -296,8 +280,6 @@ public class UserManagementController extends BaseController {
     @RequestMapping("retrievePassword")
     public ModelAndView retrievePassword(Model model, HttpServletRequest request, String user_mail) {
         String user_password = request.getParameter("user_password");
-        System.out.println(user_mail);
-        System.out.println(user_password);
         userService.changePassword(user_password, user_mail);
         model.addAttribute("mgs", "修改成功");
         return new ModelAndView("login");
