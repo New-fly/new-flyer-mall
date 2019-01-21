@@ -108,7 +108,7 @@ public class LogUserServiceImpl implements LogUserService {
                 RandonNumberUtils randonNumberUtils = new RandonNumberUtils();
                 String name = randonNumberUtils.getNumber(8);
                 String user_name = "XF_" + name;
-                String user_avatar = request.getContextPath() + "/headPortrait/morende.jpg";
+                String user_avatar = "/api/path/headPortrait/picture.jpg";
                 user.setUser_name(user_name);
                 user.setUser_avatar(user_avatar);
                 user.setUser_role("普通用户");
@@ -230,7 +230,7 @@ public class LogUserServiceImpl implements LogUserService {
             RandonNumberUtils randonNumberUtils = new RandonNumberUtils();
             String name = randonNumberUtils.getNumber(8);
             String user_name = "XF_" + name;
-            String user_avatar = request.getContextPath() + "/headPortrait/morende.jpg";
+            String user_avatar = "/api/path/headPortrait/picture.jpg";
             user.setUser_name(user_name);
             user.setUser_avatar(user_avatar);
             user.setUser_role("普通用户");

@@ -59,27 +59,22 @@ public class ProductServiceImpl implements ProductService {
     //添加商品
     @Override
     public void saveProduct(String product_details, MultipartFile[] myFileNames, HttpSession session, HttpServletRequest request) {
-        String realName = "";
+        String realName;
+        String realPath = "";
         String[] str = new String[myFileNames.length];
         for (int i = 0; i < myFileNames.length; i++) {
             if (!Objects.equals(myFileNames[i].getOriginalFilename(), "")) {
                 String fileName = myFileNames[i].getOriginalFilename();
                 assert fileName != null;
                 String fileNameExtension = fileName.substring(fileName.indexOf("."));
-
                 // 生成实际存储的真实文件名
                 realName = UUID.randomUUID().toString() + fileNameExtension;
-                // "/upload"是你自己定义的上传目录
-                String realPath = session.getServletContext().getRealPath("/upload");
-                File uploadFile = new File(realPath, realName);
-                try {
-                    myFileNames[i].transferTo(uploadFile);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                realPath = "/upload/product/" + realName;
+                File uploadFile = new File("." + realPath);
+                IdsUtil.writeFile(myFileNames[i], uploadFile);
             }
             if (!Objects.equals(myFileNames[i].getOriginalFilename(), "")) {
-                str[i] = request.getContextPath() + "/upload/" + realName;
+                str[i] = "/api/path" + realPath;
             }
         }
         StringBuilder stringBuffer = new StringBuilder();
@@ -89,7 +84,6 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         String product_picture = stringBuffer.substring(0, stringBuffer.length() - 1);
-
         Map<String, String[]> properties = request.getParameterMap();
         Product product = new Product();
         try {
@@ -105,22 +99,18 @@ public class ProductServiceImpl implements ProductService {
     //富文本添加图片
     @Override
     public String[] uploadImg(MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
-        String realName = "";
+        String realName;
+        String realPath = "";
         if (myFileName != null && myFileName.getOriginalFilename()!=null) {
             String fileName = myFileName.getOriginalFilename();
             String fileNameExtension = fileName.substring(fileName.indexOf("."));
             // 生成实际存储的真实文件名
-            realName = UUID.randomUUID().toString() + fileNameExtension;
-            // "/upload"是你自己定义的上传目录
-            String realPath = session.getServletContext().getRealPath("/upload");
-            File uploadFile = new File(realPath, realName);
-            try {
-                myFileName.transferTo(uploadFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            realName = "fuwenben" + UUID.randomUUID().toString() + fileNameExtension;
+            realPath = "/upload/product/" + realName;
+            File uploadFile = new File("." + realPath);
+            IdsUtil.writeFile(myFileName, uploadFile);
         }
-        return new String[]{request.getContextPath() + "/upload/" + realName};
+        return new String[]{"/api/path" + realPath};
     }
 
     //删除商品
@@ -128,14 +118,10 @@ public class ProductServiceImpl implements ProductService {
     public String delete(long productId, HttpServletRequest request) {
         Product product = productRepository.findById(productId);
         if (product != null) {
-            String path = request.getSession().getServletContext().getRealPath("/");
             String image = product.getProduct_picture();
             String[] img = image.split(",");
             for (String anImg : img) {
-                File file = new File(path + "" + anImg.substring(1, img[0].length()));
-                if (file.exists() && file.isFile()) {
-                    file.delete();
-                }
+                new IdsUtil().deleteFile(anImg.substring(9));
             }
             productRepository.deleteById(productId);
             return "成功";
@@ -193,26 +179,21 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(productId);
         if (product != null) {
             String realName = "";
+            String realPath = "";
             String[] str = new String[myFileNames.length];
             for (int i = 0; i < myFileNames.length; i++) {
                 if (!"".equals(myFileNames[i].getOriginalFilename())) {
                     String fileName = myFileNames[i].getOriginalFilename();
                     assert fileName != null;
                     String fileNameExtension = fileName.substring(fileName.indexOf("."));
-
                     // 生成实际存储的真实文件名
                     realName = UUID.randomUUID().toString() + fileNameExtension;
-                    // "/upload"是你自己定义的上传目录
-                    String realPath = session.getServletContext().getRealPath("/upload");
-                    File uploadFile = new File(realPath, realName);
-                    try {
-                        myFileNames[i].transferTo(uploadFile);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    realPath = "/upload/product/" + realName;
+                    File uploadFile = new File("." + realPath);
+                    IdsUtil.writeFile(myFileNames[i], uploadFile);
                 }
                 if (!Objects.equals(myFileNames[i].getOriginalFilename(), "")) {
-                    str[i] = request.getContextPath() + "/upload/" + realName;
+                    str[i] = "/api/path" + realPath;
                 }
             }
             StringBuilder stringBuffer = new StringBuilder();
@@ -297,22 +278,18 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void saveOne(ProductCategory productCategory, MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
         String realName = "";
+        String realPath = "";
         if (myFileName != null) {
             String fileName = myFileName.getOriginalFilename();
             assert fileName != null;
             String fileNameExtension = fileName.substring(fileName.indexOf("."), fileName.length());
             // 生成实际存储的真实文件名
             realName = UUID.randomUUID().toString() + fileNameExtension;
-            // "/category"是你自己定义的上传目录
-            String realPath = session.getServletContext().getRealPath("/category");
-            File uploadFile = new File(realPath, realName);
-            try {
-                myFileName.transferTo(uploadFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            realPath = "/upload/category/" + realName;
+            File uploadFile = new File("." + realPath);
+            IdsUtil.writeFile(myFileName, uploadFile);
         }
-        productCategory.setCategory_img(request.getContextPath() + "/category/" + realName);
+        productCategory.setCategory_img("/api/path" + realPath);
         productCategory.setParent_name("0");
         productCategoryRepository.save(productCategory);
     }
@@ -347,6 +324,7 @@ public class ProductServiceImpl implements ProductService {
                     }
                     productCategoryRepository.deleteByIds(Ids);
                 }
+                new IdsUtil().deleteFile(productCategory.getCategory_img().substring(9));
             }
             productCategoryRepository.deleteById(categoryId);
             return "删除成功";
@@ -372,22 +350,19 @@ public class ProductServiceImpl implements ProductService {
         }
         if (productCategory.getParent_name().equals("0")) {
             String realName = "";
+            String realPath = "";
             if (myFileName != null) {
                 String fileName = myFileName.getOriginalFilename();
                 assert fileName != null;
                 String fileNameExtension = fileName.substring(fileName.indexOf("."));
                 // 生成实际存储的真实文件名
                 realName = UUID.randomUUID().toString() + fileNameExtension;
-                // "/category"是你自己定义的上传目录
-                String realPath = session.getServletContext().getRealPath("/category");
-                File uploadFile = new File(realPath, realName);
-                try {
-                    myFileName.transferTo(uploadFile);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                realPath = "/upload/category/" + realName;
+                File uploadFile = new File("." + realPath);
+                IdsUtil.writeFile(myFileName, uploadFile);
             }
-            productCategory.setCategory_img(request.getContextPath() + "/category/" + realName);
+            new IdsUtil().deleteFile(productCategory.getCategory_img().substring(9));
+            productCategory.setCategory_img("/api/path" + realPath);
             productCategory.setCategory_show(Integer.parseInt(request.getParameter("category_show")));
             productCategory.setParent_name("0");
         }
@@ -576,23 +551,19 @@ public class ProductServiceImpl implements ProductService {
                 //String fileName = footprint.getProduct_keywords();
                 // 生成实际存储的真实文件名
                 String realName = UUID.randomUUID().toString();
-
-                String path = request.getSession().getServletContext().getRealPath("/");
-                String pathTwo = path + "txtFile/" + realName;//txtFile/dsds2321/////////2342.txt
-                File dir = new File(pathTwo);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                IdsUtil.writerFile(footprint.getProduct_keywords(), pathTwo, realName + ".txt");
-
-                //Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(pathTwo);
+                String path = "./upload/txtFile/" + realName;
+                File filePath = new File(path + "/" + realName + ".txt");
+                if (!filePath.getParentFile().exists()) filePath.getParentFile().mkdirs();
+                IdsUtil.saveFile(footprint.getProduct_keywords(), filePath);
+                //读取文件
+                ReadFiles.NormalTFOfAll(path);
                 Map<String, Float> idf = ReadFiles.idf();
                 stringListOne.addAll(idf.keySet());
-                File file = new File(pathTwo + "/" + realName + ".txt");
-                if (file.exists() && file.isFile()) {
-                    file.delete();
+                System.out.println(stringListOne);
+                if (filePath.exists() && filePath.isFile()) {
+                    filePath.delete();
                 }
-                File fileTwo = new File(pathTwo);
+                File fileTwo = new File(path);
                 if (fileTwo.exists() && fileTwo.isDirectory()) {
                     fileTwo.delete();
                 }
@@ -613,13 +584,11 @@ public class ProductServiceImpl implements ProductService {
                     i--;
                 }
             }
-
             //通过关键词查询商品
             Sort sort = new Sort(Sort.Direction.DESC, "productId");
             PageUtilTwo<Product> pageUtilTwo = new PageUtilTwo<>();
             Specification<Product> specification = pageUtilTwo.getPage(product_category);
             products = productRepository.findAll(specification, sort);
-
             //查询用户的订单
             List<Orders> orders = ordersRepository.userOrderList(userId);
             if (orders != null && orders.size() != 0) {
@@ -719,7 +688,7 @@ public class ProductServiceImpl implements ProductService {
         File filePath = new File(path + "/" + realName + ".txt");
         if (!filePath.getParentFile().exists()) filePath.getParentFile().mkdirs();
         IdsUtil.saveFile(product_category, filePath);
-
+        //读取搜索文件
         ReadFiles.NormalTFOfAll(path);
         Map<String, Float> idf = ReadFiles.idf();
         List<String> stringList = new ArrayList<>(idf.keySet());

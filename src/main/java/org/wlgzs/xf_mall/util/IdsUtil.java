@@ -1,5 +1,7 @@
 package org.wlgzs.xf_mall.util;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.*;
 
 /**
@@ -25,16 +27,28 @@ public class IdsUtil {
         return Ids;
     }
 
-    public static void writerFile(String content, String filePath, String fileName) {
+    public static void writeFile(MultipartFile file, File saveFile) {
         try {
-            File file = new File(filePath, fileName);
-            FileOutputStream writerStream = new FileOutputStream(file);
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(writerStream, "GBK"));
-            writer.write(content);
-            writer.close();
+            if (!file.isEmpty()) {
+                if (!saveFile.getParentFile().exists()) saveFile.getParentFile().mkdirs();
+                FileOutputStream outputStream = new FileOutputStream(saveFile);
+                BufferedOutputStream out = new BufferedOutputStream(outputStream);
+                out.write(file.getBytes());
+                out.flush();
+                out.close();
+                outputStream.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    //删除文件
+    public boolean deleteFile(String url) {
+        File file = new File("." + url);
+        if (file.exists() && file.exists()) {
+            return file.delete();
+        }
+        return false;
     }
 
     public static void saveFile(String content, File saveFile) {

@@ -1,18 +1,16 @@
 package org.wlgzs.xf_mall.service.impl;
 
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.wlgzs.xf_mall.dao.ActivityRepository;
 import org.wlgzs.xf_mall.entity.Activity;
 import org.wlgzs.xf_mall.service.ActivityService;
+import org.wlgzs.xf_mall.util.IdsUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,31 +38,18 @@ public class ActivityServiceImp implements ActivityService {
     @Override
     public void addActivity(MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
         String realName = "";
+        String realPath = "";
         if (myFileName != null) {
             String fileName = myFileName.getOriginalFilename();
             assert fileName != null;
             String fileNameExtension = fileName.substring(fileName.indexOf("."));
             // 生成实际存储的真实文件名
             realName = UUID.randomUUID().toString() + fileNameExtension;
-            // "/upload"是你自己定义的上传目录
-            //String realPath = session.getServletContext().getRealPath("/activity");
-            String s = "";
-            try {
-                s = ResourceUtils.getURL("classpath:").getPath();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            s = s.substring(5,s.length()-20)+"/META-INF/resources/activity"+realName;
-            //s = "xf_mall-0.0.1-SNAPSHOT/META-INF/resources/activity"+realName;
-            File path = new File(s);
-            File upload = new File(path.getAbsolutePath());
-            try {
-                myFileName.transferTo(upload);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            realPath = "/upload/activity/" + realName;
+            File uploadFile = new File("." + realPath);
+            IdsUtil.writeFile(myFileName, uploadFile);
         }
-        String str = request.getContextPath() + "/activity/" + realName;
+        String str = "/api/path" + realPath;
         Activity activity = new Activity();
         activity.setActivity_name(request.getParameter("activity_name"));
         int amount = Integer.parseInt(request.getParameter("activity_discount"));
@@ -94,22 +79,19 @@ public class ActivityServiceImp implements ActivityService {
     public void editActivity(long activitySumId, MultipartFile myFileName, HttpSession session, HttpServletRequest request) {
         Activity activity = activityRepository.findById(activitySumId);
         String realName = "";
+        String realPath = "";
         if (myFileName != null) {
             String fileName = myFileName.getOriginalFilename();
             assert fileName != null;
             String fileNameExtension = fileName.substring(fileName.indexOf("."));
             // 生成实际存储的真实文件名
             realName = UUID.randomUUID().toString() + fileNameExtension;
-            // "/upload"是你自己定义的上传目录
-            String realPath = session.getServletContext().getRealPath("/activity");
-            File uploadFile = new File(realPath, realName);
-            try {
-                myFileName.transferTo(uploadFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            realPath = "/upload/activity/" + realName;
+            File uploadFile = new File("." + realPath);
+            IdsUtil.writeFile(myFileName, uploadFile);
         }
-        String str = request.getContextPath() + "/activity/" + realName;
+        String str = "/api/path" + realPath;
+        boolean b = new IdsUtil().deleteFile(activity.getActivity_picture().substring(9));
         activity.setActivity_name(request.getParameter("activity_name"));
         int amount = Integer.parseInt(request.getParameter("activity_discount"));
         activity.setActivity_discount(amount);
@@ -130,6 +112,8 @@ public class ActivityServiceImp implements ActivityService {
     //删除活动
     @Override
     public void deleteActivity(long activityId) {
+        Activity activity = activityRepository.findById(activityId);
+        boolean b = new IdsUtil().deleteFile(activity.getActivity_picture().substring(9));
         activityRepository.deleteById(activityId);
     }
 

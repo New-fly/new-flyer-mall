@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     //后台增加用户
     @Override
     public void save(User user) {
-        user.setUser_avatar("/headPortrait/morende.jpg ");
+        user.setUser_avatar("/api/path/headPortrait/picture.jpg");
         userRepository.save(user);
     }
 
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
             if(userTwo.getUser_role().equals("超级管理员")){
                 user.setUser_role("超级管理员");
             }
-            user.setUser_avatar("/headPortrait/morende.jpg ");
+            user.setUser_avatar(userTwo.getUser_avatar());
             user.setUserIntegral(userTwo.getUserIntegral());
             userRepository.saveAndFlush(user);
             return "成功";
@@ -84,12 +84,8 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId);
         if(user != null){
             String img = user.getUser_avatar();
-            String path = request.getSession().getServletContext().getRealPath("/");
-            if(img!=null){
-                File file = new File(path+""+img.substring(1));
-                if (!img.equals("/headPortrait/morende.jpg") && file.exists() && file.isFile()) {
-                    file.delete();
-                }
+            if(img!=null && !img.equals("/api/path/headPortrait/picture.jpg")){
+                new IdsUtil().deleteFile(img.substring(9));
             }
             userRepository.deleteById(userId);
             return "成功";
@@ -191,23 +187,13 @@ public class UserServiceImpl implements UserService {
             String fileName = myFileName.getOriginalFilename();
             assert fileName != null;
             String fileNameExtension = fileName.substring(fileName.indexOf("."));
-
             // 生成实际存储的真实文件名
             realName = UUID.randomUUID().toString() + fileNameExtension;
-            // "/upload"是你自己定义的上传目录
-            logger.info(session.getServletContext().getRealPath("/")+":rootPath");
-            logger.info("11111  String classPath = Thread.currentThread().getContextClassLoader()" + ".getResource(\"\").getPath(); --->"+
-                    Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("")).getPath());
-            logger.info("22222  this.getClass().getClassLoader().getResource(\"\").getPath()--->"+ Objects.requireNonNull(this.getClass().getClassLoader().getResource("")).getPath());
-            logger.info("33333  this.getClass().getResource(\"\").getPath().toString()--->"+this.getClass().getResource("").getPath());
-
-            logger.info(session.getServletContext().getRealPath("/")+"/xf_mall/webapp/headPortrait"+":filePath");
-            String realPath = session.getServletContext().getRealPath("/headPortrait");
-            File uploadFile = new File(realPath, realName);
-            myFileName.transferTo(uploadFile);
-            user_avatar = request.getContextPath() + "/headPortrait/" + realName;
+            user_avatar = "/upload/headPortrait/" + realName;
+            File uploadFile = new File("." + user_avatar);
+            IdsUtil.writeFile(myFileName, uploadFile);
         } else {
-            user_avatar = request.getContextPath() + "/headPortrait/" + "morende.jpg";
+            user_avatar = "/upload/headPortrait/picture.jpg";
         }
         Map<String, String[]> properties = request.getParameterMap();
         User user = userRepository.findById(id);
@@ -216,8 +202,11 @@ public class UserServiceImpl implements UserService {
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
-        user.setUser_avatar(user_avatar);
-        userRepository.ModifyAvatar(user_avatar,id);
+        if(user.getUser_avatar()!=null && !user.getUser_avatar().equals("/api/path/headPortrait/picture.jpg")){
+            new IdsUtil().deleteFile(user.getUser_avatar().substring(9));
+        }
+        user.setUser_avatar("/api/path" + user_avatar);
+        userRepository.ModifyAvatar("/api/path" + user_avatar,id);
         return user;
     }
 
