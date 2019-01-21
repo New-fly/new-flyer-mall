@@ -8,9 +8,9 @@ import java.io.*;
  * @Description:
  */
 public class IdsUtil {
-    public static long[] IdsUtils(String ids){
+    public static long[] IdsUtils(String ids) {
         long[] Ids = new long[1];
-        if(ids.contains(",")){
+        if (ids.contains(",")) {
             String[] str = ids.split(",");
             if (str.length != 0) {
                 Ids = new long[str.length];
@@ -19,19 +19,34 @@ public class IdsUtil {
                 }
             }
         }
-        if(!ids.contains(",")){
+        if (!ids.contains(",")) {
             Ids[0] = Long.parseLong(ids);
         }
         return Ids;
     }
-    public static void writerFile(String content,String filePath,String fileName){
+
+    public static void writerFile(String content, String filePath, String fileName) {
         try {
-            File file = new File(filePath,fileName);
+            File file = new File(filePath, fileName);
             FileOutputStream writerStream = new FileOutputStream(file);
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(writerStream, "GBK"));
             writer.write(content);
             writer.close();
-        } catch (IOException e){
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveFile(String content, File saveFile) {
+        try {
+            if (!saveFile.getParentFile().exists()) saveFile.getParentFile().mkdirs();
+            FileOutputStream outputStream = new FileOutputStream(saveFile);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "GBK"));
+            writer.write(content);
+            writer.flush();
+            writer.close();
+            outputStream.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

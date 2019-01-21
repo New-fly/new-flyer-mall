@@ -586,7 +586,7 @@ public class ProductServiceImpl implements ProductService {
                 IdsUtil.writerFile(footprint.getProduct_keywords(), pathTwo, realName + ".txt");
 
                 //Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(pathTwo);
-                Map<String, Float> idf = ReadFiles.idf(pathTwo);
+                Map<String, Float> idf = ReadFiles.idf();
                 stringListOne.addAll(idf.keySet());
                 File file = new File(pathTwo + "/" + realName + ".txt");
                 if (file.exists() && file.isFile()) {
@@ -715,22 +715,19 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> searchProduct(HttpServletRequest request, String product_category, int page, int limit) throws IOException {
         // 生成实际存储的真实文件名
         String realName = UUID.randomUUID().toString();
-        String path = request.getSession().getServletContext().getRealPath("/");
-        String pathTwo = path + "txtFile/" + realName;
-        File dir = new File(pathTwo);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        IdsUtil.writerFile(product_category, pathTwo , realName + ".txt");
+        String path = "./upload/txtFile/" + realName;
+        File filePath = new File(path + "/" + realName + ".txt");
+        if (!filePath.getParentFile().exists()) filePath.getParentFile().mkdirs();
+        IdsUtil.saveFile(product_category, filePath);
 
-        //Map<String, HashMap<String, Integer>> normal = ReadFiles.NormalTFOfAll(pathTwo);
-        Map<String, Float> idf = ReadFiles.idf(pathTwo);
+        ReadFiles.NormalTFOfAll(path);
+        Map<String, Float> idf = ReadFiles.idf();
         List<String> stringList = new ArrayList<>(idf.keySet());
-        File file = new File(pathTwo + "/" + realName + ".txt");
-        if (file.exists() && file.isFile()) {
-            file.delete();
+        System.out.println(stringList);
+        if (filePath.exists() && filePath.isFile()) {
+            filePath.delete();
         }
-        File fileTwo = new File(pathTwo);
+        File fileTwo = new File(path);
         if (fileTwo.exists() && fileTwo.isDirectory()) {
             fileTwo.delete();
         }
