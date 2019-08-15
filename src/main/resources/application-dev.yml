@@ -4,7 +4,7 @@ logging:
   config: classpath:logback-spring.xml
 spring:
   datasource:
-    name: mysql_test
+    name: xf_mall
     type: com.alibaba.druid.pool.DruidDataSource
     #druid相关配置
     druid:
@@ -14,7 +14,7 @@ spring:
       #基本属性
       url: jdbc:mysql://127.0.0.1:3306/xf_mall?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
       username: root
-      password: lovewlgzs
+      password: root
       #配置初始化大小/最小/最大
       initial-size: 1
       min-idle: 1

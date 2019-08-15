@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: prod
 
   mail:
         default-encoding: utf-8
@@ -13,8 +13,6 @@ spring:
         protocol: smtp
         #发送者的邮箱账号
         username: huystar@126.com
-  server:
-      port: 8081
 
   thymeleaf:
     cache: false
